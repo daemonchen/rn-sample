@@ -12,16 +12,16 @@
 ## 项目目录
 
 ```
-App--应用根目录
+app--应用根目录
  |
- |--Actions
- |--Common
- |--Constants
- |--Mixins
- |--Models
- |--Services
- |--Stores
- |--Views
+ |--actions
+ |--common
+ |--constants
+ |--mixins
+ |--models
+ |--services
+ |--stores
+ |--views
  ```
 
 `ios--存放ios的xcode工程 - WIP`
