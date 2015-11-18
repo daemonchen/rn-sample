@@ -28,18 +28,18 @@ var Register = require('./app/views/register');
 var Login = require('./app/views/login');
 var Error = require('./app/views/error');
 var Home = require('./app/views/home/home');
-var TabView = require('./components/TabView');
-var TabIcon = require('./components/TabIcon');
-var TabBarFlux = require('./components/TabBarFlux');
+var TabView = require('./app/views/tabViewSample');
+var TabIcon = require('./app/views/tabIconSample');
+var TabBarFlux = require('./app/views/tabBarFluxSample');
 
 var awesomeMobile = React.createClass({
   render: function() {
     return (
         <View style={styles.container}>
-            <View style={{position:'absolute',left:0,right:0,top:0,bottom:0,backgroundColor:'#F5FCFF'}}/>
+            <View style={{position:'absolute',left:0,right:0,top:0,bottom:0,backgroundColor:'#f1f1f1'}}/>
             <Router>
-                <Schema name="modal" sceneConfig={Animations.FlatFloatFromBottom} navBar={NavBarModal}/>
-                <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} navBar={NavBar}/>
+                <Schema name="modal" sceneConfig={Navigator.SceneConfigs.FloatFromBottom} navBar={NavBarModal}/>
+                <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} navBar={NavBar}/>
                 <Schema name="withoutAnimation" navBar={NavBar}/>
                 <Schema name="tab" navBar={NavBar} sceneConfig={() => ({
                     ...Navigator.SceneConfigs.HorizontalSwipeJump,
@@ -68,22 +68,9 @@ var awesomeMobile = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    container: {
+        flex: 1
+    }
 });
 
 AppRegistry.registerComponent('awesomeMobile', () => awesomeMobile);
