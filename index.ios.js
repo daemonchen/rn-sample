@@ -3,6 +3,7 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  Navigator,
   StyleSheet,
   Text,
   View,
@@ -20,7 +21,7 @@ var {
 var {
     NavBar,
     NavBarModal
-} = require('./components/NavBar');
+} = require('./app/common/navbar');
 
 var Launch = require('./app/views/launch');
 var Register = require('./app/views/register');
@@ -40,7 +41,9 @@ var awesomeMobile = React.createClass({
                 <Schema name="modal" sceneConfig={Animations.FlatFloatFromBottom} navBar={NavBarModal}/>
                 <Schema name="default" sceneConfig={Animations.FlatFloatFromRight} navBar={NavBar}/>
                 <Schema name="withoutAnimation" navBar={NavBar}/>
-                <Schema name="tab" navBar={NavBar}/>
+                <Schema name="tab" navBar={NavBar} sceneConfig={() => ({
+                    ...Navigator.SceneConfigs.HorizontalSwipeJump,
+                })} />
 
                 <Route name="launch" component={Launch} initial={true} hideNavBar={true} title="Launch"/>
                 <Route name="register" component={Register} title="Register"/>
