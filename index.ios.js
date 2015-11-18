@@ -41,9 +41,7 @@ var awesomeMobile = React.createClass({
                 <Schema name="modal" sceneConfig={Navigator.SceneConfigs.FloatFromBottom} navBar={NavBarModal}/>
                 <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight} navBar={NavBar}/>
                 <Schema name="withoutAnimation" navBar={NavBar}/>
-                <Schema name="tab" navBar={NavBar} sceneConfig={() => ({
-                    ...Navigator.SceneConfigs.HorizontalSwipeJump,
-                })} />
+                <Schema name="tab" navBar={NavBar} sceneConfig={Navigator.SceneConfigs.HorizontalSwipeJump} />
 
                 <Route name="launch" component={Launch} initial={true} hideNavBar={true} title="Launch"/>
                 <Route name="register" component={Register} title="Register"/>
@@ -51,13 +49,12 @@ var awesomeMobile = React.createClass({
                 <Route name="login" component={Login} schema="modal"/>
                 <Route name="register2" component={Register} schema="withoutAnimation"/>
                 <Route name="error" component={Error} schema="popup"/>
-                <Route name="tabbar" hideNavBar={true} >
+                <Route name="tabbar" hideNavBar={true} type="replace">
                     <Container component={TabBarFlux}>
-                        <Route name="tab1" component={TabView} title="Tab #1" icon={TabIcon} schema="tab"/>
-                        <Route name="tab2" component={TabView} title="Tab #2" icon={TabIcon} schema="tab"/>
-                        <Route name="tab3" component={TabView} title="Tab #3" icon={TabIcon} schema="tab"/>
-                        <Route name="tab4" component={TabView} title="Tab #4" icon={TabIcon} schema="tab"/>
-                        <Route name="tab5" component={TabView} title="Tab #5" icon={TabIcon} schema="tab"/>
+                        <Route name="tab1" component={TabView} title="首页" icon={require('./app/images/TabBar/icon_cart.png')} selectedIcon={require('./app/images/TabBar/icon_cart_hover.png')} schema="tab"/>
+                        <Route name="tab2" component={TabView} title="首页2" icon={require('./app/images/TabBar/icon_cart.png')} selectedIcon={require('./app/images/TabBar/icon_cart_hover.png')} schema="tab"/>
+                        <Route name="tab3" component={TabView} title="首页3" icon={require('./app/images/TabBar/icon_cart.png')} selectedIcon={require('./app/images/TabBar/icon_cart_hover.png')} schema="tab"/>
+                        <Route name="tab4" component={TabView} title="首页4" icon={require('./app/images/TabBar/icon_cart.png')} selectedIcon={require('./app/images/TabBar/icon_cart_hover.png')} schema="tab"/>
                     </Container>
                 </Route>
             </Router>
