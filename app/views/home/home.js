@@ -29,9 +29,12 @@ var Home =  React.createClass({
             <View style={styles.container}>
                 <NavigationBar
                     title={{ title: 'Title', }}
+                    leftButton={{ title: 'Back', }}
                     rightButton={this.rightButtonConfig} />
-                <Text>Home</Text>
-                <Button>test</Button>
+                <View>
+                    <Text>Home</Text>
+                    <Button>test</Button>
+                </View>
             </View>
         );
     }
@@ -40,8 +43,6 @@ var Home =  React.createClass({
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
     welcome: {
