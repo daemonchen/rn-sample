@@ -23,6 +23,7 @@ var TabBarFlux = React.createClass({
                 console.error("No name is defined for element");
             children.push(
                 <TabBarIOS.Item
+                key={el.props.name}
                 icon={el.props.icon}
                 selectedIcon={el.props.selectedIcon}
                 title={el.props.title}
