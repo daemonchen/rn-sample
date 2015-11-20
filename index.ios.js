@@ -51,10 +51,9 @@ var awesomeMobile = React.createClass({
                 <Route name="error" component={Error} schema="popup"/>
                 <Route name="tabbar" hideNavBar={true} type="replace">
                     <Container component={TabBarFlux}>
-                        <Route name="tab1" component={TabView} title="首页" icon={require('./app/images/TabBar/icon_cart.png')} selectedIcon={require('./app/images/TabBar/icon_cart_hover.png')} schema="tab"/>
-                        <Route name="tab2" component={TabView} title="首页2" icon={require('./app/images/TabBar/icon_cart.png')} selectedIcon={require('./app/images/TabBar/icon_cart_hover.png')} schema="tab"/>
-                        <Route name="tab3" component={TabView} title="首页3" icon={require('./app/images/TabBar/icon_cart.png')} selectedIcon={require('./app/images/TabBar/icon_cart_hover.png')} schema="tab"/>
-                        <Route name="tab4" component={TabView} title="首页4" icon={require('./app/images/TabBar/icon_cart.png')} selectedIcon={require('./app/images/TabBar/icon_cart_hover.png')} schema="tab"/>
+                        <Route name="tab1" component={TabView} title="首页" icon={require('./app/images/TabBar/ico_home_black.png')} selectedIcon={require('./app/images/TabBar/ico_home_black_hover.png')} schema="tab"/>
+                        <Route name="tab2" component={TabView} title="首页2" icon={require('./app/images/TabBar/ico_home_black.png')} selectedIcon={require('./app/images/TabBar/ico_home_black_hover.png')} schema="tab"/>
+                        <Route name="tab3" component={TabView} title="首页3" icon={require('./app/images/TabBar/ico_home_black.png')} selectedIcon={require('./app/images/TabBar/ico_home_black_hover.png')} schema="tab"/>
                     </Container>
                 </Route>
             </Router>
