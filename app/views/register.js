@@ -3,15 +3,14 @@
 var React = require('react-native');
 var {View, Text, StyleSheet} = React;
 var Button = require('../common/button.js');
-var Actions = require('react-native-router-flux').Actions;
 
 class Register extends React.Component {
     render(){
         return (
             <View style={styles.container}>
                 <Text>Register page</Text>
-                <Button onPress={Actions.home}>Home</Button>
-                <Button onPress={Actions.pop}>Back</Button>
+                <Button >Home</Button>
+                <Button >Back</Button>
             </View>
         );
     }

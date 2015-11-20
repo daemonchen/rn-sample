@@ -3,14 +3,13 @@
 var React = require('react-native');
 var {View, Text, StyleSheet} = React;
 var Button = require('../common/button.js');
-var Actions = require('react-native-router-flux').Actions;
 
 class Login extends React.Component {
     render(){
         return (
             <View style={styles.container}>
                 <Text>Login page: {this.props.data}</Text>
-                <Button onPress={Actions.tabbar}>Home</Button>
+                <Button>Home</Button>
             </View>
         );
     }

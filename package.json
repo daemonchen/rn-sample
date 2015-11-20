@@ -6,9 +6,8 @@
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
+    "alt": "^0.17.1",
     "react-native": "^0.14.2",
-    "react-native-navbar": "^0.8.0",
-    "react-native-router-flux": "^0.3.2",
-    "alt": "^0.17.1"
+    "react-native-navbar": "^1.0.7"
   }
 }

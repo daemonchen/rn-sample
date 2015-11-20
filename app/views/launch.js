@@ -4,7 +4,6 @@ var React = require('react-native');
 var TimerMixin = require('react-timer-mixin');
 var {View, Text, Image, ScrollView, StyleSheet, TouchableHighlight} = React;
 
-var Actions = require('react-native-router-flux').Actions;
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -89,7 +88,7 @@ var Launch = React.createClass({
 
     },
     _onPressButton: function(){
-        Actions.tabbar();
+        //todo navigator.push stuff
     },
     //渲染单个图片
     renderItems: function (data) {

@@ -1,20 +1,40 @@
 'use strict';
 
 var React = require('react-native');
-var {View, Text, StyleSheet} = React;
+var NavigationBar = require('react-native-navbar');
+var {View, Text, Navigator, StyleSheet} = React;
 var Button = require('../../common/button.js');
-var Actions = require('react-native-router-flux').Actions;
+var tabViewSample = require('../tabViewSample');
 
-class Register extends React.Component {
-    render(){
+var _navigator = null;
+
+var Home =  React.createClass({
+    getInitialState: function(){
+        _navigator = this.props.navigator;
+        return {}
+    },
+    rightButtonConfig:{
+        title: 'Forward',
+        handler:() =>
+            _navigator.push({
+                title: 'from home' + Math.random(),
+                component: tabViewSample,
+                sceneConfig: Navigator.SceneConfigs.FloatFromRight
+            })
+
+    },
+    render:function(){
         return (
             <View style={styles.container}>
+                <NavigationBar
+                    title={{ title: 'Title', }}
+                    rightButton={this.rightButtonConfig} />
                 <Text>Home</Text>
-                <Button onPress={Actions.pop}>Back</Button>
+                <Button>test</Button>
             </View>
         );
     }
-}
+})
 
 var styles = StyleSheet.create({
     container: {
@@ -35,4 +55,4 @@ var styles = StyleSheet.create({
     },
 });
 
-module.exports = Register;
+module.exports = Home;

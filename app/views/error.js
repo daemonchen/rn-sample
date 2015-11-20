@@ -3,7 +3,6 @@
 var React = require('react-native');
 var {View, Text, StyleSheet} = React;
 var Button = require('../common/button.js');
-var Actions = require('react-native-router-flux').Actions;
 
 class Error extends React.Component {
     render(){
@@ -11,7 +10,7 @@ class Error extends React.Component {
             <View style={{width:300,height:300,justifyContent: 'center',
         alignItems: 'center',backgroundColor:'white'}}>
                 <Text>{this.props.data}</Text>
-                <Button onPress={Actions.dismiss}>Close</Button>
+                <Button>Close</Button>
             </View>
         );
     }
