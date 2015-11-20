@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var {View, Text, StyleSheet} = React;
-var Button = require('react-native-button');
+var Button = require('../common/button.js');
 var Actions = require('react-native-router-flux').Actions;
 
 class Login extends React.Component {
@@ -10,7 +10,7 @@ class Login extends React.Component {
         return (
             <View style={styles.container}>
                 <Text>Login page: {this.props.data}</Text>
-                <Button onPress={Actions.pop}>Back</Button>
+                <Button onPress={Actions.tabbar}>Home</Button>
             </View>
         );
     }

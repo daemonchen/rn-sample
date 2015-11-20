@@ -2,9 +2,9 @@
 
 var React = require('react-native');
 var {View, TabBarIOS, Text, StyleSheet} = React;
-var {Actions, ContainerStore} = require('react-native-router-flux');
+var {Actions} = require('react-native-router-flux');
 
-var TabBarFlux = React.createClass({
+var TabBar = React.createClass({
     // getDefaultProps: function(){
     //     return{
     //         children:{}
@@ -37,7 +37,10 @@ var TabBarFlux = React.createClass({
         });
 
         return (
-            <TabBarIOS style={{backgroundColor:'white'}}>
+            <TabBarIOS
+            translucent={true}
+            tintColor = "#333"
+            >
                 {children}
             </TabBarIOS>
         );
@@ -48,4 +51,4 @@ var TabBarFlux = React.createClass({
     }
 });
 
-module.exports = TabBarFlux;
+module.exports = TabBar;

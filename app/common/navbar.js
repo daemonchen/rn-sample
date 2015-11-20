@@ -17,6 +17,7 @@ class NavBarBase extends React.Component {
     }
     render() {
         return <NavigationBar style={styles.navBar}
+                              translucent={true}
                               titleColor='white'
                               buttonsColor='white'
                               statusBar='lightContent'

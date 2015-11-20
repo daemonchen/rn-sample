@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var {View, Text, StyleSheet} = React;
-var Button = require('react-native-button');
+var Button = require('../common/button.js');
 var Actions = require('react-native-router-flux').Actions;
 
 class Register extends React.Component {
