@@ -6,17 +6,18 @@ var {View, Text, Navigator, StyleSheet} = React;
 var Button = require('../../common/button.js');
 var tabViewSample = require('../tabViewSample');
 
-var _navigator = null;
+var _navigator, _topNavigator = null;
 
 var Home =  React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
+        _topNavigator = this.props.route.topNavigator;
         return {}
     },
     rightButtonConfig:{
         title: 'Forward',
         handler:() =>
-            _navigator.push({
+            _topNavigator.push({
                 title: 'from home' + Math.random(),
                 component: tabViewSample,
                 sceneConfig: Navigator.SceneConfigs.FloatFromRight
