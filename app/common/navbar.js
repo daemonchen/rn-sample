@@ -20,7 +20,7 @@ var AppNavigator = React.createClass({
         };
     },
     renderScene: function(route, navigator){
-      return <route.component route={route} navigator={navigator} />;
+        return <route.component route={route} navigator={navigator} />;
     },
     render: function () {
         return (

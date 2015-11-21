@@ -7,7 +7,7 @@ class TabView extends React.Component {
     render(){
         return (
             <View style={styles.container}>
-                <Text>Tab #{this.props.name}</Text>
+                <Text>Tab #{this.props.title}</Text>
             </View>
         );
     }

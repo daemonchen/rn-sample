@@ -5,6 +5,7 @@ var NavigationBar = require('react-native-navbar');
 var {View, Text, Navigator, StyleSheet} = React;
 var Button = require('../../common/button.js');
 var tabViewSample = require('../tabViewSample');
+var calendar = require('../calendar');
 
 var _navigator, _topNavigator = null;
 
@@ -20,9 +21,18 @@ var Home =  React.createClass({
             _topNavigator.push({
                 title: 'from home' + Math.random(),
                 component: tabViewSample,
-                sceneConfig: Navigator.SceneConfigs.FloatFromRight
+                sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+                topNavigator: _topNavigator
             })
 
+    },
+    goToCalendar: function(){
+        this.props.navigator.push({
+            title: 'calendar' + new Date(),
+            component: calendar,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            topNavigator: _topNavigator
+        })
     },
     render:function(){
         return (
@@ -34,7 +44,7 @@ var Home =  React.createClass({
                     rightButton={this.rightButtonConfig} />
                 <View style={styles.main}>
                     <Text>Home</Text>
-                    <Button>test</Button>
+                    <Button onPress={this.goToCalendar}>calendar</Button>
                 </View>
             </View>
         );
