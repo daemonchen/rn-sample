@@ -20,12 +20,12 @@ var MyCalendar =  React.createClass({
     return (
         <View style={styles.container}>
             <CalendarPicker
-              // ref="calendar"
+              ref="calendar"
               // eventDates={['2015-07-03', '2015-07-05', '2015-07-10', '2015-07-15', '2015-07-20', '2015-07-25', '2015-07-28', '2015-07-30']}
-              // scrollEnabled={true}
-              // showControls={true}
+              scrollEnabled={true}
+              showControls={true}
               // dayHeadings={customDayHeadings}
-              // titleFormat={'MMMM YYYY'}
+              titleFormat={'MMMM YYYY'}
               // prevButtonText={'Prev'}
               // nextButtonText={'Next'}
               onDateSelect={(date) => this.setState({selectedDate: date})}

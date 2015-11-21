@@ -162,11 +162,11 @@ let Calendar = React.createClass({
   getInitialStack() {
     var initialStack = [];
     if (this.props.scrollEnabled) {
-      // initialStack.push(moment(this.props.startDate).subtract(2, 'month').format());
+      initialStack.push(moment(this.props.startDate).subtract(2, 'month').format());
       initialStack.push(moment(this.props.startDate).subtract(1, 'month').format());
       initialStack.push(moment(this.props.startDate).format());
       initialStack.push(moment(this.props.startDate).add(1, 'month').format());
-      // initialStack.push(moment(this.props.startDate).add(2, 'month').format());
+      initialStack.push(moment(this.props.startDate).add(2, 'month').format());
     } else {
       initialStack.push(moment(this.props.startDate).format())
     }

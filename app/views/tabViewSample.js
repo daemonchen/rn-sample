@@ -2,34 +2,41 @@
 
 var React = require('react-native');
 var {View, Text, StyleSheet} = React;
-
-class TabView extends React.Component {
-    render(){
+var CircleProgressView = require('../common/circleProgress')
+var _navigator, _topNavigator = null;
+var TabView = React.createClass ({
+    getInitialState: function(){
+        _navigator = this.props.navigator;
+        _topNavigator = this.props.route.topNavigator;
+        return {
+            progress:0.3
+        }
+    },
+    render: function(){
         return (
             <View style={styles.container}>
-                <Text>Tab #{this.props.title}</Text>
+                <Text style={{textAlign:'center', marginTop: 64}}>Tab1 #{this.props.route.title}</Text>
+                <CircleProgressView
+                  progress={this.state.progress}
+                  lineWidth={5}
+                  lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
+                  circleRadius={20}
+                  circleColor='#ff7300'
+                  circleUnderlayColor='#e6e6e6'
+                  style={styles.circle}/>
             </View>
         );
     }
-}
+})
 
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
+        alignItems: 'center'
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
+    circle:{
+    }
 });
 
 module.exports = TabView;

@@ -6,6 +6,8 @@ var {StyleSheet, TabBarIOS} = React;
 var AppNavigator = require('../common/navbar');
 var Home = require('../views/home/home');
 var tabViewSample = require('../views/tabViewSample');
+var calendar = require('../views/calendar');
+var datePicker = require('../views/datePicker');
 //获取可视窗口的宽高
 var util = require('../common/util.js');
 var {
@@ -52,7 +54,7 @@ var Launch = React.createClass({
                     selectedIcon={require('../images/TabBar/Order_hover.png')}
                     selected={this.state.selectedTab === 'Order'}
                     onPress={this._handlePress("Order")}>
-                    <AppNavigator initialRoute={{title: 'Order', component:tabViewSample, topNavigator: this.props.navigator}} key='Order' />
+                    <AppNavigator initialRoute={{title: 'Order', component:calendar, topNavigator: this.props.navigator}} key='Order' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="Inbox"
@@ -60,7 +62,7 @@ var Launch = React.createClass({
                     selectedIcon={require('../images/TabBar/Inbox_hover.png')}
                     selected={this.state.selectedTab === 'Inbox'}
                     onPress={this._handlePress("Inbox")}>
-                    <AppNavigator initialRoute={{title: 'Inbox', component:tabViewSample, topNavigator: this.props.navigator}} key='Inbox' />
+                    <AppNavigator initialRoute={{title: 'Inbox', component:datePicker, topNavigator: this.props.navigator}} key='Inbox' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="Contact"

@@ -2,11 +2,14 @@
 
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
-var {View, Text, Navigator, StyleSheet} = React;
-var Button = require('../../common/button.js');
+var {
+    View,
+    Text,
+    Navigator,
+    StyleSheet
+} = React;
 var tabViewSample = require('../tabViewSample');
-var calendar = require('../calendar');
-var datePicker = require('../datePicker');
+var HomeSegmentControl = require('./homeSegmentControl');
 
 var _navigator, _topNavigator = null;
 
@@ -17,7 +20,7 @@ var Home =  React.createClass({
         return {}
     },
     rightButtonConfig:{
-        title: 'Forward',
+        title: 'Search',
         handler:() =>
             _topNavigator.push({
                 title: 'from home' + Math.random(),
@@ -27,34 +30,16 @@ var Home =  React.createClass({
             })
 
     },
-    goToCalendar: function(){
-        this.props.navigator.push({
-            title: 'calendar' + new Date(),
-            component: calendar,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _topNavigator
-        })
-    },
-    goToDatePicker: function(){
-        this.props.navigator.push({
-            title: 'calendar' + new Date(),
-            component: datePicker,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
-    },
     render:function(){
         return (
             <View style={styles.container}>
                 <NavigationBar
                     style={styles.navigatorView}
-                    title={{ title: 'Title', }}
-                    leftButton={{ title: 'Back', }}
+                    title={{ title: '工作台', }}
+                    leftButton={{ title: '+', }}
                     rightButton={this.rightButtonConfig} />
                 <View style={styles.main}>
-                    <Text>Home</Text>
-                    <Button onPress={this.goToCalendar}>calendar</Button>
-                    <Button onPress={this.goToDatePicker}>datePicker</Button>
+                    <HomeSegmentControl />
                 </View>
             </View>
         );
@@ -68,8 +53,7 @@ var styles = StyleSheet.create({
     main:{
         flex:1,
         borderTopWidth:1 / React.PixelRatio.get(),
-        borderTopColor:'#e1e1e1',
-        alignItems:'center'
+        borderTopColor:'#e1e1e1'
     }
 });
 
