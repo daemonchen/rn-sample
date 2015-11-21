@@ -6,6 +6,7 @@ var {View, Text, Navigator, StyleSheet} = React;
 var Button = require('../../common/button.js');
 var tabViewSample = require('../tabViewSample');
 var calendar = require('../calendar');
+var datePicker = require('../datePicker');
 
 var _navigator, _topNavigator = null;
 
@@ -34,6 +35,14 @@ var Home =  React.createClass({
             topNavigator: _topNavigator
         })
     },
+    goToDatePicker: function(){
+        this.props.navigator.push({
+            title: 'calendar' + new Date(),
+            component: datePicker,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
+    },
     render:function(){
         return (
             <View style={styles.container}>
@@ -45,6 +54,7 @@ var Home =  React.createClass({
                 <View style={styles.main}>
                     <Text>Home</Text>
                     <Button onPress={this.goToCalendar}>calendar</Button>
+                    <Button onPress={this.goToDatePicker}>datePicker</Button>
                 </View>
             </View>
         );

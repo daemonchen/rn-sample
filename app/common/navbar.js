@@ -39,7 +39,7 @@ var styles = StyleSheet.create({
         width: width,
         height: height - 49,
         borderBottomWidth:1 / React.PixelRatio.get(),
-        borderBottomColor:'#e1e1e1'
+        borderBottomColor:'#dfe0df'
     },
 });
 
