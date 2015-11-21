@@ -9,6 +9,7 @@
     "alt": "^0.17.1",
     "moment": "^2.10.6",
     "react-native": "^0.14.2",
+    "react-native-calendar": "^0.6.0",
     "react-native-navbar": "^1.0.7",
     "rn-calendar": "0.0.4"
   }

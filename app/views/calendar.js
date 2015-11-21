@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var CalendarPicker = require('rn-calendar');
+var CalendarPicker = require('../common/calendarIOS');
 var moment = require('moment');
 var {View, Text, Navigator, StyleSheet} = React;
 var Button = require('../common/button.js');
@@ -13,39 +13,31 @@ var MyCalendar =  React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-              date: new Date()
+              selectedDate: moment().format()
             };
     },
-    render: function(){
-        var holiday = {
-          '2015-10-1': '国庆节',
-          '2015-9-10': '教师节',
-          '2016-1-1': '元旦节',
-          '2015-11-11': '双十一'
-        };
-        var check = {
-          '2015-11-21': 'checked',
-          '2015-9-1': 'checked',
-          '2015-7-10': 'checked',
-          '2015-9-10': 'checked'
-        };
-        var headerStyle ={
-          backgroundColor: '#3C9BFD',
-          color:'#fff',
-          fontSize: 15,
-          fontWeight:'500',
-        };
-        return (
-          <View style={styles.container}>
+    render: function() {
+    return (
+        <View style={styles.container}>
             <CalendarPicker
-                touchEvent={this.press}
-                headerStyle={headerStyle}
-                holiday={holiday}
-                check={check} />
-          </View>
+              // ref="calendar"
+              // eventDates={['2015-07-03', '2015-07-05', '2015-07-10', '2015-07-15', '2015-07-20', '2015-07-25', '2015-07-28', '2015-07-30']}
+              // scrollEnabled={true}
+              // showControls={true}
+              // dayHeadings={customDayHeadings}
+              // titleFormat={'MMMM YYYY'}
+              // prevButtonText={'Prev'}
+              // nextButtonText={'Next'}
+              onDateSelect={(date) => this.setState({selectedDate: date})}
+              onTouchPrev={() => console.log('Back TOUCH')}
+              onTouchNext={() => console.log('Forward TOUCH')}
+              onSwipePrev={() => console.log('Back SWIPE')}
+              onSwipeNext={() => console.log('Forward SWIPE')}/>
+            <Text>Selected Date: {moment(this.state.selectedDate).format('MMMM DD YYYY')}</Text>
+        </View>
+
         );
     },
-
     press: function(str){
         console.log(str);
     }
