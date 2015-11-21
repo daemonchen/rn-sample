@@ -33,8 +33,10 @@ var Launch = React.createClass({
     render: function() {
         return (
             <TabBarIOS
+                style={styles.tabbarView}
                 tintColor = "#333"
-                barTintColor = "#fff">
+                barTintColor = "#fff"
+                translucent = {true} >
                 <TabBarIOS.Item
                     title="Workspace"
                     badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
@@ -80,5 +82,9 @@ var Launch = React.createClass({
         );
     }
 });
+var styles = StyleSheet.create({
+    tabbarView: {
 
+    }
+});
 module.exports = Launch;

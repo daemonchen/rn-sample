@@ -26,7 +26,7 @@ var AppNavigator = React.createClass({
         return (
             <Navigator
                 style={styles.container}
-                tintColor="fff"
+                tintColor="#fff"
                 initialRoute={this.props.initialRoute}
                 renderScene={this.renderScene}
                 configureScene={(route)=>route.sceneConfig} />
@@ -37,7 +37,9 @@ var AppNavigator = React.createClass({
 var styles = StyleSheet.create({
     container: {
         width: width,
-        height: height - 49
+        height: height - 49,
+        borderBottomWidth:1 / React.PixelRatio.get(),
+        borderBottomColor:'#e1e1e1'
     },
 });
 

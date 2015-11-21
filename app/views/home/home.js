@@ -28,10 +28,11 @@ var Home =  React.createClass({
         return (
             <View style={styles.container}>
                 <NavigationBar
+                    style={styles.navigatorView}
                     title={{ title: 'Title', }}
                     leftButton={{ title: 'Back', }}
                     rightButton={this.rightButtonConfig} />
-                <View>
+                <View style={styles.main}>
                     <Text>Home</Text>
                     <Button>test</Button>
                 </View>
@@ -42,19 +43,14 @@ var Home =  React.createClass({
 
 var styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#F5FCFF',
+        flex: 1
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
+    main:{
+        flex:1,
+        borderTopWidth:1 / React.PixelRatio.get(),
+        borderTopColor:'#e1e1e1',
+        alignItems:'center'
+    }
 });
 
 module.exports = Home;
