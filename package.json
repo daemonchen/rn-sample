@@ -11,6 +11,9 @@
     "react-native": "^0.14.2",
     "react-native-calendar": "^0.6.0",
     "react-native-navbar": "^1.0.7",
-    "rn-calendar": "0.0.4"
+    "react-native-radio-button-classic": "0.0.5",
+    "react-native-refreshable-listview": "^1.3.0",
+    "rn-calendar": "0.0.4",
+    "tcomb-form-native": "^0.3.0"
   }
 }

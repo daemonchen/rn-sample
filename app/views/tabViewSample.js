@@ -2,15 +2,37 @@
 
 var React = require('react-native');
 var {View, Text, StyleSheet} = React;
+var Radio = require('react-native-radio-button-classic');
+var Option = Radio.Option;
 var CircleProgressView = require('../common/circleProgress')
 var _navigator, _topNavigator = null;
+
+var Item = React.createClass({
+  render: function() {
+    var { title, description } = this.props;
+
+    return (
+      <View style={{ paddingTop: 7, paddingLeft: 10 }}>
+        <Text style={styles.title}>{ title }</Text>
+        <Text style={styles.description}>{ description }</Text>
+      </View>
+    );
+  }
+})
+
 var TabView = React.createClass ({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            progress:0.3
+            progress:0.3,
+            optionSelected: 1
         }
+    },
+    onSelect(index) {
+        this.setState({
+          optionSelected: index + 1
+        });
     },
     render: function(){
         return (
@@ -24,6 +46,21 @@ var TabView = React.createClass ({
                   circleColor='#ff7300'
                   circleUnderlayColor='#e6e6e6'
                   style={styles.circle}/>
+                <Radio onSelect={this.onSelect.bind(this)} defaultSelect={this.state.optionSelected - 1}>
+                  <Option color="gray" selectedColor="#008BEF">
+                    <Item title="First Options" description="This is your First Option"/>
+                  </Option>
+                  <Option color="gray" selectedColor="#008BEF">
+                    <Item title="Second Options" description="This is your Second Option"/>
+                  </Option>
+                  <Option color="gray" selectedColor="#008BEF">
+                    <Item title="Third Options" description="This is your Third Option"/>
+                  </Option>
+                </Radio>
+
+                <View style={{ paddingTop: 40 }}>
+                  <Text>You have selected option {this.state.optionSelected}</Text>
+                </View>
             </View>
         );
     }
