@@ -10,6 +10,7 @@ var {
 } = React;
 var tabViewSample = require('../tabViewSample');
 var HomeSegmentControl = require('./homeSegmentControl');
+var HomeList = require('./homeList');
 
 var _navigator, _topNavigator = null;
 
@@ -40,6 +41,7 @@ var Home =  React.createClass({
                     rightButton={this.rightButtonConfig} />
                 <View style={styles.main}>
                     <HomeSegmentControl />
+                    <HomeList />
                 </View>
             </View>
         );
