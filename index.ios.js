@@ -46,12 +46,23 @@ var Welcome = React.createClass({
             topNavigator: _navigator
         })
     },
+    goLaunch: function(){
+        _navigator.replace({
+            title: 'home' ,
+            component: Launch,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            topNavigator: _navigator
+        })
+    },
     render: function(){
         return (
             <View style={styles.welcome}>
                 <Image style={styles.welcomeImage} source={require('./app/images/logo.png')} />
                 <View style={styles.welcomeWrapper}>
-                    <Text style={[styles.welcomeText, commonStyle.textGray]}>欢迎使用你造么</Text>
+                    <Text style={[styles.welcomeText, commonStyle.textGray]}
+                    onPress={this.goLaunch}>
+                    欢迎使用你造么
+                    </Text>
                     <Text style={[styles.welcomeText, commonStyle.textGray]}>生产管理从未如此轻松</Text>
                     <Button
                     style={commonStyle.blueButton}

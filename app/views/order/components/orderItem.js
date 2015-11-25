@@ -11,24 +11,24 @@ var {
 
 var Swipeout = require('react-native-swipeout');
 
-var styles = require('../../styles/home/task.js');
-var homeTask = React.createClass({
+var CircleProgressView = require('../../../common/circleProgress')
+var styles = require('../../../styles/order/orderItem.js');
+var orderItem = React.createClass({
     getInitialState: function(){
         return{
-            done: this.props.rowData.done
+            progress: 0.4
         }
     },
     onPress: function(){
         this.props.onPress(this.props.rowData, this.props.sectionID);
         this.setState({
-            done: true
+            progress: 1
         });
     },
     onDelete: function(){
         console.log('delete stuff');
     },
     render: function(){
-        var circleImage = this.state.done ? require('../../images/Check_box_done.png') : require('../../images/Check_box_undo.png')
         var swipeoutBtns = [
           {
             text: '删除',
@@ -41,21 +41,21 @@ var homeTask = React.createClass({
             <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
                 <TouchableOpacity onPress={this.onPress}>
                     <View style={styles.rowStyle}>
-                        <Image source={circleImage} />
+                        <CircleProgressView
+                          progress={this.state.progress}
+                          lineWidth={2}
+                          lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
+                          circleRadius={20}
+                          circleColor='#34a853'
+                          circleUnderlayColor='#e6e6e6'
+                          style={styles.circle}/>
+                        <Text style={[styles.percent]}>80%</Text>
                         <Text style={styles.rowText}>{this.props.rowData.name}</Text>
                     </View>
                 </TouchableOpacity>
             </Swipeout>
             )
-        // return (
-        //     <TouchableOpacity onPress={this.onPress}>
-        //         <View style={styles.rowStyle}>
-        //             <View style={[styles.circle, circleDone]} />
-        //             <Text style={styles.rowText}>{this.props.rowData.name}</Text>
-        //         </View>
-        //     </TouchableOpacity>
-        //     )
     }
 });
 
-module.exports = homeTask
+module.exports = orderItem

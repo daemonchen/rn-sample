@@ -5,6 +5,7 @@ var {StyleSheet, TabBarIOS} = React;
 
 var AppNavigator = require('../common/navbar');
 var Home = require('../views/home/home');
+var Order = require('../views/order/order');
 var tabViewSample = require('../views/tabViewSample');
 var calendar = require('../views/calendar');
 var datePicker = require('../views/datePicker');
@@ -54,7 +55,7 @@ var Launch = React.createClass({
                     selectedIcon={require('../images/TabBar/Order_hover.png')}
                     selected={this.state.selectedTab === 'Order'}
                     onPress={this._handlePress("Order")}>
-                    <AppNavigator initialRoute={{title: 'Order', component:tabViewSample, topNavigator: this.props.navigator}} key='Order' />
+                    <AppNavigator initialRoute={{title: 'Order', component:Order, topNavigator: this.props.navigator}} key='Order' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="Inbox"

@@ -10,17 +10,44 @@ var {
     StyleSheet
 } = React;
 var tabViewSample = require('../tabViewSample');
-var HomeSegmentControl = require('./homeSegmentControl');
-var HomeList = require('./homeList');
-
+var OrderSegmentControl = require('./components/orderSegmentControl');
+var OrderList = require('./components/orderList');
+var OrderTemplates = require('./orderTemplates');
+var OrderDetail = require('./orderDetail');
 var _navigator, _topNavigator = null;
 
-var Home =  React.createClass({
+var order =  React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            clicked: 'none'
+            orderStatus: 0
+        }
+    },
+    doPush: function(component){
+        _navigator.push({
+            component: component,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            topNavigator: _navigator
+        });
+    },
+    doCreate: function(index){
+        switch(index){
+            case 0:
+                this.setState({
+                    orderStatus: index
+                })
+                return this.doPush(OrderDetail);
+            case 1:
+                this.setState({
+                    orderStatus: index
+                })
+                return this.doPush(OrderTemplates);
+            default:
+                this.setState({
+                    orderStatus: 0
+                })
+                return this.doPush(OrderDetail);
         }
     },
     showActionSheet: function(){
@@ -31,10 +58,11 @@ var Home =  React.createClass({
             // destructiveButtonIndex: 1,
             },
             (buttonIndex) => {
-              self.setState({ clicked: self.actionList[buttonIndex] });
+                self.doCreate(buttonIndex)
+              // self.setState({ clicked: self.actionList[buttonIndex] });
             });
     },
-    actionList: ['订单','任务','取消'],
+    actionList: ['新建订单','从模版创建','取消'],
     rightButtonConfig:{
         title: 'Search',
         handler:() =>
@@ -57,12 +85,12 @@ var Home =  React.createClass({
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={{ title: '工作台', }}
+                    title={{ title: '订单', }}
                     leftButton={this.leftButtonConfig()}
                     rightButton={this.rightButtonConfig} />
                 <View style={styles.main}>
-                    <HomeSegmentControl />
-                    <HomeList />
+                    <OrderSegmentControl />
+                    <OrderList />
                 </View>
             </View>
         );
@@ -80,4 +108,4 @@ var styles = StyleSheet.create({
     }
 });
 
-module.exports = Home;
+module.exports = order;

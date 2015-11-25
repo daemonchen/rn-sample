@@ -15,5 +15,16 @@ module.exports = React.StyleSheet.create({
         color: '#212121',
         fontSize: 16,
         marginLeft: 10
+    },
+    circle: {
+        width: 40,
+        height: 40
+    },
+    percent: {
+        width: 40,
+        height:40,
+        position: 'absolute',
+        left: 22,
+        top: 28
     }
 });

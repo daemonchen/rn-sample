@@ -38,6 +38,13 @@ module.exports = React.StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        padding: 6
+        padding: 6,
+        // borderBottomWidth: 1 / React.PixelRatio.get(),
+        // borderBottomColor: '#E0E0E0'
+    },
+    sepLine:{
+        // width: 300,
+        height: 1,
+        backgroundColor: '#E0E0E0'
     }
 });

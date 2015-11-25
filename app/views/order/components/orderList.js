@@ -10,12 +10,12 @@ var {
     StyleSheet
 } = React
 
-var mockData = require('../../mock/homeList');
+var mockData = require('../../../mock/homeList');
 
-var styles = require('../../styles/home/style.js');
-var HomeTask = require('./homeTask');
+var styles = require('../../../styles/home/style.js');
+var OrderItem = require('./orderItem');
 
-var homeList = React.createClass({
+var orderList = React.createClass({
     getInitialState: function() {
         var ds = new ListView.DataSource({
             getSectionData: this.getSectionData,
@@ -66,7 +66,11 @@ var homeList = React.createClass({
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <HomeTask rowData={rowData} sectionID={sectionID} rowID={rowID} onPress={(rowData, sectionID) => this.onPressRow(rowData, sectionID)}></HomeTask>
+            <OrderItem
+            rowData={rowData}
+            sectionID={sectionID}
+            rowID={rowID}
+            onPress={(rowData, sectionID) => this.onPressRow(rowData, sectionID)} />
             )
     },
     renderSectionHeader: function(sectionData, sectionID){
@@ -109,10 +113,8 @@ var homeList = React.createClass({
                 style={styles.container}
                 automaticallyAdjustContentInsets={false}
                 dataSource={this.state.dataSource}
-                renderSectionHeader={this.renderSectionHeader}
                 renderRow={this.renderRow}
                 renderFooter={this.renderFooter}
-                renderSeparator={this.renderSeparator}
                 onEndReached={this.fetchData}
                 onEndReachedThreshold={40}
                 loadData={this.fetchData}
@@ -133,4 +135,4 @@ var homeList = React.createClass({
         );
     }
 });
-module.exports = homeList;
+module.exports = orderList;
