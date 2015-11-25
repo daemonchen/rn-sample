@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var moment = require('moment');
+var NavigationBar = require('react-native-navbar');
 var {View, Text, Navigator, DatePickerIOS, StyleSheet} = React;
 var Button = require('../common/button.js');
 
@@ -32,9 +33,29 @@ var MyDatePicker =  React.createClass({
         }
         this.setState({timeZoneOffsetInHours: offset});
     },
+    leftButtonConfig: function(){
+        var self = this;
+        return{
+            title: '<',
+            handler:() =>
+                _navigator.pop()
+        }
+    },
+    rightButtonConfig: function(){
+        var self = this;
+        return{
+            title: 'Done',
+            handler:() =>
+                _navigator.pop()
+        }
+    },
     render:function(){
         return (
             <View style={styles.container}>
+                <NavigationBar
+                    title={{title:'选择日期'}}
+                    leftButton={this.leftButtonConfig()}
+                    rightButton={this.rightButtonConfig()}/>
                 <DatePickerIOS
                     date={this.state.date}
                     mode="datetime"

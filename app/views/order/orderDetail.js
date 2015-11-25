@@ -7,6 +7,7 @@ var {
     View,
     ListView,
     Image,
+    Navigator,
     TouchableOpacity,
     StyleSheet
 } = React
@@ -17,6 +18,8 @@ orderStatus:enum
 2: normal
 */
 var commonStyle = require('../../styles/commonStyle');
+
+var DatePicker = require('../datePicker');
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
@@ -40,6 +43,13 @@ module.exports = React.createClass({
                 _navigator.pop()
         }
     },
+    _setEndTime: function(){
+        _navigator.push({
+            component: DatePicker,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _navigator
+        });
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
@@ -59,7 +69,7 @@ module.exports = React.createClass({
                         clearButtonMode={'while-editing'}
                         multiline={true} />
                     </View>
-                    <TouchableOpacity style={commonStyle.settingItem}>
+                    <TouchableOpacity style={commonStyle.settingItem} onPress={this._setEndTime}>
                         <Text
                         style={commonStyle.settingTitle}>
                             截止日期
