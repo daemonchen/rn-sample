@@ -35,15 +35,15 @@ module.exports = React.StyleSheet.create({
     sepLine: {
         color: '#eee'
     },
-    title:{
+    title: {
         fontSize: 32,
         fontWeight: 'bold'
     },
-    paddingHorizontal:{
+    paddingHorizontal: {
         paddingLeft: 16,
         paddingRight: 16
     },
-    blueButton:{
+    blueButton: {
         width: width - 32,
         marginTop: 12,
         marginBottom: 12,
@@ -52,7 +52,7 @@ module.exports = React.StyleSheet.create({
         color:'#fff',
         backgroundColor:'#4285f4'
     },
-    button:{
+    button: {
         width: width - 32,
         marginTop: 10,
         marginBottom: 10,
@@ -68,9 +68,36 @@ module.exports = React.StyleSheet.create({
         borderBottomWidth: 1 / React.PixelRatio.get(),
         borderBottomColor: '#bdbdbd'
     },
-    textInput:{
+    textInput: {
         width: width - 32,
         alignSelf: 'center',
-        height: 40
+        height: 40,
+        fontSize: 16
+    },
+    settingGroups: {
+        backgroundColor: '#fff'
+    },
+    settingItem: {
+        width: width - 32,
+        flexDirection: 'row',
+        // alignItems: 'center',
+        // paddingVertical: 16,
+        height: 40,
+        borderBottomWidth: 1 / React.PixelRatio.get(),
+        borderBottomColor: '#bdbdbd'
+    },
+    settingTitle: {
+        color: '#212121',
+        width: 80,
+        paddingVertical: 12
+    },
+    settingDetail: {
+        flex: 1,
+        paddingVertical: 12,
+        textAlign: 'right'
+    },
+    settingArrow: {
+        marginTop: 5,
+        width: 48
     }
 });
