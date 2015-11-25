@@ -2,7 +2,7 @@ module.exports = [
     {
         timeLabel:'today',
         subList:[
-            {name: 'a'},
+            {name: 'Install the button from npm with n'},
             {name: 'b'},
             {name: 'c'},
             {name: 'd'}

@@ -11,6 +11,10 @@ var {
 } = React
 
 var mockData = require('../../mock/homeList');
+
+var styles = require('../../styles/home/style.js');
+var HomeTask = require('./homeTask');
+
 var homeList = React.createClass({
     getInitialState: function() {
         var ds = new ListView.DataSource({
@@ -62,17 +66,13 @@ var homeList = React.createClass({
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <TouchableOpacity onPress={() => this.onPressRow(rowData, sectionID)}>
-                <View style={styles.rowStyle}>
-                    <Text style={styles.rowText}>{rowData.name}</Text>
-                </View>
-            </TouchableOpacity>
+            <HomeTask rowData={rowData} sectionID={sectionID} rowID={rowID} onPress={(rowData, sectionID) => this.onPressRow(rowData, sectionID)}></HomeTask>
             )
     },
     renderSectionHeader: function(sectionData, sectionID){
         return(
             <View style={styles.section}>
-                <Text style={styles.text}>My custom section header {sectionData.timeLabel}</Text>
+                <Text style={styles.text}>{sectionData.timeLabel}</Text>
             </View>
             )
     },
@@ -80,8 +80,8 @@ var homeList = React.createClass({
         return (
           <View>
             <ActivityIndicatorIOS
-                      animating={true}
-                      size={'large'} />
+                animating={true}
+                size={'large'} />
             <Text>My custom footer</Text>
           </View>
         )
@@ -99,18 +99,6 @@ var homeList = React.createClass({
         return this.renderListView();
     },
     renderListView: function(){
-        // return (
-        //   <ListView
-        //   style={styles.container}
-        //   contentContainerStyle={{paddingVertical: 0}}
-        //   onScroll={this.onScroll}
-        //   dataSource={this.state.dataSource}
-        //   renderFooter={this.renderFooter}
-        //   renderRow={this.renderRow}
-        //   renderSectionHeader={this.renderSectionHeader}
-          // onEndReached={this.onEndReached}
-          // onEndReachedThreshold={40} />
-        // )
         return (
             <RefreshableListView
                 style={styles.container}
@@ -137,60 +125,6 @@ var homeList = React.createClass({
                 </View>
             </View>
         );
-    }
-});
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        paddingVertical: 0
-    },
-    activityIndicator: {
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    header: {
-        height: 60,
-        justifyContent: 'center',
-        alignItems: 'center',
-        // backgroundColor: '#3F51B5',
-        flexDirection: 'column',
-        paddingTop: 25
-    },
-    headerText: {
-        fontWeight: 'bold',
-        fontSize: 20,
-        color: 'white'
-    },
-    text: {
-        color: 'white',
-        paddingHorizontal: 8,
-        fontSize: 16
-    },
-    rowStyle: {
-        paddingVertical: 20,
-        paddingLeft: 16,
-        borderTopColor: 'white',
-        borderLeftColor: 'white',
-        borderRightColor: 'white',
-        borderBottomColor: '#E0E0E0',
-        borderWidth: 1
-    },
-    rowText: {
-        color: '#212121',
-        fontSize: 16
-    },
-    subText: {
-        fontSize: 14,
-        color: '#757575'
-    },
-    section: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        padding: 6,
-        backgroundColor: '#e3e3e3'
     }
 });
 module.exports = homeList;

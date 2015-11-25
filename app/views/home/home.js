@@ -35,7 +35,6 @@ var Home =  React.createClass({
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    style={styles.navigatorView}
                     title={{ title: '工作台', }}
                     leftButton={{ title: '+', }}
                     rightButton={this.rightButtonConfig} />

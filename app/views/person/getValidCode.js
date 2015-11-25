@@ -8,37 +8,44 @@ var {View,
     Navigator,
     StyleSheet
 } = React;
-var Button = require('../common/button.js');
-var commonStyle = require('../styles/commonStyle');
+var Button = require('../../common/button.js');
+var commonStyle = require('../../styles/commonStyle');
 
-var ValidationCode = require('../views/person/validationCode');
-var NavTitleWithLogo = require('../common/navTitleWithLogo');
-var _navigator = null;
-var register = React.createClass({
+//获取可视窗口的宽高
+var util = require('../../common/util.js');
+var {
+    width, height, scale
+} = util.getDimensions();
+
+var ValidationCode = require('./validationCode');
+
+var _navigator, _topNavigator = null;
+var getValidCode = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
+        _topNavigator = this.props.route.topNavigator;
         return {}
     },
     getCode: function(){
         _navigator.replace({
-            title: 'from home' + Math.random(),
+            title: 'from home',
             component: ValidationCode,
-            // sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _navigator
         })
+    },
+    leftButtonConfig: {
+        title: '<',
+        handler:() =>
+            _navigator.pop()
     },
     render: function(){
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={<NavTitleWithLogo />}
-                    leftButton={{ title: 'X', }} />
+                    title={{title:'重置密码'}}
+                    leftButton={this.leftButtonConfig} />
                 <View style={styles.main}>
-                    <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='姓名'
-                        style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}/>
-                    </View>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='手机号码'
                         style={commonStyle.textInput}
@@ -66,4 +73,4 @@ var styles = StyleSheet.create({
 
 
 
-module.exports = register;
+module.exports = getValidCode;

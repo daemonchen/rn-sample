@@ -54,7 +54,7 @@ var Launch = React.createClass({
                     selectedIcon={require('../images/TabBar/Order_hover.png')}
                     selected={this.state.selectedTab === 'Order'}
                     onPress={this._handlePress("Order")}>
-                    <AppNavigator initialRoute={{title: 'Order', component:calendar, topNavigator: this.props.navigator}} key='Order' />
+                    <AppNavigator initialRoute={{title: 'Order', component:tabViewSample, topNavigator: this.props.navigator}} key='Order' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="Inbox"

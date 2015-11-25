@@ -426,8 +426,8 @@ var styles = StyleSheet.create({
   },
   calendarHeading: {
     flexDirection: 'row',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    borderTopWidth: 1 / React.PixelRatio.get(),
+    borderBottomWidth: 1 / React.PixelRatio.get()
   },
   dayHeading: {
     flex: 1,
