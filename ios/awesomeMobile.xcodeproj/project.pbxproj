@@ -23,6 +23,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D25AF01C1BF9AE8100009F01 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */; };
 		D2ED5D5C1C00788C008826C6 /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */; };
+		D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,13 @@
 			remoteGlobalIDString = F8BD55C51B6A6B6200E49ED0;
 			remoteInfo = RCTCircleProgressTests;
 		};
+		D2ED5D6F1C069A2C008826C6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNSearchBar;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +150,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
+		D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */,
 				D2ED5D5C1C00788C008826C6 /* libRCTCircleProgress.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -278,6 +288,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */,
 				D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -328,6 +339,14 @@
 			children = (
 				D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */,
 				D2ED5D521C007876008826C6 /* RCTCircleProgressTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D2ED5D6C1C069A2C008826C6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -442,6 +461,10 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
+				{
+					ProductGroup = D2ED5D6C1C069A2C008826C6 /* Products */;
+					ProjectRef = D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -534,6 +557,13 @@
 			fileType = wrapper.cfbundle;
 			path = RCTCircleProgressTests.xctest;
 			remoteRef = D2ED5D511C007876008826C6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSearchBar.a;
+			remoteRef = D2ED5D6F1C069A2C008826C6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

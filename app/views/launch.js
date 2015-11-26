@@ -6,6 +6,7 @@ var {StyleSheet, TabBarIOS} = React;
 var AppNavigator = require('../common/navbar');
 var Home = require('../views/home/home');
 var Order = require('../views/order/order');
+var Contact = require('../views/contact/contact');
 var tabViewSample = require('../views/tabViewSample');
 var calendar = require('../views/calendar');
 var datePicker = require('../views/datePicker');
@@ -71,7 +72,7 @@ var Launch = React.createClass({
                     selectedIcon={require('../images/TabBar/Contact_hover.png')}
                     selected={this.state.selectedTab === 'Contact'}
                     onPress={this._handlePress("Contact")}>
-                    <AppNavigator initialRoute={{title: 'Contact', component:tabViewSample, topNavigator: this.props.navigator}} key='Contact' />
+                    <AppNavigator initialRoute={{title: '通讯录', component:Contact, topNavigator: this.props.navigator}} key='Contact' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="Person"

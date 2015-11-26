@@ -36,7 +36,8 @@ module.exports = React.StyleSheet.create({
         color: '#eee'
     },
     title: {
-        fontSize: 32,
+        fontSize: 16,
+        padding: 16,
         fontWeight: 'bold'
     },
     paddingHorizontal: {
@@ -99,5 +100,5 @@ module.exports = React.StyleSheet.create({
     settingArrow: {
         marginTop: 5,
         width: 48
-    }
+    },
 });

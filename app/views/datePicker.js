@@ -7,7 +7,7 @@ var {View, Text, Navigator, DatePickerIOS, StyleSheet} = React;
 var Button = require('../common/button.js');
 
 var _navigator, _topNavigator = null;
-var customDayHeadings = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+var commonStyle = require('../styles/commonStyle');
 var MyDatePicker =  React.createClass({
     getDefaultProps: function () {
         return {
@@ -51,7 +51,7 @@ var MyDatePicker =  React.createClass({
     },
     render:function(){
         return (
-            <View style={styles.container}>
+            <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'选择日期'}}
                     leftButton={this.leftButtonConfig()}
@@ -67,11 +67,5 @@ var MyDatePicker =  React.createClass({
     }
 })
 
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 20
-    }
-});
 
 module.exports = MyDatePicker;
