@@ -10,6 +10,7 @@ var {
     Image,
     Navigator,
     TouchableOpacity,
+    ActivityIndicatorIOS,
     StyleSheet
 } = React
 
@@ -63,9 +64,6 @@ module.exports = React.createClass({
     getRowData: function(dataBlob, sectionID, rowID){
         return dataBlob[sectionID + ':' + rowID];
     },
-    // onPressRow: function(rowData, sectionID){
-    //     console.log(rowData);
-    // },
     renderRow: function(rowData, sectionID, rowID) {
         return (
             <TaskItem

@@ -41,6 +41,9 @@ module.exports = React.createClass({
                 _navigator.pop()
         }
     },
+    onPressTaskRow: function(rowData, sectionID){
+        console.log('---rowData', rowData);
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
@@ -50,7 +53,8 @@ module.exports = React.createClass({
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>
                     <OrderDetailSegmentControl />
-                    <Task />
+                    <Task
+                    onPressRow={this.onPressTaskRow}/>
                 </View>
             </View>
             );

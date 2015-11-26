@@ -11,25 +11,25 @@ var {
 
 var Swipeout = require('react-native-swipeout');
 
-var CircleProgressView = require('../../../common/circleProgress')
-var styles = require('../../../styles/order/orderItem.js');
+var styles = require('../../../styles/home/task');
 
 module.exports = React.createClass({
     getInitialState: function(){
         return{
-            progress: 0.4
+            done: this.props.rowData.done
         }
     },
     onPress: function(){
         this.props.onPress(this.props.rowData, this.props.sectionID);
         this.setState({
-            progress: 1
+            done: true
         });
     },
     onDelete: function(){
         console.log('delete stuff');
     },
     render: function(){
+        var circleImage = this.state.done ? require('../../../images/Check_box_done.png') : require('../../../images/Check_box_undo.png')
         var swipeoutBtns = [
           {
             text: '删除',
@@ -42,19 +42,19 @@ module.exports = React.createClass({
             <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
                 <TouchableOpacity onPress={this.onPress}>
                     <View style={styles.rowStyle}>
-                        <CircleProgressView
-                          progress={this.state.progress}
-                          lineWidth={2}
-                          lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
-                          circleRadius={20}
-                          circleColor='#34a853'
-                          circleUnderlayColor='#e6e6e6'
-                          style={styles.circle}/>
-                        <Text style={[styles.percent]}>80%</Text>
+                        <Image source={circleImage} />
                         <Text style={styles.rowText}>{this.props.rowData.name}</Text>
                     </View>
                 </TouchableOpacity>
             </Swipeout>
             )
+        // return (
+        //     <TouchableOpacity onPress={this.onPress}>
+        //         <View style={styles.rowStyle}>
+        //             <View style={[styles.circle, circleDone]} />
+        //             <Text style={styles.rowText}>{this.props.rowData.name}</Text>
+        //         </View>
+        //     </TouchableOpacity>
+        //     )
     }
 });
