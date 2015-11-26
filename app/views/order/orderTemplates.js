@@ -20,7 +20,7 @@ orderStatus:enum
 var commonStyle = require('../../styles/commonStyle');
 var _navigator, _topNavigator = null;
 
-var OrderDetail = require('./orderDetail');
+var OrderSettings = require('./orderSettings');
 
 module.exports = React.createClass({
     getInitialState: function(){
@@ -38,10 +38,10 @@ module.exports = React.createClass({
             _navigator.pop()
     },
     _pressRow: function(rowData){
-        _navigator.push({
-            component: OrderDetail,
+        _topNavigator.push({
+            component: OrderSettings,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
+            topNavigator: _topNavigator
         });
     },
     renderRow: function(rowData){

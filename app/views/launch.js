@@ -1,6 +1,10 @@
 'use strict';
 
 var React = require('react-native');
+var DeviceInfo = require('react-native-device-info');
+
+console.log("Device Unique ID", DeviceInfo.getUniqueID());
+
 var {StyleSheet, TabBarIOS} = React;
 
 var AppNavigator = require('../common/navbar');
@@ -80,7 +84,7 @@ var Launch = React.createClass({
                     selectedIcon={require('../images/TabBar/Person_hover.png')}
                     selected={this.state.selectedTab === 'Person'}
                     onPress={this._handlePress("Person")}>
-                    <AppNavigator initialRoute={{title: 'Person', component:tabViewSample, topNavigator: this.props.navigator}} key='Person' />
+                    <AppNavigator initialRoute={{title: 'Person', component:calendar, topNavigator: this.props.navigator}} key='Person' />
                 </TabBarIOS.Item>
             </TabBarIOS>
         );

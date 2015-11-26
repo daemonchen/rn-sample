@@ -1,22 +1,27 @@
 'use strict';
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
+var NavigationBar = require('react-native-navbar');
 var {
     Text,
+    TextInput,
     View,
     ListView,
+    Image,
+    Navigator,
     TouchableOpacity,
-    ActivityIndicatorIOS,
     StyleSheet
 } = React
 
-var mockData = require('../../mock/homeList');
+var commonStyle = require('../../../styles/commonStyle');
 
-var styles = require('../../styles/home/style.js');
-var HomeTask = require('./homeTask');
+var mockData = require('../../../mock/homeList');
 
-var homeList = React.createClass({
-    getInitialState: function() {
+var styles = require('../../../styles/home/style.js');
+var TaskItem = require('./taskItem');
+
+module.exports = React.createClass({
+    getInitialState: function(){
         var ds = new ListView.DataSource({
             getSectionData: this.getSectionData,
             getRowData: this.getRowData,
@@ -28,9 +33,6 @@ var homeList = React.createClass({
             dataSource: ds
         }
     },
-  // reloadArticles() {
-  //   return ArticleStore.reload() // returns a Promise of reload completion
-  // },
     componentDidMount: function() {
         this.fetchData();
     },
@@ -61,14 +63,16 @@ var homeList = React.createClass({
     getRowData: function(dataBlob, sectionID, rowID){
         return dataBlob[sectionID + ':' + rowID];
     },
-    onPressRow: function(rowData, sectionID){
-        console.log(rowData);
-    },
+    // onPressRow: function(rowData, sectionID){
+    //     console.log(rowData);
+    // },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <HomeTask rowData={rowData} sectionID={sectionID}
+            <TaskItem
+            rowData={rowData}
+            sectionID={sectionID}
             rowID={rowID}
-            onPress={(rowData, sectionID) => this.onPressRow(rowData, sectionID)}></HomeTask>
+            onPress={this.props.onPressRow} />
             )
     },
     renderSectionHeader: function(sectionData, sectionID){
@@ -111,10 +115,8 @@ var homeList = React.createClass({
                 style={styles.container}
                 automaticallyAdjustContentInsets={false}
                 dataSource={this.state.dataSource}
-                renderSectionHeader={this.renderSectionHeader}
                 renderRow={this.renderRow}
                 renderFooter={this.renderFooter}
-                renderSeparator={this.renderSeparator}
                 onEndReached={this.fetchData}
                 onEndReachedThreshold={40}
                 loadData={this.fetchData}
@@ -135,4 +137,12 @@ var homeList = React.createClass({
         );
     }
 });
-module.exports = homeList;
+
+var styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        // justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+    }
+});

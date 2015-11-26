@@ -71,6 +71,7 @@ module.exports = React.createClass({
                     rightButton={this.rightButtonConfig()} />
                 <ScrollView style={commonStyle.container}
                 contentOffset={{y: 44}}
+                contentInset={{bottom: 40}}
                 automaticallyAdjustContentInsets={false}
                 onScroll={this._handleScroll}>
                     <SearchBar

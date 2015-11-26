@@ -58,7 +58,7 @@ var MyDatePicker =  React.createClass({
                     rightButton={this.rightButtonConfig()}/>
                 <DatePickerIOS
                     date={this.state.date}
-                    mode="datetime"
+                    mode="time"
                     timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
                     onDateChange={this.onDateChange}
                     minuteInterval={10} />

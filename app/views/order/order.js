@@ -9,10 +9,11 @@ var {
     ActionSheetIOS,
     StyleSheet
 } = React;
-var tabViewSample = require('../tabViewSample');
+var commonStyle = require('../../styles/commonStyle');
 var OrderSegmentControl = require('./components/orderSegmentControl');
 var OrderList = require('./components/orderList');
 var OrderTemplates = require('./orderTemplates');
+var OrderSettings = require('./orderSettings');
 var OrderDetail = require('./orderDetail');
 var _navigator, _topNavigator = null;
 
@@ -25,10 +26,10 @@ var order =  React.createClass({
         }
     },
     doPush: function(component){
-        _navigator.push({
+        _topNavigator.push({
             component: component,
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _navigator
+            topNavigator: _topNavigator
         });
     },
     doCreate: function(index){
@@ -37,7 +38,7 @@ var order =  React.createClass({
                 this.setState({
                     orderStatus: index
                 })
-                return this.doPush(OrderDetail);
+                return this.doPush(OrderSettings);
             case 1:
                 this.setState({
                     orderStatus: index
@@ -47,7 +48,7 @@ var order =  React.createClass({
                 this.setState({
                     orderStatus: 0
                 })
-                return this.doPush(OrderDetail);
+                return this.doPush(OrderSettings);
         }
     },
     showActionSheet: function(){
@@ -68,7 +69,7 @@ var order =  React.createClass({
         handler:() =>
             _topNavigator.push({
                 title: 'from home' + Math.random(),
-                component: tabViewSample,
+                component: OrderDetail,
                 sceneConfig: Navigator.SceneConfigs.FloatFromRight,
                 topNavigator: _topNavigator
             })
@@ -81,16 +82,26 @@ var order =  React.createClass({
                 self.showActionSheet()
         }
     },
+    _onPressRow: function(rowData, sectionID){
+        console.log(rowData);
+        _topNavigator.push({
+            title: rowData.name,
+            component: OrderDetail,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
+    },
     render:function(){
         return (
-            <View style={styles.container}>
+            <View style={commonStyle.container}>
                 <NavigationBar
                     title={{ title: '订单', }}
                     leftButton={this.leftButtonConfig()}
                     rightButton={this.rightButtonConfig} />
                 <View style={styles.main}>
                     <OrderSegmentControl />
-                    <OrderList />
+                    <OrderList
+                    onPressRow={this._onPressRow}/>
                 </View>
             </View>
         );
@@ -98,13 +109,8 @@ var order =  React.createClass({
 })
 
 var styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
     main:{
-        flex:1,
-        borderTopWidth:1 / React.PixelRatio.get(),
-        borderTopColor:'#e1e1e1'
+        flex:1
     }
 });
 
