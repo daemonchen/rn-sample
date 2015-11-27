@@ -73,7 +73,7 @@ var order =  React.createClass({
         }
     },
     _onPressRow: function(rowData, sectionID){
-        console.log(rowData);
+        console.log('orderList rowData:',rowData);
         _topNavigator.push({
             title: rowData.name,
             component: OrderDetail,

@@ -41,11 +41,11 @@ module.exports = React.createClass({
         });
     },
     fetchAlbumParams:{
-        first: 25,
+        first: 5,
         groupTypes: 'Album'
     },
     fetchCameraParams:{
-        first: 25,
+        first: 5,
         groupTypes: 'PhotoStream'
     },
     logImageError: function(err) {
@@ -94,7 +94,6 @@ module.exports = React.createClass({
         this.showActionSheet();
     },
     _onPressRow: function(rowData, sectionID){
-        console.log(rowData);
         _topNavigator.push({
             title: rowData.name,
             component: AttachDetail,

@@ -10,12 +10,15 @@ var {
     Navigator,
     ActionSheetIOS,
     TouchableOpacity,
+    CameraRoll,
     StyleSheet
 } = React
 
 var commonStyle = require('../../styles/commonStyle');
 
 var TaskList = require('./task/taskList');
+var AttachList = require('./attach/attachList');
+var AttachDetail = require('./attach/attachDetail');
 var OrderDetailSegmentControl = require('./components/orderDetailSegmentControl');
 var OrderSettings = require('./orderSettings');
 var _navigator, _topNavigator = null;
@@ -25,7 +28,7 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            orderStatus: 0
+            tabIndex: 0
         }
     },
     leftButtonConfig:function() {
@@ -42,30 +45,23 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
-    doCreate: function(index){
-        console.log(index);
-        // switch(index){
-        //     case 0:
-        //         this.setState({
-        //             orderStatus: index
-        //         })
-        //         return this.doPush(OrderSettings);
-        //     case 1:
-        //         this.setState({
-        //             orderStatus: index
-        //         })
-        //         return this.doPush(OrderTemplates);
-        //     case 2:
-        //         this.setState({
-        //             orderStatus: index
-        //         })
-        //         return this.doPush(OrderTemplates);
-        //     default:
-        //         this.setState({
-        //             orderStatus: 0
-        //         })
-        //         return this.doPush(OrderSettings);
-        // }
+    createTask: function(){
+        console.log('----create new task');
+    },
+    createMember: function(){
+        console.log('---create new member for this order');
+    },
+    onActionSelect: function(index){
+        switch(index){
+            case 0:
+                return this.createTask();
+            case 1:
+                return this.createMember();
+            case 2:
+                return this.showCameraRoll();
+            default:
+                return
+        }
     },
     _pressCreateButton: function(){
         var self = this;
@@ -75,7 +71,7 @@ module.exports = React.createClass({
             // destructiveButtonIndex: 1,
             },
             (buttonIndex) => {
-                self.doCreate(buttonIndex)
+                self.onActionSelect(buttonIndex)
               // self.setState({ clicked: self.actionList[buttonIndex] });
             });
     },
@@ -93,14 +89,65 @@ module.exports = React.createClass({
                 </TouchableOpacity>
             </View>
             );
-        // return{
-        //     title: '+',
-        //     handler:() =>
-        //         _navigator.pop()
-        // }
     },
     onPressTaskRow: function(rowData, sectionID){
         console.log('---rowData', rowData);
+    },
+    onPressAttachRow: function(rowData,sectionID){
+        _topNavigator.push({
+            title: rowData.name,
+            component: AttachDetail,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
+    },
+    fetchCameraParams:{
+        first: 5,
+        groupTypes: 'All'
+    },
+    logImageError: function(err) {
+        console.log(err);
+    },
+    showCameraRoll: function(){
+        CameraRoll.getPhotos(this.fetchCameraParams, this.storeImages, this.logImageError);
+    },
+    onAttachEmptyButtonPress: function(){
+        this.showCameraRoll();
+    },
+    onSegmentChange: function(event){
+        this.setState({
+            tabIndex: event.nativeEvent.selectedSegmentIndex
+        })
+    },
+    renderTabContent: function(){
+        switch(this.state.tabIndex){
+            case 0:
+                return(
+                    <TaskList
+                    onPressRow={this.onPressTaskRow}/>
+                )
+            case 1:
+                return(
+                    <TaskList
+                    onPressRow={this.onPressTaskRow}/>
+                )
+            case 2:
+                return(
+                    <TaskList
+                    onPressRow={this.onPressTaskRow}/>
+                )
+            case 3:
+                return(
+                    <AttachList
+                    onPressRow={this.onPressAttachRow}
+                    onEmptyButtonPress={this.onAttachEmptyButtonPress}/>
+                )
+            default:
+                return(
+                    <TaskList
+                    onPressRow={this.onPressTaskRow}/>
+                )
+        }
     },
     render: function(){
         return(
@@ -110,9 +157,9 @@ module.exports = React.createClass({
                     leftButton={this.leftButtonConfig()}
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>
-                    <OrderDetailSegmentControl />
-                    <TaskList
-                    onPressRow={this.onPressTaskRow}/>
+                    <OrderDetailSegmentControl
+                    onSegmentChange={this.onSegmentChange}/>
+                    {this.renderTabContent()}
                 </View>
             </View>
             );
