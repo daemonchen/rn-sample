@@ -17,6 +17,8 @@ var {
 var commonStyle = require('../../styles/commonStyle');
 
 var TaskList = require('./task/taskList');
+var TaskDetail = require('./task/taskDetail');
+var TaskSettings = require('./task/taskSettings');
 var AttachList = require('./attach/attachList');
 var AttachDetail = require('./attach/attachDetail');
 var OrderDetailSegmentControl = require('./components/orderDetailSegmentControl');
@@ -46,7 +48,11 @@ module.exports = React.createClass({
         });
     },
     createTask: function(){
-        console.log('----create new task');
+        _topNavigator.push({
+            component: TaskSettings,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            topNavigator: _topNavigator
+        });
     },
     createMember: function(){
         console.log('---create new member for this order');
@@ -91,7 +97,12 @@ module.exports = React.createClass({
             );
     },
     onPressTaskRow: function(rowData, sectionID){
-        console.log('---rowData', rowData);
+        _topNavigator.push({
+            title: rowData.name,
+            component: TaskDetail,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
     },
     onPressAttachRow: function(rowData,sectionID){
         _topNavigator.push({

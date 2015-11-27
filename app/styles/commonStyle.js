@@ -81,6 +81,11 @@ module.exports = React.StyleSheet.create({
     settingGroups: {
         backgroundColor: '#fff'
     },
+    settingItemWrapper:{
+        width: width,
+        height: 40,
+        alignItems: 'center'
+    },
     settingItem: {
         width: width - 32,
         flexDirection: 'row',

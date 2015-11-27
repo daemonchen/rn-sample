@@ -21,11 +21,14 @@ module.exports = React.createClass({
             done: this.props.rowData.done
         }
     },
-    onPress: function(){
-        this.props.onPress(this.props.rowData, this.props.sectionID);
+    onPressCircle: function(){
+        this.props.onPressCircle(this.props.rowData, this.props.sectionID);
         this.setState({
             done: true
         });
+    },
+    onPressRow: function(){
+        this.props.onPressRow(this.props.rowData, this.props.sectionID);
     },
     onDelete: function(){
         console.log('delete stuff');
@@ -43,9 +46,10 @@ module.exports = React.createClass({
         return(
             <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
                 <TouchableHighlight
-                underlayColor='#eee'>
+                underlayColor='#eee'
+                onPress={this.onPressRow}>
                     <View style={styles.rowStyle}>
-                        <TouchableWithoutFeedback onPress={this.onPress} >
+                        <TouchableWithoutFeedback onPress={this.onPressCircle} >
                             <Image source={circleImage} />
                         </TouchableWithoutFeedback>
                         <Text style={styles.rowText}>{this.props.rowData.name}</Text>
