@@ -9,8 +9,6 @@
     "alt": "^0.17.1",
     "moment": "^2.10.6",
     "react-native": "^0.14.2",
-    "react-native-calendar": "^0.6.0",
-    "react-native-calendar-picker": "^1.0.1",
     "react-native-device-info": "^0.5.1",
     "react-native-navbar": "^1.0.7",
     "react-native-radio-button-classic": "0.0.5",
@@ -18,7 +16,6 @@
     "react-native-search-bar": "^2.5.0",
     "react-native-swipeout": "^2.1.0",
     "react-native-vector-icons": "^0.8.5",
-    "rn-calendar": "0.0.4",
     "tcomb-form-native": "^0.3.0"
   }
 }
