@@ -17,4 +17,17 @@ var {
 
 var _navigator, _topNavigator = null;
 
-var commonStyle = require('../../styles/commonStyle');
+var commonStyle = require('../../../styles/commonStyle');
+
+module.exports = React.createClass({
+    getInitialState: function(){
+        return {}
+    },
+    render: function(){
+        return(
+            <View>
+                <Text>this is the task detail</Text>
+            </View>
+            );
+    }
+})

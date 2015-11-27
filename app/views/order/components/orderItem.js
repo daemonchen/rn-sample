@@ -6,6 +6,7 @@ var {
     ListView,
     Image,
     TouchableOpacity,
+    TouchableHighlight,
     StyleSheet
 } = React
 
@@ -39,7 +40,8 @@ var orderItem = React.createClass({
         ]
         return(
             <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
-                <TouchableOpacity onPress={this.onPress}>
+                <TouchableHighlight underlayColor='#eee'
+                onPress={this.onPress}>
                     <View style={styles.rowStyle}>
                         <CircleProgressView
                           progress={this.state.progress}
@@ -52,7 +54,7 @@ var orderItem = React.createClass({
                         <Text style={[styles.percent]}>80%</Text>
                         <Text style={styles.rowText}>{this.props.rowData.name}</Text>
                     </View>
-                </TouchableOpacity>
+                </TouchableHighlight>
             </Swipeout>
             )
     }

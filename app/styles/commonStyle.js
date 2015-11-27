@@ -11,6 +11,9 @@ module.exports = React.StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff'
     },
+    alignCenter:{
+        textAlign: 'center'
+    },
     textGray:{
         color: '#212121'
     },

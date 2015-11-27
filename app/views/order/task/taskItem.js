@@ -6,6 +6,8 @@ var {
     ListView,
     Image,
     TouchableOpacity,
+    TouchableHighlight,
+    TouchableWithoutFeedback,
     StyleSheet
 } = React
 
@@ -29,7 +31,7 @@ module.exports = React.createClass({
         console.log('delete stuff');
     },
     render: function(){
-        var circleImage = this.state.done ? require('../../../images/Check_box_done.png') : require('../../../images/Check_box_undo.png')
+        var circleImage = this.state.done ? require('../../../images/Check_box_done_1.png') : require('../../../images/Check_box_1.png')
         var swipeoutBtns = [
           {
             text: '删除',
@@ -40,12 +42,15 @@ module.exports = React.createClass({
         ]
         return(
             <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
-                <TouchableOpacity onPress={this.onPress}>
+                <TouchableHighlight
+                underlayColor='#eee'>
                     <View style={styles.rowStyle}>
-                        <Image source={circleImage} />
+                        <TouchableWithoutFeedback onPress={this.onPress} >
+                            <Image source={circleImage} />
+                        </TouchableWithoutFeedback>
                         <Text style={styles.rowText}>{this.props.rowData.name}</Text>
                     </View>
-                </TouchableOpacity>
+                </TouchableHighlight>
             </Swipeout>
             )
         // return (

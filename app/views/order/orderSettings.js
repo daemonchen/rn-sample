@@ -22,12 +22,13 @@ var commonStyle = require('../../styles/commonStyle');
 var DatePicker = require('../datePicker');
 var Calendar = require('../calendar');
 var Contact = require('../contact/contact');
+var Attach = require('./attach/attach');
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
-        // _topNavigator = this.props.route.topNavigator;
+        _topNavigator = this.props.route.topNavigator;
         return {
             orderStatus: 0
         }
@@ -49,7 +50,7 @@ module.exports = React.createClass({
         _navigator.push({
             component: Calendar,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
+            topNavigator: _topNavigator
         });
     },
     _setCustomer: function(){
@@ -57,7 +58,15 @@ module.exports = React.createClass({
             title:'客户',
             component: Contact,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
+            topNavigator: _topNavigator
+        });
+    },
+    _addAttachs: function(){
+        _navigator.push({
+            title:'添加附件',
+            component: Attach,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
         });
     },
     render: function(){
@@ -121,7 +130,8 @@ module.exports = React.createClass({
                         style={commonStyle.settingArrow}
                         source={require('../../images/Arrow_back.png')} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={commonStyle.settingItem}>
+                    <TouchableOpacity style={commonStyle.settingItem}
+                    onPress={this._addAttachs}>
                         <Text
                         style={commonStyle.settingTitle}>
                             添加附件

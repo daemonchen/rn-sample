@@ -6,16 +6,14 @@ var {
     ListView,
     Image,
     TouchableOpacity,
-    TouchableHighlight,
-    TouchableWithoutFeedback,
     StyleSheet
 } = React
 
 var Swipeout = require('react-native-swipeout');
 
-var styles = require('../../styles/home/task');
+var styles = require('../../../styles/home/task');
 
-var homeTask = React.createClass({
+module.exports = React.createClass({
     getInitialState: function(){
         return{
             done: this.props.rowData.done
@@ -31,7 +29,7 @@ var homeTask = React.createClass({
         console.log('delete stuff');
     },
     render: function(){
-        var circleImage = this.state.done ? require('../../images/Check_box_done.png') : require('../../images/Check_box_undo.png')
+        var circleImage = this.state.done ? require('../../../images/Check_box_done.png') : require('../../../images/Check_box_undo.png')
         var swipeoutBtns = [
           {
             text: '删除',
@@ -42,14 +40,12 @@ var homeTask = React.createClass({
         ]
         return(
             <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
-                <TouchableHighlight underlayColor='#eee'>
+                <TouchableOpacity onPress={this.onPress}>
                     <View style={styles.rowStyle}>
-                        <TouchableWithoutFeedback onPress={this.onPress} >
-                            <Image source={circleImage} />
-                        </TouchableWithoutFeedback>
+                        <Image source={circleImage} />
                         <Text style={styles.rowText}>{this.props.rowData.name}</Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </Swipeout>
             )
         // return (
@@ -62,5 +58,3 @@ var homeTask = React.createClass({
         //     )
     }
 });
-
-module.exports = homeTask

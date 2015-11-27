@@ -64,17 +64,7 @@ var order =  React.createClass({
             });
     },
     actionList: ['新建订单','从模版创建','取消'],
-    rightButtonConfig:{
-        title: 'Search',
-        handler:() =>
-            _topNavigator.push({
-                title: 'from home' + Math.random(),
-                component: OrderDetail,
-                sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-                topNavigator: _topNavigator
-            })
-    },
-    leftButtonConfig:function(){
+    rightButtonConfig:function(){
         var self = this;
         return {
             title: '+',
@@ -96,8 +86,7 @@ var order =  React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{ title: '订单', }}
-                    leftButton={this.leftButtonConfig()}
-                    rightButton={this.rightButtonConfig} />
+                    rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>
                     <OrderSegmentControl />
                     <OrderList

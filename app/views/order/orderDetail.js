@@ -15,7 +15,7 @@ var {
 
 var commonStyle = require('../../styles/commonStyle');
 
-var Task = require('./task/task');
+var TaskList = require('./task/taskList');
 var OrderDetailSegmentControl = require('./components/orderDetailSegmentControl');
 var OrderSettings = require('./orderSettings');
 var _navigator, _topNavigator = null;
@@ -111,7 +111,7 @@ module.exports = React.createClass({
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>
                     <OrderDetailSegmentControl />
-                    <Task
+                    <TaskList
                     onPressRow={this.onPressTaskRow}/>
                 </View>
             </View>
