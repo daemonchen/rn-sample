@@ -11,6 +11,22 @@ module.exports = React.StyleSheet.create({
     swipeWrapper:{
         backgroundColor: 'transparent'
     },
+    timelineWrapper:{
+        width: 2 / React.PixelRatio.get(),
+        position: 'absolute',
+        left: 29,
+        top: 0,
+        bottom: 0,
+        flexDirection: 'column',
+        backgroundColor: '#34a853'
+    },
+    timeline: {
+        width: 2 / React.PixelRatio.get(),
+        flex: 1
+    },
+    timelineDone: {
+        backgroundColor: '#34a853'
+    },
     rowText: {
         color: '#212121',
         fontSize: 16,

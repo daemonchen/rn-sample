@@ -49,6 +49,10 @@ module.exports = React.createClass({
                 underlayColor='#eee'
                 onPress={this.onPressRow}>
                     <View style={styles.rowStyle}>
+                        <View style={styles.timelineWrapper}>
+                            <View style={[styles.timeline, styles.timelineDone]}></View>
+                            <View style={[styles.timeline, styles.timelineDone]}></View>
+                        </View>
                         <TouchableWithoutFeedback onPress={this.onPressCircle} >
                             <Image source={circleImage} />
                         </TouchableWithoutFeedback>
