@@ -20,10 +20,10 @@ var register = React.createClass({
         return {}
     },
     getCode: function(){
-        _navigator.replace({
+        _navigator.push({
             title: 'from home' + Math.random(),
             component: ValidationCode,
-            // sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _navigator
         })
     },

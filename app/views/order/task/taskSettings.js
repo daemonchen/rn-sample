@@ -120,7 +120,8 @@ module.exports = React.createClass({
                     style={commonStyle.settingItemWrapper}
                     underlayColor='#eee'
                     onPress={this._setEndTime}>
-                        <View style={commonStyle.settingItem}>
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
                             <Text
                             style={commonStyle.settingTitle}>
                                 截止日期
@@ -138,7 +139,8 @@ module.exports = React.createClass({
                     style={commonStyle.settingItemWrapper}
                     underlayColor='#eee'
                     onPress={this._setCustomer}>
-                        <View style={commonStyle.settingItem}>
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
                             <Text
                             style={commonStyle.settingTitle}>
                                 负责人
@@ -156,7 +158,8 @@ module.exports = React.createClass({
                     style={commonStyle.settingItemWrapper}
                     underlayColor='#eee'
                     onPress={this._setTaskDependence} >
-                        <View style={commonStyle.settingItem}>
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
                             <Text
                             style={commonStyle.settingTitle}>
                                 前置任务
@@ -174,7 +177,8 @@ module.exports = React.createClass({
                     style={commonStyle.settingItemWrapper}
                     underlayColor='#eee'
                     onPress={this._setOrderBelongs} >
-                        <View style={commonStyle.settingItem}>
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
                             <Text
                             style={commonStyle.settingTitle}>
                                 所属订单

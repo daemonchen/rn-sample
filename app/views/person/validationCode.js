@@ -27,7 +27,7 @@ var validationCode = React.createClass({
         return {}
     },
     getCode: function(){
-        _navigator.replace({
+        _navigator.push({
             title: 'xx',
             component: SetPassword,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,

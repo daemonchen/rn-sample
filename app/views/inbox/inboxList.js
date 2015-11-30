@@ -1,81 +1,56 @@
 'use strict';
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
+var NavigationBar = require('react-native-navbar');
 var {
     Text,
+    TextInput,
     View,
     ListView,
+    Image,
+    Navigator,
     TouchableOpacity,
     ActivityIndicatorIOS,
     StyleSheet
 } = React
 
+var commonStyle = require('../../styles/commonStyle');
+var InboxItem = require('./inboxItem');
+var _navigator, _topNavigator = null;
+
 var mockData = require('../../mock/homeList');
 
-var styles = require('../../styles/home/style.js');
-var HomeTaskItem = require('./homeTaskItem');
+module.exports = React.createClass({
+    getInitialState: function(){
+        _navigator = this.props.navigator;
+        _topNavigator = this.props.route.topNavigator;
 
-var homeList = React.createClass({
-    getInitialState: function() {
         var ds = new ListView.DataSource({
-            getSectionData: this.getSectionData,
-            getRowData: this.getRowData,
-            rowHasChanged: (r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2}) // assumes immutable objects
-            // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
+
         return {
             loaded : false,
             dataSource: ds
         }
     },
-  // reloadArticles() {
-  //   return ArticleStore.reload() // returns a Promise of reload completion
-  // },
     componentDidMount: function() {
         this.fetchData();
     },
     fetchData: function(){
-        var dataBlob = {};
-        var sectionIDs = [];
-        var rowIDs = [];
-        for (var i = 0; i <= mockData.length-1; i++) {
-            sectionIDs.push(i);
-            dataBlob[i] = mockData[i];
-            rowIDs[i] = [];
-            var subChildren = mockData[i].subList;
-            for (var j = 0; j <= subChildren.length - 1; j++) {
-                var sub = subChildren[j];
-                rowIDs[i].push(sub.name);
-
-                dataBlob[i + ':' + sub.name] = sub;
-            };
-        };
         this.setState({
-            dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
+            dataSource : this.state.dataSource.cloneWithRows(mockData),
             loaded     : true
         });
-    },
-    getSectionData: function(dataBlob, sectionID){
-        return dataBlob[sectionID];
-    },
-    getRowData: function(dataBlob, sectionID, rowID){
-        return dataBlob[sectionID + ':' + rowID];
     },
     onPressRow: function(rowData, sectionID){
         console.log(rowData);
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <HomeTaskItem rowData={rowData} sectionID={sectionID}
+            <InboxItem rowData={rowData} sectionID={sectionID}
             rowID={rowID}
-            onPress={this.onPressRow}></HomeTaskItem>
-            )
-    },
-    renderSectionHeader: function(sectionData, sectionID){
-        return(
-            <View style={styles.section}>
-                <Text style={styles.text}>{sectionData.timeLabel}</Text>
-            </View>
+            onPress={this.onPressRow}></InboxItem>
             )
     },
     renderSeparator: function(sectionID, rowID, adjacentRowHighlighted){
@@ -99,7 +74,7 @@ var homeList = React.createClass({
     onScroll: function(){
         console.log('onScroll');
     },
-    render: function() {
+    renderInbox: function() {
         if (!this.state.loaded) {
             return this.renderLoadingView();
         }
@@ -111,10 +86,8 @@ var homeList = React.createClass({
                 style={styles.container}
                 automaticallyAdjustContentInsets={false}
                 dataSource={this.state.dataSource}
-                renderSectionHeader={this.renderSectionHeader}
                 renderRow={this.renderRow}
                 renderFooter={this.renderFooter}
-                renderSeparator={this.renderSeparator}
                 onEndReached={this.fetchData}
                 onEndReachedThreshold={40}
                 loadData={this.fetchData}
@@ -133,6 +106,22 @@ var homeList = React.createClass({
                 </View>
             </View>
         );
+    },
+    render: function(){
+        return(
+            <View style={commonStyle.container}>
+                <NavigationBar
+                    title={{ title: '消息', }} />
+                <View style={styles.main}>
+                    {this.renderInbox()}
+                </View>
+            </View>
+            );
     }
 });
-module.exports = homeList;
+
+var styles = StyleSheet.create({
+    main:{
+        flex:1
+    }
+});

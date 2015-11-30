@@ -15,7 +15,7 @@ var Swipeout = require('react-native-swipeout');
 
 var styles = require('../../styles/home/task');
 
-var homeTask = React.createClass({
+module.exports = React.createClass({
     getInitialState: function(){
         return{
             done: this.props.rowData.done
@@ -62,5 +62,3 @@ var homeTask = React.createClass({
         //     )
     }
 });
-
-module.exports = homeTask

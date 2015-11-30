@@ -10,7 +10,9 @@ var {StyleSheet, TabBarIOS} = React;
 var AppNavigator = require('../common/navbar');
 var Home = require('../views/home/home');
 var Order = require('../views/order/order');
+var Inbox = require('../views/inbox/inboxList');
 var Contact = require('../views/contact/contact');
+var UserIndex = require('../views/person/userIndex');
 var tabViewSample = require('../views/tabViewSample');
 var calendar = require('../views/calendar');
 var datePicker = require('../views/datePicker');
@@ -68,7 +70,7 @@ var Launch = React.createClass({
                     selectedIcon={require('../images/TabBar/Inbox_hover.png')}
                     selected={this.state.selectedTab === 'Inbox'}
                     onPress={this._handlePress("Inbox")}>
-                    <AppNavigator initialRoute={{title: 'Inbox', component:datePicker, topNavigator: this.props.navigator}} key='Inbox' />
+                    <AppNavigator initialRoute={{title: 'Inbox', component:Inbox, topNavigator: this.props.navigator}} key='Inbox' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="Contact"
@@ -84,7 +86,7 @@ var Launch = React.createClass({
                     selectedIcon={require('../images/TabBar/Person_hover.png')}
                     selected={this.state.selectedTab === 'Person'}
                     onPress={this._handlePress("Person")}>
-                    <AppNavigator initialRoute={{title: 'Person', component:calendar, topNavigator: this.props.navigator}} key='Person' />
+                    <AppNavigator initialRoute={{title: 'Person', component:UserIndex, topNavigator: this.props.navigator}} key='Person' />
                 </TabBarIOS.Item>
             </TabBarIOS>
         );

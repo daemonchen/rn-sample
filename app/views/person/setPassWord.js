@@ -28,12 +28,18 @@ var setPassWord = React.createClass({
         return {}
     },
     getCode: function(){
-        _navigator.replace({
+        _navigator.immediatelyResetRouteStack([{
             title: 'from home',
             component: Launch,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _navigator
-        })
+        }]);
+        // _navigator.push({
+        //     title: 'from home',
+        //     component: Launch,
+        //     sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+        //     topNavigator: _navigator
+        // })
     },
     leftButtonConfig: {
         title: '<',

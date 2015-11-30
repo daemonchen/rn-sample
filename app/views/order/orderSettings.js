@@ -88,7 +88,8 @@ module.exports = React.createClass({
                         clearButtonMode={'while-editing'}
                         multiline={true} />
                     </View>
-                    <TouchableOpacity style={commonStyle.settingItem}
+                    <TouchableOpacity
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
                     onPress={this._setEndTime}>
                         <Text
                         style={commonStyle.settingTitle}>
@@ -102,7 +103,8 @@ module.exports = React.createClass({
                         style={commonStyle.settingArrow}
                         source={require('../../images/Arrow_back.png')} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={commonStyle.settingItem}
+                    <TouchableOpacity
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
                     onPress={this._setCustomer}>
                         <Text
                         style={commonStyle.settingTitle}>
@@ -116,7 +118,8 @@ module.exports = React.createClass({
                         style={commonStyle.settingArrow}
                         source={require('../../images/Arrow_back.png')} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={commonStyle.settingItem}
+                    <TouchableOpacity
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
                     onPress={this._setCustomer} >
                         <Text
                         style={commonStyle.settingTitle}>
@@ -130,7 +133,8 @@ module.exports = React.createClass({
                         style={commonStyle.settingArrow}
                         source={require('../../images/Arrow_back.png')} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={commonStyle.settingItem}
+                    <TouchableOpacity
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
                     onPress={this._addAttachs}>
                         <Text
                         style={commonStyle.settingTitle}>

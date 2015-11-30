@@ -7,6 +7,8 @@ var {
 } = util.getDimensions();
 
 module.exports = React.StyleSheet.create({
+    screenWidth: width,
+    screenHeight: height,
     container: {
         flex: 1,
         backgroundColor: '#fff'
@@ -46,6 +48,10 @@ module.exports = React.StyleSheet.create({
     paddingHorizontal: {
         paddingLeft: 16,
         paddingRight: 16
+    },
+    bottomBorder: {
+        borderBottomWidth: 1 / React.PixelRatio.get(),
+        borderBottomColor: '#bdbdbd'
     },
     blueButton: {
         width: width - 32,
@@ -91,9 +97,13 @@ module.exports = React.StyleSheet.create({
         flexDirection: 'row',
         // alignItems: 'center',
         // paddingVertical: 16,
-        height: 40,
-        borderBottomWidth: 1 / React.PixelRatio.get(),
-        borderBottomColor: '#bdbdbd'
+        height: 40
+    },
+    settingIcon: {
+        width: 24,
+        height: 24,
+        marginTop: 8,
+        marginRight: 16
     },
     settingTitle: {
         color: '#212121',
