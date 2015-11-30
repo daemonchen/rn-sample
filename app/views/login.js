@@ -18,7 +18,7 @@ var {
 } = util.getDimensions();
 
 var Launch = require('../views/launch');
-var ResetPassword = require('../views/person/getValidCode');
+var ResetPassword = require('../views/person/resetPassword');
 var NavTitleWithLogo = require('../common/navTitleWithLogo');
 var _navigator = null;
 var Login = React.createClass({

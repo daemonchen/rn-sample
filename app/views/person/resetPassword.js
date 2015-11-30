@@ -4,7 +4,6 @@ var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
 var {View,
     Text,
-    Image,
     TextInput,
     Navigator,
     StyleSheet
@@ -18,28 +17,22 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var Launch = require('../launch');
+var ValidationCode = require('./validationCode');
 
 var _navigator, _topNavigator = null;
-var setPassWord = React.createClass({
+module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {}
     },
     getCode: function(){
-        _navigator.immediatelyResetRouteStack([{
+        _navigator.replace({
             title: 'from home',
-            component: Launch,
+            component: ValidationCode,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _navigator
-        }]);
-        // _navigator.push({
-        //     title: 'from home',
-        //     component: Launch,
-        //     sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-        //     topNavigator: _navigator
-        // })
+        })
     },
     leftButtonConfig: {
         title: '<',
@@ -50,20 +43,19 @@ var setPassWord = React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title:'设置登录密码'}}
+                    title={{title:'重置密码'}}
                     leftButton={this.leftButtonConfig} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='设置密码'
+                        <TextInput placeholder='手机号码'
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}/>
                     </View>
                     <Button
                     style={commonStyle.blueButton}
                     onPress={this.getCode} >
-                        完成
+                        获取验证码
                     </Button>
-                    <Text style={commonStyle.textLight}>点击注册即表示您同意《你造么用户协议》</Text>
                 </View>
             </View>
         );
@@ -78,7 +70,3 @@ var styles = StyleSheet.create({
         backgroundColor: 'transparent',
     }
 });
-
-
-
-module.exports = setPassWord;

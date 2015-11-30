@@ -4,15 +4,15 @@ var NavigationBar = require('react-native-navbar');
 var {
     View,
     ListView,
+    Image,
+    Text,
     Navigator,
+    TouchableHighlight,
     StyleSheet
 } = React
 
-var commonStyle = require('../../styles/commonStyle');
+var commonStyle = require('../styles/commonStyle');
 var _navigator, _topNavigator = null;
-
-var OrderSettings = require('./orderSettings');
-var OrderTemplateList = require('./components/orderTemplateList');
 
 module.exports = React.createClass({
     getInitialState: function(){
@@ -21,30 +21,29 @@ module.exports = React.createClass({
         return {}
     },
     leftButtonConfig: {
-        title: 'X',
+        title: '<',
         handler:() =>
             _navigator.pop()
-    },
-    _pressRow: function(rowData){
-        _topNavigator.push({
-            component: OrderSettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
-    },
-    renderList: function(){
-        return(
-            <OrderTemplateList onPressRow={this._pressRow}/>
-            );
     },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title:'订单模版'}}
+                    title={{title:'关于我们'}}
                     leftButton={this.leftButtonConfig} />
-                    {this.renderList()}
+                <View style={styles.main}>
+                    <Image
+                      source={require('../images/logo.png')} />
+                    <Text>你造么 for iPhone 1.0.0</Text>
+                </View>
             </View>
             );
+    }
+});
+
+var styles = StyleSheet.create({
+    main:{
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });

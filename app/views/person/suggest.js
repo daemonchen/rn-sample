@@ -17,22 +17,17 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var ValidationCode = require('./validationCode');
+var launch = require('../launch');
 
 var _navigator, _topNavigator = null;
-var getValidCode = React.createClass({
+module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {}
     },
-    getCode: function(){
-        _navigator.replace({
-            title: 'from home',
-            component: ValidationCode,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        })
+    doCommit: function(){
+        _navigator.pop();
     },
     leftButtonConfig: {
         title: '<',
@@ -43,18 +38,20 @@ var getValidCode = React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title:'重置密码'}}
+                    title={{title:'意见反馈'}}
                     leftButton={this.leftButtonConfig} />
                 <View style={styles.main}>
-                    <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='手机号码'
-                        style={commonStyle.textInput}
+                    <View style={commonStyle.textAreaWrapper}>
+                        <TextInput placeholder='请输入您的产品意见，我们将不断优化产品体验'
+                        secureTextEntry={true}
+                        multiline={true}
+                        style={commonStyle.textArea}
                         clearButtonMode={'while-editing'}/>
                     </View>
                     <Button
                     style={commonStyle.blueButton}
-                    onPress={this.getCode} >
-                        获取验证码
+                    onPress={this.doCommit} >
+                        提交
                     </Button>
                 </View>
             </View>
@@ -70,7 +67,3 @@ var styles = StyleSheet.create({
         backgroundColor: 'transparent',
     }
 });
-
-
-
-module.exports = getValidCode;

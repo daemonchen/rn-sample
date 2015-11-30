@@ -7,8 +7,6 @@ var {
 } = util.getDimensions();
 
 module.exports = React.StyleSheet.create({
-    screenWidth: width,
-    screenHeight: height,
     container: {
         flex: 1,
         backgroundColor: '#fff'
@@ -72,7 +70,7 @@ module.exports = React.StyleSheet.create({
     },
     textInputWrapper: {//带有下划线的输入框
         width: width - 32,
-        height: 40,
+        height: 80,
         flexDirection: 'row',
         borderStyle: 'solid',
         borderBottomWidth: 1 / React.PixelRatio.get(),
@@ -81,8 +79,22 @@ module.exports = React.StyleSheet.create({
     textInput: {
         width: width - 32,
         alignSelf: 'center',
-        height: 40,
+        height: 80,
         fontSize: 16
+    },
+    textAreaWrapper: {
+        width: width - 32,
+        height: 100,
+        flexDirection: 'row',
+        borderStyle: 'solid',
+        borderBottomWidth: 1 / React.PixelRatio.get(),
+        borderBottomColor: '#bdbdbd'
+    },
+    textArea: {
+        fontSize: 16,
+        width: width - 32,
+        alignSelf: 'center',
+        height: 100
     },
     settingGroups: {
         backgroundColor: '#fff'

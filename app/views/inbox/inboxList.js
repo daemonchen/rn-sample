@@ -111,7 +111,7 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{ title: '消息', }} />
+                    title={{ title: '消息' }} />
                 <View style={styles.main}>
                     {this.renderInbox()}
                 </View>

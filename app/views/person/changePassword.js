@@ -4,7 +4,6 @@ var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
 var {View,
     Text,
-    Image,
     TextInput,
     Navigator,
     StyleSheet
@@ -18,28 +17,15 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var Launch = require('../launch');
-
 var _navigator, _topNavigator = null;
-var setPassWord = React.createClass({
+module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {}
     },
-    getCode: function(){
-        _navigator.immediatelyResetRouteStack([{
-            title: 'from home',
-            component: Launch,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        }]);
-        // _navigator.push({
-        //     title: 'from home',
-        //     component: Launch,
-        //     sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-        //     topNavigator: _navigator
-        // })
+    doChangePassword: function(){
+        _navigator.pop();
     },
     leftButtonConfig: {
         title: '<',
@@ -50,20 +36,26 @@ var setPassWord = React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title:'设置登录密码'}}
+                    title={{title:'修改密码'}}
                     leftButton={this.leftButtonConfig} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='设置密码'
+                        <TextInput placeholder='原密码'
+                        secureTextEntry={true}
+                        style={commonStyle.textInput}
+                        clearButtonMode={'while-editing'}/>
+                    </View>
+                    <View style={commonStyle.textInputWrapper}>
+                        <TextInput placeholder='新密码'
+                        secureTextEntry={true}
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}/>
                     </View>
                     <Button
                     style={commonStyle.blueButton}
-                    onPress={this.getCode} >
-                        完成
+                    onPress={this.doChangePassword} >
+                        提交
                     </Button>
-                    <Text style={commonStyle.textLight}>点击注册即表示您同意《你造么用户协议》</Text>
                 </View>
             </View>
         );
@@ -78,7 +70,3 @@ var styles = StyleSheet.create({
         backgroundColor: 'transparent',
     }
 });
-
-
-
-module.exports = setPassWord;

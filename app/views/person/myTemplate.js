@@ -11,8 +11,8 @@ var {
 var commonStyle = require('../../styles/commonStyle');
 var _navigator, _topNavigator = null;
 
-var OrderSettings = require('./orderSettings');
-var OrderTemplateList = require('./components/orderTemplateList');
+var OrderTemplateDetail = require('../order/orderTemplateDetail');
+var OrderTemplateList = require('../order/components/orderTemplateList');
 
 module.exports = React.createClass({
     getInitialState: function(){
@@ -21,13 +21,14 @@ module.exports = React.createClass({
         return {}
     },
     leftButtonConfig: {
-        title: 'X',
+        title: '<',
         handler:() =>
             _navigator.pop()
     },
     _pressRow: function(rowData){
         _topNavigator.push({
-            component: OrderSettings,
+            title: rowData,
+            component: OrderTemplateDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });

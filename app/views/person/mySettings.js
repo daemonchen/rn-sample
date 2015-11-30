@@ -1,28 +1,19 @@
 'use strict';
 var React = require('react-native')
-var RefreshableListView = require('react-native-refreshable-listview')
 var NavigationBar = require('react-native-navbar');
 var {
-    Text,
-    TextInput,
     View,
     ListView,
     Image,
+    Text,
     Navigator,
     TouchableHighlight,
     StyleSheet
 } = React
 
-var util = require('../../common/util.js');
-var {
-    width, height, scale
-} = util.getDimensions();
-
 var commonStyle = require('../../styles/commonStyle');
-var userAccount = require('./userAccount');
-var myTemplate = require('./myTemplate');
-var mySettings = require('./mySettings');
-var suggest = require('./suggest');
+var about = require('../about');
+var changePassword = require('./changePassword');
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
@@ -31,34 +22,29 @@ module.exports = React.createClass({
         _topNavigator = this.props.route.topNavigator;
         return {}
     },
-    goAccount: function(){
+    leftButtonConfig: {
+        title: '<',
+        handler:() =>
+            _navigator.pop()
+    },
+    doRate: function(){
+        console.log('TODO: open app store to set score...');
+    },
+    goAbout: function(){
         _navigator.push({
-            title:'我的账号',
-            component: userAccount,
+            title:'关于我们',
+            component: about,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
     },
-    goTemplate: function(){
-        _navigator.push({
-            title:'我的模版',
-            component: myTemplate,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
+    cleanCache: function(){
+        console.log('TODO: clean app cache...');
     },
-    goSettings: function(){
+    goChangePassword: function(){
         _navigator.push({
-            title:'设置',
-            component: mySettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
-    },
-    goSuggest: function(){
-        _navigator.push({
-            title:'意见反馈',
-            component: suggest,
+            title:'修改密码',
+            component: changePassword,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
@@ -66,19 +52,14 @@ module.exports = React.createClass({
     render: function(){
         return(
             <View style={commonStyle.container}>
-                <View style={styles.topInfo}>
-                    <Image
-                      style={styles.avatar}
-                      source={require('../../images/logo.png')} />
-                    <View style={styles.nameWrapper}>
-                        <Text style={styles.name}>name stuff</Text>
-                    </View>
-                </View>
+                <NavigationBar
+                    title={{title:'设置'}}
+                    leftButton={this.leftButtonConfig} />
                 <View style={commonStyle.settingGroups}>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
-                        onPress={this.goAccount}>
+                        onPress={this.doRate}>
                         <View
                         style={commonStyle.settingItem}>
                             <Image
@@ -86,14 +67,14 @@ module.exports = React.createClass({
                             source={require('../../images/Setting.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
-                                我的账号
+                                给我评分
                             </Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
-                        onPress={this.goTemplate}>
+                        onPress={this.goAbout}>
                         <View
                         style={commonStyle.settingItem}>
                             <Image
@@ -101,14 +82,14 @@ module.exports = React.createClass({
                             source={require('../../images/Setting.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
-                                我的模版
+                                关于我们
                             </Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
-                        onPress={this.goSettings}>
+                        onPress={this.cleanCache}>
                         <View
                         style={commonStyle.settingItem}>
                             <Image
@@ -116,14 +97,14 @@ module.exports = React.createClass({
                             source={require('../../images/Setting.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
-                                设置
+                                清楚缓存
                             </Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
-                        onPress={this.goSuggest}>
+                        onPress={this.goChangePassword}>
                         <View
                         style={commonStyle.settingItem}>
                             <Image
@@ -131,35 +112,12 @@ module.exports = React.createClass({
                             source={require('../../images/Setting.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
-                                意见反馈
+                                修改密码
                             </Text>
                         </View>
                     </TouchableHighlight>
                 </View>
             </View>
             );
-    }
-});
-var styles = StyleSheet.create({
-    topInfo:{
-        // height: 174,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 16
-    },
-    avatar:{
-        marginTop: 16,
-        width: 100,
-        height: 100
-    },
-    nameWrapper: {
-        width: width - 32,
-        borderBottomWidth: 1 / React.PixelRatio.get(),
-        paddingVertical: 22,
-        borderBottomColor: '#bdbdbd'
-    },
-    name: {
-        textAlign: 'center',
-        fontSize: 22
     }
 });

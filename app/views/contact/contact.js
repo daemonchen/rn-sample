@@ -39,16 +39,17 @@ module.exports = React.createClass({
         }
     },
     rightButtonConfig: function(){
-        return {
-            title: '+',
-            handler:() =>
-                _topNavigator.push({
-                    title: this.props.route.title,
-                    component: tabViewSample,
-                    sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-                    topNavigator: _topNavigator
-                })
-        }
+        // return {
+        //     title: '+',
+        //     handler:() =>
+        //         _topNavigator.push({
+        //             title: this.props.route.title,
+        //             component: tabViewSample,
+        //             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+        //             topNavigator: _topNavigator
+        //         })
+        // }
+        console.log('TODO: ...');
     },
     renderRow: function(data){
         var circleBackground = {
