@@ -64,17 +64,14 @@ module.exports = React.createClass({
     getRowData: function(dataBlob, sectionID, rowID){
         return dataBlob[sectionID + ':' + rowID];
     },
-    onPressCircle: function(rowData, sectionID){
-        console.log('todo: update task list stuff');
-    },
     renderRow: function(rowData, sectionID, rowID) {
         return (
             <TaskItem
             rowData={rowData}
             sectionID={sectionID}
             rowID={rowID}
-            onPressRow={this.props.onPressRow}
-            onPressCircle={this.onPressCircle}/>
+            onPressRow={this.props.events.onPressRow}
+            onPressCircle={this.props.events.onPressCircle}/>
             )
     },
     renderSectionHeader: function(sectionData, sectionID){

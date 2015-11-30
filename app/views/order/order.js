@@ -72,8 +72,7 @@ var order =  React.createClass({
                 self.showActionSheet()
         }
     },
-    _onPressRow: function(rowData, sectionID){
-        console.log('orderList rowData:',rowData);
+    onPressOrderRow: function(rowData, sectionID){
         _topNavigator.push({
             title: rowData.name,
             component: OrderDetail,
@@ -90,7 +89,7 @@ var order =  React.createClass({
                 <View style={styles.main}>
                     <OrderSegmentControl />
                     <OrderList
-                    onPressRow={this._onPressRow}/>
+                    events={{onPressRow: this.onPressOrderRow}} />
                 </View>
             </View>
         );

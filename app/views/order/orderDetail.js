@@ -104,6 +104,9 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         })
     },
+    onPressCircle: function(rowData, sectionID){
+        console.log('todo: update task list stuff');
+    },
     onPressAttachRow: function(rowData,sectionID){
         _topNavigator.push({
             title: rowData.name,
@@ -135,12 +138,18 @@ module.exports = React.createClass({
             case 0:
                 return(
                     <TaskList
-                    onPressRow={this.onPressTaskRow}/>
+                    events={{
+                        onPressRow: this.onPressTaskRow,
+                        onPressCircle: this.onPressCircle
+                    }} />
                 )
             case 1:
                 return(
                     <TaskList
-                    onPressRow={this.onPressTaskRow}/>
+                    events={{
+                        onPressRow: this.onPressTaskRow,
+                        onPressCircle: this.onPressCircle
+                    }} />
                 )
             case 2:
                 return(
@@ -156,7 +165,10 @@ module.exports = React.createClass({
             default:
                 return(
                     <TaskList
-                    onPressRow={this.onPressTaskRow}/>
+                    events={{
+                        onPressRow: this.onPressTaskRow,
+                        onPressCircle: this.onPressCircle
+                    }} />
                 )
         }
     },

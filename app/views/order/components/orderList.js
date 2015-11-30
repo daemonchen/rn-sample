@@ -61,16 +61,13 @@ var orderList = React.createClass({
     getRowData: function(dataBlob, sectionID, rowID){
         return dataBlob[sectionID + ':' + rowID];
     },
-    // onPressRow: function(rowData, sectionID){
-    //     console.log(rowData);
-    // },
     renderRow: function(rowData, sectionID, rowID) {
         return (
             <OrderItem
             rowData={rowData}
             sectionID={sectionID}
             rowID={rowID}
-            onPress={this.props.onPressRow} />
+            onPress={this.props.events.onPressRow} />
             )
     },
     renderSectionHeader: function(sectionData, sectionID){

@@ -18,6 +18,8 @@ var Calendar = require('../../calendar');
 var Contact = require('../../contact/contact');
 var SettingsWrapper = require('./settingsWrapper');
 var TaskList = require('./taskList');
+var TaskDetail = require('./taskDetail');
+var OrderList = require('../components/orderList');
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
@@ -54,8 +56,20 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
-    onPressTaskRow: function(){
+    onPressTaskRow: function(rowData, sectionID){
+        _topNavigator.push({
+            title: rowData.name,
+            component: TaskDetail,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
         console.log('----on tap');
+    },
+    onPressOrderRow: function(rowData, sectionID){
+        console.log('chose order:', rowData);
+    },
+    onPressCircle: function(rowData, sectionID){
+        console.log('todo: update task list stuff');
     },
     _setTaskDependence: function(){
         //todo: 把settingwrapper修改为presettings
@@ -63,7 +77,10 @@ module.exports = React.createClass({
             title:'前置任务',
             component: SettingsWrapper,
             children: TaskList,
-            onPressRow: this.onPressTaskRow,
+            events:{
+                onPressRow: this.onPressTaskRow,
+                onPressCircle: this.onPressCircle,
+            },
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
@@ -71,7 +88,11 @@ module.exports = React.createClass({
     _setOrderBelongs: function(){
         _navigator.push({
             title:'所属订单',
-            component: Contact,
+            component: SettingsWrapper,
+            children: OrderList,
+            events:{
+                onPressRow: this.onPressOrderRow
+            },
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
@@ -152,7 +173,7 @@ module.exports = React.createClass({
                     <TouchableHighlight
                     style={commonStyle.settingItemWrapper}
                     underlayColor='#eee'
-                    onPress={this._setCustomer} >
+                    onPress={this._setOrderBelongs} >
                         <View style={commonStyle.settingItem}>
                             <Text
                             style={commonStyle.settingTitle}>
