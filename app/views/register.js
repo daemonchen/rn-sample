@@ -27,13 +27,14 @@ var register = React.createClass({
         }
     },
     componentDidMount: function(){
-        this.unlisten = verifyCodeStore.listen(this.onGetVarifyCode)
+        this.unlisten = verifyCodeStore.listen(this.onChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
     },
-    onGetVarifyCode: function(data) {
+    onChange: function() {
         var result = verifyCodeStore.getState();
+        if (result.type != 'get') { return; };
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;

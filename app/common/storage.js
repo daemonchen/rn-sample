@@ -3,13 +3,14 @@ var React = require('react-native')
 var AsyncStorage = React.AsyncStorage
 
 module.exports = {
-    setItem: function(key, value){
+    setItem: async function(key, value){
         if (value == null) return Promise.reject('value is null')
-        return AsyncStorage.setItem(key, JSON.stringify(value))
+            console.log('setItem:', key, value);
+        return await AsyncStorage.setItem(key, JSON.stringify(value))
     },
-    getItem: function(key){
-        // var result = await AsyncStorage.getItem(key)
-        var result = AsyncStorage.getItem(key)
+    getItem: async function(key){
+        var result = await AsyncStorage.getItem(key)
+        // var result = AsyncStorage.getItem(key)
             .then(function (value) {
                 return JSON.parse(value)
             })

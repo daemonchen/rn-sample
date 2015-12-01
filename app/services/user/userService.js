@@ -5,5 +5,14 @@ var NZAOM_INTERFACE = require('../../common/interface');
 module.exports = {
     getVerifyCode: function(data){
         return http.put(NZAOM_INTERFACE.verifycode, data)
+    },
+    doVerifyCode: function(data){
+        var urlParams = '/{code}/mobile/{mobile}/type/{type}'.replace('{code}', data.code)
+        .replace('{mobile}', data.mobile)
+        .replace('{type}', data.type);
+        return http.get(NZAOM_INTERFACE.verifycode + urlParams)
+    },
+    register: function(data){
+        return http.post(NZAOM_INTERFACE.user, data)
     }
 }

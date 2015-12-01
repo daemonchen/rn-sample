@@ -8,11 +8,13 @@ class VerifyCodeStore {
     constructor() {
         this.bindActions(verifyCodeAction);
         this.state = {};
+        this.verifyData = asyncStorage.getItem('verifyData');
     }
 
     onGetVerifyCode(data) {
         // cache the mobile for next step:
-        asyncStorage.setItem('userData', Object.assign(asyncStorage.getItem('userData'),{
+        console.log('ddd', this.verifyData);
+        asyncStorage.setItem('verifyData', Object.assign(this.verifyData,{
             mobile: data.mobile
         }))
 
@@ -24,6 +26,19 @@ class VerifyCodeStore {
         this.preventDefault();
     }
     onGetVerifyCodeSuccess(data){
+        data.type = 'get'
+        this.setState(data);
+    }
+    onVerifyCode(data){
+        userService.doVerifyCode(data)
+        .then((responseData) => {
+            verifyCodeAction.verifyCodeSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onVerifyCodeSuccess(data){
+        data.type = 'check';
         this.setState(data);
     }
 }

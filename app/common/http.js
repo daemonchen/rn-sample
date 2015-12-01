@@ -38,6 +38,9 @@ module.exports = {
         this.fetchOptions.body = '';
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
+            .catch((error) => {
+                console.warn(error);
+              });
     },
     post: function(url, body){
         url += '?' + this.getUrlParams()
@@ -45,6 +48,9 @@ module.exports = {
         this.fetchOptions.body = JSON.stringify(body);
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
+            .catch((error) => {
+                console.warn(error);
+              });
     },
     put: function(url, body){
         url += '?' + this.getUrlParams()
@@ -52,6 +58,9 @@ module.exports = {
         this.fetchOptions.body = JSON.stringify(body);
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
+            .catch((error) => {
+                console.warn(error);
+              });
     },
     delete: function(url){},
 }
