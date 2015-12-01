@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "alt": "^0.17.1",
+    "md5": "^2.0.0",
     "moment": "^2.10.6",
+    "query-string": "^3.0.0",
     "react-native": "^0.14.2",
     "react-native-device-info": "^0.5.1",
     "react-native-navbar": "^1.0.7",

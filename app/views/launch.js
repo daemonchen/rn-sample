@@ -1,9 +1,6 @@
 'use strict';
 
 var React = require('react-native');
-var DeviceInfo = require('react-native-device-info');
-
-console.log("Device Unique ID", DeviceInfo.getUniqueID());
 
 var {StyleSheet, TabBarIOS} = React;
 

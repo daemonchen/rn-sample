@@ -110,9 +110,9 @@ module.exports = React.createClass({
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}/>
                     </View>
-                    <View style={commonStyle.textInputWrapper}>
+                    <View style={commonStyle.textAreaWrapper}>
                         <TextInput placeholder='任务描述'
-                        style={commonStyle.textInput}
+                        style={commonStyle.textArea}
                         clearButtonMode={'while-editing'}
                         multiline={true} />
                     </View>

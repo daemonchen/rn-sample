@@ -7,39 +7,56 @@ var {
     LinkingIOS
 } = React
 
+module.exports = {
+    getObjectKeysAlphabetical: function(obj) {
+        var keys = [],
+            key;
 
-// The Dimensions API may change, so I move to a single module
-// use this method like this:
-// var { width, height } = Util.get()
-exports.getDimensions = function () {
-    return Dimensions.get('window')
-}
-
-
-exports.alert = function (content) {
-    AlertIOS.alert(content)
-}
-
-
-exports.link = function (url) {
-    LinkingIOS.canOpenURL(url, (supported) => {
-        if (!supported) {
-            console.warn("Can't support the url")
-        } else {
-            LinkingIOS.openURL(url)
+        for (key in obj) {
+            if (obj.hasOwnProperty(key))
+                keys.push(key);
         }
-    })
-}
 
+        keys.sort();
 
-exports.parseImgUrl = function (url) {
-    if (/^\/\/.*/.test(url)) {
-        url = 'http:' + url
+        return keys;
+    },
+    stringifyObjectAlphabetical: function(obj){
+        var result = '';
+        var keys = this.getObjectKeysAlphabetical(obj);
+        for (i = 0; i < keys.length; i++) {
+            key = keys[i];
+            val = obj[key]; //Get the value of the property here.
+            result += key + val;
+        }
+        return result;
+    },
+    getDimensions: function(){
+    // The Dimensions API may change, so I move to a single module
+    // use this method like this:
+    // var { width, height } = Util.get()
+        return Dimensions.get('window')
+    },
+    alert: function(content){
+        AlertIOS.alert(content)
+    },
+    link: function(url){
+        LinkingIOS.canOpenURL(url, (supported) => {
+            if (!supported) {
+                console.warn("Can't support the url")
+            } else {
+                LinkingIOS.openURL(url)
+            }
+        })
+    },
+    parseImgUrl: function(url){
+        if (/^\/\/.*/.test(url)) {
+            url = 'http:' + url
+        }
+        return url
+    },
+    getRating: function(rating){
+        if(rating > 5 || rating < 0) throw new Error('数字不在范围内');
+        return "★★★★★☆☆☆☆☆".substring(5 - rating, 10 - rating );
     }
-    return url
-}
-
-exports.getRating = function(rating) {
-    if(rating > 5 || rating < 0) throw new Error('数字不在范围内');
-    return "★★★★★☆☆☆☆☆".substring(5 - rating, 10 - rating );
-}
+};

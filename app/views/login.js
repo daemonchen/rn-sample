@@ -11,6 +11,8 @@ var {View,
 var Button = require('../common/button.js');
 var commonStyle = require('../styles/commonStyle');
 
+var http = require('../common/http');
+
 //获取可视窗口的宽高
 var util = require('../common/util.js');
 var {
