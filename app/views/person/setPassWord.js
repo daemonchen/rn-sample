@@ -54,6 +54,11 @@ var setPassWord = React.createClass({
                     leftButton={this.leftButtonConfig} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
+                        <TextInput placeholder='姓名'
+                        style={commonStyle.textInput}
+                        clearButtonMode={'while-editing'}/>
+                    </View>
+                    <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='设置密码'
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}/>

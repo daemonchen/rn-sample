@@ -19,35 +19,40 @@ module.exports = {
             'x-platform': 'IOS'
         }
     },
-    factoryParams: function(params){
-        params.appkey = 997251497892209797;
-        params.appsecret = 'hXyL0XsW7uVYX89mbUivRH9vkeyZvcfb';
-        params.imei = DeviceInfo.getUniqueID();
-        params.t = new Date().valueOf();
-        params.sign = this.md5Params(params);
-        return params;
+    getUrlParams: function(){
+        var result = {}
+        result.appkey = 997251497892209797;
+        result.imei = DeviceInfo.getUniqueID();
+        result.imsi = DeviceInfo.getUniqueID();
+        result.t = new Date().valueOf();
+        result.sign = this.md5Params(result);
+        return queryString.stringify(result);
     },
     md5Params: function(params){
         var stringifyParams = util.stringifyObjectAlphabetical(params);
-        return md5('secret' + stringifyParams + 'secret').toUpperCase();
+        return md5(stringifyParams + 'hXyL0XsW7uVYX89mbUivRH9vkeyZvcfb').toUpperCase();
     },
-    get: function(url, params){
-        if (params) {
-            params = this.factoryParams(params);
-            url += '?' + queryString.stringify(params)
-        }
+    get: function(url){
+        url += '?' + this.getUrlParams()
         this.fetchOptions.method = 'GET';
         this.fetchOptions.body = '';
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
     },
     post: function(url, body){
-        var params = this.factoryParams(body);
+        url += '?' + this.getUrlParams()
         this.fetchOptions.method = 'POST';
-        this.fetchOptions.body = JSON.stringify(params);
+        this.fetchOptions.body = JSON.stringify(body);
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
     },
-    put: function(){},
-    delete: function(){},
+    put: function(url, body){
+        url += '?' + this.getUrlParams()
+        this.fetchOptions.method = 'PUT';
+        this.fetchOptions.body = JSON.stringify(body);
+        console.log('body', body);
+        return fetch(url, this.fetchOptions)
+            .then(res => res.json())
+    },
+    delete: function(url){},
 }
