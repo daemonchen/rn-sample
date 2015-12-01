@@ -11,11 +11,12 @@ var {View,
 var Button = require('../common/button.js');
 var commonStyle = require('../styles/commonStyle');
 
-var userAction = require('../actions/user/userAction');
-var userStore = require('../stores/user/userStore');
+var verifyCodeAction = require('../actions/user/verifyCodeAction');
+var verifyCodeStore = require('../stores/user/verifyCodeStore');
 
-var ValidationCode = require('../views/person/validationCode');
+var ValidationCode = require('./person/validationCode');
 var NavTitleWithLogo = require('../common/navTitleWithLogo');
+var util = require('../common/util');
 var _navigator = null;
 var register = React.createClass({
     getInitialState: function(){
@@ -25,11 +26,18 @@ var register = React.createClass({
             type: 1
         }
     },
-    componentDidMount: function() {
-        userStore.listen(this.onGetVarifyCode);
+    componentDidMount: function(){
+        this.unlisten = verifyCodeStore.listen(this.onGetVarifyCode)
     },
-
-    onGetVarifyCode: function() {
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onGetVarifyCode: function(data) {
+        var result = verifyCodeStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
         _navigator.push({
             title: 'ValidationCode',
             component: ValidationCode,
@@ -38,7 +46,7 @@ var register = React.createClass({
         })
     },
     getCode: function(){
-        userAction.getVerifyCode({
+        verifyCodeAction.getVerifyCode({
             mobile: this.state.mobile,
             type: this.state.type
         });

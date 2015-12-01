@@ -50,7 +50,6 @@ module.exports = {
         url += '?' + this.getUrlParams()
         this.fetchOptions.method = 'PUT';
         this.fetchOptions.body = JSON.stringify(body);
-        console.log('body', body);
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
     },
