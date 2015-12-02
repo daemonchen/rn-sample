@@ -20,6 +20,11 @@ var _navigator, _topNavigator = null;
 var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');
 var ContactGroup = require('./group');
+
+var contactAction = require('../../actions/contact/contactAction');
+var contactStore = require('../../stores/contact/contactStore');
+
+var util = require('../../common/util');
 /*
 target: 表示从哪里打开通讯录 enum
 {
@@ -35,31 +40,69 @@ module.exports = React.createClass({
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         return {
             target: this.props.route.target,
-            dataSource: ds.cloneWithRows(['row 1', 'row 2','row 2','row 2','row 2','row 2','row 2']),
+            dataSource: ds,
         }
     },
-    rightButtonConfig: function(){
-        // return {
-        //     title: '+',
-        //     handler:() =>
-        //         _topNavigator.push({
-        //             title: this.props.route.title,
-        //             component: tabViewSample,
-        //             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-        //             topNavigator: _topNavigator
-        //         })
-        // }
-        console.log('TODO: ...');
+    componentDidMount: function(){
+        contactAction.getList();
+        this.unlisten = contactStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function() {
+        var result = contactStore.getState();
+        if (result.type != 'get') { return; };
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(result.data)
+        });
+    },
+    goCreateGroup: function(){
+        _topNavigator.push({
+            title: this.props.route.title,
+            component: tabViewSample,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
+
+    },
+    renderAvatar: function(data){
+        if (data.avatar) {
+            return(
+                <Image
+                  style={contactsStyle.contactsItemCircle}
+                  source={{uri: data.avatar}} />
+                );
+        }else{
+            var circleBackground = {
+                backgroundColor: data.bgColor
+            }
+            return(
+                <View style={[contactsStyle.contactsItemCircle, circleBackground]}>
+                    <Text style={contactsStyle.contactsItemTitle}>{data.simpleUserName}</Text>
+                </View>
+                )
+        }
     },
     renderRow: function(data){
-        var circleBackground = {
-            backgroundColor: '#ff7300'
-        }
+        // { bgColor: '#b2cee6',
+        //   bgColorId: 9,
+        //   avatar: null,
+        //   userId: 4,
+        //   userName: '大白二货',
+        //   simpleUserName: '二货',
+        //   pinyin: 'DABAIERHUO',
+        //   group: 1,
+        //   mobiles: [ '15071414335' ] }
+        if (data.avatar) {};
         return(
             <TouchableOpacity style={contactsStyle.contactsItem}>
-                <View style={[contactsStyle.contactsItemCircle, circleBackground]}></View>
-                <Image style={contactsStyle.contactsItemIcon} source={require('../../images/Send.png')} />
-                <Text style={contactsStyle.contactsItemTitle}>大白工厂{data}</Text>
+                {this.renderAvatar(data)}
+                <Text style={contactsStyle.contactsItemDetail}>{data.userName}</Text>
             </TouchableOpacity>
             );
     },
@@ -68,8 +111,7 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{ title: this.props.route.title }}
-                    rightButton={this.rightButtonConfig()} />
+                    title={{ title: this.props.route.title }} />
                 <ScrollView style={commonStyle.container}
                 contentOffset={{y: 44}}
                 contentInset={{bottom: 40}}

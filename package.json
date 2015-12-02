@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "alt": "^0.17.1",
+    "keymirror": "^0.1.1",
     "md5": "^2.0.0",
     "moment": "^2.10.6",
     "query-string": "^3.0.0",

@@ -26,9 +26,18 @@ module.exports = React.StyleSheet.create({
         height: 20,
         position: 'absolute',
         left: 10,
-        top: 24
+        top: 12
     },
-    contactsItemTitle: {
+    contactsItemTitle:{
+        position: 'absolute',
+        width: 30,
+        textAlign: 'center',
+        left: 3,
+        top: 12,
+        color: '#fff',
+        fontSize: 12
+    },
+    contactsItemDetail: {
         color: '#727272',
         fontWeight: 'bold',
         flex: 1,

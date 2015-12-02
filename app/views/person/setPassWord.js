@@ -20,7 +20,6 @@ var asyncStorage = require('../../common/storage');
 
 //获取可视窗口的宽高
 var util = require('../../common/util.js');
-var http = require('../../common/http');
 var {
     width, height, scale
 } = util.getDimensions();
@@ -59,7 +58,7 @@ var setPassWord = React.createClass({
             util.alert(result.message);
             return;
         }
-        http.setAuthToken(result.data);
+        asyncStorage.setItem('xAuthToken', {xAuthToken: result.data});
         _navigator.immediatelyResetRouteStack([{
             title: 'Launch',
             component: Launch,

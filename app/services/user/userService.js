@@ -17,5 +17,8 @@ module.exports = {
     },
     login: function(data){
         return http.post(NZAOM_INTERFACE.login, data)
+    },
+    token: function(data){
+        return http.get(NZAOM_INTERFACE.token)
     }
 }

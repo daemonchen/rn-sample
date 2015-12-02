@@ -11,12 +11,18 @@ var {
   View,
 } = React;
 
+var appConstants = require('./app/constants/appConstants');
 var AppNavigator = require('./app/common/navbar');
 var Launch = require('./app/views/launch');
 var Login = require('./app/views/login');
 var Register = require('./app/views/register');
 var Button = require('./app/common/button.js');
 var commonStyle = require('./app/styles/commonStyle');
+var asyncStorage = require('./app/common/storage');
+
+var authTokenAction = require('./app/actions/user/authTokenAction');
+var authTokenStore = require('./app/stores/user/authTokenStore');
+
 //获取可视窗口的宽高
 var util = require('./app/common/util.js');
 var {
@@ -83,11 +89,42 @@ var Welcome = React.createClass({
 var awesomeMobile = React.createClass({
     getInitialState: function(){
         return {
-            login: false
+            xAuthToken: ''
         }
     },
+    componentDidMount: function(){
+        this.getAppState();
+        this.unlisten = authTokenStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function() {
+        var result = authTokenStore.getState();
+        if (result.type != 'init') { return; };
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        asyncStorage.setItem('xAuthToken', {xAuthToken: result.data});
+        appConstants.xAuthToken = result.data;
+    },
+    getAppState: function(){
+        asyncStorage.getItem('xAuthToken')
+        .then((data)=>{
+            if(!data){return;}
+            this.setState({
+                xAuthToken: data.xAuthToken
+            });
+            appConstants.xAuthToken = data.xAuthToken;
+            this.getNewXAuthToken()
+        }).done();
+    },
+    getNewXAuthToken: function(){
+        authTokenAction.updateToken();
+    },
     render: function(){
-        if (!this.state.login) {
+        if (!this.state.xAuthToken) {
             return (
                 <AppNavigator initialRoute={{title: 'welcome', component:Welcome}} key='welcome' />
                 )

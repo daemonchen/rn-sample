@@ -14,7 +14,7 @@ var commonStyle = require('../styles/commonStyle');
 
 var loginAction = require('../actions/user/loginAction');
 var loginStore = require('../stores/user/loginStore');
-var http = require('../common/http');
+var asyncStorage = require('../common/storage');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -44,7 +44,7 @@ var Login = React.createClass({
             util.alert(result.message);
             return;
         }
-        http.setAuthToken(result.data);
+        asyncStorage.setItem('xAuthToken', {xAuthToken: result.data});
         _navigator.replace({
             title: 'Launch',
             component: Launch,

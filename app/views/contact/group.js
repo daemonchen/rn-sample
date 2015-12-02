@@ -30,17 +30,17 @@ module.exports = React.createClass({
                     <TouchableOpacity style={contactsStyle.contactsItem}>
                         <View style={[contactsStyle.contactsItemCircle, circleBackground]}></View>
                         <Image style={contactsStyle.contactsItemIcon} source={require('../../images/Send.png')} />
-                        <Text style={contactsStyle.contactsItemTitle}>大白工厂</Text>
+                        <Text style={contactsStyle.contactsItemTitle}>组织架构</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={contactsStyle.contactsItem}>
                         <View style={[contactsStyle.contactsItemCircle, circleBackground]}></View>
                         <Image style={contactsStyle.contactsItemIcon} source={require('../../images/Send.png')} />
-                        <Text style={contactsStyle.contactsItemTitle}>大白工厂</Text>
+                        <Text style={contactsStyle.contactsItemTitle}>客户</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={contactsStyle.contactsItem}>
                         <View style={[contactsStyle.contactsItemCircle, circleBackground]}></View>
                         <Image style={contactsStyle.contactsItemIcon} source={require('../../images/Send.png')} />
-                        <Text style={contactsStyle.contactsItemTitle}>大白工厂</Text>
+                        <Text style={contactsStyle.contactsItemTitle}>手机通讯录</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </View>

@@ -5,6 +5,7 @@ var DeviceInfo = require('react-native-device-info');
 var md5 = require('md5');
 var util = require('./util');
 var asyncStorage = require('./storage');
+var appConstants = require('../constants/appConstants');
 
 console.log("Device Unique ID", DeviceInfo.getUniqueID());
 console.log('version--:', DeviceInfo.getVersion());
@@ -19,9 +20,8 @@ module.exports = {
             'x-platform': 'IOS'
         }
     },
-    setAuthToken: function(token){
-        asyncStorage.setItem('xAutoToken', {token: token});
-        this.fetchOptions.headers['x-auth-token'] = token;
+    getAuthToken: function(callback){
+        return appConstants.xAuthToken;
     },
     getUrlParams: function(){
         var result = {}
@@ -38,39 +38,33 @@ module.exports = {
     },
     get: function(url){
         url += '?' + this.getUrlParams()
-        this.fetchOptions.method = 'GET';
-        this.fetchOptions.body = '';
+        this.factoryHeader('GET');
         console.log('http get', url);
-        return fetch(url, this.fetchOptions)
-            .then(res => res.json())
-            .catch((error) => {
-                console.warn(error);
-                util.alert('网络异常，请稍后再试');
-              });
+        return this.fetchData(url);
     },
     post: function(url, body){
         url += '?' + this.getUrlParams()
-        this.fetchOptions.method = 'POST';
-        this.fetchOptions.body = JSON.stringify(body);
+        this.factoryHeader('POST', body);
         console.log('http post', url, body);
-        return fetch(url, this.fetchOptions)
-            .then(res => res.json())
-            .catch((error) => {
-                console.warn(error);
-                util.alert('网络异常，请稍后再试');
-              });
+        return this.fetchData(url);
     },
     put: function(url, body){
         url += '?' + this.getUrlParams()
-        this.fetchOptions.method = 'PUT';
-        this.fetchOptions.body = JSON.stringify(body);
+        this.factoryHeader('PUT', body);
         console.log('http put', url, body);
+        return this.fetchData(url);
+    },
+    delete: function(url){},
+    factoryHeader: function(type, data){
+        this.fetchOptions.method = type;
+        this.fetchOptions.headers['x-auth-token'] = this.getAuthToken();
+        !!data && (this.fetchOptions.body = JSON.stringify(data));
+    },
+    fetchData: function(url){
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
             .catch((error) => {
-                console.warn(error);
                 util.alert('网络异常，请稍后再试');
               });
-    },
-    delete: function(url){},
+        }
 }
