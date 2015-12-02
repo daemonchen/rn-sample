@@ -75,13 +75,16 @@ var validationCode = React.createClass({
 
     },
     onChange: function() {
-        if(result.type == 'isReset'){
-            this.setState({
-                canReGetCode: false,
-                timer: 60
-            });
-        }
         var result = verifyCodeStore.getState();
+        if(result.type == 'isReset' && result.status != 200){
+            this.clearInterval(this._timeInterval);
+            this.setState({
+                canReGetCode: true,
+                timer: 0
+            });
+            util.alert(result.message);
+            return;
+        }
         if (result.type != 'check') { return; };
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
@@ -98,7 +101,7 @@ var validationCode = React.createClass({
         verifyCodeAction.getVerifyCode({
             mobile: this.state.mobile,
             type: this.state.type,
-            isReset; 'isReset'
+            isReset: 'isReset'
         });
         this.doTimer();
     },
