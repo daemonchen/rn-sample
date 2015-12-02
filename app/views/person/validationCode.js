@@ -60,7 +60,7 @@ var validationCode = React.createClass({
         var data = verifyCodeStore.getState();
         verifyCodeAction.verifyCode({
             code: this.state.code,
-            mobile: asyncStorage.getItem('verifyData').mobile,
+            mobile: this.state.mobile,
             type: this.state.type
         });
     },

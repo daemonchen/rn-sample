@@ -40,6 +40,7 @@ module.exports = {
             .then(res => res.json())
             .catch((error) => {
                 console.warn(error);
+                util.alert('网络异常，请稍后再试');
               });
     },
     post: function(url, body){
@@ -50,6 +51,7 @@ module.exports = {
             .then(res => res.json())
             .catch((error) => {
                 console.warn(error);
+                util.alert('网络异常，请稍后再试');
               });
     },
     put: function(url, body){
@@ -60,6 +62,7 @@ module.exports = {
             .then(res => res.json())
             .catch((error) => {
                 console.warn(error);
+                util.alert('网络异常，请稍后再试');
               });
     },
     delete: function(url){},
