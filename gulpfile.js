@@ -11,4 +11,6 @@ gulp.task('watch', function() {
   gulp.watch(['./app/**/*.js'], ['lint']);
 });
 
+gulp.task('dev', function(){})
+
 gulp.task('default', ['watch', 'lint']);

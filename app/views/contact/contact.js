@@ -89,6 +89,7 @@ module.exports = React.createClass({
         }
     },
     renderRow: function(data){
+        console.log('data:', data);
         // { bgColor: '#b2cee6',
         //   bgColorId: 9,
         //   avatar: null,

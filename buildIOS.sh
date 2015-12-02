@@ -1,0 +1,1 @@
+react-native bundle --dev true --minify --platform ios --entry-file index.ios.js --bundle-output main.jsbundle
