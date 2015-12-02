@@ -4,6 +4,7 @@ var queryString = require('query-string')
 var DeviceInfo = require('react-native-device-info');
 var md5 = require('md5');
 var util = require('./util');
+var asyncStorage = require('./storage');
 
 console.log("Device Unique ID", DeviceInfo.getUniqueID());
 console.log('version--:', DeviceInfo.getVersion());
@@ -18,6 +19,10 @@ module.exports = {
             // 'x-auth-token':'abcd',
             'x-platform': 'IOS'
         }
+    },
+    setAuthToken: function(token){
+        asyncStorage.setItem('xAutoToken', {token: token});
+        this.fetchOptions.headers['x-auth-token'] = token;
     },
     getUrlParams: function(){
         var result = {}
@@ -36,6 +41,7 @@ module.exports = {
         url += '?' + this.getUrlParams()
         this.fetchOptions.method = 'GET';
         this.fetchOptions.body = '';
+        console.log('http get', url);
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
             .catch((error) => {
@@ -47,6 +53,7 @@ module.exports = {
         url += '?' + this.getUrlParams()
         this.fetchOptions.method = 'POST';
         this.fetchOptions.body = JSON.stringify(body);
+        console.log('http post', url, body);
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
             .catch((error) => {
@@ -58,6 +65,7 @@ module.exports = {
         url += '?' + this.getUrlParams()
         this.fetchOptions.method = 'PUT';
         this.fetchOptions.body = JSON.stringify(body);
+        console.log('http put', url, body);
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
             .catch((error) => {

@@ -5,4 +5,6 @@ module.exports = alt.generateActions(
     'getVerifyCode',
     'getVerifyCodeSuccess',
     'verifyCode',
-    'verifyCodeSuccess');
+    'verifyCodeSuccess',
+    'register',
+    'registerSuccess');

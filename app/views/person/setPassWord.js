@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
+var md5 = require('md5');
 var {View,
     Text,
     Image,
@@ -11,6 +12,11 @@ var {View,
 } = React;
 var Button = require('../../common/button.js');
 var commonStyle = require('../../styles/commonStyle');
+
+var verifyCodeAction = require('../../actions/user/verifyCodeAction');
+var verifyCodeStore = require('../../stores/user/verifyCodeStore');
+
+var asyncStorage = require('../../common/storage');
 
 //获取可视窗口的宽高
 var util = require('../../common/util.js');
@@ -25,47 +31,97 @@ var setPassWord = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
-        return {}
+        return {
+            verifyCode: '',
+            mobile: '',
+            username: '',
+            password: ''
+        }
     },
-    getCode: function(){
+    componentDidMount: function(){
+        asyncStorage.getItem('verifyData')
+        .then((value) => {
+            this.setState({
+                mobile: value.mobile,
+                verifyCode: value.code
+            });
+        }).done();
+        this.unlisten = verifyCodeStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function() {
+        var result = verifyCodeStore.getState();
+        if (result.type != 'register') { return; };
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        http.setAuthToken(result.data);
         _navigator.immediatelyResetRouteStack([{
-            title: 'from home',
+            title: 'Launch',
             component: Launch,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _navigator
         }]);
-        // _navigator.push({
-        //     title: 'from home',
-        //     component: Launch,
-        //     sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-        //     topNavigator: _navigator
-        // })
     },
-    leftButtonConfig: {
-        title: '<',
-        handler:() =>
-            _navigator.pop()
+    doRegister: function(){
+        if (this.state.password.length < 6) {
+            util.alert('密码长度不能小于6位');
+            return false;
+        };
+        var data = verifyCodeStore.getState();
+        verifyCodeAction.register({
+            verifyCode: this.state.code,
+            mobile: this.state.mobile,
+            username: this.state.username,
+            password: md5(this.state.password)
+        });
+    },
+    leftButtonConfig: function() {
+        return {
+            title: '<',
+            handler:() =>
+                _navigator.pop()
+        }
+    },
+    onSubmitEditing: function(){
+        this.doRegister();
+    },
+    onChangeUsernameText: function(text){
+        this.setState({
+            username: text
+        });
+    },
+    onChangePasswordText: function(text){
+        this.setState({
+            password: text
+        });
     },
     render: function(){
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'设置登录密码'}}
-                    leftButton={this.leftButtonConfig} />
+                    leftButton={this.leftButtonConfig()} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='姓名'
                         style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}/>
+                        clearButtonMode={'while-editing'}
+                        onChangeText={this.onChangeUsernameText} />
                     </View>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='设置密码'
                         style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}/>
+                        clearButtonMode={'while-editing'}
+                        onChangeText={this.onChangePasswordText}
+                        onSubmitEditing={this.onSubmitEditing} />
                     </View>
                     <Button
                     style={commonStyle.blueButton}
-                    onPress={this.getCode} >
+                    onPress={this.doRegister} >
                         完成
                     </Button>
                     <Text style={commonStyle.textLight}>点击注册即表示您同意《你造么用户协议》</Text>

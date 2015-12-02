@@ -47,6 +47,10 @@ var register = React.createClass({
         })
     },
     getCode: function(){
+        if (!this.state.mobile) {
+            util.alert('请输入手机号码');
+            return;
+        };
         verifyCodeAction.getVerifyCode({
             mobile: this.state.mobile,
             type: this.state.type

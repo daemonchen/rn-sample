@@ -29,8 +29,10 @@ class VerifyCodeStore {
         this.setState(data);
     }
     onVerifyCode(data){
+        // isReset: 如果是重复发送验证码的请求，会带上这个参数，值为'isReset'
         userService.doVerifyCode(data)
         .then((responseData) => {
+            responseData.isReset = data.isReset;
             verifyCodeAction.verifyCodeSuccess(responseData)
         }).done();
 
@@ -38,7 +40,20 @@ class VerifyCodeStore {
     }
     onVerifyCodeSuccess(data){
         if (!data) {return false};
-        data.type = 'check';
+        data.type = data.isReset || 'check';
+        this.setState(data);
+    }
+    onRegister(data){
+        userService.register(data)
+        .then((responseData) => {
+            verifyCodeAction.registerSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onRegisterSuccess(data){
+        if (!data) {return false};
+        data.type = 'register';
         this.setState(data);
     }
 }
