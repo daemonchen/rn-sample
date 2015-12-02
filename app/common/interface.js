@@ -13,5 +13,7 @@ if (!!_debug) {
 }
 module.exports = {
     verifycode: NZAOM_API_DOMAIN + '/api/verifycode',
-    user: NZAOM_API_DOMAIN + '/api/user'
+    user: NZAOM_API_DOMAIN + '/api/user',
+    login: NZAOM_API_DOMAIN + '/api/login',
+    token: NZAOM_API_DOMAIN + '/api/token'
 }

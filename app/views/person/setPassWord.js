@@ -20,6 +20,7 @@ var asyncStorage = require('../../common/storage');
 
 //获取可视窗口的宽高
 var util = require('../../common/util.js');
+var http = require('../../common/http');
 var {
     width, height, scale
 } = util.getDimensions();
@@ -73,9 +74,9 @@ var setPassWord = React.createClass({
         };
         var data = verifyCodeStore.getState();
         verifyCodeAction.register({
-            verifyCode: this.state.code,
+            verifyCode: this.state.verifyCode,
             mobile: this.state.mobile,
-            username: this.state.username,
+            userName: this.state.username,
             password: md5(this.state.password)
         });
     },

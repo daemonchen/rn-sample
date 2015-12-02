@@ -3,7 +3,7 @@
 
 # 你造么react-native项目
 
-> 项目使用[react-native](http://facebook.github.io/react-native/)开发
+> 项目使用[react-native](http://facebook.github.io/react-native/)开发,采用flux架构
 
 > ios项目禁用了NSAppTransportSecurity，后期考虑配合服务端一起升级https，再启用
 

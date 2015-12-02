@@ -68,7 +68,6 @@ var validationCode = React.createClass({
             this.clearInterval(this._timeInterval);
             return;
         };
-        console.log(this.state.timer);
         this.setState({
             timer: this.state.timer-1
         });
@@ -90,6 +89,7 @@ var validationCode = React.createClass({
             util.alert(result.message);
             return;
         }
+        this.clearInterval(this._timeInterval);
         _navigator.push({
             title: 'ValidationCode',
             component: SetPassword,
@@ -134,7 +134,7 @@ var validationCode = React.createClass({
         });
         asyncStorage.setItem('verifyData', {
             mobile: this.state.mobile,
-            code: this.state.code
+            code: text
         });
     },
     renderTimer: function(){
@@ -155,11 +155,18 @@ var validationCode = React.createClass({
     renderButton: function(){
         if (this.state.canReGetCode) {
             return(
-                <Button
+                <View>
+                    <Button
                     style={commonStyle.blueButton}
-                    onPress={this.reGetCode} >
-                        重新获取验证码
-                </Button>
+                    onPress={this.doVerify} >
+                        下一步
+                    </Button>
+                    <Button
+                        style={commonStyle.blueButton}
+                        onPress={this.reGetCode} >
+                            重新获取验证码
+                    </Button>
+                </View>
                 );
         }
         return(

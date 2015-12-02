@@ -15,9 +15,10 @@ class VerifyCodeStore {
         asyncStorage.setItem('verifyData', {
             mobile: data.mobile
         })
-
+        // isReset: 如果是重复发送验证码的请求，会带上这个参数，值为'isReset'
         userService.getVerifyCode(data)
         .then((responseData) => {
+            responseData.isReset = data.isReset;
             verifyCodeAction.getVerifyCodeSuccess(responseData)
         }).done();
 
@@ -25,14 +26,12 @@ class VerifyCodeStore {
     }
     onGetVerifyCodeSuccess(data){
         if (!data) {return false};
-        data.type = 'get'
+        data.type = data.isReset || 'get'
         this.setState(data);
     }
     onVerifyCode(data){
-        // isReset: 如果是重复发送验证码的请求，会带上这个参数，值为'isReset'
         userService.doVerifyCode(data)
         .then((responseData) => {
-            responseData.isReset = data.isReset;
             verifyCodeAction.verifyCodeSuccess(responseData)
         }).done();
 
@@ -40,7 +39,7 @@ class VerifyCodeStore {
     }
     onVerifyCodeSuccess(data){
         if (!data) {return false};
-        data.type = data.isReset || 'check';
+        data.type = 'check';
         this.setState(data);
     }
     onRegister(data){

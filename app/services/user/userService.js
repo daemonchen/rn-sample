@@ -14,5 +14,8 @@ module.exports = {
     },
     register: function(data){
         return http.post(NZAOM_INTERFACE.user, data)
+    },
+    login: function(data){
+        return http.post(NZAOM_INTERFACE.login, data)
     }
 }

@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
+var md5 = require('md5');
 var {View,
     Text,
     TextInput,
@@ -11,6 +12,8 @@ var {View,
 var Button = require('../common/button.js');
 var commonStyle = require('../styles/commonStyle');
 
+var loginAction = require('../actions/user/loginAction');
+var loginStore = require('../stores/user/loginStore');
 var http = require('../common/http');
 
 //获取可视窗口的宽高
@@ -28,6 +31,27 @@ var Login = React.createClass({
         _navigator = this.props.navigator;
         return {}
     },
+    componentDidMount: function(){
+        this.unlisten = loginStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function() {
+        var result = loginStore.getState();
+        if (result.type != 'login') { return; };
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        http.setAuthToken(result.data);
+        _navigator.replace({
+            title: 'Launch',
+            component: Launch,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _navigator
+        })
+    },
     goResetPassword: function(){
         _navigator.push({
             title: 'from home' + Math.random(),
@@ -37,12 +61,31 @@ var Login = React.createClass({
         })
     },
     doLogin: function(){
-        _navigator.replace({
-            title: 'from home' + Math.random(),
-            component: Launch,
-            // sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _navigator
-        })
+        if (!this.state.mobile) {
+            util.alert('请输入手机号码');
+            return;
+        };
+        if (!this.state.password) {
+            util.alert('请输入密码');
+            return;
+        };
+        loginAction.login({
+            mobile: this.state.mobile,
+            password: md5(this.state.password)
+        });
+    },
+    onChangeMobileText: function(text){
+        this.setState({
+            mobile: text
+        });
+    },
+    onChangePasswordText: function(text){
+        this.setState({
+            password: text
+        });
+    },
+    onSubmitEditing: function(){
+        this.doLogin();
     },
     render: function(){
         return (
@@ -54,13 +97,16 @@ var Login = React.createClass({
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='手机号码'
                         style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}/>
+                        clearButtonMode={'while-editing'}
+                        onChangeText={this.onChangeMobileText} />
                     </View>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='密码'
                         style={commonStyle.textInput}
                         secureTextEntry={true}
-                        clearButtonMode={'while-editing'}/>
+                        clearButtonMode={'while-editing'}
+                        onChangeText={this.onChangePasswordText}
+                        onSubmitEditing={this.onSubmitEditing} />
                     </View>
                     <Button
                     style={commonStyle.blueButton}
