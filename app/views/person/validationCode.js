@@ -193,6 +193,7 @@ var validationCode = React.createClass({
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
                         onChangeText={this.onChangeText}
+                        returnKeyType={'next'}
                         onSubmitEditing={this.onSubmitEditing} />
                         {this.renderTimer()}
 

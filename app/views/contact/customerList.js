@@ -18,10 +18,8 @@ var _navigator, _topNavigator = null;
 
 var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');
-var ContactGroup = require('./group');
 var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
-var CustomerList = require('./customerList');
 
 var contactAction = require('../../actions/contact/contactAction');
 var contactStore = require('../../stores/contact/contactStore');
@@ -58,9 +56,17 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         }
+        var customerListData = this.transformList(result.data);
         this.setState({
-            listData: result.data
+            listData: customerListData
         });
+    },
+    transformList: function(list){
+        var result = [];
+        for (var i = 0; i < list.length; i++) {
+            (list[i]['group'] == 2) && result.push(list[i]);
+        };
+        return result;
     },
     onPressRow: function(data){
         if (this.state.target == 2) {
@@ -75,20 +81,19 @@ module.exports = React.createClass({
         };
         this.props.route.onPressContactRow(data);
     },
-    goCustomerList: function(){
-        _topNavigator.push({
-            title: '客户',
-            target: 2,
-            component: CustomerList,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
+    leftButtonConfig:function() {
+        return {
+            title: '<',
+            handler:() =>
+                _navigator.pop()
+        }
     },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{ title: this.props.route.title }} />
+                    title={{ title: this.props.route.title }}
+                    leftButton={this.leftButtonConfig()} />
                 <ScrollView style={commonStyle.container}
                 contentOffset={{y: 44}}
                 contentInset={{bottom: 40}}
@@ -98,14 +103,6 @@ module.exports = React.createClass({
                         textFieldBackgroundColor='#fff'
                         barTintColor='#bdbdbd'
                         tintColor='#333' />
-                    <ContactGroup
-                    style={styles.contactGroup}
-                    goCustomerList={this.goCustomerList} />
-                    <View>
-                        <Text style={[commonStyle.blue, commonStyle.title]}>
-                            常用联系人
-                        </Text>
-                    </View>
                     <ContactList
                         style={contactsStyle.scrollView}
                         data={this.state.listData}
@@ -113,12 +110,5 @@ module.exports = React.createClass({
                 </ScrollView>
             </View>
             );
-    }
-});
-
-var styles = StyleSheet.create({
-    contactGroup: {
-        borderBottomWidth: 1 / React.PixelRatio.get(),
-        borderBottomColor: '#bdbdbd'
     }
 });

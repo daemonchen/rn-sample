@@ -57,9 +57,13 @@ module.exports = React.createClass({
         _navigator.push({
             title:'客户',
             component: Contact,
+            onPressContactRow: this.onPressContactRow,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
+    },
+    onPressContactRow: function(data){
+        console.log('selected data:', data);
     },
     _addAttachs: function(){
         _navigator.push({

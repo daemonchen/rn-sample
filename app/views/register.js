@@ -47,7 +47,7 @@ var register = React.createClass({
         })
     },
     getCode: function(){
-        if (!this.state.mobile) {
+        if (!this.state.mobile || !/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(this.state.mobile)) {
             util.alert('请输入手机号码');
             return;
         };
@@ -76,6 +76,8 @@ var register = React.createClass({
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
                         onChangeText={this.onChangeText}
+                        keyboardType={'number-pad'}
+                        returnKeyType={'next'}
                         onSubmitEditing={this.onSubmitEditing}
                         value={this.state.mobile} />
                     </View>

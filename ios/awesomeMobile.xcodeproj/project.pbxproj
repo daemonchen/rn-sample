@@ -23,6 +23,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D22832EA1C0F3A3B00027EA3 /* libRCTCameraRoll.a */; };
 		D22832FF1C0FCAFA00027EA3 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */; };
+		D22833111C100AB400027EA3 /* libRNPhonePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D22833101C100A9B00027EA3 /* libRNPhonePicker.a */; };
 		D25AF01C1BF9AE8100009F01 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */; };
 		D2ED5D5C1C00788C008826C6 /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */; };
 		D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */; };
@@ -114,6 +115,13 @@
 			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
 			remoteInfo = RCTCameraRoll;
 		};
+		D228330F1C100A9B00027EA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D228330B1C100A9B00027EA3 /* RNPhonePicker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 409A073B1B9047BF00F6A547;
+			remoteInfo = RNPhonePicker;
+		};
 		D2ED5D4F1C007876008826C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */;
@@ -167,6 +175,7 @@
 		D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		D22832FD1C0FCAFA00027EA3 /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImagePickerManager.h; sourceTree = "<group>"; };
 		D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerManager.m; sourceTree = "<group>"; };
+		D228330B1C100A9B00027EA3 /* RNPhonePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNPhonePicker.xcodeproj; path = "../node_modules/react-native-phone-picker/RNPhonePicker.xcodeproj"; sourceTree = "<group>"; };
 		D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
@@ -185,6 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D22833111C100AB400027EA3 /* libRNPhonePicker.a in Frameworks */,
 				D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */,
 				D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */,
 				D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */,
@@ -309,6 +319,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D228330B1C100A9B00027EA3 /* RNPhonePicker.xcodeproj */,
 				D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */,
 				D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */,
 				D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */,
@@ -374,6 +385,14 @@
 			);
 			name = UIImagePickerManager;
 			path = "../node_modules/react-native-image-picker/UIImagePickerManager";
+			sourceTree = "<group>";
+		};
+		D228330C1C100A9B00027EA3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D22833101C100A9B00027EA3 /* libRNPhonePicker.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D2ED5D4A1C007876008826C6 /* Products */ = {
@@ -520,6 +539,10 @@
 					ProjectRef = D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */;
 				},
 				{
+					ProductGroup = D228330C1C100A9B00027EA3 /* Products */;
+					ProjectRef = D228330B1C100A9B00027EA3 /* RNPhonePicker.xcodeproj */;
+				},
+				{
 					ProductGroup = D2ED5D6C1C069A2C008826C6 /* Products */;
 					ProjectRef = D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */;
 				},
@@ -608,6 +631,13 @@
 			fileType = archive.ar;
 			path = libRCTCameraRoll.a;
 			remoteRef = D22832E91C0F3A3B00027EA3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D22833101C100A9B00027EA3 /* libRNPhonePicker.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNPhonePicker.a;
+			remoteRef = D228330F1C100A9B00027EA3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */ = {

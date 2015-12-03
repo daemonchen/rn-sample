@@ -39,7 +39,8 @@ var orderItem = React.createClass({
           }
         ]
         return(
-            <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
+            <Swipeout autoClose={true} right={swipeoutBtns}
+            backgroundColor='transparent' style={styles.swipeWrapper}>
                 <TouchableHighlight underlayColor='#eee'
                 onPress={this.onPress}>
                     <View style={styles.rowStyle}>

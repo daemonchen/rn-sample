@@ -52,9 +52,13 @@ module.exports = React.createClass({
         _navigator.push({
             title:'客户',
             component: Contact,
+            onPressContactRow: this.onPressContactRow,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
+    },
+    onPressContactRow: function(data){
+        console.log('select contact:', data);
     },
     onPressTaskRow: function(rowData, sectionID){
         _topNavigator.push({

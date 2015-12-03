@@ -61,7 +61,7 @@ var Login = React.createClass({
         })
     },
     doLogin: function(){
-        if (!this.state.mobile) {
+        if (!this.state.mobile || !/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(this.state.mobile)) {
             util.alert('请输入手机号码');
             return;
         };
@@ -98,7 +98,8 @@ var Login = React.createClass({
                         <TextInput placeholder='手机号码'
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
-                        onChangeText={this.onChangeMobileText} />
+                        onChangeText={this.onChangeMobileText}
+                        keyboardType={'number-pad'} />
                     </View>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='密码'
@@ -106,6 +107,7 @@ var Login = React.createClass({
                         secureTextEntry={true}
                         clearButtonMode={'while-editing'}
                         onChangeText={this.onChangePasswordText}
+                        returnKeyType={'join'}
                         onSubmitEditing={this.onSubmitEditing} />
                     </View>
                     <Button

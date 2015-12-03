@@ -26,12 +26,20 @@ module.exports = React.createClass({
         _topNavigator = this.props.route.topNavigator;
         return {}
     },
+    leftButtonConfig:function() {
+        return {
+            title: '<',
+            handler:() =>
+                _navigator.pop()
+        }
+    },
     render: function(){
         return(
             <View>
                 <NavigationBar
-                    title={{ title: this.props.route.title }} />
-                <Text> this is  the contact detail stuff... </Text>
+                    title={{ title: this.props.route.title }}
+                    leftButton={this.leftButtonConfig()} />
+                <Text> {this.props.route.data} </Text>
             </View>
             );
     }
