@@ -19,5 +19,7 @@ module.exports = {
 
     contacts: NZAOM_API_DOMAIN + '/api/contacts',
 
-    message: NZAOM_API_DOMAIN + '/api/message'
+    message: NZAOM_API_DOMAIN + '/api/message',
+
+    invite: NZAOM_API_DOMAIN + '/api/invite'
 }

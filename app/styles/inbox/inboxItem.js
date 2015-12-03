@@ -24,12 +24,24 @@ module.exports = React.StyleSheet.create({
         marginLeft: 10
     },
     inboxSubDetail: {
-        fontSize: 14
+        fontSize: 14,
+        marginTop: 5,
+        marginLeft: 10
     },
     timeLabel: {
         width:64,
         marginTop: 5,
         textAlign: 'right'
+    },
+    rightButton: {
+        width:56,
+        height: 30,
+        fontSize: 14,
+        color:'#fff',
+        paddingTop: 5,
+        marginTop: 5,
+        borderRadius: 5,
+        backgroundColor:'#4285f4'
     },
     inboxIcon: {
         width: 50,

@@ -42,6 +42,7 @@ var _navigator, _topNavigator = null;
 var OrderDetail = require('../order/orderDetail');
 var TaskDetail = require('../order/task/taskDetail');
 var SysMessage = require('./sysMessage');
+var InviteMessage = require('./inviteMessage');
 
 var util = require('../../common/util');
 
@@ -143,9 +144,11 @@ module.exports = React.createClass({
             case 2:
                 return this.doPush(TaskDetail, rowData)
             case 3:
-                return
+                return this.doPush(TaskDetail, rowData)
             case 4:
                 return this.doPush(SysMessage, rowData)
+            case 5:
+                return this.doPush(InviteMessage, rowData)
             default:
                 return
         }

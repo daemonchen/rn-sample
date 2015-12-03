@@ -148,4 +148,21 @@ module.exports = React.StyleSheet.create({
         fontSize: 20,
         color: 'white'
     },
+    articleTitle: {
+        textAlign: 'center',
+        fontSize: 20,
+        paddingVertical: 10
+    },
+    articleTime: {
+        textAlign: 'right',
+        fontSize: 14,
+        paddingVertical: 10,
+        paddingRight: 16
+    },
+    articleDetail: {
+        textAlign: 'center',
+        fontSize: 14,
+        paddingVertical: 10,
+        paddingHorizontal: 16
+    }
 });

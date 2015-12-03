@@ -1,6 +1,6 @@
 'use strict';
 var React = require('react-native')
-var moment = require('moment')
+
 var {
     Text,
     View,
@@ -17,6 +17,8 @@ var Swipeout = require('react-native-swipeout');
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/inbox/inboxItem');
 var contactsStyle = require('../../styles/contact/contactsItem');
+
+var util = require('../../common/util');
 
 module.exports = React.createClass({
     getInitialState: function(){
@@ -101,7 +103,7 @@ module.exports = React.createClass({
         }
     },
     renderTimeLabel: function(timestamp){
-        var time = moment(timestamp).format('HH:SS')
+        var time = util.formatTimestamp(timestamp);
         return(
             <Text style={[styles.timeLabel, commonStyle.textLight]}>
                 {time}
