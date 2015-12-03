@@ -5,6 +5,7 @@
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
 var SearchBar = require('react-native-search-bar');
+var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var {
     View,
     Text,
@@ -13,8 +14,6 @@ var {
     ListView,
     ScrollView,
     TouchableOpacity,
-    ActionSheetIOS,
-    CameraRoll,
     StyleSheet
 } = React;
 
@@ -33,47 +32,46 @@ module.exports = React.createClass({
             images: []
         }
     },
-    storeImages: function(data) {
-        var assets = data.edges;
-        var images = assets.map( asset => asset.node.image );
-        this.setState({
-            images: this.state.images.concat(images),
-        });
-    },
-    fetchAlbumParams:{
-        first: 5,
-        groupTypes: 'Album'
-    },
-    fetchCameraParams:{
-        first: 5,
-        groupTypes: 'PhotoStream'
-    },
-    logImageError: function(err) {
-        console.log(err);
-    },
-    showCameraRoll: function(index){
-        switch(index){
-            case 0:
-                return CameraRoll.getPhotos(this.fetchCameraParams, this.storeImages, this.logImageError);
-            case 1:
-                return CameraRoll.getPhotos(this.fetchAlbumParams, this.storeImages, this.logImageError);
-            default:
-                return CameraRoll.getPhotos(this.fetchAlbumParams, this.storeImages, this.logImageError);
-        }
-    },
     showActionSheet: function(){
         var self = this;
-        ActionSheetIOS.showActionSheetWithOptions({
-            options: this.actionList,
-            cancelButtonIndex: 2,
-            // destructiveButtonIndex: 1,
-            },
-            (buttonIndex) => {
-                self.showCameraRoll(buttonIndex)
-              // self.setState({ clicked: self.actionList[buttonIndex] });
-            });
+        var options = {
+          title: '添加附件', // specify null or empty string to remove the title
+          cancelButtonTitle: 'Cancel',
+          takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
+          chooseFromLibraryButtonTitle: '选择图片', // specify null or empty string to remove this button
+          maxWidth: 100,
+          maxHeight: 100,
+          quality: 0.2,
+          allowsEditing: false, // Built in iOS functionality to resize/reposition the image
+          noData: false, // Disables the base64 `data` field from being generated (greatly improves performance on large photos)
+          storageOptions: { // if this key is provided, the image will get saved in the documents directory (rather than a temporary directory)
+            skipBackup: true, // image will NOT be backed up to icloud
+            path: 'images' // will save image at /Documents/images rather than the root
+          }
+        };
+
+        UIImagePickerManager.showImagePicker(options, (didCancel, response) => {
+          console.log('Response = ', response);
+
+          if (didCancel) {
+            console.log('User cancelled image picker');
+          }
+          else {
+            if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+              // You can display the image using either:
+              // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+              const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+
+              this.setState({
+                avatarSource: source
+              });
+            }
+          }
+        });
     },
-    actionList: ['拍摄上传','从相册上传','取消'],
     leftButtonConfig: function(){
         return{
             title: '<',

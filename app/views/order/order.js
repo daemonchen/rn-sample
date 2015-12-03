@@ -45,10 +45,7 @@ var order =  React.createClass({
                 })
                 return this.doPush(OrderTemplates);
             default:
-                this.setState({
-                    orderStatus: 0
-                })
-                return this.doPush(OrderSettings);
+                return;
         }
     },
     showActionSheet: function(){

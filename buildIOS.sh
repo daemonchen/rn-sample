@@ -1,1 +1,1 @@
-react-native bundle --dev true --minify --platform ios --entry-file index.ios.js --bundle-output main.jsbundle
+react-native bundle --dev false --minify --platform ios --entry-file /Users/scott/Documents/nzaom/ios/awesomeMobile/index.ios.js --bundle-output /Users/scott/Documents/nzaom/ios/awesomeMobile/ios/main.jsbundle

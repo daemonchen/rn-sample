@@ -1,6 +1,6 @@
 {
   "name": "awesomeMobile",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
@@ -13,6 +13,7 @@
     "query-string": "^3.0.0",
     "react-native": "^0.14.2",
     "react-native-device-info": "^0.5.1",
+    "react-native-image-picker": "^0.9.0",
     "react-native-navbar": "^1.0.7",
     "react-native-radio-button-classic": "0.0.5",
     "react-native-refreshable-listview": "^1.3.0",

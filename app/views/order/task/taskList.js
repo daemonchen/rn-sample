@@ -2,6 +2,7 @@
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
 var NavigationBar = require('react-native-navbar');
+var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     TextInput,
@@ -22,12 +23,9 @@ var styles = require('../../../styles/home/style.js');
 var TaskItem = require('./taskItem');
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
-        var ds = new ListView.DataSource({
-            getSectionData: this.getSectionData,
-            getRowData: this.getRowData,
-            rowHasChanged: (r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2}) // assumes immutable objects
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
         return {
             loaded : false,
@@ -35,34 +33,17 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function() {
+        // this._timer = this.setTimeout(this.fetchData, 1500);
         this.fetchData();
     },
+    componentWillUnmount: function(){
+        // this.clearTimeout(this._timer);
+    },
     fetchData: function(){
-        var dataBlob = {};
-        var sectionIDs = [];
-        var rowIDs = [];
-        for (var i = 0; i <= mockData.length-1; i++) {
-            sectionIDs.push(i);
-            dataBlob[i] = mockData[i];
-            rowIDs[i] = [];
-            var subChildren = mockData[i].subList;
-            for (var j = 0; j <= subChildren.length - 1; j++) {
-                var sub = subChildren[j];
-                rowIDs[i].push(sub.name);
-
-                dataBlob[i + ':' + sub.name] = sub;
-            };
-        };
         this.setState({
-            dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
+            dataSource : this.state.dataSource.cloneWithRows(mockData),
             loaded     : true
         });
-    },
-    getSectionData: function(dataBlob, sectionID){
-        return dataBlob[sectionID];
-    },
-    getRowData: function(dataBlob, sectionID, rowID){
-        return dataBlob[sectionID + ':' + rowID];
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
@@ -72,13 +53,6 @@ module.exports = React.createClass({
             rowID={rowID}
             onPressRow={this.props.events.onPressRow}
             onPressCircle={this.props.events.onPressCircle}/>
-            )
-    },
-    renderSectionHeader: function(sectionData, sectionID){
-        return(
-            <View style={styles.section}>
-                <Text style={styles.text}>{sectionData.timeLabel}</Text>
-            </View>
             )
     },
     renderSeparator: function(sectionID, rowID, adjacentRowHighlighted){

@@ -58,7 +58,11 @@ module.exports = {
     factoryHeader: function(type, data){
         this.fetchOptions.method = type;
         this.fetchOptions.headers['x-auth-token'] = this.getAuthToken();
-        !!data && (this.fetchOptions.body = JSON.stringify(data));
+        if(!!data){
+            this.fetchOptions.body = JSON.stringify(data)
+        }else{
+            this.fetchOptions.body = ''
+        }
     },
     fetchData: function(url){
         return fetch(url, this.fetchOptions)
