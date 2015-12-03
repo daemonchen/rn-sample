@@ -23,8 +23,8 @@ module.exports = {
     getAuthToken: function(callback){
         return appConstants.xAuthToken;
     },
-    getUrlParams: function(){
-        var result = {}
+    getUrlParams: function(data){
+        var result = data || {}
         result.appkey = 997251497892209797;
         result.imei = DeviceInfo.getUniqueID();
         result.imsi = DeviceInfo.getUniqueID();
@@ -36,8 +36,8 @@ module.exports = {
         var stringifyParams = util.stringifyObjectAlphabetical(params);
         return md5(stringifyParams + 'hXyL0XsW7uVYX89mbUivRH9vkeyZvcfb').toUpperCase();
     },
-    get: function(url){
-        url += '?' + this.getUrlParams()
+    get: function(url, data){
+        url += '?' + this.getUrlParams(data)
         this.factoryHeader('GET');
         console.log('http get', url);
         return this.fetchData(url);
@@ -54,7 +54,12 @@ module.exports = {
         console.log('http put', url, body);
         return this.fetchData(url);
     },
-    delete: function(url){},
+    delete: function(url){
+        url += '?' + this.getUrlParams()
+        this.factoryHeader('DELETE');
+        console.log('http delete', url);
+        return this.fetchData(url);
+    },
     factoryHeader: function(type, data){
         this.fetchOptions.method = type;
         this.fetchOptions.headers['x-auth-token'] = this.getAuthToken();

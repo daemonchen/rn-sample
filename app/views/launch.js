@@ -41,14 +41,14 @@ var Launch = React.createClass({
         return (
             <TabBarIOS
                 style={styles.tabbarView}
-                tintColor = "#333"
+                tintColor = "#4285f4"
                 barTintColor = "#fff"
                 translucent = {true} >
                 <TabBarIOS.Item
                     title="Workspace"
                     badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
                     icon={require('../images/TabBar/Workspace.png')}
-                    selectedIcon={require('../images/TabBar/Workspace_hover.png')}
+                    selectedIcon={require('../images/TabBar/Workspace_selected.png')}
                     selected={this.state.selectedTab === 'Workspace'}
                     onPress={this._handlePress("Workspace")}>
                     <AppNavigator initialRoute={{title: 'Workspace', component:Home, topNavigator: this.props.navigator}} key='Workspace' />
@@ -56,7 +56,7 @@ var Launch = React.createClass({
                 <TabBarIOS.Item
                     title="Order"
                     icon={require('../images/TabBar/Order.png')}
-                    selectedIcon={require('../images/TabBar/Order_hover.png')}
+                    selectedIcon={require('../images/TabBar/Order_selected.png')}
                     selected={this.state.selectedTab === 'Order'}
                     onPress={this._handlePress("Order")}>
                     <AppNavigator initialRoute={{title: 'Order', component:Order, topNavigator: this.props.navigator}} key='Order' />
@@ -64,15 +64,15 @@ var Launch = React.createClass({
                 <TabBarIOS.Item
                     title="Inbox"
                     icon={require('../images/TabBar/Inbox.png')}
-                    selectedIcon={require('../images/TabBar/Inbox_hover.png')}
+                    selectedIcon={require('../images/TabBar/Inbox_selected.png')}
                     selected={this.state.selectedTab === 'Inbox'}
                     onPress={this._handlePress("Inbox")}>
                     <AppNavigator initialRoute={{title: 'Inbox', component:Inbox, topNavigator: this.props.navigator}} key='Inbox' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="Contact"
-                    icon={require('../images/TabBar/Contact.png')}
-                    selectedIcon={require('../images/TabBar/Contact_hover.png')}
+                    icon={require('../images/TabBar/Contacts.png')}
+                    selectedIcon={require('../images/TabBar/Contacts_selected.png')}
                     selected={this.state.selectedTab === 'Contact'}
                     onPress={this._handlePress("Contact")}>
                     <AppNavigator initialRoute={{title: '通讯录', component:Contact, topNavigator: this.props.navigator}} key='Contact' />
@@ -80,7 +80,7 @@ var Launch = React.createClass({
                 <TabBarIOS.Item
                     title="Person"
                     icon={require('../images/TabBar/Person.png')}
-                    selectedIcon={require('../images/TabBar/Person_hover.png')}
+                    selectedIcon={require('../images/TabBar/Person_selected.png')}
                     selected={this.state.selectedTab === 'Person'}
                     onPress={this._handlePress("Person")}>
                     <AppNavigator initialRoute={{title: 'Person', component:UserIndex, topNavigator: this.props.navigator}} key='Person' />

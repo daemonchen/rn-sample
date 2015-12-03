@@ -17,5 +17,7 @@ module.exports = {
     login: NZAOM_API_DOMAIN + '/api/login',
     token: NZAOM_API_DOMAIN + '/api/token',
 
-    contacts: NZAOM_API_DOMAIN + '/api/contacts'
+    contacts: NZAOM_API_DOMAIN + '/api/contacts',
+
+    message: NZAOM_API_DOMAIN + '/api/message'
 }

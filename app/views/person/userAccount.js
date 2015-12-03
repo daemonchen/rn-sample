@@ -54,7 +54,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/Arrow_back.png')} />
+                            source={require('../../images/common/Arrow_back.png')} />
                         </View>
                     </TouchableHighlight>
                 </View>
