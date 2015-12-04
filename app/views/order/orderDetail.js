@@ -19,6 +19,7 @@ var styles = require('../../styles/order/orderDetail');
 
 var TaskList = require('./task/taskList');
 var TaskDetail = require('./task/taskDetail');
+var MemberList = require('./member/memberList')
 var TaskSettings = require('./task/taskSettings');
 var AttachList = require('./attach/attachList');
 var AttachDetail = require('./attach/attachDetail');
@@ -123,6 +124,9 @@ module.exports = React.createClass({
             </View>
             );
     },
+    onPressMemberRow: function(rowData, sectionID){
+        console.log(rowData);
+    },
     onPressTaskRow: function(rowData, sectionID){
         _topNavigator.push({
             title: rowData.name,
@@ -144,7 +148,7 @@ module.exports = React.createClass({
     },
     showCameraRoll: function(){
         var options = {
-          title: '添加附件', // specify null or empty string to remove the title
+          // title: '添加附件', // specify null or empty string to remove the title
           cancelButtonTitle: 'Cancel',
           takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
           chooseFromLibraryButtonTitle: '选择图片', // specify null or empty string to remove this button
@@ -205,15 +209,16 @@ module.exports = React.createClass({
                 )
             case 2:
                 return(
-                    <TaskList
-                    onPressRow={this.onPressTaskRow}
+                    <MemberList
+                    onPressRow={this.onPressMemberRow}
                     data={this.props.route.data} />
                 )
             case 3:
                 return(
                     <AttachList
                     onPressRow={this.onPressAttachRow}
-                    onEmptyButtonPress={this.onAttachEmptyButtonPress}/>
+                    onEmptyButtonPress={this.onAttachEmptyButtonPress}
+                    data={this.props.route.data} />
                 )
             default:
                 return(

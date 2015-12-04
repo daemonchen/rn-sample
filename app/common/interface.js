@@ -31,5 +31,7 @@ module.exports = {
 
     updateTaskStatus: NZAOM_API_DOMAIN + '/api/order_job/over',
 
-    task: NZAOM_API_DOMAIN + '/api/order_job'
+    task: NZAOM_API_DOMAIN + '/api/order_job',
+
+    member: NZAOM_API_DOMAIN + '/api/order_job/member'
 }

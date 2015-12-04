@@ -1,7 +1,6 @@
 'use strict';
 var React = require('react-native')
 var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
-var NavigationBar = require('react-native-navbar');
 var TimerMixin = require('react-timer-mixin');
 var {
     Text,
@@ -116,12 +115,6 @@ module.exports = React.createClass({
     onDelete: function(rowData){
         taskListAction.delete({
             orderId:rowData.id
-        });
-    },
-    fetchData: function(){
-        this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(mockData),
-            loaded     : true
         });
     },
     renderRow: function(rowData, sectionID, rowID) {
