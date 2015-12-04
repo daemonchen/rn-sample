@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
-var RefreshableListView = require('react-native-refreshable-listview')
+var TimerMixin = require('react-timer-mixin');
+var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var {
     Text,
     View,
@@ -10,56 +11,108 @@ var {
     StyleSheet
 } = React
 
-var mockData = require('../../../mock/homeList');
+var orderListAction = require('../../../actions/order/orderListAction');
+var orderListStore = require('../../../stores/order/orderListStore');
+var util = require('../../../common/util');
 
 var styles = require('../../../styles/home/style.js');
 var OrderItem = require('./orderItem');
 
 var orderList = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function() {
         var ds = new ListView.DataSource({
-            getSectionData: this.getSectionData,
-            getRowData: this.getRowData,
-            rowHasChanged: (r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2}) // assumes immutable objects
-            // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
         return {
+            status: 0,//-1删除，0正常，1结束
+            pageNum: 1,
+            pageSize: 20,
             loaded : false,
+            list: [],
             dataSource: ds
         }
     },
-  // reloadArticles() {
-  //   return ArticleStore.reload() // returns a Promise of reload completion
-  // },
-    componentDidMount: function() {
-        this.fetchData();
-    },
-    fetchData: function(){
-        var dataBlob = {};
-        var sectionIDs = [];
-        var rowIDs = [];
-        for (var i = 0; i <= mockData.length-1; i++) {
-            sectionIDs.push(i);
-            dataBlob[i] = mockData[i];
-            rowIDs[i] = [];
-            var subChildren = mockData[i].subList;
-            for (var j = 0; j <= subChildren.length - 1; j++) {
-                var sub = subChildren[j];
-                rowIDs[i].push(sub.name);
-
-                dataBlob[i + ':' + sub.name] = sub;
-            };
-        };
+    componentWillReceiveProps: function(nextProps){
         this.setState({
-            dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
-            loaded     : true
+            status: nextProps.status
+        });
+        if (this._timeout) {
+            this.clearTimeout(this._timeout)
+        };
+        this._timeout = this.setTimeout(this.onRefresh, 15)
+    },
+    componentDidMount: function(){
+        this.onRefresh();
+        this.unlisten = orderListStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    handleGet: function(result){
+        if (result.status != 200 && !!result.message) {
+            this.setState({
+                loaded: true,
+                list: []
+            })
+            return;
+        }
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRows(result.data || []),
+            list: result.data || [],
+            loaded     : true,
+            total: result.total
+        });
+        this.list.hideHeader();
+        this.list.hideFooter();
+    },
+    handleUpdate: function(result){
+        return;
+    },
+    handleDelete: function(result){
+        return;
+    },
+    onChange: function() {
+        var result = orderListStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'get':
+                return this.handleGet(result);
+            // case 'delete':
+            //     return this.handleDelete(result);
+        }
+    },
+    onRefresh: function() {
+        this.setState({
+            pageNum: 1
+        });
+        console.log('this.state.status:',this.state.status);
+        orderListAction.getList({
+            status: this.state.status,
+            pageNum: this.state.pageNum,
+            pageSize: this.state.pageSize
         });
     },
-    getSectionData: function(dataBlob, sectionID){
-        return dataBlob[sectionID];
+    onInfinite: function() {
+        this.setState({
+            pageNum: this.state.pageNum + 1
+        });
+        orderListAction.loadMore({
+            status: this.state.status,
+            pageNum: this.state.pageNum,
+            pageSize: this.state.pageSize
+        });
     },
-    getRowData: function(dataBlob, sectionID, rowID){
-        return dataBlob[sectionID + ':' + rowID];
+    loadedAllData: function() {
+        return this.state.list.length >= this.state.total||this.state.list.length===0;
+    },
+    onDelete: function(rowData){
+        orderListAction.delete({
+            msgId:rowData.msgId
+        });
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
@@ -67,36 +120,9 @@ var orderList = React.createClass({
             rowData={rowData}
             sectionID={sectionID}
             rowID={rowID}
-            onPress={this.props.events.onPressRow} />
+            onPress={this.props.events.onPressRow}
+            onDelete={this.onDelete} />
             )
-    },
-    renderSectionHeader: function(sectionData, sectionID){
-        return(
-            <View style={styles.section}>
-                <Text style={styles.text}>{sectionData.timeLabel}</Text>
-            </View>
-            )
-    },
-    renderSeparator: function(sectionID, rowID, adjacentRowHighlighted){
-        return(
-            <View style={styles.sepLine}></View>
-            )
-    },
-    renderFooter: function(){
-        return (
-          <View>
-            <ActivityIndicatorIOS
-                animating={true}
-                size={'large'} />
-            <Text>My custom footer</Text>
-          </View>
-        )
-    },
-    onEndReached: function(){
-        console.log('onEndReached')
-    },
-    onScroll: function(){
-        console.log('onScroll');
     },
     render: function() {
         if (!this.state.loaded) {
@@ -106,16 +132,17 @@ var orderList = React.createClass({
     },
     renderListView: function(){
         return (
-            <RefreshableListView
-                style={styles.container}
-                automaticallyAdjustContentInsets={false}
+            <RefreshInfiniteListView
+                ref = {(list) => {this.list= list}}
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
-                renderFooter={this.renderFooter}
-                onEndReached={this.fetchData}
-                onEndReachedThreshold={40}
-                loadData={this.fetchData}
-                refreshDescription="reload" />
+                scrollEventThrottle={10}
+                style={styles.container}
+                onRefresh = {this.onRefresh}
+                onInfinite = {this.onInfinite}
+                loadedAllData={this.loadedAllData}
+                >
+            </RefreshInfiniteListView>
             )
     },
     renderLoadingView: function(){

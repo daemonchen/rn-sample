@@ -14,23 +14,12 @@ module.exports =  React.createClass({
             selectedIndex: 0
         }
     },
-    // _onSegmentChange: function(event){
-    //     this.setState({
-    //         selectedIndex: event.nativeEvent.selectedSegmentIndex,
-    //     });
-    // },
-    _onSegmentValueChange: function(value){
-        // this.setState({
-        //     value: value,
-        // });
-    },
     render:function(){
         return (
             <View style={{padding:16}}>
                 <SegmentedControlIOS values={['任务', '动态', '成员', '附件']}
                 selectedIndex={this.state.selectedIndex}
-                onChange={this.props.onSegmentChange}
-                onValueChange={this._onSegmentValueChange} />
+                onChange={this.props.onSegmentChange} />
             </View>
         );
     }

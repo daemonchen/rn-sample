@@ -10,4 +10,4 @@
 
 - 项目开发完成后，适当的补全model，方便代码阅读
 
-- 把所有的asyncstorage统一存放在一个对象下。
+- 把所有的asyncstorage统一存放在一个对象下:appConstant。

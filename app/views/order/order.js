@@ -9,12 +9,20 @@ var {
     ActionSheetIOS,
     StyleSheet
 } = React;
+
+var orderListAction = require('../../actions/order/orderListAction');
+var orderListStore = require('../../stores/order/orderListStore');
+
 var commonStyle = require('../../styles/commonStyle');
 var OrderSegmentControl = require('./components/orderSegmentControl');
 var OrderList = require('./components/orderList');
 var OrderTemplates = require('./orderTemplates');
 var OrderSettings = require('./orderSettings');
 var OrderDetail = require('./orderDetail');
+var RightAddButton = require('../../common/rightAddButton');
+
+var util = require('../../common/util');
+
 var _navigator, _topNavigator = null;
 
 var order =  React.createClass({
@@ -22,6 +30,7 @@ var order =  React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
+            tabIndex: 0,
             orderStatus: 0
         }
     },
@@ -61,14 +70,6 @@ var order =  React.createClass({
             });
     },
     actionList: ['新建订单','从模版创建','取消'],
-    rightButtonConfig:function(){
-        var self = this;
-        return {
-            title: '+',
-            handler:() =>
-                self.showActionSheet()
-        }
-    },
     onPressOrderRow: function(rowData, sectionID){
         _topNavigator.push({
             title: rowData.name,
@@ -77,16 +78,37 @@ var order =  React.createClass({
             topNavigator: _topNavigator
         })
     },
+    onSegmentChange: function(event){
+        this.setState({
+            tabIndex: event.nativeEvent.selectedSegmentIndex
+        })
+    },
+    renderTabContent: function(){
+        switch(this.state.tabIndex){
+            case 0:
+                return(
+                    <OrderList
+                    events={{onPressRow: this.onPressOrderRow}}
+                    status={0} />
+                )
+            case 1:
+                return(
+                    <OrderList
+                    events={{onPressRow: this.onPressOrderRow}}
+                    status={1} />
+                )
+        }
+    },
     render:function(){
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{ title: '订单', }}
-                    rightButton={this.rightButtonConfig()} />
+                    rightButton={<RightAddButton onPress={this.showActionSheet} />} />
                 <View style={styles.main}>
-                    <OrderSegmentControl />
-                    <OrderList
-                    events={{onPressRow: this.onPressOrderRow}} />
+                    <OrderSegmentControl
+                    onSegmentChange={this.onSegmentChange} />
+                    {this.renderTabContent()}
                 </View>
             </View>
         );

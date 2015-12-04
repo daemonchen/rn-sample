@@ -92,8 +92,10 @@ var awesomeMobile = React.createClass({
             xAuthToken: ''
         }
     },
-    componentDidMount: function(){
+    componentWillMount: function(){
         this.getAppState();
+    },
+    componentDidMount: function(){
         this.unlisten = authTokenStore.listen(this.onChange)
     },
     componentWillUnmount: function() {

@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react-native')
-var RefreshableListView = require('react-native-refreshable-listview')
 var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var NavigationBar = require('react-native-navbar');
 var {

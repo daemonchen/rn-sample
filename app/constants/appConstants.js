@@ -6,3 +6,5 @@ var keyMirror = require('keymirror');
 module.exports = keyMirror({
     xAuthToken: null
 });
+
+// TODO: orderList inboxList

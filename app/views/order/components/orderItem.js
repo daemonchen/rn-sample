@@ -27,7 +27,7 @@ var orderItem = React.createClass({
         });
     },
     onDelete: function(){
-        console.log('delete stuff');
+        this.props.onDelete(this.props.rowData, this.props.sectionID);
     },
     render: function(){
         var swipeoutBtns = [
@@ -38,6 +38,7 @@ var orderItem = React.createClass({
             // backgroundColor: ''
           }
         ]
+        // console.log('---rowData', this.props.rowData);
         return(
             <Swipeout autoClose={true} right={swipeoutBtns}
             backgroundColor='transparent' style={styles.swipeWrapper}>

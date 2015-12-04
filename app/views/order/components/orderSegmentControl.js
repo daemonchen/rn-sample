@@ -14,23 +14,12 @@ var orderSegmentControl =  React.createClass({
             selectedIndex: 0
         }
     },
-    _onSegmentChange: function(event){
-        this.setState({
-          selectedIndex: event.nativeEvent.selectedSegmentIndex,
-        });
-    },
-    _onSegmentValueChange: function(value){
-        this.setState({
-            value: value,
-        });
-    },
     render:function(){
         return (
             <View style={{padding:16}}>
                 <SegmentedControlIOS values={['未完成', '已完成']}
                 selectedIndex={this.state.selectedIndex}
-                onChange={this._onSegmentChange}
-                onValueChange={this._onSegmentValueChange} />
+                onChange={this.props.onSegmentChange} />
             </View>
         );
     }
