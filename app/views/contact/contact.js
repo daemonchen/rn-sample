@@ -90,14 +90,9 @@ module.exports = React.createClass({
                 <NavigationBar
                     title={{ title: this.props.route.title }} />
                 <ScrollView style={commonStyle.container}
-                contentOffset={{y: 44}}
-                contentInset={{bottom: 40}}
+
                 automaticallyAdjustContentInsets={false} >
-                    <SearchBar
-                        placeholder='Search'
-                        textFieldBackgroundColor='#fff'
-                        barTintColor='#bdbdbd'
-                        tintColor='#333' />
+
                     <ContactGroup
                     style={styles.contactGroup}
                     goCustomerList={this.goCustomerList} />

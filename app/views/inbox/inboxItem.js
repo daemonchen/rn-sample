@@ -140,10 +140,12 @@ module.exports = React.createClass({
                         {this.renderAvatar()}
                         {this.renderDot()}
                         <View style={styles.rowTextWrapper}>
-                            <Text style={styles.inboxTitle}>
+                            <Text style={styles.inboxTitle}
+                            numberOfLines={1}>
                                 {this.props.rowData.msgTitle}
                             </Text>
-                            <Text style={[styles.inboxDetail,commonStyle.textLight]}>
+                            <Text style={[styles.inboxDetail,commonStyle.textLight]}
+                            numberOfLines={1} >
                                 {this.props.rowData.msgContent}
                             </Text>
                         </View>

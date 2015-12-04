@@ -40,7 +40,9 @@ var orderList = React.createClass({
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
-        this._timeout = this.setTimeout(this.onRefresh, 15)
+        if (nextProps.status != this.props.status) {
+            this._timeout = this.setTimeout(this.onRefresh, 15)
+        };
     },
     componentDidMount: function(){
         this.onRefresh();

@@ -14,7 +14,7 @@ module.exports = React.StyleSheet.create({
     },
     inboxTitle: {
         color: '#212121',
-        fontSize: 18,
+        fontSize: 16,
         marginTop: 5,
         marginLeft: 10
     },

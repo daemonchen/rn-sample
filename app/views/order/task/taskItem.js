@@ -13,28 +13,119 @@ var {
 
 var Swipeout = require('react-native-swipeout');
 
-var styles = require('../../../styles/home/task');
+var taskListAction = require('../../../actions/task/taskListAction');
+var taskListStore = require('../../../stores/task/taskListStore');
+
+var commonStyle = require('../../../styles/commonStyle');
+var styles = require('../../../styles/order/orderDetail');
+var util = require('../../../common/util');
 
 module.exports = React.createClass({
     getInitialState: function(){
         return{
-            done: this.props.rowData.done
+            done: this.props.rowData.jobDO.status
+        }
+    },
+    componentDidMount: function(){
+        this.unlisten = taskListStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    handleUpdate: function(result){
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        if (parseInt(result.data) != this.props.rowData.jobDO.id) {
+            return;
+        };
+        var status = (this.state.done == 1) ? 0 : 1
+        this.setState({
+            done: status
+        });
+    },
+    onChange: function() {
+        var result = taskListStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        switch(result.type){
+            case 'update':
+                return this.handleUpdate(result);
         }
     },
     onPressCircle: function(){
-        this.props.onPressCircle(this.props.rowData, this.props.sectionID);
-        this.setState({
-            done: true
+        var status = (this.state.done == 1) ? 0 : 1
+        taskListAction.update({
+            id: this.props.rowData.jobDO.id,
+            status: status,
         });
     },
     onPressRow: function(){
         this.props.onPressRow(this.props.rowData, this.props.sectionID);
     },
     onDelete: function(){
-        console.log('delete stuff');
+        taskListAction.delete({
+            jobId: this.props.rowData.jobDO.id
+        });
+    },
+    renderAvatar: function(user){
+        if (user.avatar) {
+            return(
+                <Image
+                  style={styles.taskItemCircle}
+                  source={{uri: user.avatar}} />
+                );
+        }else{
+            var circleBackground = {
+                backgroundColor: user.bgColor
+            }
+            return(
+                <View style={[styles.taskItemCircle, circleBackground]}>
+                    <Text style={styles.taskItemTitle}>
+                        {user.simpleUserName}
+                    </Text>
+                </View>
+                )
+        }
+    },
+    renderTimeLabel: function(timestamp){
+        var time = util.formatTimestamp(timestamp);
+        return(
+            <Text style={[styles.rowText, commonStyle.textGray]}>
+                {time}
+            </Text>
+            );
+    },
+    renderTimeLine: function(){
+        if(this.state.done == 0){
+            return(
+                <View style={styles.timelineWrapper}>
+                    <View style={[styles.timeline]}></View>
+                    <View style={[styles.timeline]}></View>
+                </View>
+                )
+        }else{
+            return(
+                <View style={styles.timelineWrapper}>
+                    <View style={[styles.timeline, styles.timelineDone]}></View>
+                    <View style={[styles.timeline, styles.timelineDone]}></View>
+                </View>
+                )
+        }
+    },
+    renderCheckIcon: function(){
+        var circleImage = (this.state.done == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
+        return(
+            <TouchableWithoutFeedback onPress={this.onPressCircle}
+            style={styles.checkIcon} >
+                <View style={styles.checkIconWrapper}>
+                    <Image source={circleImage} />
+                </View>
+            </TouchableWithoutFeedback>
+            )
     },
     render: function(){
-        var circleImage = this.state.done ? require('../../../images/Check_box_done_1.png') : require('../../../images/Check_box_1.png')
         var swipeoutBtns = [
           {
             text: '删除',
@@ -49,14 +140,13 @@ module.exports = React.createClass({
                 underlayColor='#eee'
                 onPress={this.onPressRow}>
                     <View style={styles.rowStyle}>
-                        <View style={styles.timelineWrapper}>
-                            <View style={[styles.timeline, styles.timelineDone]}></View>
-                            <View style={[styles.timeline, styles.timelineDone]}></View>
+                        {this.renderTimeLine()}
+                        {this.renderCheckIcon()}
+                        <View style={styles.contentWrapper}>
+                            <Text style={styles.rowText}>{this.props.rowData.jobDO.jobName}</Text>
+                            {this.renderTimeLabel(this.props.rowData.jobDO.gmtCreate)}
                         </View>
-                        <TouchableWithoutFeedback onPress={this.onPressCircle} >
-                            <Image source={circleImage} />
-                        </TouchableWithoutFeedback>
-                        <Text style={styles.rowText}>{this.props.rowData.name}</Text>
+                        {this.renderAvatar(this.props.rowData.userVO)}
                     </View>
                 </TouchableHighlight>
             </Swipeout>

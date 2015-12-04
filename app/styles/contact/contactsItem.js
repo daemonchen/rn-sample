@@ -21,13 +21,6 @@ module.exports = React.StyleSheet.create({
         height: 36,
         borderRadius: 18
     },
-    contactsItemIcon: {
-        width: 20,
-        height: 20,
-        position: 'absolute',
-        left: 10,
-        top: 12
-    },
     contactsItemTitle:{
         position: 'absolute',
         width: 30,

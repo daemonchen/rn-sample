@@ -15,6 +15,7 @@ var {
 } = React
 
 var commonStyle = require('../../styles/commonStyle');
+var styles = require('../../styles/order/orderDetail');
 
 var TaskList = require('./task/taskList');
 var TaskDetail = require('./task/taskDetail');
@@ -23,6 +24,14 @@ var AttachList = require('./attach/attachList');
 var AttachDetail = require('./attach/attachDetail');
 var OrderDetailSegmentControl = require('./components/orderDetailSegmentControl');
 var OrderSettings = require('./orderSettings');
+
+var WhiteBackButton = require('../../common/whiteBackButton');
+var RightWhiteAddButton = require('../../common/rightWhiteAddButton');
+var RightWhiteSettingButton = require('../../common/rightWhiteSettingButton');
+
+var util = require('../../common/util');
+var taskListStore = require('../../stores/task/taskListStore');
+
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
@@ -35,20 +44,32 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        // this.setState({
-        //     tabIndex: 0
-        // });
-        // contactAction.getList();
-        // this.unlisten = contactStore.listen(this.onChange)
+        this.unlisten = taskListStore.listen(this.onChange)
     },
     componentWillUnmount: function() {
-        // this.unlisten();
+        this.unlisten();
     },
-    leftButtonConfig:function() {
-        return {
-            title: '<',
-            handler:() =>
-                _navigator.pop()
+    handleGet: function(result){
+        if (result.status != 200 && !!result.message) {
+            this.setState({
+                loaded: true,
+                list: []
+            })
+            return;
+        }
+        console.log('-----get result in orderDetail');
+    },
+    onChange: function() {
+        var result = taskListStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'get':
+                return this.handleGet(result);
+            // case 'delete':
+            //     return this.handleDelete(result);
         }
     },
     _pressSettingButton: function(){
@@ -96,14 +117,9 @@ module.exports = React.createClass({
     rightButtonConfig: function(){
         var self = this;
         return(
-            <View style={{width: 72,flexDirection:'row',alignItems:'flex-end'}}>
-                <TouchableOpacity onPress={this._pressCreateButton}>
-                    <Image source={require('../../images/Setting.png')} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this._pressSettingButton}
-                style={{marginLeft:8}}>
-                    <Image source={require('../../images/Setting.png')} />
-                </TouchableOpacity>
+            <View style={{flexDirection:'row'}}>
+                <RightWhiteAddButton onPress={this._pressCreateButton} />
+                <RightWhiteSettingButton onPress={this._pressSettingButton} />
             </View>
             );
     },
@@ -125,10 +141,6 @@ module.exports = React.createClass({
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         })
-    },
-    fetchCameraParams:{
-        first: 5,
-        groupTypes: 'All'
     },
     showCameraRoll: function(){
         var options = {
@@ -182,23 +194,20 @@ module.exports = React.createClass({
             case 0:
                 return(
                     <TaskList
-                    events={{
-                        onPressRow: this.onPressTaskRow,
-                        onPressCircle: this.onPressCircle
-                    }} />
+                    onPressRow={this.onPressTaskRow}
+                    data={this.props.route.data} />
                 )
             case 1:
                 return(
                     <TaskList
-                    events={{
-                        onPressRow: this.onPressTaskRow,
-                        onPressCircle: this.onPressCircle
-                    }} />
+                    onPressRow={this.onPressTaskRow}
+                    data={this.props.route.data} />
                 )
             case 2:
                 return(
                     <TaskList
-                    onPressRow={this.onPressTaskRow}/>
+                    onPressRow={this.onPressTaskRow}
+                    data={this.props.route.data} />
                 )
             case 3:
                 return(
@@ -216,21 +225,31 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{ title: this.props.route.title, }}
-                    leftButton={this.leftButtonConfig()}
+                    statusBar={{style: 'light-content', hidden: false}}
+                    tintColor={'#4285f4'}
+                    title={{ title: this.props.route.title, tintColor: '#fff' }}
+                    leftButton={<WhiteBackButton navigator={_topNavigator} />}
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>
+                    <View style={{flexDirection:'row', height: 68, backgroundColor: '#4285f4'}}>
+                        <View style={{flex: 1}}>
+                            <Text style={styles.taskTotalText}>4</Text>
+                            <Text style={styles.taskTotalText}>已完成</Text>
+                        </View>
+                        <View style={{flex: 1}}>
+                            <Text style={styles.taskTotalText}>4</Text>
+                            <Text style={styles.taskTotalText}>未完成</Text>
+                        </View>
+                        <View style={{flex: 1}}>
+                            <Text style={styles.taskTotalText}>4</Text>
+                            <Text style={styles.taskTotalText}>截止日</Text>
+                        </View>
+                    </View>
                     <OrderDetailSegmentControl
                     onSegmentChange={this.onSegmentChange}/>
                     {this.renderTabContent()}
                 </View>
             </View>
             );
-    }
-});
-
-var styles = StyleSheet.create({
-    main: {
-        flex: 1
     }
 });

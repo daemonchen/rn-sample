@@ -10,8 +10,6 @@ var {
     StyleSheet
 } = React;
 
-var orderListAction = require('../../actions/order/orderListAction');
-var orderListStore = require('../../stores/order/orderListStore');
 
 var commonStyle = require('../../styles/commonStyle');
 var OrderSegmentControl = require('./components/orderSegmentControl');
@@ -72,7 +70,8 @@ var order =  React.createClass({
     actionList: ['新建订单','从模版创建','取消'],
     onPressOrderRow: function(rowData, sectionID){
         _topNavigator.push({
-            title: rowData.name,
+            title: rowData.title,
+            data: rowData,
             component: OrderDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
