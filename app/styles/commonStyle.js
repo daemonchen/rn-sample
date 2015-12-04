@@ -15,10 +15,10 @@ module.exports = React.StyleSheet.create({
         textAlign: 'center'
     },
     textGray:{
-        color: '#212121'
+        color: '#727272'
     },
     textDark: {
-        color: '#727272'
+        color: '#212121'
     },
     textLight: {
         color: '#bdbdbd'

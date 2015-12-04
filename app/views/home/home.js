@@ -13,6 +13,8 @@ var tabViewSample = require('../tabViewSample');
 var HomeSegmentControl = require('./homeSegmentControl');
 var HomeList = require('./homeList');
 
+var RightAddButton = require('../../common/rightAddButton');
+
 var _navigator, _topNavigator = null;
 
 var Home =  React.createClass({
@@ -35,31 +37,12 @@ var Home =  React.createClass({
             });
     },
     actionList: ['订单','任务','取消'],
-    rightButtonConfig:{
-        title: 'Search',
-        handler:() =>
-            _topNavigator.push({
-                title: 'from home' + Math.random(),
-                component: tabViewSample,
-                sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-                topNavigator: _topNavigator
-            })
-    },
-    leftButtonConfig:function(){
-        var self = this;
-        return {
-            title: '+',
-            handler:() =>
-                self.showActionSheet()
-        }
-    },
     render:function(){
         return (
             <View style={styles.container}>
                 <NavigationBar
                     title={{ title: '工作台', }}
-                    leftButton={this.leftButtonConfig()}
-                    rightButton={this.rightButtonConfig} />
+                    rightButton={<RightAddButton onPress={this.showActionSheet} />} />
                 <View style={styles.main}>
                     <HomeSegmentControl />
                     <HomeList />

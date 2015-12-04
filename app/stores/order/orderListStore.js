@@ -4,6 +4,7 @@ var alt = require('../../common/alt');
 var orderListAction = require('../../actions/order/orderListAction');
 var orderListService = require('../../services/order/orderListService')
 var asyncStorage = require('../../common/storage');
+var appConstants = require('../../constants/appConstants');
 class OrderListStore {
     constructor() {
         this.bindActions(orderListAction);
@@ -21,7 +22,8 @@ class OrderListStore {
     onGetListSuccess(data){
         if (!data) {return false};
         data.type = 'get'
-        asyncStorage.setItem('orderList', {list: data.data});
+        appConstants.orderList = data.data
+        asyncStorage.setItem('appConstants', appConstants);
         this.setState(data);
     }
     onLoadMore(data) {
@@ -38,15 +40,16 @@ class OrderListStore {
         this.mergeList(data)
     }
     mergeList(data){
-        asyncStorage.getItem('orderList')
+        asyncStorage.getItem('appConstants')
         .then((result)=>{
-            if (!!result.list) {
-                data.data = result.list.concat(data.data)
+            if (!!result.orderList) {
+                data.data = result.orderList.concat(data.data)
                 this.setState(data);
             }else{
                 this.setState(data);
             }
-            asyncStorage.setItem('orderList', {list: data.data});
+            appConstants.orderList = data.data
+            asyncStorage.setItem('appConstants', appConstants);
         }).done();
     }
     onDelete(data){
@@ -60,7 +63,19 @@ class OrderListStore {
     onDeleteSuccess(data){
         if (!data) {return false};
         data.type = 'delete'
+        appConstants.orderList = this.removeItemFromCache(appConstants.orderList, data.data);
+        asyncStorage.setItem('appConstants', appConstants);
+        data.data = appConstants.orderList;
         this.setState(data);
+    }
+    removeItemFromCache(collection, id){
+        var result = [];
+        for (var i = 0; i < collection.length; i++) {
+            if(collection[i].id == id){
+                collection.splice(i, 1)
+            }
+        };
+        return collection;
     }
 }
 

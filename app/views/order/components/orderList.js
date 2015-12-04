@@ -70,6 +70,18 @@ var orderList = React.createClass({
         return;
     },
     handleDelete: function(result){
+        if (result.status != 200 && !!result.message) {
+            this.setState({
+                loaded: true,
+                list: []
+            })
+            return;
+        }
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRows(result.data || []),
+            list: result.data || [],
+            loaded     : true
+        });
         return;
     },
     onChange: function() {
@@ -81,15 +93,14 @@ var orderList = React.createClass({
         switch(result.type){
             case 'get':
                 return this.handleGet(result);
-            // case 'delete':
-            //     return this.handleDelete(result);
+            case 'delete':
+                return this.handleDelete(result);
         }
     },
     onRefresh: function() {
         this.setState({
             pageNum: 1
         });
-        console.log('this.state.status:',this.state.status);
         orderListAction.getList({
             status: this.state.status,
             pageNum: this.state.pageNum,
@@ -111,7 +122,7 @@ var orderList = React.createClass({
     },
     onDelete: function(rowData){
         orderListAction.delete({
-            msgId:rowData.msgId
+            orderId:rowData.id
         });
     },
     renderRow: function(rowData, sectionID, rowID) {

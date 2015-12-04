@@ -1,10 +1,11 @@
-var keyMirror = require('keymirror');
+// var keyMirror = require('keymirror');
 
 /*
     global variable cached in memory
 */
-module.exports = keyMirror({
-    xAuthToken: null
-});
+module.exports = {
+    xAuthToken: null,
+    orderList: null
+};
 
 // TODO: orderList inboxList
