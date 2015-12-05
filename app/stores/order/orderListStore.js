@@ -69,7 +69,6 @@ class OrderListStore {
         this.setState(data);
     }
     removeItemFromCache(collection, id){
-        var result = [];
         for (var i = 0; i < collection.length; i++) {
             if(collection[i].id == id){
                 collection.splice(i, 1)

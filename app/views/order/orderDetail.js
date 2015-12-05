@@ -1,7 +1,6 @@
 'use strict';
 var React = require('react-native')
 var NavigationBar = require('react-native-navbar');
-var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var {
     Text,
     TextInput,
@@ -33,6 +32,7 @@ var RightWhiteSettingButton = require('../../common/rightWhiteSettingButton');
 
 var util = require('../../common/util');
 var taskListStore = require('../../stores/task/taskListStore');
+var attachAction = require('../../actions/attach/attachAction');
 
 var _navigator, _topNavigator = null;
 
@@ -59,7 +59,7 @@ module.exports = React.createClass({
             })
             return;
         }
-        console.log('-----get result in orderDetail');
+        console.log('TODO: add total task number in orderDetail');
     },
     onChange: function() {
         var result = taskListStore.getState();
@@ -154,42 +154,15 @@ module.exports = React.createClass({
         })
     },
     showCameraRoll: function(){
-        var options = {
-          // title: '添加附件', // specify null or empty string to remove the title
-          cancelButtonTitle: 'Cancel',
-          takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
-          chooseFromLibraryButtonTitle: '选择图片', // specify null or empty string to remove this button
-          maxWidth: 100,
-          maxHeight: 100,
-          quality: 0.2,
-          allowsEditing: false, // Built in iOS functionality to resize/reposition the image
-          noData: false, // Disables the base64 `data` field from being generated (greatly improves performance on large photos)
-          storageOptions: { // if this key is provided, the image will get saved in the documents directory (rather than a temporary directory)
-            skipBackup: true, // image will NOT be backed up to icloud
-            path: 'images' // will save image at /Documents/images rather than the root
-          }
-        };
-
-        UIImagePickerManager.showImagePicker(options, (didCancel, response) => {
-          console.log('Response = ', response);
-
-          if (didCancel) {
-            console.log('User cancelled image picker');
-          }
-          else {
-            if (response.customButton) {
-              console.log('User tapped custom button: ', response.customButton);
-            }
-            else {
-              // You can display the image using either:
-              // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
-              const source = {uri: response.uri.replace('file://', ''), isStatic: true};
-
-              this.setState({
-                avatarSource: source
-              });
-            }
-          }
+        util.showPhotoPicker({
+            title: ''
+        }, (response)=>{
+            var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
+            attachAction.create([{
+                hostId: this.props.route.data.id,
+                hostType: 1,
+                base64: response.data,
+                fileName: name}]);
         });
     },
     onAttachEmptyButtonPress: function(){

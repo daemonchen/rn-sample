@@ -17,8 +17,11 @@ var {
     StyleSheet
 } = React;
 
-var mockData = require('../../../mock/homeList');
 var _navigator, _topNavigator = null;
+
+var attachListStore = require('../../../stores/attach/attachListStore');
+var attachListAction = require('../../../actions/attach/attachListAction');
+var attachStore = require('../../../stores/attach/attachStore');
 
 var commonStyle = require('../../../styles/commonStyle');
 
@@ -27,12 +30,7 @@ var Button = require('../../../common/button.js');
 
 module.exports = React.createClass({
     getInitialState: function(){
-        var ds = new ListView.DataSource({
-            getSectionData: this.getSectionData,
-            getRowData: this.getRowData,
-            rowHasChanged: (r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2}) // assumes immutable objects
-            // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}) // assumes immutable objects
         return {
             loaded : false,
             list: [],
@@ -40,38 +38,59 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function() {
+        this.unlistenAttach = attachListStore.listen(this.onChange)
         this.fetchData();
     },
-    fetchData: function(){
-        var dataBlob = {};
-        var sectionIDs = [];
-        var rowIDs = [];
-        for (var i = 0; i <= mockData.length-1; i++) {
-            sectionIDs.push(i);
-            dataBlob[i] = mockData[i];
-            rowIDs[i] = [];
-            var subChildren = mockData[i].subList;
-            for (var j = 0; j <= subChildren.length - 1; j++) {
-                var sub = subChildren[j];
-                rowIDs[i].push(sub.name);
-
-                dataBlob[i + ':' + sub.name] = sub;
-            };
-        };
+    componentWillUnmount: function(){
+        this.unlistenAttach();
+    },
+    handleGet: function(result){
+        if (result.status != 200 && !!result.message) {
+            this.setState({
+                loaded: true,
+                list: []
+            })
+            return;
+        }
         this.setState({
-            dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
-            loaded     : true
+            dataSource : this.state.dataSource.cloneWithRows(result.data || []),
+            list: result.data || [],
+            loaded     : true,
         });
     },
-    getSectionData: function(dataBlob, sectionID){
-        return dataBlob[sectionID];
+    handleDelete: function(result){
+        if (result.status != 200 && !!result.message) {
+            this.setState({
+                loaded: true,
+                list: []
+            })
+            return;
+        }
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRows(result.data || []),
+            list: result.data || [],
+            loaded: true
+        });
+        return;
     },
-    getRowData: function(dataBlob, sectionID, rowID){
-        return dataBlob[sectionID + ':' + rowID];
+    onChange: function(){
+        var result = attachListStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        switch(result.type){
+            case 'get':
+                return this.handleGet(result);
+            case 'delete':
+                return this.handleDelete(result)
+        }
     },
-    // onPressRow: function(rowData, sectionID){
-    //     console.log(rowData);
-    // },
+    fetchData: function(){
+        attachListAction.getList({
+            hostId: this.props.data.id,
+            hostType: 1
+        });
+    },
     renderRow: function(rowData, sectionID, rowID) {
         return (
             <AttachItem
@@ -80,12 +99,6 @@ module.exports = React.createClass({
             rowID={rowID}
             onPress={this.props.onPressRow} />
             )
-    },
-    onEndReached: function(){
-        console.log('onEndReached')
-    },
-    onScroll: function(){
-        console.log('onScroll');
     },
     render: function() {
         if (!this.state.loaded) {
@@ -98,15 +111,10 @@ module.exports = React.createClass({
     },
     renderListView: function(){
         return (
-            <RefreshableListView
-                style={commonStyle.container}
-                automaticallyAdjustContentInsets={false}
-                dataSource={this.state.dataSource}
-                renderRow={this.renderRow}
-                onEndReached={this.fetchData}
-                onEndReachedThreshold={40}
-                loadData={this.fetchData}
-                refreshDescription="reload" />
+            <ListView
+              style={commonStyle.container}
+              dataSource={this.state.dataSource}
+              renderRow={this.renderRow} />
             )
     },
     renderEmptyView: function(){

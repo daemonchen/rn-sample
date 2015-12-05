@@ -9,24 +9,23 @@ var {
     StyleSheet
 } = React
 
+var attachListAction = require('../../../actions/attach/attachListAction');
+
 var Swipeout = require('react-native-swipeout');
 
 var styles = require('../../../styles/home/task');
 
 module.exports = React.createClass({
     getInitialState: function(){
-        return{
-            done: this.props.rowData.done
-        }
+        return{}
     },
     onPress: function(){
         this.props.onPress(this.props.rowData, this.props.sectionID);
-        this.setState({
-            done: true
-        });
     },
     onDelete: function(){
-        console.log('delete stuff');
+        attachListAction.delete({
+            id: this.props.rowData.id
+        });
     },
     render: function(){
         var circleImage = this.state.done ? require('../../../images/Check_box_done.png') : require('../../../images/Check_box_undo.png')
@@ -43,7 +42,9 @@ module.exports = React.createClass({
                 <TouchableOpacity onPress={this.onPress}>
                     <View style={styles.rowStyle}>
                         <Image source={circleImage} />
-                        <Text style={styles.rowText}>{this.props.rowData.name}</Text>
+                        <Text style={styles.rowText}>
+                            {this.props.rowData.name}
+                        </Text>
                     </View>
                 </TouchableOpacity>
             </Swipeout>
