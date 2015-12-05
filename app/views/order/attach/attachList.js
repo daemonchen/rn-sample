@@ -38,11 +38,31 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function() {
-        this.unlistenAttach = attachListStore.listen(this.onChange)
+        this.unlistenAttach = attachStore.listen(this.onAttachChange);
+        this.unlisten = attachListStore.listen(this.onChange)
         this.fetchData();
     },
     componentWillUnmount: function(){
-        this.unlistenAttach();
+        this.unlisten();
+        this.unlistenAttach()
+    },
+    onAttachChange: function(){
+        var result = attachStore.getState();
+        if (result.status != 200 && !!result.message) {
+            this.setState({
+                loaded: true,
+                list: []
+            })
+            return;
+        }
+        if (result.type == 'create') {
+            // this.fetchData();
+            this.setState({
+                dataSource : this.state.dataSource.cloneWithRows(result.data || []),
+                list: result.data || [],
+                loaded     : true,
+            });
+        };
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {

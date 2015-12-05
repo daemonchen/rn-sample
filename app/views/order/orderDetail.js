@@ -147,7 +147,8 @@ module.exports = React.createClass({
     },
     onPressAttachRow: function(rowData,sectionID){
         _topNavigator.push({
-            title: rowData.name,
+            title: '附件详情',
+            data: rowData,
             component: AttachDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator

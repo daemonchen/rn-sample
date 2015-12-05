@@ -1,5 +1,11 @@
 const React = require('react-native');
 
+//获取可视窗口的宽高
+var util = require('../../common/util.js');
+var {
+    width, height, scale
+} = util.getDimensions();
+
 module.exports = React.StyleSheet.create({
     main: {
         flex: 1
@@ -68,5 +74,30 @@ module.exports = React.StyleSheet.create({
         color: '#212121',
         fontSize: 14,
         paddingVertical: 5
+    },
+    attachImageWrapper: {
+        alignItems: 'center'
+        // paddingHorizontal: 64
+    },
+    attachImage: {
+        width: 80,
+        height: 80,
+        marginLeft: 16,
+        marginRight: 16
+    },
+    attachImageMiddle: {
+        width: width - 32,
+        height: height / 2
+    },
+    attachTitle: {
+        height: 54,
+        paddingVertical: 16,
+        fontSize: 22,
+        textAlign: 'center',
+        fontWeight: '800'
+    },
+    attachItemText: {
+        fontSize: 16,
+        justifyContent: 'center'
     }
 });

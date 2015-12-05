@@ -101,7 +101,7 @@ module.exports = React.StyleSheet.create({
     },
     settingItemWrapper:{
         width: width,
-        height: 40,
+        height: 48,
         alignItems: 'center'
     },
     settingItem: {
@@ -109,7 +109,7 @@ module.exports = React.StyleSheet.create({
         flexDirection: 'row',
         // alignItems: 'center',
         // paddingVertical: 16,
-        height: 40
+        height: 48
     },
     settingIcon: {
         width: 24,

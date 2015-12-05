@@ -13,7 +13,7 @@ var attachListAction = require('../../../actions/attach/attachListAction');
 
 var Swipeout = require('react-native-swipeout');
 
-var styles = require('../../../styles/home/task');
+var styles = require('../../../styles/order/orderDetail');
 
 module.exports = React.createClass({
     getInitialState: function(){
@@ -28,7 +28,6 @@ module.exports = React.createClass({
         });
     },
     render: function(){
-        var circleImage = this.state.done ? require('../../../images/Check_box_done.png') : require('../../../images/Check_box_undo.png')
         var swipeoutBtns = [
           {
             text: '删除',
@@ -41,9 +40,10 @@ module.exports = React.createClass({
             <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
                 <TouchableOpacity onPress={this.onPress}>
                     <View style={styles.rowStyle}>
-                        <Image source={circleImage} />
-                        <Text style={styles.rowText}>
-                            {this.props.rowData.name}
+                        <Image source={{uri: this.props.rowData.fileAddress}}
+                        style={styles.attachImage} />
+                        <Text style={styles.attachItemText}>
+                            {this.props.rowData.fileName}
                         </Text>
                     </View>
                 </TouchableOpacity>
