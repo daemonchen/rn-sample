@@ -20,6 +20,7 @@ var styles = require('../../styles/order/orderDetail');
 var TaskList = require('./task/taskList');
 var TaskDetail = require('./task/taskDetail');
 var MemberList = require('./member/memberList')
+var ContactDetail = require('../contact/contactDetail');
 var TaskSettings = require('./task/taskSettings');
 var AttachList = require('./attach/attachList');
 var AttachDetail = require('./attach/attachDetail');
@@ -125,7 +126,13 @@ module.exports = React.createClass({
             );
     },
     onPressMemberRow: function(rowData, sectionID){
-        console.log(rowData);
+        _topNavigator.push({
+            title: rowData.userName,
+            data: rowData,
+            component: ContactDetail,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
     },
     onPressTaskRow: function(rowData, sectionID){
         _topNavigator.push({

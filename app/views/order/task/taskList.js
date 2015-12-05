@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react-native')
-var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var TimerMixin = require('react-timer-mixin');
 var {
     Text,
@@ -28,7 +27,6 @@ module.exports = React.createClass({
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
         return {
-            pageSize: 20,
             loaded : false,
             list: [],
             dataSource: ds
@@ -39,7 +37,7 @@ module.exports = React.createClass({
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
-        this._timeout = this.setTimeout(this.onRefresh, 350)
+        this._timeout = this.setTimeout(this.fetchData, 350)
     },
     componentWillUnmount: function() {
         this.unlisten();
@@ -58,8 +56,6 @@ module.exports = React.createClass({
             loaded     : true,
             total: result.total
         });
-        this.list.hideHeader();
-        this.list.hideFooter();
     },
     handleUpdate: function(result){
         return;
@@ -91,30 +87,9 @@ module.exports = React.createClass({
                 return this.handleDelete(result);
         }
     },
-    onRefresh: function() {
-        this.pageNum = 1;
+    fetchData: function() {
         taskListAction.getList({
-            orderId: this.props.data.id,
-            pageNum: this.pageNum,
-            pageSize: this.state.pageSize
-        });
-    },
-    onInfinite: function() {
-        this.setState({
-            pageNum: this.pageNum + 1
-        });
-        taskListAction.loadMore({
-            status: this.props.data.id,
-            pageNum: this.pageNum,
-            pageSize: this.state.pageSize
-        });
-    },
-    loadedAllData: function() {
-        return this.state.list.length >= this.state.total||this.state.list.length===0;
-    },
-    onDelete: function(rowData){
-        taskListAction.delete({
-            orderId:rowData.id
+            orderId: this.props.data.id
         });
     },
     renderRow: function(rowData, sectionID, rowID) {
@@ -134,17 +109,10 @@ module.exports = React.createClass({
     },
     renderListView: function(){
         return (
-            <RefreshInfiniteListView
-                ref = {(list) => {this.list= list}}
-                dataSource={this.state.dataSource}
-                renderRow={this.renderRow}
-                scrollEventThrottle={10}
-                style={commonStyle.container}
-                onRefresh = {this.onRefresh}
-                onInfinite = {this.onInfinite}
-                loadedAllData={this.loadedAllData}
-                >
-            </RefreshInfiniteListView>
+            <ListView
+              style={commonStyle.container}
+              dataSource={this.state.dataSource}
+              renderRow={this.renderRow} />
             )
     },
     renderLoadingView: function(){

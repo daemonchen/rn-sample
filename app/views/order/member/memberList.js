@@ -52,11 +52,12 @@ module.exports = React.createClass({
             return;
         }
         this.setState({
-            listData: result.data
+            listData: result.data,
+            loaded: true
         });
     },
     onChange: function() {
-        var result = taskListStore.getState();
+        var result = memberListStore.getState();
         if (result.status != 200 && !!result.message) {
             return;
         }
@@ -78,6 +79,9 @@ module.exports = React.createClass({
             return this.renderLoadingView();
         }
         return this.renderListView();
+    },
+    onPressRow: function(data){
+        this.props.onPressRow(data);
     },
     renderListView: function(){
         return (
