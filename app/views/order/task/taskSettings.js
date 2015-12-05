@@ -20,6 +20,10 @@ var SettingsWrapper = require('./settingsWrapper');
 var TaskList = require('./taskList');
 var TaskDetail = require('./taskDetail');
 var OrderList = require('../components/orderList');
+
+var LeftCloseButton = require('../../common/leftCloseButton');
+var RightDoneButton = require('../../common/rightDoneButton');
+
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
@@ -27,19 +31,6 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {}
-    },
-    leftButtonConfig: {
-        title: 'X',
-        handler:() =>
-            _navigator.pop()
-    },
-    rightButtonConfig: function(){
-        var self = this;
-        return{
-            title: 'Done',
-            handler:() =>
-                _navigator.pop()
-        }
     },
     _setEndTime: function(){
         _navigator.push({
@@ -106,8 +97,8 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'新建任务'}}
-                    leftButton={this.leftButtonConfig}
-                    rightButton={this.rightButtonConfig()}/>
+                    leftButton={<LeftCloseButton navigator={_topNavigator} />}
+                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='任务名称'
@@ -136,7 +127,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/Arrow_back.png')} />
+                            source={require('../../../images/common/arrow_right.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -155,7 +146,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/Arrow_back.png')} />
+                            source={require('../../../images/common/arrow_right.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -174,7 +165,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/Arrow_back.png')} />
+                            source={require('../../../images/common/arrow_right.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -193,7 +184,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/Arrow_back.png')} />
+                            source={require('../../../images/common/arrow_right.png')} />
                         </View>
                     </TouchableHighlight>
                 </View>

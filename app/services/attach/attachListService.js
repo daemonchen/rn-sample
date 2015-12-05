@@ -8,6 +8,6 @@ module.exports = {
     },
     deleteList: function(data){
         var urlParams = '/{id}'.replace('{id}', data.id);
-        return http.put(NZAOM_INTERFACE.accessory + urlParams)
+        return http.delete(NZAOM_INTERFACE.accessory + urlParams)
     }
 }

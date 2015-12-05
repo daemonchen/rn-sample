@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
 var NavigationBar = require('react-native-navbar');
+var moment = require('moment');
 var {
     Text,
     TextInput,
@@ -41,6 +42,9 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
+            overNum: 0,
+            endTime: new Date(),
+            totaleJobNum: 0,
             tabIndex: 0,
             images: []
         }
@@ -53,13 +57,13 @@ module.exports = React.createClass({
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {
-            this.setState({
-                loaded: true,
-                list: []
-            })
             return;
-        }
-        console.log('TODO: add total task number in orderDetail');
+        };
+        this.setState({
+            overNum: result.data.overNum,
+            endTime: result.data.endTime,
+            totaleJobNum: result.data.totaleJobNum
+        });
     },
     onChange: function() {
         var result = taskListStore.getState();
@@ -76,6 +80,7 @@ module.exports = React.createClass({
     },
     _pressSettingButton: function(){
         _topNavigator.push({
+            data: {orderStatus: 0},
             component: OrderSettings,
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             topNavigator: _topNavigator
@@ -174,6 +179,26 @@ module.exports = React.createClass({
             tabIndex: event.nativeEvent.selectedSegmentIndex
         })
     },
+    renderSummary: function(){
+        var time = moment(this.state.endTime).format('YYYY.MM.DD');
+        var undoNumber = this.state.totaleJobNum - this.state.overNum;
+        return(
+            <View style={{flexDirection:'row', height: 68, backgroundColor: '#4285f4'}}>
+                <View style={{flex: 1}}>
+                    <Text style={styles.taskTotalText}>{this.state.overNum}</Text>
+                    <Text style={styles.taskTotalText}>已完成</Text>
+                </View>
+                <View style={{flex: 1}}>
+                    <Text style={styles.taskTotalText}>{undoNumber}</Text>
+                    <Text style={styles.taskTotalText}>未完成</Text>
+                </View>
+                <View style={{flex: 1}}>
+                    <Text style={styles.taskTotalText}>{time}</Text>
+                    <Text style={styles.taskTotalText}>截止日</Text>
+                </View>
+            </View>
+            );
+    },
     renderTabContent: function(){
         switch(this.state.tabIndex){
             case 0:
@@ -217,20 +242,7 @@ module.exports = React.createClass({
                     leftButton={<WhiteBackButton navigator={_topNavigator} />}
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>
-                    <View style={{flexDirection:'row', height: 68, backgroundColor: '#4285f4'}}>
-                        <View style={{flex: 1}}>
-                            <Text style={styles.taskTotalText}>4</Text>
-                            <Text style={styles.taskTotalText}>已完成</Text>
-                        </View>
-                        <View style={{flex: 1}}>
-                            <Text style={styles.taskTotalText}>4</Text>
-                            <Text style={styles.taskTotalText}>未完成</Text>
-                        </View>
-                        <View style={{flex: 1}}>
-                            <Text style={styles.taskTotalText}>4</Text>
-                            <Text style={styles.taskTotalText}>截止日</Text>
-                        </View>
-                    </View>
+                    {this.renderSummary()}
                     <OrderDetailSegmentControl
                     onSegmentChange={this.onSegmentChange}/>
                     {this.renderTabContent()}

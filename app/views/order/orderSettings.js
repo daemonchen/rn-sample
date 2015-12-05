@@ -6,6 +6,7 @@ var {
     TextInput,
     View,
     ListView,
+    ScrollView,
     Image,
     Navigator,
     TouchableOpacity,
@@ -23,28 +24,53 @@ var DatePicker = require('../datePicker');
 var Calendar = require('../calendar');
 var Contact = require('../contact/contact');
 var Attach = require('./attach/attach');
+
+var LeftCloseButton = require('../../common/leftCloseButton');
+var RightDoneButton = require('../../common/rightDoneButton');
+
+var orderAction = require('../../actions/order/orderAction');
+var orderStore = require('../../stores/order/orderStore');
+
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
+        var defaultData = this.props.route.data || {};
+        console.log('this.props.route.data',this.props.route.data);
         return {
-            orderStatus: 0
+            orderStatus: defaultData.orderStatus || 0,
+            accessoryIds: defaultData.accessoryIds || [],
+            accessoryNum: defaultData.accessoryNum || '',
+            creatorId: defaultData.creatorId || 0,
+            creatorName: defaultData.creatorName || '',
+            customerName: defaultData.customerName || '',
+            description: defaultData.description || '',
+            endTime: defaultData.endTime || new Date().valueOf(),
+            factoryId: defaultData.factoryId || 0,
+            lable: defaultData.lable || '',
+            salesManId: defaultData.salesManId || '',
+            startTime: defaultData.startTime || '',
+            title: defaultData.title || ''
+
         }
     },
-    leftButtonConfig: {
-        title: 'X',
-        handler:() =>
-            _navigator.pop()
+    componentDidMount: function(){
+        this.unlisten = orderStore.listen(this.onChange)
     },
-    rightButtonConfig: function(){
-        var self = this;
-        return{
-            title: 'Done',
-            handler:() =>
-                _navigator.pop()
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function(){
+        var result = orderStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
         }
+        if (result.type == 'create') {
+            _navigator.pop();
+        };
     },
     _setEndTime: function(){
         _navigator.push({
@@ -73,24 +99,54 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
+    onPressDone: function(){
+        // _navigator.pop();
+        orderAction.create({
+            accessoryIds: this.state.accessoryIds || [],
+            accessoryNum: this.state.accessoryNum || '',
+            creatorId: this.state.creatorId || 0,
+            creatorName: this.state.creatorName || '',
+            customerName: this.state.customerName || '',
+            description: this.state.description || '',
+            endTime: this.state.endTime || new Date().valueOf(),
+            factoryId: this.state.factoryId || 0,
+            lable: this.state.lable || '',
+            salesManId: this.state.salesManId || '',
+            startTime: this.state.startTime || '',
+            title: this.state.title || ''
+        });
+    },
+    onChangeNameText: function(text){
+        this.setState({
+            title: text
+        });
+    },
+    onChangeDescribeText: function(text){
+        this.setState({
+            description: text
+        });
+    },
     render: function(){
         return(
-            <View style={commonStyle.container}>
+            <ScrollView keyboardShouldPersistTaps={false}
+            style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'订单'}}
-                    leftButton={this.leftButtonConfig}
-                    rightButton={this.rightButtonConfig()}/>
+                    leftButton={<LeftCloseButton navigator={_topNavigator} />}
+                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='订单名称'
                         style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}/>
-                    </View>
-                    <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='订单描述'
-                        style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
-                        multiline={true} />
+                        onChangeText={this.onChangeNameText}/>
+                    </View>
+                    <View style={commonStyle.textAreaWrapper}>
+                        <TextInput placeholder='订单描述'
+                        style={commonStyle.textArea}
+                        clearButtonMode={'while-editing'}
+                        multiline={true}
+                        onChangeText={this.onChangeDescribeText} />
                     </View>
                     <TouchableOpacity
                     style={[commonStyle.settingItem, commonStyle.bottomBorder]}
@@ -105,7 +161,7 @@ module.exports = React.createClass({
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}
-                        source={require('../../images/common/Arrow_back.png')} />
+                        source={require('../../images/common/arrow_right.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={[commonStyle.settingItem, commonStyle.bottomBorder]}
@@ -120,7 +176,7 @@ module.exports = React.createClass({
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}
-                        source={require('../../images/common/Arrow_back.png')} />
+                        source={require('../../images/common/arrow_right.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={[commonStyle.settingItem, commonStyle.bottomBorder]}
@@ -135,7 +191,7 @@ module.exports = React.createClass({
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}
-                        source={require('../../images/common/Arrow_back.png')} />
+                        source={require('../../images/common/arrow_right.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={[commonStyle.settingItem, commonStyle.bottomBorder]}
@@ -149,10 +205,10 @@ module.exports = React.createClass({
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}
-                        source={require('../../images/common/Arrow_back.png')} />
+                        source={require('../../images/common/arrow_right.png')} />
                     </TouchableOpacity>
                 </View>
-            </View>
+            </ScrollView>
             );
     }
 });

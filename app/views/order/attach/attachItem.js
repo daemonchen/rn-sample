@@ -42,7 +42,8 @@ module.exports = React.createClass({
                     <View style={styles.rowStyle}>
                         <Image source={{uri: this.props.rowData.fileAddress}}
                         style={styles.attachImage} />
-                        <Text style={styles.attachItemText}>
+                        <Text style={styles.attachItemText}
+                        numberOfLines={1}>
                             {this.props.rowData.fileName}
                         </Text>
                     </View>

@@ -13,6 +13,7 @@ var {
 
 var orderListAction = require('../../../actions/order/orderListAction');
 var orderListStore = require('../../../stores/order/orderListStore');
+var orderStore = require('../../../stores/order/orderStore');
 var util = require('../../../common/util');
 
 var styles = require('../../../styles/home/style.js');
@@ -46,10 +47,22 @@ var orderList = React.createClass({
     },
     componentDidMount: function(){
         this.onRefresh();
-        this.unlisten = orderListStore.listen(this.onChange)
+        this.unlisten = orderListStore.listen(this.onChange);
+        this.unlistenOrderChange = orderStore.listen(this.onOrderChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenOrderChange();
+    },
+    onOrderChange: function(){
+        var result = orderStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        if (result.type == 'create') {
+            this.onRefresh();
+        };
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {

@@ -114,22 +114,27 @@ module.exports = React.StyleSheet.create({
     settingIcon: {
         width: 24,
         height: 24,
-        marginTop: 8,
+        marginTop: 12,
         marginRight: 16
     },
     settingTitle: {
+        fontSize: 14,
         color: '#212121',
+        height: 48,
+        paddingTop: 17,
         width: 80,
-        paddingVertical: 12
     },
     settingDetail: {
+        fontSize: 14,
         flex: 1,
-        paddingVertical: 12,
+        height: 48,
+        paddingTop: 17,
         textAlign: 'right'
     },
     settingArrow: {
-        marginTop: 5,
-        width: 48
+        width: 24,
+        height: 24,
+        marginTop: 12
     },
     activityIndicator: {
         alignItems: 'center',

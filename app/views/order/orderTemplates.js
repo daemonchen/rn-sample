@@ -27,6 +27,7 @@ module.exports = React.createClass({
     },
     _pressRow: function(rowData){
         _topNavigator.push({
+            data:{orderStatus: 1},
             component: OrderSettings,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator

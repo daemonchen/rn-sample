@@ -32,7 +32,7 @@ module.exports = React.createClass({
             fileName: this.props.route.data.fileName
         }
     },
-    _pressSettingButton: function(){
+    onPressDone: function(){
         // _navigator.pop();
         // loginAction.login({
         //     mobile: this.state.mobile,
@@ -50,7 +50,7 @@ module.exports = React.createClass({
                 <NavigationBar
                     title={{ title: this.props.route.title}}
                     leftButton={<BlueBackButton navigator={_topNavigator} />}
-                    rightButton={<RightDoneButton onPress={this._pressSettingButton} />} />
+                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={[styles.main,{alignItems: 'center'}]}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='附件名称'
