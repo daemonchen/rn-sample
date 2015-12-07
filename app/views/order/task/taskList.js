@@ -15,6 +15,8 @@ var {
 
 var taskListAction = require('../../../actions/task/taskListAction');
 var taskListStore = require('../../../stores/task/taskListStore');
+var taskStore = require('../../../stores/task/taskStore');
+
 var util = require('../../../common/util');
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
@@ -33,6 +35,7 @@ module.exports = React.createClass({
     },
     componentDidMount: function(){
         this.unlisten = taskListStore.listen(this.onChange);
+        this.unlistenTaskChange = taskStore.listen(this.onTaskChange)
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
@@ -40,6 +43,17 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenTaskChange();
+    },
+    onTaskChange: function(){
+        var result = taskStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        if (result.type == 'create') {
+            // this.fetchData();
+        };
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {

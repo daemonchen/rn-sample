@@ -1,20 +1,20 @@
 'use strict';
 
 var alt = require('../../common/alt');
-var orderAction = require('../../actions/order/orderAction');
-var orderService = require('../../services/order/orderService')
+var taskAction = require('../../actions/task/taskAction');
+var taskService = require('../../services/task/taskService')
 var asyncStorage = require('../../common/storage');
 var appConstants = require('../../constants/appConstants');
-class OrderStore {
+class TaskStore {
     constructor() {
-        this.bindActions(orderAction);
+        this.bindActions(taskAction);
         this.state = {};
     }
 
     onCreate(data) {
-        orderService.create(data)
+        taskService.create(data)
         .then((responseData) => {
-            orderAction.createSuccess(responseData)
+            taskAction.createSuccess(responseData)
         }).done();
 
         this.preventDefault();
@@ -25,22 +25,9 @@ class OrderStore {
 
         // appConstants.memberList = responseData.data
         // asyncStorage.setItem('appConstants', appConstants);
-        this.mergeList(responseData)
-        // this.setState(responseData);
-    }
-    mergeList(responseData){
-        asyncStorage.getItem('appConstants')
-        .then((result)=>{
-            if (!!result.attachList) {
-                responseData.data = result.attachList.concat(responseData.data)
-                this.setState(responseData);
-            }else{
-                this.setState(responseData);
-            }
-            appConstants.attachList = responseData.data
-            asyncStorage.setItem('appConstants', appConstants);
-        }).done();
+        // this.mergeList(responseData)
+        this.setState(responseData);
     }
 }
 
-export default alt.createStore(OrderStore, 'OrderStore');
+export default alt.createStore(TaskStore, 'TaskStore');

@@ -38,7 +38,6 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         var defaultData = this.props.route.data || {};
-        console.log('this.props.route.data',this.props.route.data);
         return {
             orderStatus: defaultData.orderStatus || 0,
             accessoryIds: defaultData.accessoryIds || [],

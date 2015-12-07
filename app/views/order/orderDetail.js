@@ -87,7 +87,9 @@ module.exports = React.createClass({
         });
     },
     createTask: function(){
+        var data = Object.assign({taskStatus: 0}, this.props.route.data);
         _topNavigator.push({
+            data: data,
             component: TaskSettings,
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             topNavigator: _topNavigator

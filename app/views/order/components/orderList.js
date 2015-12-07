@@ -61,7 +61,7 @@ var orderList = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            this.onRefresh();
+            // this.onRefresh();
         };
     },
     handleGet: function(result){

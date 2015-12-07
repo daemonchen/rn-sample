@@ -6,6 +6,7 @@ var {
     TextInput,
     View,
     ListView,
+    ScrollView,
     Image,
     Navigator,
     TouchableHighlight,
@@ -21,16 +22,71 @@ var TaskList = require('./taskList');
 var TaskDetail = require('./taskDetail');
 var OrderList = require('../components/orderList');
 
-var LeftCloseButton = require('../../common/leftCloseButton');
-var RightDoneButton = require('../../common/rightDoneButton');
+var LeftCloseButton = require('../../../common/leftCloseButton');
+var RightDoneButton = require('../../../common/rightDoneButton');
+
+var taskAction = require('../../../actions/task/taskAction');
+var taskStore = require('../../../stores/task/taskStore');
 
 var _navigator, _topNavigator = null;
+
+/*
+orderStatus:enum
+0: create
+1: update
+2: normal
+*/
 
 module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
-        return {}
+        var defaultData = this.props.route.data || {};
+        return {
+            taskStatus: defaultData.taskStatus || 0,
+            orderId: defaultData.id || 0,
+            ownerId: defaultData.ownerId || 0,
+            description: defaultData.description || '',
+            jobName: defaultData.jobName || '',
+            endTime: defaultData.endTime || new Date().valueOf(),
+            lastIds: defaultData.lastIds || []
+        }
+    },
+    componentDidMount: function(){
+        this.unlisten = taskStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function(){
+        var result = taskStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        if (result.type == 'create') {
+            _navigator.pop();
+        };
+    },
+    onPressDone: function(){
+        taskAction.create({
+            orderId: this.state.orderId || 0,
+            ownerId: this.state.ownerId || 0,
+            description: this.state.description || '',
+            jobName: this.state.jobName || '',
+            endTime: this.state.endTime || new Date().valueOf(),
+            lastIds: this.state.lastIds || []
+        });
+    },
+    onChangeNameText: function(text){
+        this.setState({
+            jobName: text
+        });
+    },
+    onChangeDescribeText: function(text){
+        this.setState({
+            description: text
+        });
     },
     _setEndTime: function(){
         _navigator.push({
@@ -94,7 +150,8 @@ module.exports = React.createClass({
     },
     render: function(){
         return(
-            <View style={commonStyle.container}>
+            <ScrollView keyboardShouldPersistTaps={false}
+            style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'新建任务'}}
                     leftButton={<LeftCloseButton navigator={_topNavigator} />}
@@ -103,12 +160,14 @@ module.exports = React.createClass({
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='任务名称'
                         style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}/>
+                        clearButtonMode={'while-editing'}
+                        onChangeText={this.onChangeNameText} />
                     </View>
                     <View style={commonStyle.textAreaWrapper}>
                         <TextInput placeholder='任务描述'
                         style={commonStyle.textArea}
                         clearButtonMode={'while-editing'}
+                        onChangeText={this.onChangeDescribeText}
                         multiline={true} />
                     </View>
                     <TouchableHighlight
@@ -188,7 +247,7 @@ module.exports = React.createClass({
                         </View>
                     </TouchableHighlight>
                 </View>
-            </View>
+            </ScrollView>
             );
     }
 });
