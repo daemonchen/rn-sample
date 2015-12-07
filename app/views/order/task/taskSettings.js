@@ -34,7 +34,7 @@ var taskListStore = require('../../../stores/task/taskListStore');
 var _navigator, _topNavigator = null;
 
 /*
-orderStatus:enum
+taskStatus:enum
 0: create
 1: update
 2: normal

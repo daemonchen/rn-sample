@@ -16,9 +16,9 @@ var {
 } = React
 /*
 orderStatus:enum
-0: create
-1: update
-2: normal
+1: create
+2: update
+3: normal
 */
 var commonStyle = require('../../styles/commonStyle');
 
@@ -26,12 +26,16 @@ var DatePicker = require('../datePicker');
 var Calendar = require('../calendar');
 var Contact = require('../contact/contact');
 var Attach = require('./attach/attach');
+var OrderTemplates = require('./orderTemplates');
 
+var BlueBackButton = require('../../common/blueBackButton');
 var LeftCloseButton = require('../../common/leftCloseButton');
 var RightDoneButton = require('../../common/rightDoneButton');
 
 var orderAction = require('../../actions/order/orderAction');
 var orderStore = require('../../stores/order/orderStore');
+var orderListAction = require('../../actions/order/orderListAction');
+var orderListStore = require('../../stores/order/orderListStore');
 var attachAction = require('../../actions/attach/attachAction');
 var attachStore = require('../../stores/attach/attachStore');
 
@@ -48,6 +52,7 @@ module.exports = React.createClass({
         var endTime = defaultData.endTime || new Date().valueOf();
 
         return {
+            orderId: defaultData.id || 0,
             orderStatus: defaultData.orderStatus || 0,
             accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
@@ -70,10 +75,21 @@ module.exports = React.createClass({
     componentDidMount: function(){
         this.unlisten = orderStore.listen(this.onChange);
         this.unlistenAttach = attachStore.listen(this.onAttachChange);
+        this.unlistenOrderList = orderListStore.listen(this.onOrderlistChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenAttach();
+        this.unlistenOrderList();
+    },
+    onOrderlistChange: function(){
+        var result = orderListStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        if (result.type == 'delete') {
+            _navigator.popToTop();
+        };
     },
     onAttachChange: function(){
         var result = attachStore.getState();
@@ -114,7 +130,7 @@ module.exports = React.createClass({
     _setEndTime: function(){
         _navigator.push({
             component: Calendar,
-            target: 1,
+            target: 2,
             onCalendarPressDone: this.onCalendarPressDone,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
@@ -138,7 +154,7 @@ module.exports = React.createClass({
         _navigator.push({
             title:'选择客户',
             component: Contact,
-            target: 0,
+            target: 2,
             onPressContactRow: this.onGetCustomer,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
@@ -148,7 +164,7 @@ module.exports = React.createClass({
         _navigator.push({
             title:'业务员',
             component: Contact,
-            target: 0,
+            target: 2,
             onPressContactRow: this.onGetSales,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
@@ -164,6 +180,13 @@ module.exports = React.createClass({
                 hostType: 1,
                 base64: response.data,
                 fileName: name}]);
+        });
+    },
+    _selectTemplate: function(){
+        _navigator.push({
+            component: OrderTemplates,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            topNavigator: _topNavigator
         });
     },
     onPressDone: function(){
@@ -195,19 +218,111 @@ module.exports = React.createClass({
             description: text
         });
     },
+    renderNavigationBar: function(){
+        if (this.state.orderStatus == 2) {//修改订单
+            return(
+                <NavigationBar
+                    title={{title: this.props.route.title}}
+                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
+                );
+        };
+        return(
+            <NavigationBar
+                title={{title: this.props.route.title}}
+                leftButton={<LeftCloseButton navigator={_topNavigator} />}
+                rightButton={<RightDoneButton onPress={this.onPressDone} />} />
+            );
+    },
+    _saveTemplate: function(){
+        _navigator.push({
+            component: Calendar,
+            // data: this.,
+            onCalendarPressDone: this.onCalendarPressDone,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        });
+        // orderAction.save()
+    },
+    _deleteOrder: function(){
+        orderListAction.delete({
+            orderId: this.state.orderId
+        })
+    },
+    renderOptionalSettings: function(){
+        if (this.state.orderStatus == 2) {//修改订单
+            return(
+                <View>
+                    <TouchableOpacity
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                        <Text
+                        style={commonStyle.settingTitle}>
+                            创建者
+                        </Text>
+                        <Text
+                        style={commonStyle.settingDetail}>
+                        {this.state.creatorName}
+                        </Text>
+                        <Image
+                        style={commonStyle.settingArrow}
+                        source={require('../../images/common/arrow_right.png')} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
+                    onPress={this._saveTemplate}>
+                        <Text
+                        style={commonStyle.settingTitle}>
+                            保存为模版
+                        </Text>
+                        <Text
+                        style={commonStyle.settingDetail}>
+                        </Text>
+                        <Image
+                        style={commonStyle.settingArrow}
+                        source={require('../../images/common/arrow_right.png')} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
+                    onPress={this._deleteOrder}>
+                        <Text
+                        style={[commonStyle.settingTitle, commonStyle.red]}>
+                            删除
+                        </Text>
+                        <Text
+                        style={commonStyle.settingDetail}>
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                );
+        };
+        return(
+            <TouchableOpacity
+            style={[commonStyle.settingItem, commonStyle.bottomBorder]}
+            onPress={this._selectTemplate}>
+                <Text
+                style={commonStyle.settingTitle}>
+                    从模版创建
+                </Text>
+                <Text
+                style={commonStyle.settingDetail}>
+                </Text>
+                <Image
+                style={commonStyle.settingArrow}
+                source={require('../../images/common/arrow_right.png')} />
+            </TouchableOpacity>
+            )
+    },
     render: function(){
         return(
             <ScrollView keyboardShouldPersistTaps={false}
             style={commonStyle.container}>
-                <NavigationBar
-                    title={{title:'订单'}}
-                    leftButton={<LeftCloseButton navigator={_topNavigator} />}
-                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
+                {this.renderNavigationBar()}
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='订单名称'
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
+                        value={this.state.title}
                         onChangeText={this.onChangeNameText}/>
                     </View>
                     <View style={commonStyle.textAreaWrapper}>
@@ -215,6 +330,7 @@ module.exports = React.createClass({
                         style={commonStyle.textArea}
                         clearButtonMode={'while-editing'}
                         multiline={true}
+                        value={this.state.description}
                         onChangeText={this.onChangeDescribeText} />
                     </View>
                     <TouchableOpacity
@@ -277,6 +393,7 @@ module.exports = React.createClass({
                         style={commonStyle.settingArrow}
                         source={require('../../images/common/arrow_right.png')} />
                     </TouchableOpacity>
+                    {this.renderOptionalSettings()}
                 </View>
             </ScrollView>
             );

@@ -34,6 +34,8 @@ var RightWhiteSettingButton = require('../../common/rightWhiteSettingButton');
 var util = require('../../common/util');
 var taskListStore = require('../../stores/task/taskListStore');
 var attachAction = require('../../actions/attach/attachAction');
+var orderStore = require('../../stores/order/orderStore');
+var orderAction = require('../../actions/order/orderAction');
 
 var _navigator, _topNavigator = null;
 
@@ -50,7 +52,7 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        this.unlisten = taskListStore.listen(this.onChange)
+        this.unlisten = taskListStore.listen(this.onChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
@@ -79,15 +81,17 @@ module.exports = React.createClass({
         }
     },
     _pressSettingButton: function(){
+        var data = Object.assign({orderStatus: 2}, this.props.route.data);
         _topNavigator.push({
-            data: {orderStatus: 0},
+            title: '设置订单',
+            data: data,
             component: OrderSettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
     },
     createTask: function(){
-        var data = Object.assign({taskStatus: 0}, this.props.route.data);
+        var data = Object.assign({taskStatus: 1}, this.props.route.data);
         _topNavigator.push({
             data: data,
             component: TaskSettings,

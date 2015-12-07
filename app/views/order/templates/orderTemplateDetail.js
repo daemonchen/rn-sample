@@ -9,7 +9,7 @@ var {
     StyleSheet
 } = React
 
-var commonStyle = require('../../styles/commonStyle');
+var commonStyle = require('../../../styles/commonStyle');
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({

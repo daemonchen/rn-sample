@@ -11,7 +11,7 @@ var {
 var commonStyle = require('../../styles/commonStyle');
 var _navigator, _topNavigator = null;
 
-var OrderTemplateDetail = require('../order/orderTemplateDetail');
+var OrderTemplateDetail = require('../order/templates/orderTemplateDetail');
 var OrderTemplateList = require('../order/components/orderTemplateList');
 
 module.exports = React.createClass({

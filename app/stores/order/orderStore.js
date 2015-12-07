@@ -28,6 +28,23 @@ class OrderStore {
         // this.mergeList(responseData)
         this.setState(responseData);
     }
+    onGet(data) {
+        orderService.get(data)
+        .then((responseData) => {
+            orderAction.getSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'get'
+
+        // appConstants.memberList = responseData.data
+        // asyncStorage.setItem('appConstants', appConstants);
+        // this.mergeList(responseData)
+        this.setState(responseData);
+    }
 }
 
 export default alt.createStore(OrderStore, 'OrderStore');

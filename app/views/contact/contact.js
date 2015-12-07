@@ -32,9 +32,9 @@ var util = require('../../common/util');
 /*
 target: 表示从哪里打开通讯录 enum
 {
-    0: 'createOrder',
     1: 'createTask',
-    2: 'normal'
+    2: 'createOrder'
+    3: 'normal'
 }
 */
 module.exports = React.createClass({
@@ -42,7 +42,7 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            target: this.props.route.target,
+            target: this.props.route.target || 3,
             listData: [],
         }
     },
@@ -65,7 +65,7 @@ module.exports = React.createClass({
         });
     },
     onPressRow: function(data){
-        if (this.state.target == 2) {
+        if (this.state.target == 3) {
             _topNavigator.push({
                 title: data.userName,
                 data: data,
@@ -89,7 +89,7 @@ module.exports = React.createClass({
         })
     },
     renderNavigationBar: function(){
-        if (this.state.target == 2) {
+        if (this.state.target == 3) {
             return(
                 <NavigationBar
                     title={{ title: this.props.route.title }} />

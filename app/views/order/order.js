@@ -32,8 +32,10 @@ var order =  React.createClass({
             orderStatus: 0
         }
     },
-    doPush: function(component){
+    doPush: function(component, options){
         _topNavigator.push({
+            title: options.title,
+            data: {orderStatus: 1},
             component: component,
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             topNavigator: _topNavigator
@@ -45,12 +47,12 @@ var order =  React.createClass({
                 this.setState({
                     orderStatus: index
                 })
-                return this.doPush(OrderSettings);
+                return this.doPush(OrderSettings, {title: '新建订单'});
             case 1:
                 this.setState({
                     orderStatus: index
                 })
-                return this.doPush(OrderTemplates);
+                return this.doPush(OrderTemplates, {title: '选择模版'});
             default:
                 return;
         }

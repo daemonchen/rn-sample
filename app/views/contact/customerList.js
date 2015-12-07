@@ -21,6 +21,8 @@ var contactsStyle = require('../../styles/contact/contactsItem');
 var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
 
+var BlueBackButton = require('../../common/blueBackButton');
+
 var contactAction = require('../../actions/contact/contactAction');
 var contactStore = require('../../stores/contact/contactStore');
 
@@ -28,9 +30,9 @@ var util = require('../../common/util');
 /*
 target: 表示从哪里打开通讯录 enum
 {
-    0: 'createOrder',
     1: 'createTask',
-    2: 'normal'
+    2: 'createOrder'
+    3: 'normal'
 }
 */
 module.exports = React.createClass({
@@ -38,7 +40,7 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            target: this.props.route.target || 2,
+            target: this.props.route.target || 3,
             listData: [],
         }
     },
@@ -69,7 +71,7 @@ module.exports = React.createClass({
         return result;
     },
     onPressRow: function(data){
-        if (this.state.target == 2) {
+        if (this.state.target == 3) {
             _topNavigator.push({
                 title: data.userName,
                 data: data,
@@ -78,8 +80,10 @@ module.exports = React.createClass({
                 topNavigator: _topNavigator
             })
             return;
-        };
-        this.props.route.onPressContactRow(data);
+        }else{
+            this.props.route.onPressContactRow(data);
+            _topNavigator.pop();
+        }
     },
     leftButtonConfig:function() {
         return {
@@ -88,12 +92,25 @@ module.exports = React.createClass({
                 _navigator.pop()
         }
     },
+    renderNavigationBar: function(){
+        if (this.state.target == 3) {
+            return(
+                <NavigationBar
+                    title={{ title: this.props.route.title }} />
+                );
+
+        }else{
+            return(
+                <NavigationBar
+                    title={{ title: this.props.route.title }}
+                    leftButton={<BlueBackButton navigator={_navigator}/>} />
+                );
+        }
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
-                <NavigationBar
-                    title={{ title: this.props.route.title }}
-                    leftButton={this.leftButtonConfig()} />
+                {this.renderNavigationBar()}
                 <ScrollView style={commonStyle.container}
                 contentOffset={{y: 44}}
                 contentInset={{bottom: 40}}

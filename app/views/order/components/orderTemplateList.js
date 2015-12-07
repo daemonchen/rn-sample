@@ -13,10 +13,11 @@ var {
     StyleSheet
 } = React
 /*
-orderStatus:enum
-0: create
-1: update
-2: normal
+target: 表示从哪里打开订单模版 enum
+{
+    1: 'createOrder',
+    2: 'normal'
+}
 */
 var commonStyle = require('../../../styles/commonStyle');
 
