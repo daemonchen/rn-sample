@@ -3,6 +3,7 @@
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
 var SearchBar = require('react-native-search-bar');
+var TimerMixin = require('react-timer-mixin');
 var {
     View,
     Text,
@@ -38,6 +39,7 @@ target: 表示从哪里打开通讯录 enum
 }
 */
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
@@ -47,11 +49,17 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        contactAction.getList();
-        this.unlisten = contactStore.listen(this.onChange)
+        this.unlisten = contactStore.listen(this.onChange);
+        if (this._timeout) {
+            this.clearTimeout(this._timeout)
+        };
+        this._timeout = this.setTimeout(this.fetchData, 350)
     },
     componentWillUnmount: function() {
         this.unlisten();
+    },
+    fetchData: function(){
+        contactAction.getList();
     },
     onChange: function() {
         var result = contactStore.getState();

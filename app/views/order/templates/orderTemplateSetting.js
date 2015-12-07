@@ -25,6 +25,8 @@ var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     getInitialState: function(){
+        _navigator = this.props.navigator;
+        _topNavigator = this.props.route.topNavigator;
         return {}
     },
     componentDidMount: function(){
@@ -33,7 +35,7 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
     },
-    onOrderlistChange: function(){
+    onChange: function(){
         var result = templateStore.getState();
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
@@ -88,5 +90,13 @@ module.exports = React.createClass({
                 </View>
             </ScrollView>
             );
+    }
+});
+var styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        // justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
     }
 });

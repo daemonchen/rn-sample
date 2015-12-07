@@ -85,18 +85,9 @@ module.exports = React.createClass({
     },
     handleDelete: function(result){
         if (result.status != 200 && !!result.message) {
-            this.setState({
-                loaded: true,
-                list: []
-            })
             return;
         }
-        this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(result.data.jobVOList || []),
-            list: result.data.jobVOList || [],
-            loaded: true
-        });
-        return;
+        this.setTimeout(this.fetchData, 350)
     },
     onChange: function() {
         var result = taskListStore.getState();

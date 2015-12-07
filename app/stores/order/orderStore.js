@@ -28,6 +28,23 @@ class OrderStore {
         // this.mergeList(responseData)
         this.setState(responseData);
     }
+    onUpdate(data) {
+        orderService.update(data)
+        .then((responseData) => {
+            orderAction.updateSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onUpdateSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'update'
+
+        // appConstants.memberList = responseData.data
+        // asyncStorage.setItem('appConstants', appConstants);
+        // this.mergeList(responseData)
+        this.setState(responseData);
+    }
     onGet(data) {
         orderService.get(data)
         .then((responseData) => {

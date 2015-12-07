@@ -5,4 +5,6 @@ module.exports = alt.generateActions(
     'create',
     'createSuccess',
     'get',
-    'getSuccess');
+    'getSuccess',
+    'update',
+    'updateSuccess');

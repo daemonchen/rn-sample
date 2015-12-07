@@ -119,6 +119,9 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
+            _navigator.popToTop();
+        };
+        if (result.type == 'update') {
             _navigator.pop();
         };
     },
@@ -185,29 +188,50 @@ module.exports = React.createClass({
     },
     _selectTemplate: function(){
         _navigator.push({
+            target: 1,
             component: OrderTemplates,
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
             topNavigator: _topNavigator
         });
     },
     onPressDone: function(){
-        // _navigator.pop();
-        orderAction.create({
-            accessoryIds: this.state.accessoryIds || [],
-            accessoryNum: this.state.accessoryNum || '',
-            creatorId: this.state.creatorId || 0,
-            creatorName: this.state.creatorName || '',
-            customerId: this.state.customerId || '',
-            customerName: this.state.customerName || '',
-            description: this.state.description || '',
-            endTime: this.state.endTime || new Date().valueOf(),
-            factoryId: this.state.factoryId || 0,
-            lable: this.state.lable || '',
-            salesManId: this.state.salesManId || '',
-            salesManName: this.state.salesManName || '',
-            startTime: this.state.startTime || '',
-            title: this.state.title || ''
-        });
+        if (this.state.orderStatus == 2) {//修改订单
+            orderAction.update({
+                id: this.state.orderId,
+                accessoryIds: this.state.accessoryIds || [],
+                accessoryNum: this.state.accessoryNum || '',
+                creatorId: this.state.creatorId || 0,
+                creatorName: this.state.creatorName || '',
+                customerId: this.state.customerId || '',
+                customerName: this.state.customerName || '',
+                description: this.state.description || '',
+                endTime: this.state.endTime || new Date().valueOf(),
+                factoryId: this.state.factoryId || 0,
+                lable: this.state.lable || '',
+                salesManId: this.state.salesManId || '',
+                salesManName: this.state.salesManName || '',
+                startTime: this.state.startTime || '',
+                title: this.state.title || ''
+            });
+        }
+        if (this.state.orderStatus == 1) {//新增订单
+            orderAction.create({
+                accessoryIds: this.state.accessoryIds || [],
+                accessoryNum: this.state.accessoryNum || '',
+                creatorId: this.state.creatorId || 0,
+                creatorName: this.state.creatorName || '',
+                customerId: this.state.customerId || '',
+                customerName: this.state.customerName || '',
+                description: this.state.description || '',
+                endTime: this.state.endTime || new Date().valueOf(),
+                factoryId: this.state.factoryId || 0,
+                lable: this.state.lable || '',
+                salesManId: this.state.salesManId || '',
+                salesManName: this.state.salesManName || '',
+                startTime: this.state.startTime || '',
+                title: this.state.title || ''
+            });
+        };
     },
     onChangeNameText: function(text){
         this.setState({
@@ -237,6 +261,7 @@ module.exports = React.createClass({
     },
     _saveTemplate: function(){
         _navigator.push({
+            title: '保存为模版',
             component: OrderTemplateSetting,
             data: this.props.route.data,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
