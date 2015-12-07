@@ -19,11 +19,20 @@ var taskListStore = require('../../../stores/task/taskListStore');
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
 var util = require('../../../common/util');
-
+/*
+target: 表示从哪里打开任务列表 enum
+{
+    0: 'createOrder',
+    1: 'createTask',
+    2: 'normal'
+}
+*/
 module.exports = React.createClass({
     getInitialState: function(){
         return{
-            done: this.props.rowData.jobDO.status
+            done: this.props.rowData.jobDO.status,
+            isCheck: this.props.rowData.isCheck,
+            target: this.props.target || 2
         }
     },
     componentDidMount: function(){
@@ -56,10 +65,22 @@ module.exports = React.createClass({
     },
     onPressCircle: function(){
         var status = (this.state.done == 1) ? 0 : 1
-        taskListAction.update({
-            id: this.props.rowData.jobDO.id,
-            status: status,
-        });
+        var isCheck = (this.state.isCheck == 1) ? 0 : 1;
+        if (this.props.target == 1) {//新建任务的时候，选择任务依赖
+            taskListAction.addDependinces({
+                type: 'addTask',
+                id: this.props.rowData.jobDO.id,
+                isCheck: isCheck
+            });
+            this.setState({
+                isCheck: isCheck
+            });
+        }else{
+            taskListAction.update({
+                id: this.props.rowData.jobDO.id,
+                status: status,
+            });
+        }
     },
     onPressRow: function(){
         this.props.onPressRow(this.props.rowData, this.props.sectionID);
@@ -98,6 +119,10 @@ module.exports = React.createClass({
             );
     },
     renderTimeLine: function(){
+        if (this.props.target == 1) {
+            return(<View />);
+            //如果是新建任务的时候，不需要timeline
+        };
         if(this.state.done == 0){
             return(
                 <View style={styles.timelineWrapper}>
@@ -115,7 +140,11 @@ module.exports = React.createClass({
         }
     },
     renderCheckIcon: function(){
-        var circleImage = (this.state.done == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
+        if (this.props.target == 1) {
+            var circleImage = (this.state.isCheck == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
+        }else{
+            var circleImage = (this.state.done == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
+        }
         return(
             <TouchableWithoutFeedback onPress={this.onPressCircle}
             style={styles.checkIcon} >

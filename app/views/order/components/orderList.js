@@ -61,6 +61,7 @@ var orderList = React.createClass({
             return;
         }
         if (result.type == 'create') {
+            this.setTimeout(this.onRefresh, 350)
             // this.onRefresh();
         };
     },
@@ -146,7 +147,7 @@ var orderList = React.createClass({
             rowData={rowData}
             sectionID={sectionID}
             rowID={rowID}
-            onPress={this.props.events.onPressRow}
+            onPress={this.props.onPressRow}
             onDelete={this.onDelete} />
             )
     },

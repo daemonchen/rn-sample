@@ -9,4 +9,5 @@ module.exports = alt.generateActions(
     'update',
     'updateSuccess',
     'delete',
-    'deleteSuccess');
+    'deleteSuccess',
+    'addDependinces');

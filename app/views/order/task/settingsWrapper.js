@@ -16,7 +16,8 @@ var {
     StyleSheet
 } = React;
 
-var _navigator, _topNavigator = null;
+var BlueBackButton = require('../../../common/blueBackButton');
+var RightDoneButton = require('../../../common/rightDoneButton');
 
 var commonStyle = require('../../../styles/commonStyle');
 var _navigator, _topNavigator = null;
@@ -27,31 +28,22 @@ module.exports = React.createClass({
         _topNavigator = this.props.route.topNavigator;
         return {}
     },
-    leftButtonConfig:function() {
-        return {
-            title: '<',
-            handler:() =>
-                _navigator.pop()
-        }
-    },
-    rightButtonConfig: function(){
-        var self = this;
-        return{
-            title: 'Done',
-            handler:() =>
-                _navigator.pop()
-        }
+    onPressDone: function(){
+        this.props.route.onPressDone();
+        _topNavigator.pop();
     },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title:'新建任务'}}
-                    leftButton={this.leftButtonConfig()}
-                    rightButton={this.rightButtonConfig()}/>
+                    title={{title: this.props.route.title}}
+                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     <this.props.route.children
-                    events={this.props.route.events}/>
+                    data={this.props.route.data}
+                    target={this.props.route.target}
+                    onPressRow={this.props.route.onPressRow} />
                 </View>
             </View>
             );

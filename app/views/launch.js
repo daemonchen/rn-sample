@@ -75,7 +75,7 @@ var Launch = React.createClass({
                     selectedIcon={require('../images/TabBar/Contacts_selected.png')}
                     selected={this.state.selectedTab === 'Contact'}
                     onPress={this._handlePress("Contact")}>
-                    <AppNavigator initialRoute={{title: '通讯录', component:Contact, topNavigator: this.props.navigator}} key='Contact' />
+                    <AppNavigator initialRoute={{title: '通讯录', target: 2, component:Contact, topNavigator: this.props.navigator}} key='Contact' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="Person"

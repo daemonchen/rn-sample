@@ -1,6 +1,8 @@
 'use strict';
 var React = require('react-native')
 var NavigationBar = require('react-native-navbar');
+var moment = require('moment');
+var underscore = require('underscore');
 var {
     Text,
     TextInput,
@@ -27,6 +29,7 @@ var RightDoneButton = require('../../../common/rightDoneButton');
 
 var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
+var taskListStore = require('../../../stores/task/taskListStore');
 
 var _navigator, _topNavigator = null;
 
@@ -42,21 +45,29 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         var defaultData = this.props.route.data || {};
+        var endTime = defaultData.endTime || new Date().valueOf();
+        var lastIds = defaultData.lastIds || [];
         return {
             taskStatus: defaultData.taskStatus || 0,
             orderId: defaultData.id || 0,
+            userName: defaultData.userName || '',
             ownerId: defaultData.ownerId || 0,
+            userName: defaultData.userName || '',
             description: defaultData.description || '',
             jobName: defaultData.jobName || '',
-            endTime: defaultData.endTime || new Date().valueOf(),
-            lastIds: defaultData.lastIds || []
+            endTime: endTime,
+            endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
+            lastIds: lastIds,
+            lastIdsNumber: lastIds.length
         }
     },
     componentDidMount: function(){
-        this.unlisten = taskStore.listen(this.onChange)
+        this.unlisten = taskStore.listen(this.onChange);
+        this.unlistenTaskList = taskListStore.listen(this.onTaskListChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenTaskList();
     },
     onChange: function(){
         var result = taskStore.getState();
@@ -66,6 +77,12 @@ module.exports = React.createClass({
         }
         if (result.type == 'create') {
             _navigator.pop();
+        };
+    },
+    onTaskListChange: function(){
+        var result = taskListStore.getState();
+        if (result.type == 'addTask') {
+            this.setLastIds(result)
         };
     },
     onPressDone: function(){
@@ -91,6 +108,8 @@ module.exports = React.createClass({
     _setEndTime: function(){
         _navigator.push({
             component: Calendar,
+            target: 1,
+            onCalendarPressDone: this.onCalendarPressDone,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
@@ -99,28 +118,45 @@ module.exports = React.createClass({
         _navigator.push({
             title:'客户',
             component: Contact,
+            target: 1,
             onPressContactRow: this.onPressContactRow,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
     },
-    onPressContactRow: function(data){
-        console.log('select contact:', data);
+    onCalendarPressDone: function(date){
+        this.setState({
+            endTime: moment(date).valueOf(),
+            endTimeFormat: moment(date).format('YYYY年MM月DD日')
+        });
     },
-    onPressTaskRow: function(rowData, sectionID){
+    onPressContactRow: function(data){
+        this.setState({
+            ownerId: data.userId,
+            userName: data.userName
+        });
+    },
+    onPressTaskRow: function(rowData){
         _topNavigator.push({
             title: rowData.name,
             component: TaskDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         })
-        console.log('----on tap');
     },
-    onPressOrderRow: function(rowData, sectionID){
-        console.log('chose order:', rowData);
+    setLastIds: function(data){
+        this.lastIds = this.state.lastIds;
+        if (!!data.isCheck && !underscore.contains(this.lastIds, data.id)) {
+            this.lastIds.push(data.id);
+        }else{
+            this.lastIds = underscore.without(this.lastIds, data.id);
+        }
     },
-    onPressCircle: function(rowData, sectionID){
-        console.log('todo: update task list stuff');
+    onTaskPressDone: function(){
+        this.setState({
+            lastIds: this.lastIds,
+            lastIdsNumber: this.lastIds.length
+        });
     },
     _setTaskDependence: function(){
         //todo: 把settingwrapper修改为presettings
@@ -128,22 +164,10 @@ module.exports = React.createClass({
             title:'前置任务',
             component: SettingsWrapper,
             children: TaskList,
-            events:{
-                onPressRow: this.onPressTaskRow,
-                onPressCircle: this.onPressCircle,
-            },
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
-    },
-    _setOrderBelongs: function(){
-        _navigator.push({
-            title:'所属订单',
-            component: SettingsWrapper,
-            children: OrderList,
-            events:{
-                onPressRow: this.onPressOrderRow
-            },
+            target: 1,
+            data: this.props.route.data,
+            onPressRow: this.onPressTaskRow,
+            onPressDone: this.onTaskPressDone,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
@@ -182,7 +206,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={commonStyle.settingDetail}>
-                                2015年x月x日
+                                {this.state.endTimeFormat}
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
@@ -201,7 +225,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={commonStyle.settingDetail}>
-                                我是xx
+                                {this.state.userName}
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
@@ -220,26 +244,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={commonStyle.settingDetail}>
-                                2
-                            </Text>
-                            <Image
-                            style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                    style={commonStyle.settingItemWrapper}
-                    underlayColor='#eee'
-                    onPress={this._setOrderBelongs} >
-                        <View
-                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
-                            <Text
-                            style={commonStyle.settingTitle}>
-                                所属订单
-                            </Text>
-                            <Text
-                            style={commonStyle.settingDetail}>
-                                2asdfasd3
+                                {this.state.lastIdsNumber}
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}

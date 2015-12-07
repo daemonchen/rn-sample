@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var CalendarPicker = require('../common/calendarPicker/CalendarPicker');
+var NavigationBar = require('react-native-navbar');
 var {
     View,
     Text,
@@ -9,6 +10,9 @@ var {
     StyleSheet
 } = React;
 var Button = require('../common/button.js');
+var BlueBackButton = require('../common/blueBackButton');
+var RightDoneButton = require('../common/rightDoneButton');
+
 var commonStyle = require('../styles/commonStyle');
 var _navigator, _topNavigator = null;
 
@@ -23,16 +27,20 @@ module.exports =  React.createClass({
     onDateChange: function(date) {
         this.setState({ date: date });
     },
+    onPressDone: function(){
+        this.props.route.onCalendarPressDone(this.state.date);
+        _topNavigator.pop();
+    },
     render: function() {
         return (
             <View style={commonStyle.container}>
+                <NavigationBar
+                    title={{title:'日历'}}
+                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <CalendarPicker
                   selectedDate={this.state.date}
                   onDateChange={this.onDateChange} />
-
-                <Text style={[commonStyle.blue,commonStyle.textInput]}>
-                    Date:  { this.state.date.toString() }
-                </Text>
             </View>
 
         );

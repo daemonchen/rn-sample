@@ -1,6 +1,8 @@
 'use strict';
 var React = require('react-native')
 var NavigationBar = require('react-native-navbar');
+var moment = require('moment');
+var underscore = require('underscore');
 var {
     Text,
     TextInput,
@@ -30,6 +32,10 @@ var RightDoneButton = require('../../common/rightDoneButton');
 
 var orderAction = require('../../actions/order/orderAction');
 var orderStore = require('../../stores/order/orderStore');
+var attachAction = require('../../actions/attach/attachAction');
+var attachStore = require('../../stores/attach/attachStore');
+
+var util = require('../../common/util');
 
 var _navigator, _topNavigator = null;
 
@@ -37,29 +43,57 @@ module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
+
         var defaultData = this.props.route.data || {};
+        var endTime = defaultData.endTime || new Date().valueOf();
+
         return {
             orderStatus: defaultData.orderStatus || 0,
             accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
             creatorId: defaultData.creatorId || 0,
             creatorName: defaultData.creatorName || '',
+            customerId: defaultData.customerId || '',
             customerName: defaultData.customerName || '',
             description: defaultData.description || '',
-            endTime: defaultData.endTime || new Date().valueOf(),
+            endTime: endTime,
+            endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
             factoryId: defaultData.factoryId || 0,
             lable: defaultData.lable || '',
             salesManId: defaultData.salesManId || '',
+            salesManName: defaultData.salesManName || '',
             startTime: defaultData.startTime || '',
             title: defaultData.title || ''
 
         }
     },
     componentDidMount: function(){
-        this.unlisten = orderStore.listen(this.onChange)
+        this.unlisten = orderStore.listen(this.onChange);
+        this.unlistenAttach = attachStore.listen(this.onAttachChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenAttach();
+    },
+    onAttachChange: function(){
+        var result = attachStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        if (result.type == 'create') {
+            // this.fetchData();
+            this.setAccessoryIds(result);
+        };
+    },
+    setAccessoryIds: function(data){
+        this.accessoryIds = this.state.accessoryIds;
+        if (!underscore.contains(this.accessoryIds, data[0].id)) {
+            this.accessoryIds.push(data[0].id);
+        }
+        this.setState({
+            accessoryIds: this.accessoryIds,
+            accessoryNum: this.accessoryIds.length
+        });
     },
     onChange: function(){
         var result = orderStore.getState();
@@ -71,31 +105,65 @@ module.exports = React.createClass({
             _navigator.pop();
         };
     },
+    onCalendarPressDone: function(date){
+        this.setState({
+            endTime: moment(date).valueOf(),
+            endTimeFormat: moment(date).format('YYYY年MM月DD日')
+        });
+    },
     _setEndTime: function(){
         _navigator.push({
             component: Calendar,
+            target: 1,
+            onCalendarPressDone: this.onCalendarPressDone,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
+        });
+    },
+    onGetCustomer: function(data){
+        // customerId
+        this.setState({
+            customerId: data.userId,
+            customerName: data.userName
+        });
+    },
+    onGetSales: function(data){
+        // salesManId
+        this.setState({
+            salesManId: data.userId,
+            salesManName: data.userName
         });
     },
     _setCustomer: function(){
         _navigator.push({
-            title:'客户',
+            title:'选择客户',
             component: Contact,
-            onPressContactRow: this.onPressContactRow,
+            target: 0,
+            onPressContactRow: this.onGetCustomer,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
     },
-    onPressContactRow: function(data){
-        console.log('selected data:', data);
-    },
-    _addAttachs: function(){
+    _setSales: function(){
         _navigator.push({
-            title:'添加附件',
-            component: Attach,
+            title:'业务员',
+            component: Contact,
+            target: 0,
+            onPressContactRow: this.onGetSales,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
+        });
+    },
+    _addAttachs: function(){
+        util.showPhotoPicker({
+            title: ''
+        }, (response)=>{
+            var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
+            attachAction.create([{
+                // hostId: this.props.route.data.id,
+                hostType: 1,
+                base64: response.data,
+                fileName: name}]);
         });
     },
     onPressDone: function(){
@@ -105,12 +173,14 @@ module.exports = React.createClass({
             accessoryNum: this.state.accessoryNum || '',
             creatorId: this.state.creatorId || 0,
             creatorName: this.state.creatorName || '',
+            customerId: this.state.customerId || '',
             customerName: this.state.customerName || '',
             description: this.state.description || '',
             endTime: this.state.endTime || new Date().valueOf(),
             factoryId: this.state.factoryId || 0,
             lable: this.state.lable || '',
             salesManId: this.state.salesManId || '',
+            salesManName: this.state.salesManName || '',
             startTime: this.state.startTime || '',
             title: this.state.title || ''
         });
@@ -156,7 +226,7 @@ module.exports = React.createClass({
                         </Text>
                         <Text
                         style={commonStyle.settingDetail}>
-                            2015年x月x日
+                            {this.state.endTimeFormat}
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}
@@ -171,7 +241,7 @@ module.exports = React.createClass({
                         </Text>
                         <Text
                         style={commonStyle.settingDetail}>
-                            我是xx
+                            {this.state.customerName}
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}
@@ -179,14 +249,14 @@ module.exports = React.createClass({
                     </TouchableOpacity>
                     <TouchableOpacity
                     style={[commonStyle.settingItem, commonStyle.bottomBorder]}
-                    onPress={this._setCustomer} >
+                    onPress={this._setSales} >
                         <Text
                         style={commonStyle.settingTitle}>
                             业务员
                         </Text>
                         <Text
                         style={commonStyle.settingDetail}>
-                            阿斯顿发
+                            {this.state.salesManName}
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}
@@ -201,6 +271,7 @@ module.exports = React.createClass({
                         </Text>
                         <Text
                         style={commonStyle.settingDetail}>
+                            {this.state.accessoryNum}
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}

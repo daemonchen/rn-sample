@@ -25,8 +25,8 @@ class AttachStore {
 
         // appConstants.memberList = responseData.data
         // asyncStorage.setItem('appConstants', appConstants);
-        this.mergeList(responseData)
-        // this.setState(responseData);
+        // this.mergeList(responseData)
+        this.setState(responseData);
     }
     mergeList(responseData){
         asyncStorage.getItem('appConstants')

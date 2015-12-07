@@ -18,10 +18,12 @@ var _navigator, _topNavigator = null;
 
 var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');
+
 var ContactGroup = require('./group');
 var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
 var CustomerList = require('./customerList');
+var BlueBackButton = require('../../common/blueBackButton');
 
 var contactAction = require('../../actions/contact/contactAction');
 var contactStore = require('../../stores/contact/contactStore');
@@ -40,7 +42,7 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            target: this.props.route.target || 2,
+            target: this.props.route.target,
             listData: [],
         }
     },
@@ -72,23 +74,39 @@ module.exports = React.createClass({
                 topNavigator: _topNavigator
             })
             return;
-        };
-        this.props.route.onPressContactRow(data);
+        }else{
+            this.props.route.onPressContactRow(data);
+            _topNavigator.pop();
+        }
     },
     goCustomerList: function(){
         _topNavigator.push({
             title: '客户',
-            target: 2,
+            target: this.state.target,
             component: CustomerList,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         })
     },
+    renderNavigationBar: function(){
+        if (this.state.target == 2) {
+            return(
+                <NavigationBar
+                    title={{ title: this.props.route.title }} />
+                );
+
+        }else{
+            return(
+                <NavigationBar
+                    title={{ title: this.props.route.title }}
+                    leftButton={<BlueBackButton navigator={_navigator}/>} />
+                );
+        }
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
-                <NavigationBar
-                    title={{ title: this.props.route.title }} />
+                {this.renderNavigationBar()}
                 <ScrollView style={commonStyle.container}
 
                 automaticallyAdjustContentInsets={false} >

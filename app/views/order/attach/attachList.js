@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var TimerMixin = require('react-timer-mixin');
 var NavigationBar = require('react-native-navbar');
 var SearchBar = require('react-native-search-bar');
 var RefreshableListView = require('react-native-refreshable-listview')
@@ -29,6 +30,7 @@ var AttachItem = require('./attachItem');
 var Button = require('../../../common/button.js');
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}) // assumes immutable objects
         return {
@@ -57,11 +59,12 @@ module.exports = React.createClass({
         }
         if (result.type == 'create') {
             // this.fetchData();
-            this.setState({
-                dataSource : this.state.dataSource.cloneWithRows(result.data || []),
-                list: result.data || [],
-                loaded     : true,
-            });
+            this.setTimeout(this.fetchData, 350);
+            // this.setState({
+            //     dataSource : this.state.dataSource.cloneWithRows(result.data || []),
+            //     list: result.data || [],
+            //     loaded     : true,
+            // });
         };
     },
     handleGet: function(result){

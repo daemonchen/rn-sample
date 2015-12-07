@@ -89,6 +89,9 @@ class TaskListStore {
         };
         return obj;
     }
+    onAddDependinces(data){
+        this.setState(data);
+    }
 }
 
 export default alt.createStore(TaskListStore, 'TaskListStore');

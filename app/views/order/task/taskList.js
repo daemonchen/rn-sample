@@ -22,6 +22,15 @@ var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
 var TaskItem = require('./taskItem');
 
+/*
+target: 表示从哪里打开任务列表 enum
+{
+    0: 'createOrder',
+    1: 'createTask',
+    2: 'normal'
+}
+*/
+
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
@@ -52,6 +61,7 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
+            this.setTimeout(this.fetchData, 350)
             // this.fetchData();
         };
     },
@@ -111,6 +121,7 @@ module.exports = React.createClass({
             rowData={rowData}
             sectionID={sectionID}
             rowID={rowID}
+            target={this.props.target}
             onPressRow={this.props.onPressRow} />
             )
     },

@@ -87,13 +87,14 @@ var order =  React.createClass({
             case 0:
                 return(
                     <OrderList
-                    events={{onPressRow: this.onPressOrderRow}}
+                    onPressRow={this.onPressOrderRow}
+                    events={{}}
                     status={0} />
                 )
             case 1:
                 return(
                     <OrderList
-                    events={{onPressRow: this.onPressOrderRow}}
+                    onPressRow={this.onPressOrderRow}
                     status={1} />
                 )
         }
