@@ -27,6 +27,7 @@ var Calendar = require('../calendar');
 var Contact = require('../contact/contact');
 var Attach = require('./attach/attach');
 var OrderTemplates = require('./orderTemplates');
+var OrderTemplateSetting = require('./templates/orderTemplateSetting');
 
 var BlueBackButton = require('../../common/blueBackButton');
 var LeftCloseButton = require('../../common/leftCloseButton');
@@ -236,9 +237,8 @@ module.exports = React.createClass({
     },
     _saveTemplate: function(){
         _navigator.push({
-            component: Calendar,
-            // data: this.,
-            onCalendarPressDone: this.onCalendarPressDone,
+            component: OrderTemplateSetting,
+            data: this.props.route.data,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });

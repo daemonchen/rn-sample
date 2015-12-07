@@ -35,5 +35,7 @@ module.exports = {
 
     member: NZAOM_API_DOMAIN + '/api/order_job/member',
 
-    accessory: NZAOM_API_DOMAIN + '/api/accessory'
+    accessory: NZAOM_API_DOMAIN + '/api/accessory',
+
+    template: NZAOM_API_DOMAIN + '/api/job_template'
 }
