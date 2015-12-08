@@ -14,7 +14,7 @@ var {
 } = React
 
 var commentAction = require('../../../actions/comment/commentAction');
-// var orderStore = require('../../../stores/order/orderStore');
+var commentStore = require('../../../stores/comment/commentStore');
 var util = require('../../../common/util');
 
 var styles = require('../../../styles/order/comment.js');
@@ -31,8 +31,21 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
+        this.unlisten = commentStore.listen(this.onChange);
     },
     componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function(){
+        var result = commentStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        if (result.type == 'create') {
+            this.setState({
+                comment: ''
+            });
+        };
     },
     onChangeComment: function(text){
         this.setState({
@@ -47,16 +60,6 @@ module.exports = React.createClass({
             type: 2
         });
     },
-    inputFocused: function(refName) {
-      setTimeout(() => {
-        var scrollResponder = this.refs.scrollView.getScrollResponder();
-        scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-          React.findNodeHandle(this.refs[refName]),
-          110, //additionalOffset
-          true
-        );
-      }, 50);
-    },
     render: function() {
         return(
             <View style={styles.commentBarWrapper}>
@@ -65,6 +68,8 @@ module.exports = React.createClass({
                         clearButtonMode={'while-editing'}
                         onChangeText={this.onChangeComment}
                         returnKeyType={'send'}
+                        clearTextOnFocus={true}
+                        value={this.state.comment}
                         onSubmitEditing={this.sendComment} />
                 <TouchableOpacity onPress={this.sendComment}
                 style={styles.commentSendButtonWrapper}>

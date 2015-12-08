@@ -16,6 +16,8 @@ var {
     TouchableOpacity,
     TouchableWithoutFeedback,
     ActionSheetIOS,
+    DeviceEventEmitter,
+    Dimensions,
     StyleSheet
 } = React;
 
@@ -41,6 +43,8 @@ module.exports = React.createClass({
 
         var endTime = defaultData.jobDO.endTime || new Date().valueOf();
         return {
+            visibleHeight: Dimensions.get('window').height,
+
             orderId: defaultData.jobDO.orderId,
             taskStatus: defaultData.taskStatus || 0,
             done: defaultData.jobDO.status,
@@ -52,6 +56,19 @@ module.exports = React.createClass({
             ownerId: defaultData.userVO.userId || 0,
             userName: defaultData.userVO.userName || ''
         }
+    },
+    componentDidMount: function(){
+        DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow)
+        DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide)
+    },
+    componentWillUnmount: function() {
+    },
+    keyboardWillShow: function(e) {
+        var newSize = Dimensions.get('window').height - e.endCoordinates.height
+        this.setState({visibleHeight: newSize})
+    },
+    keyboardWillHide: function(e) {
+        this.setState({visibleHeight: Dimensions.get('window').height})
     },
     _pressSettingButton: function(){
         var data = Object.assign({taskStatus: 2}, this.props.route.data);
@@ -86,7 +103,7 @@ module.exports = React.createClass({
     },
     render: function(){
         return(
-            <View style={commonStyle.container} >
+            <View style={{height: this.state.visibleHeight}} >
                 <NavigationBar
                     title={{ title: '任务详情'}}
                     leftButton={<BlueBackButton navigator={_topNavigator} />}
@@ -154,8 +171,8 @@ module.exports = React.createClass({
                         </View>
                     </TouchableHighlight>
                     <CommentList data={this.state.id}/>
-                    <CommentBar navigator={_navigator} data={this.state.id}/>
                 </ScrollView>
+                <CommentBar navigator={_navigator} data={this.state.id}/>
             </View>
             );
     }

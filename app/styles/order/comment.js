@@ -60,8 +60,6 @@ module.exports = React.StyleSheet.create({
         fontSize: 12
     },
     commentBarWrapper: {
-        position: 'absolute',
-        bottom: 0,
         width: width,
         flexDirection: 'row',
         height: 44,
