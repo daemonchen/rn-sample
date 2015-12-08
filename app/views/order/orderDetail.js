@@ -93,6 +93,7 @@ module.exports = React.createClass({
     createTask: function(){
         var data = Object.assign({taskStatus: 1}, this.props.route.data);
         _topNavigator.push({
+            title: '新建任务',
             data: data,
             component: TaskSettings,
             sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
@@ -148,6 +149,7 @@ module.exports = React.createClass({
     onPressTaskRow: function(rowData, sectionID){
         _topNavigator.push({
             title: rowData.name,
+            data: rowData,
             component: TaskDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator

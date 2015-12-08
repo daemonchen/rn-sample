@@ -46,7 +46,7 @@ var order =  React.createClass({
             title: '选择模版',
             target: 1,
             component: OrderTemplates,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
     },

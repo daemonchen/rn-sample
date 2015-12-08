@@ -120,14 +120,14 @@ module.exports = React.StyleSheet.create({
     settingTitle: {
         fontSize: 14,
         color: '#212121',
-        height: 48,
+        height: 47,
         paddingTop: 17,
         width: 80,
     },
     settingDetail: {
         fontSize: 14,
         flex: 1,
-        height: 48,
+        height: 47,
         paddingTop: 17,
         textAlign: 'right'
     },

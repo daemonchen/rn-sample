@@ -28,6 +28,19 @@ class TaskStore {
         // this.mergeList(responseData)
         this.setState(responseData);
     }
+    onUpdate(data){
+        taskService.update(data)
+        .then((responseData) => {
+            taskAction.updateSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onUpdateSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'update'
+        this.setState(responseData);
+    }
 }
 
 export default alt.createStore(TaskStore, 'TaskStore');

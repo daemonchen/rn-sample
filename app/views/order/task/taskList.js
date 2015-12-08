@@ -64,6 +64,10 @@ module.exports = React.createClass({
             this.setTimeout(this.fetchData, 350)
             // this.fetchData();
         };
+        if (result.type == 'update') {
+            this.setTimeout(this.fetchData, 350)
+            // this.fetchData();
+        };
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {

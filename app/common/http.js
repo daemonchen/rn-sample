@@ -72,10 +72,10 @@ module.exports = {
     fetchData: function(url){
         return fetch(url, this.fetchOptions)
             .then(res => res.json())
-            .then( res =>{
-                console.log(res);
-                return res;
-            })
+            // .then( res =>{
+            //     console.log(res);
+            //     return res;
+            // })
             .catch((error) => {
                 util.alert(error);
               });

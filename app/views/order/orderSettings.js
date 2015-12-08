@@ -12,6 +12,7 @@ var {
     Image,
     Navigator,
     TouchableOpacity,
+    TouchableHighlight,
     StyleSheet
 } = React
 /*
@@ -54,7 +55,7 @@ module.exports = React.createClass({
 
         return {
             orderId: defaultData.id || 0,
-            orderStatus: defaultData.orderStatus || 0,
+            orderStatus: defaultData.orderStatus || 3,
             accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
             creatorId: defaultData.creatorId || 0,
@@ -278,63 +279,79 @@ module.exports = React.createClass({
         if (this.state.orderStatus == 2) {//修改订单
             return(
                 <View>
-                    <TouchableOpacity
-                    style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
-                        <Text
-                        style={commonStyle.settingTitle}>
-                            创建者
-                        </Text>
-                        <Text
-                        style={commonStyle.settingDetail}>
-                        {this.state.creatorName}
-                        </Text>
-                        <Image
-                        style={commonStyle.settingArrow}
-                        source={require('../../images/common/arrow_right.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
-                    onPress={this._saveTemplate}>
-                        <Text
-                        style={commonStyle.settingTitle}>
-                            保存为模版
-                        </Text>
-                        <Text
-                        style={commonStyle.settingDetail}>
-                        </Text>
-                        <Image
-                        style={commonStyle.settingArrow}
-                        source={require('../../images/common/arrow_right.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
-                    onPress={this._deleteOrder}>
-                        <Text
-                        style={[commonStyle.settingTitle, commonStyle.red]}>
-                            删除
-                        </Text>
-                        <Text
-                        style={commonStyle.settingDetail}>
-                        </Text>
-                    </TouchableOpacity>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee' >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                创建者
+                            </Text>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                            {this.state.creatorName}
+                            </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../images/common/arrow_right.png')} />
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this._saveTemplate} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                保存为模版
+                            </Text>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                            </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../images/common/arrow_right.png')} />
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this._deleteOrder} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={[commonStyle.settingTitle, commonStyle.red]}>
+                                删除
+                            </Text>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
                 </View>
                 );
         };
         return(
-            <TouchableOpacity
-            style={[commonStyle.settingItem, commonStyle.bottomBorder]}
-            onPress={this._selectTemplate}>
-                <Text
-                style={commonStyle.settingTitle}>
-                    从模版创建
-                </Text>
-                <Text
-                style={commonStyle.settingDetail}>
-                </Text>
-                <Image
-                style={commonStyle.settingArrow}
-                source={require('../../images/common/arrow_right.png')} />
-            </TouchableOpacity>
+            <TouchableHighlight
+                style={commonStyle.settingItemWrapper}
+                underlayColor='#eee'
+                onPress={this._selectTemplate} >
+                <View
+                style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                    <Text
+                    style={commonStyle.settingTitle}>
+                        从模版创建
+                    </Text>
+                    <Text
+                    style={commonStyle.settingDetail}>
+                    </Text>
+                    <Image
+                    style={commonStyle.settingArrow}
+                    source={require('../../images/common/arrow_right.png')} />
+                </View>
+            </TouchableHighlight>
             )
     },
     render: function(){
@@ -358,66 +375,82 @@ module.exports = React.createClass({
                         value={this.state.description}
                         onChangeText={this.onChangeDescribeText} />
                     </View>
-                    <TouchableOpacity
-                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
-                    onPress={this._setEndTime}>
-                        <Text
-                        style={commonStyle.settingTitle}>
-                            截止日期
-                        </Text>
-                        <Text
-                        style={commonStyle.settingDetail}>
-                            {this.state.endTimeFormat}
-                        </Text>
-                        <Image
-                        style={commonStyle.settingArrow}
-                        source={require('../../images/common/arrow_right.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
-                    onPress={this._setCustomer}>
-                        <Text
-                        style={commonStyle.settingTitle}>
-                            客户
-                        </Text>
-                        <Text
-                        style={commonStyle.settingDetail}>
-                            {this.state.customerName}
-                        </Text>
-                        <Image
-                        style={commonStyle.settingArrow}
-                        source={require('../../images/common/arrow_right.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
-                    onPress={this._setSales} >
-                        <Text
-                        style={commonStyle.settingTitle}>
-                            业务员
-                        </Text>
-                        <Text
-                        style={commonStyle.settingDetail}>
-                            {this.state.salesManName}
-                        </Text>
-                        <Image
-                        style={commonStyle.settingArrow}
-                        source={require('../../images/common/arrow_right.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}
-                    onPress={this._addAttachs}>
-                        <Text
-                        style={commonStyle.settingTitle}>
-                            添加附件
-                        </Text>
-                        <Text
-                        style={commonStyle.settingDetail}>
-                            {this.state.accessoryNum}
-                        </Text>
-                        <Image
-                        style={commonStyle.settingArrow}
-                        source={require('../../images/common/arrow_right.png')} />
-                    </TouchableOpacity>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this._setEndTime} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                截止日期
+                            </Text>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                                {this.state.endTimeFormat}
+                            </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../images/common/arrow_right.png')} />
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this._setCustomer} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                客户
+                            </Text>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                                {this.state.customerName}
+                            </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../images/common/arrow_right.png')} />
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this._setSales} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                业务员
+                            </Text>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                                {this.state.salesManName}
+                            </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../images/common/arrow_right.png')} />
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this._addAttachs} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                添加附件
+                            </Text>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                                {this.state.accessoryNum}
+                            </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../images/common/arrow_right.png')} />
+                        </View>
+                    </TouchableHighlight>
                     {this.renderOptionalSettings()}
                 </View>
             </ScrollView>

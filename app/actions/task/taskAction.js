@@ -3,4 +3,6 @@
 var alt = require('../../common/alt');
 module.exports = alt.generateActions(
     'create',
-    'createSuccess');
+    'createSuccess',
+    'update',
+    'updateSuccess');

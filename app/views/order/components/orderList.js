@@ -64,6 +64,10 @@ var orderList = React.createClass({
             this.setTimeout(this.onRefresh, 350)
             // this.onRefresh();
         };
+        if (result.type == 'update') {
+            this.setTimeout(this.onRefresh, 350)
+            // this.onRefresh();
+        };
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {

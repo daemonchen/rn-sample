@@ -53,7 +53,7 @@ class TaskListStore {
         }).done();
     }
     onUpdate(data){
-        taskListService.updateList(data)
+        taskListService.updateTaskStatus(data)
         .then((responseData) => {
             taskListAction.updateSuccess(responseData)
         }).done();

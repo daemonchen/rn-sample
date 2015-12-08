@@ -68,7 +68,7 @@ module.exports = React.createClass({
         var isCheck = (this.state.isCheck == 1) ? 0 : 1;
         if (this.props.target == 1) {//新建任务的时候，选择任务依赖
             taskListAction.addDependinces({
-                type: 'addTask',
+                type: 'addDependinces',
                 id: this.props.rowData.jobDO.id,
                 isCheck: isCheck
             });

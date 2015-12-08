@@ -23,6 +23,11 @@ module.exports = React.StyleSheet.create({
         flex: 1,
         flexDirection: 'row'
     },
+    taskDetailCheckIcon:{
+        position: 'absolute',
+        left: 16,
+        top: 16
+    },
     checkIconWrapper: {
         width: 54,
         height: 48,
@@ -49,6 +54,23 @@ module.exports = React.StyleSheet.create({
         top: 12,
         color: '#fff',
         fontSize: 12
+    },
+    taskDetailTop: {
+        height: 60,
+        width: width,
+        flexDirection: 'row'
+    },
+    taskTitle: {
+        paddingVertical: 16,
+        marginTop: 16,
+        textAlign: 'center',
+        fontSize: 18,
+        flex: 1
+    },
+    taskDetailDescribe: {
+        alignItems: 'center',
+        width: width,
+        marginTop: 16
     },
     swipeWrapper:{
         backgroundColor: 'transparent'
