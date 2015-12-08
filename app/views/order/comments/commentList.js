@@ -11,22 +11,22 @@ var {
     StyleSheet
 } = React
 
-var orderListAction = require('../../../actions/order/orderListAction');
-var orderListStore = require('../../../stores/order/orderListStore');
-var orderStore = require('../../../stores/order/orderStore');
+var commentListAction = require('../../../actions/comment/commentListAction');
+var commentListStore = require('../../../stores/comment/commentListStore');
+var commentStore = require('../../../stores/comment/commentStore');
 var util = require('../../../common/util');
 
-var styles = require('../../../styles/home/style.js');
-var OrderItem = require('./orderItem');
+var styles = require('../../../styles/order/comment.js');
+var commonStyle = require('../../../styles/commonStyle');
 
-var orderList = React.createClass({
+module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function() {
         var ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
         return {
-            status: 0,//-1删除，0正常，1结束
+            jobId: this.props.data,//任务id
             pageNum: 1,
             pageSize: 20,
             loaded : false,
@@ -34,28 +34,20 @@ var orderList = React.createClass({
             dataSource: ds
         }
     },
-    componentWillReceiveProps: function(nextProps){
-        this.setState({
-            status: nextProps.status
-        });
+    componentDidMount: function(){
+        this.unlisten = commentListStore.listen(this.onChange);
+        this.unlistenComment = commentStore.listen(this.onChangeComment);
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
-        if (nextProps.status != this.props.status) {
-            this._timeout = this.setTimeout(this.onRefresh, 15)
-        };
-    },
-    componentDidMount: function(){
-        this.onRefresh();
-        this.unlisten = orderListStore.listen(this.onChange);
-        this.unlistenOrderChange = orderStore.listen(this.onOrderChange)
+        this._timeout = this.setTimeout(this.onRefresh, 350)
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.unlistenOrderChange();
+        this.unlistenComment();
     },
-    onOrderChange: function(){
-        var result = orderStore.getState();
+    onChangeComment: function(){//TODO: change to comment create listener
+        var result = commentStore.getState();
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
@@ -105,7 +97,7 @@ var orderList = React.createClass({
         return;
     },
     onChange: function() {
-        var result = orderListStore.getState();
+        var result = commentListStore.getState();
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
@@ -121,8 +113,8 @@ var orderList = React.createClass({
         this.setState({
             pageNum: 1
         });
-        orderListAction.getList({
-            status: this.state.status,
+        commentListAction.getList({
+            jobId: this.state.jobId,
             pageNum: this.state.pageNum,
             pageSize: this.state.pageSize
         });
@@ -131,8 +123,8 @@ var orderList = React.createClass({
         this.setState({
             pageNum: this.state.pageNum + 1
         });
-        orderListAction.loadMore({
-            status: this.state.status,
+        commentListAction.loadMore({
+            jobId: this.state.jobId,
             pageNum: this.state.pageNum,
             pageSize: this.state.pageSize
         });
@@ -141,18 +133,52 @@ var orderList = React.createClass({
         return this.state.list.length >= this.state.total||this.state.list.length===0;
     },
     onDelete: function(rowData){
-        orderListAction.delete({
+        commentListAction.delete({
             orderId:rowData.id
         });
     },
+    renderAvatar: function(data){
+        if (data.avatar) {
+            return(
+                <Image
+                  style={styles.avatar}
+                  source={{uri: data.avatar}} />
+                );
+        }else{
+            var circleBackground = {
+                backgroundColor: data.bgColor
+            }
+            return(
+                <View style={[styles.avatar, circleBackground]}>
+                    <Text style={styles.subName}>{data.simpleUserName}</Text>
+                </View>
+                )
+        }
+    },
+    renderTimeLabel: function(timestamp){
+        var time = util.formatTimestamp(timestamp);
+        return(
+            <Text style={[styles.time, commonStyle.textLight]}>
+                {time}
+            </Text>
+            )
+    },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <OrderItem
-            rowData={rowData}
-            sectionID={sectionID}
-            rowID={rowID}
-            onPress={this.props.onPressRow}
-            onDelete={this.onDelete} />
+            <View style={styles.rowStyle}>
+                {this.renderAvatar(rowData)}
+                <View style={styles.detailWrapper}>
+                    <View style={styles.nameWrapper}>
+                        <Text style={[styles.name, commonStyle.blue]}>
+                        {rowData.userName}
+                        </Text>
+                        {this.renderTimeLabel(rowData.gmtCreate)}
+                    </View>
+                    <Text style={[styles.detail, commonStyle.textDark]}>
+                        {rowData.comment}
+                    </Text>
+                </View>
+            </View>
             )
     },
     render: function() {
@@ -163,31 +189,34 @@ var orderList = React.createClass({
     },
     renderListView: function(){
         return (
-            <RefreshInfiniteListView
-                ref = {(list) => {this.list= list}}
-                dataSource={this.state.dataSource}
-                renderRow={this.renderRow}
-                scrollEventThrottle={10}
-                contentContainerStyle={{paddingBottom: 40}}
-                onRefresh = {this.onRefresh}
-                onInfinite = {this.onInfinite}
-                loadedAllData={this.loadedAllData}
-                >
-            </RefreshInfiniteListView>
+            <View style={styles.main}>
+                <Text style={styles.commentTitle}>
+                    评论({this.state.list.length})
+                </Text>
+                <RefreshInfiniteListView
+                    ref = {(list) => {this.list= list}}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow}
+                    scrollEventThrottle={10}
+                    onRefresh = {this.onRefresh}
+                    onInfinite = {this.onInfinite}
+                    loadedAllData={this.loadedAllData}
+                    >
+                </RefreshInfiniteListView>
+            </View>
             )
     },
     renderLoadingView: function(){
         return (
-            <View style={styles.header}>
-                <Text style={styles.headerText}>User List</Text>
-                <View style={styles.container}>
+            <View style={commonStyle.header}>
+                <Text style={commonStyle.headerText}>User List</Text>
+                <View style={commonStyle.container}>
                     <ActivityIndicatorIOS
                         animating={!this.state.loaded}
-                        style={[styles.activityIndicator, {height: 80}]}
+                        style={[commonStyle.activityIndicator, {height: 80}]}
                         size="large" />
                 </View>
             </View>
         );
     }
 });
-module.exports = orderList;

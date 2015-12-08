@@ -7,7 +7,8 @@ module.exports = {
     xAuthToken: null,
     orderList: null,
     taskList: null,
-    attachList: null
+    attachList: null,
+    commentList: null
 };
 
 // TODO: orderList inboxList

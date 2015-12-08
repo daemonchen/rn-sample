@@ -19,10 +19,10 @@ var {
 } = util.getDimensions();
 
 var commonStyle = require('../../styles/commonStyle');
-var userAccount = require('./userAccount');
-var myTemplate = require('./myTemplate');
-var mySettings = require('./mySettings');
-var suggest = require('./suggest');
+var UserAccount = require('./userAccount');
+var OrderTemplates = require('../order/orderTemplates');
+var MySettings = require('./mySettings');
+var Suggest = require('./suggest');
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
@@ -34,15 +34,17 @@ module.exports = React.createClass({
     goAccount: function(){
         _navigator.push({
             title:'我的账号',
-            component: userAccount,
+            component: UserAccount,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
     },
     goTemplate: function(){
+
         _navigator.push({
-            title:'我的模版',
-            component: myTemplate,
+            title: '我的模版',
+            target: 2,
+            component: OrderTemplates,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
@@ -50,7 +52,7 @@ module.exports = React.createClass({
     goSettings: function(){
         _navigator.push({
             title:'设置',
-            component: mySettings,
+            component: MySettings,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });
@@ -58,7 +60,7 @@ module.exports = React.createClass({
     goSuggest: function(){
         _navigator.push({
             title:'意见反馈',
-            component: suggest,
+            component: Suggest,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         });

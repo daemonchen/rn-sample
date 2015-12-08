@@ -357,6 +357,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             <ScrollView keyboardShouldPersistTaps={false}
+            keyboardDismissMode={'interactive'}
             style={commonStyle.container}>
                 {this.renderNavigationBar()}
                 <View style={styles.main}>

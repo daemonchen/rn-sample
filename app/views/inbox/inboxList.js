@@ -137,6 +137,7 @@ module.exports = React.createClass({
         });
     },
     onPressRow: function(rowData, sectionID){
+        console.log('...rowData in inboxlist', rowData);
         switch(rowData.msgType){
             case 1:
                 return this.doPush(OrderDetail, rowData)

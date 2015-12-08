@@ -27,6 +27,8 @@ var styles = require('../../../styles/order/orderDetail');
 var BlueBackButton = require('../../../common/blueBackButton');
 var RightSettingButton = require('../../../common/rightSettingButton');
 
+var CommentList = require('../comments/commentList');
+var CommentBar = require('../comments/commentBar');
 
 var taskListAction = require('../../../actions/task/taskListAction');
 var TaskSettings = require('./taskSettings');
@@ -84,12 +86,13 @@ module.exports = React.createClass({
     },
     render: function(){
         return(
-            <View style={commonStyle.container}>
+            <View style={commonStyle.container} >
                 <NavigationBar
                     title={{ title: '任务详情'}}
                     leftButton={<BlueBackButton navigator={_topNavigator} />}
                     rightButton={<RightSettingButton onPress={this._pressSettingButton} />} />
-                <View style={styles.main}>
+                <ScrollView style={styles.main}
+                keyboardDismissMode={'interactive'} >
                     <View style={styles.taskDetailTop}>
                         <Text placeholder='任务名称'
                         style={[styles.taskTitle]}>
@@ -150,7 +153,9 @@ module.exports = React.createClass({
                             </View>
                         </View>
                     </TouchableHighlight>
-                </View>
+                    <CommentList data={this.state.id}/>
+                    <CommentBar navigator={_navigator} data={this.state.id}/>
+                </ScrollView>
             </View>
             );
     }

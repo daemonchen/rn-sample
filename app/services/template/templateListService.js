@@ -9,6 +9,6 @@ module.exports = {
     },
     deleteList: function(data){
         var urlParams = '/{id}'.replace('{id}', data.id);
-        return http.delete(NZAOM_INTERFACE.task + urlParams)
+        return http.delete(NZAOM_INTERFACE.template + urlParams)
     }
 }
