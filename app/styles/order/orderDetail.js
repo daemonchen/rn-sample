@@ -122,5 +122,49 @@ module.exports = React.StyleSheet.create({
     attachItemText: {
         fontSize: 16,
         justifyContent: 'center'
+    },
+    newsTimeline: {
+        width: 2 / React.PixelRatio.get(),
+        position: 'absolute',
+        left: 67,
+        top: 0,
+        bottom: 0,
+        backgroundColor: '#bdbdbd'
+    },
+    newsTag: {
+        width: 10,
+        height: 10,
+        backgroundColor: 'red',
+        borderRadius: 5,
+        position: 'absolute',
+        top: 20,
+        left: 63
+    },
+    newsTagGray: {
+        width: 10,
+        height: 10,
+        backgroundColor: '#bdbdbd',
+        borderRadius: 5,
+        position: 'absolute',
+        top: 20,
+        left: 63
+    },
+    borderLeft: {
+        borderLeftColor: '#bdbdbd',
+        borderLeftWidth: 2 / React.PixelRatio.get()
+    },
+    newsItemAvatar: {
+        width: 36,
+        height: 36,
+        marginTop: 5,
+        marginLeft: 16,
+        marginRight: 32,
+        borderRadius: 18
+    },
+    newsSectionHeder: {
+        padding: 16
+    },
+    newsSectionText: {
+        marginLeft: 68
     }
 });

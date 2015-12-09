@@ -19,6 +19,7 @@ var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/order/orderDetail');
 
 var TaskList = require('./task/taskList');
+var NewsList = require('./news/newsList');
 var TaskDetail = require('./task/taskDetail');
 var MemberList = require('./member/memberList')
 var ContactDetail = require('../contact/contactDetail');
@@ -249,8 +250,7 @@ module.exports = React.createClass({
                 )
             case 1:
                 return(
-                    <TaskList
-                    onPressRow={this.onPressTaskRow}
+                    <NewsList
                     data={this.state.orderData} />
                 )
             case 2:

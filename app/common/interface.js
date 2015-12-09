@@ -32,6 +32,8 @@ module.exports = {
 
     task: NZAOM_API_DOMAIN + '/api/order_job',
 
+    news: NZAOM_API_DOMAIN + '/api/dynamic',
+
     member: NZAOM_API_DOMAIN + '/api/order_job/member',
 
     accessory: NZAOM_API_DOMAIN + '/api/accessory',

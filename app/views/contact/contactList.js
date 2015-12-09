@@ -38,6 +38,9 @@ module.exports = React.createClass({
         });
     },
     renderAvatar: function(data){
+        if (!data) {
+            return(<View style={contactsStyle.contactsItemCircle}/>);
+        };
         if (data.avatar) {
             return(
                 <Image

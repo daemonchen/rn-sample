@@ -91,6 +91,9 @@ module.exports = React.createClass({
         });
     },
     renderAvatar: function(user){
+        if (!user) {
+            return(<View style={styles.taskItemCircle}/>);
+        };
         if (user.avatar) {
             return(
                 <Image

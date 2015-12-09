@@ -9,7 +9,8 @@ module.exports = {
     taskList: null,
     attachList: null,
     commentList: null,
-    workbenchList: null
+    workbenchList: null,
+    newsList: null
 };
 
 // TODO: orderList inboxList
