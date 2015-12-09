@@ -118,7 +118,7 @@ module.exports = React.createClass({
     _goOrderDetail: function(){
         _navigator.push({
             title:'',
-            // data: this.state.taskData.orderId,
+            data: this.state.taskData.orderId,
             component: OrderDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
@@ -229,6 +229,9 @@ module.exports = React.createClass({
                                 style={commonStyle.settingDetail}>
                                 {this.state.taskData.orderId}
                                 </Text>
+                                <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../../images/common/arrow_right.png')} />
                             </View>
                         </View>
                     </TouchableHighlight>
