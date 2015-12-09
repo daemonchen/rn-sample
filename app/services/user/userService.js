@@ -20,5 +20,8 @@ module.exports = {
     },
     token: function(data){
         return http.get(NZAOM_INTERFACE.token)
+    },
+    system: function(data){
+        return http.get(NZAOM_INTERFACE.system)
     }
 }

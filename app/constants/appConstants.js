@@ -4,6 +4,7 @@
     global variable cached in memory
 */
 module.exports = {
+    systemInfo: null,
     xAuthToken: null,
     orderList: null,
     taskList: null,

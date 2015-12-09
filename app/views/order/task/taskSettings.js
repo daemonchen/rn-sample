@@ -52,18 +52,18 @@ module.exports = React.createClass({
     },
     initTaskState: function(defaultData){
         if (defaultData.taskStatus == 2) {
-            var endTime = defaultData.jobDO.endTime || new Date().valueOf();
-            var lastIds = defaultData.jobDO.lastIds || [];
+            var endTime = defaultData.endTime || new Date().valueOf();
+            var lastIds = defaultData.lastIds || [];
             return {
                 taskStatus: defaultData.taskStatus || 0,
-                done: defaultData.jobDO.status,
-                jobName: defaultData.jobDO.jobName || '',
-                description: defaultData.jobDO.description || '',
+                done: defaultData.status,
+                jobName: defaultData.jobName || '',
+                description: defaultData.description || '',
                 endTime: endTime,
                 endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
-                id: defaultData.jobDO.id || 0,
-                ownerId: defaultData.userVO.userId || 0,
-                userName: defaultData.userVO.userName || '',
+                id: defaultData.id || 0,
+                ownerId: defaultData.userId || 0,
+                userName: defaultData.userName || '',
                 lastIds: lastIds,
                 lastIdsNumber: lastIds.length
             }

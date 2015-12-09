@@ -10,9 +10,9 @@ var Order = require('../views/order/order');
 var Inbox = require('../views/inbox/inboxList');
 var Contact = require('../views/contact/contact');
 var UserIndex = require('../views/person/userIndex');
-var tabViewSample = require('../views/tabViewSample');
-var calendar = require('../views/calendar');
-var datePicker = require('../views/datePicker');
+var appConstants = require('../constants/appConstants');
+
+var appCon
 //获取可视窗口的宽高
 var util = require('../common/util.js');
 var {
@@ -23,7 +23,7 @@ var Launch = React.createClass({
     getInitialState: function () {
         return {
             selectedTab: 'Workspace',
-            notifCount: 0,
+            notifCount: appConstants.systemInfo.unreadMsg || 0,
             presses: 0,
         };
     },
@@ -32,8 +32,7 @@ var Launch = React.createClass({
         var self = this;
         return function () {
             self.setState({
-                selectedTab: tab,
-                notifCount: self.state.notifCount + 1,
+                selectedTab: tab
             });
         }
     },
@@ -46,7 +45,6 @@ var Launch = React.createClass({
                 translucent = {true} >
                 <TabBarIOS.Item
                     title="Workspace"
-                    badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
                     icon={require('../images/TabBar/Workspace.png')}
                     selectedIcon={require('../images/TabBar/Workspace_selected.png')}
                     selected={this.state.selectedTab === 'Workspace'}
@@ -63,6 +61,7 @@ var Launch = React.createClass({
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="Inbox"
+                    badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
                     icon={require('../images/TabBar/Inbox.png')}
                     selectedIcon={require('../images/TabBar/Inbox_selected.png')}
                     selected={this.state.selectedTab === 'Inbox'}

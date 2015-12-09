@@ -52,8 +52,8 @@ var Home =  React.createClass({
     },
     onSelectActionSheet: function(index){
         switch(index){
-            case 1:
-                return self.doPushOrderSetting();
+            case 0:
+                return this.doPushOrderSetting();
             default :
                 return;
         }

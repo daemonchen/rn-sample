@@ -52,7 +52,7 @@ module.exports = React.createClass({
         };
     },
     componentDidMount: function(){
-        this.onRefresh();
+        this.setTimeout(this.onRefresh, 350)
         this.unlisten = workbenchListStore.listen(this.onChange);
         this.unlistenTaskChange = taskStore.listen(this.onTaskChange)
         this.unlistenTaskListChange = taskStore.listen(this.onTaskListChange)

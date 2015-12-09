@@ -66,7 +66,10 @@ module.exports = React.createClass({
                 <View style={styles.rowStyle}>
                     {this.renderAvatar()}
                     <View style={styles.newsTimeline}/>
-                    <View style={styles.newsTag}/>
+                    <Image
+                      style={styles.newsTag}
+                      source={require('../../../images/order/circle_blue.png')} />
+
                     <View style={styles.contentWrapper}>
                         <Text style={styles.rowText}>
                             {this.state.news.msg}

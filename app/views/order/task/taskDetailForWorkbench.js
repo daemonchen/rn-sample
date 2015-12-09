@@ -87,7 +87,6 @@ module.exports = React.createClass({
         return {
 
             orderId: data.orderId,
-            taskStatus: data.taskStatus || 0,
             done: data.status,
             jobName: data.jobName || '',
             description: data.description || '',

@@ -126,28 +126,28 @@ module.exports = React.StyleSheet.create({
     newsTimeline: {
         width: 2 / React.PixelRatio.get(),
         position: 'absolute',
-        left: 67,
+        left: 68,
         top: 0,
         bottom: 0,
         backgroundColor: '#bdbdbd'
     },
     newsTag: {
-        width: 10,
-        height: 10,
-        backgroundColor: 'red',
-        borderRadius: 5,
+        // width: 10,
+        // height: 10,
+        // backgroundColor: 'red',
+        // borderRadius: 5,
         position: 'absolute',
         top: 20,
-        left: 63
+        left: 62
     },
     newsTagGray: {
-        width: 10,
-        height: 10,
-        backgroundColor: '#bdbdbd',
-        borderRadius: 5,
+        // width: 24,
+        // height: 24,
+        // backgroundColor: '#bdbdbd',
+        // borderRadius: 12,
         position: 'absolute',
         top: 20,
-        left: 63
+        left: 62
     },
     borderLeft: {
         borderLeftColor: '#bdbdbd',

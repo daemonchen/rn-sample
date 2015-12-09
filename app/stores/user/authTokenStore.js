@@ -20,7 +20,7 @@ class AuthTokenStore {
     }
     onUpdateTokenSuccess(data){
         if (!data) {return false};
-        data.type = 'init'
+        data.type = 'updateToken'
         this.setState(data);
     }
 }

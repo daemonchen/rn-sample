@@ -5,6 +5,7 @@ var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     View,
+    Image,
     ListView,
     TouchableOpacity,
     ActivityIndicatorIOS,
@@ -86,7 +87,9 @@ module.exports = React.createClass({
         return(
             <View style={[styles.newsSectionHeder]}>
                 <View style={styles.newsTimeline}/>
-                <View style={styles.newsTagGray}/>
+                <Image
+                      style={styles.newsTagGray}
+                      source={require('../../../images/order/circle_gray_fill.png')} />
                 <Text style={[styles.newsSectionText,commonStyle.blue]}
                 numberOfLines={1} >
                     {sectionData.time}
