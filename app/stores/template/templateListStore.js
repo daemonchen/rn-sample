@@ -5,7 +5,7 @@ var templateListAction = require('../../actions/template/templateListAction');
 var templateListService = require('../../services/template/templateListService')
 var asyncStorage = require('../../common/storage');
 var appConstants = require('../../constants/appConstants');
-class TaskListStore {
+class TemplateListStore {
     constructor() {
         this.bindActions(templateListAction);
         this.state = {};
@@ -39,4 +39,4 @@ class TaskListStore {
     }
 }
 
-export default alt.createStore(TaskListStore, 'TaskListStore');
+export default alt.createStore(TemplateListStore, 'TemplateListStore');

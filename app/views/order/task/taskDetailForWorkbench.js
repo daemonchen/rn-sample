@@ -34,7 +34,7 @@ var RightSettingButton = require('../../../common/rightSettingButton');
 var CommentList = require('../comments/commentList');
 var CommentBar = require('../comments/commentBar');
 
-// var OrderDetail = require('../orderDetail');
+var OrderDetail = require('../orderDetail');
 
 var taskListAction = require('../../../actions/task/taskListAction');
 var taskAction = require('../../../actions/task/taskAction');
@@ -116,14 +116,14 @@ module.exports = React.createClass({
         });
     },
     _goOrderDetail: function(){
-        // _navigator.push({
-        //     title:'',
-        //     data: this.state.taskData.orderId,
-        //     component: OrderDetail,
-        //     sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-        //     topNavigator: _topNavigator
-        // });
-        _navigator.pop();
+        _navigator.push({
+            title:'',
+            data: this.state.taskData.orderId,
+            component: OrderDetail,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        });
+        // _navigator.pop();
     },
     onPressCircle: function(){//更新任务状态
         var status = (this.state.done == 1) ? 0 : 1

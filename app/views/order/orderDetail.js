@@ -174,7 +174,6 @@ module.exports = React.createClass({
         })
     },
     onPressTaskRow: function(rowData, sectionID){
-        console.log('----task rowData', rowData);
         _topNavigator.push({
             title: rowData.jobDO.jobName,
             data: rowData.jobDO.id,

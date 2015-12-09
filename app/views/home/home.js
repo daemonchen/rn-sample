@@ -14,7 +14,7 @@ var HomeSegmentControl = require('./homeSegmentControl');
 var HomeList = require('./homeList');
 var OrderSettings = require('../order/orderSettings');
 // var OrderDetail = require('../order/orderDetail');
-var TaskDetail = require('../order/task/taskDetail');
+var TaskDetail = require('../order/task/taskDetailForWorkbench');
 
 var RightAddButton = require('../../common/rightAddButton');
 
