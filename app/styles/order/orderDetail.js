@@ -8,7 +8,8 @@ var {
 
 module.exports = React.StyleSheet.create({
     main: {
-        flex: 1
+        flex: 1,
+        backgroundColor: '#fff'
     },
     taskTotalText: {
         color:'#fff',

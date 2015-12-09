@@ -2,6 +2,7 @@
 var React = require('react-native')
 var NavigationBar = require('react-native-navbar');
 var moment = require('moment');
+var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     TextInput,
@@ -40,10 +41,13 @@ var orderAction = require('../../actions/order/orderAction');
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
+            orderId: this.props.route.data || 0,//订单id
+            orderData: {},
             overNum: 0,
             endTime: new Date(),
             totaleJobNum: 0,
@@ -53,9 +57,32 @@ module.exports = React.createClass({
     },
     componentDidMount: function(){
         this.unlisten = taskListStore.listen(this.onChange);
+        this.unlistenOrder = orderStore.listen(this.onOrderChange);
+        if (this._timeout) {
+            this.clearTimeout(this._timeout)
+        };
+        this._timeout = this.setTimeout(this.fetchData, 350)
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenOrder();
+    },
+    fetchData: function(){
+        orderAction.get({
+            orderId: this.state.orderId
+        });
+    },
+    onOrderChange: function(){
+        var result = orderStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        };
+        if (result.type == 'get') {
+            this.setState({
+                orderData: result.data
+            });
+        };
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {
@@ -81,7 +108,7 @@ module.exports = React.createClass({
         }
     },
     _pressSettingButton: function(){
-        var data = Object.assign({orderStatus: 2}, this.props.route.data);
+        var data = Object.assign({orderStatus: 2}, this.state.orderData);
         _topNavigator.push({
             title: '设置订单',
             data: data,
@@ -91,7 +118,7 @@ module.exports = React.createClass({
         });
     },
     createTask: function(){
-        var data = Object.assign({taskStatus: 1}, this.props.route.data);
+        var data = Object.assign({taskStatus: 1}, this.state.orderData);
         _topNavigator.push({
             title: '新建任务',
             data: data,
@@ -173,7 +200,7 @@ module.exports = React.createClass({
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
             attachAction.create([{
-                hostId: this.props.route.data.id,
+                hostId: this.state.orderData.id,
                 hostType: 1,
                 base64: response.data,
                 fileName: name}]);
@@ -208,31 +235,36 @@ module.exports = React.createClass({
             );
     },
     renderTabContent: function(){
+        if (!this.state.orderData.id) {
+            return(
+                <View />
+                );
+        };
         switch(this.state.tabIndex){
             case 0:
                 return(
                     <TaskList
                     onPressRow={this.onPressTaskRow}
-                    data={this.props.route.data} />
+                    data={this.state.orderData} />
                 )
             case 1:
                 return(
                     <TaskList
                     onPressRow={this.onPressTaskRow}
-                    data={this.props.route.data} />
+                    data={this.state.orderData} />
                 )
             case 2:
                 return(
                     <MemberList
                     onPressRow={this.onPressMemberRow}
-                    data={this.props.route.data} />
+                    data={this.state.orderData} />
                 )
             case 3:
                 return(
                     <AttachList
                     onPressRow={this.onPressAttachRow}
                     onEmptyButtonPress={this.onAttachEmptyButtonPress}
-                    data={this.props.route.data} />
+                    data={this.state.orderData} />
                 )
             default:
                 return(
@@ -241,12 +273,13 @@ module.exports = React.createClass({
         }
     },
     render: function(){
+        var title = this.state.orderData.title || ''
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
                     statusBar={{style: 'light-content', hidden: false}}
                     tintColor={'#4285f4'}
-                    title={{ title: this.props.route.title, tintColor: '#fff' }}
+                    title={{ title: title, tintColor: '#fff' }}
                     leftButton={<WhiteBackButton navigator={_topNavigator} />}
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>

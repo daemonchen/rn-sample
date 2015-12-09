@@ -23,12 +23,14 @@ module.exports = React.StyleSheet.create({
         fontSize: 20,
         color: 'white'
     },
-    text: {
+    sectionText: {
         fontSize: 16,
-        color: '#4285f4',
-        paddingHorizontal: 8
+        paddingHorizontal: 16
     },
-
+    sectionHeder:{
+        backgroundColor: '#fff',
+        paddingVertical: 16
+    },
 
     subText: {
         fontSize: 14,
@@ -38,9 +40,9 @@ module.exports = React.StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        padding: 6,
-        // borderBottomWidth: 1 / React.PixelRatio.get(),
-        // borderBottomColor: '#E0E0E0'
+        paddingVertical: 16,
+        borderBottomWidth: 1 / React.PixelRatio.get(),
+        borderBottomColor: '#E0E0E0'
     },
     sepLine:{
         // width: 300,

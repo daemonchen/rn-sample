@@ -140,7 +140,7 @@ module.exports = React.createClass({
         console.log('...rowData in inboxlist', rowData);
         switch(rowData.msgType){
             case 1:
-                return this.doPush(OrderDetail, rowData)
+                return this.doPush(OrderDetail, rowData.extra.orderId)
             case 2:
                 return this.doPush(TaskDetail, rowData)
             case 3:

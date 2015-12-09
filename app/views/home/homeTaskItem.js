@@ -97,7 +97,9 @@ module.exports = React.createClass({
                         {this.renderCheckIcon()}
                         <View style={styles.contentWrapper}>
                             <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
-                            <Text style={[styles.rowText, commonStyle.textGray]}>{this.props.rowData.jobName}</Text>
+                            <Text style={[styles.rowText, commonStyle.textGray]}>
+                                订单：{this.props.rowData.orderId}
+                            </Text>
                         </View>
                     </View>
                 </TouchableHighlight>

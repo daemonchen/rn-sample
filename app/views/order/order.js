@@ -75,7 +75,7 @@ var order =  React.createClass({
     onPressOrderRow: function(rowData){
         _topNavigator.push({
             title: rowData.title,
-            data: rowData,
+            data: rowData.id,
             component: OrderDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator

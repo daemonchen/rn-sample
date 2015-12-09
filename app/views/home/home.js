@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
+var TimerMixin = require('react-timer-mixin');
 var {
     View,
     Text,
@@ -19,6 +20,7 @@ var RightAddButton = require('../../common/rightAddButton');
 var _navigator, _topNavigator = null;
 
 var Home =  React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
@@ -59,7 +61,7 @@ var Home =  React.createClass({
         //TODO: judge if this is task row or header row
         _topNavigator.push({
             title: rowData.title,
-            data: rowData,
+            data: rowData.orderId,
             component: OrderDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator

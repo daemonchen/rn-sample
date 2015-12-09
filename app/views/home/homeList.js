@@ -23,6 +23,7 @@ var util = require('../../common/util');
 var HomeTaskItem = require('./homeTaskItem');
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function() {
         var ds = new ListView.DataSource({
             getSectionData: this.getSectionData,
@@ -83,8 +84,6 @@ module.exports = React.createClass({
             list: rawData || [],
             total: response.total
         });
-        // this.list.hideHeader();
-        // this.list.hideFooter();
     },
     getSectionData: function(dataBlob, sectionID){
         return dataBlob[sectionID];
@@ -96,15 +95,16 @@ module.exports = React.createClass({
         return (
             <HomeTaskItem rowData={rowData} sectionID={sectionID}
             rowID={rowID}
-            onPress={this.props.onPressRow}
-            onDelete={this.onDelete} />
+            onPressRow={this.props.onPressRow} />
             )
     },
     renderSectionHeader: function(sectionData, sectionID){
-        console.log('----sectionData', sectionData);
         return(
-            <View style={styles.section}>
-                <Text style={styles.text}>{sectionData.time}</Text>
+            <View style={[styles.sectionHeder]}>
+                <Text style={[styles.sectionText,commonStyle.blue]}
+                numberOfLines={1} >
+                    {sectionData.time}
+                </Text>
             </View>
             )
     },
@@ -129,7 +129,7 @@ module.exports = React.createClass({
             this.setTimeout(this.onRefresh, 350)
         };
     },
-    handleGet: function(result){
+    handleGet: function(result, isLoadmore){
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -138,6 +138,8 @@ module.exports = React.createClass({
             return;
         }
         this.transfromDataBlob(result);
+        !isLoadmore && this.list.hideHeader();
+        !!isLoadmore && this.list.hideFooter();
     },
     onChange: function() {
         var result = workbenchListStore.getState();
@@ -148,6 +150,8 @@ module.exports = React.createClass({
         switch(result.type){
             case 'get':
                 return this.handleGet(result);
+            case 'loadmore':
+                return this.handleGet(result, true)
         }
     },
     onRefresh: function() {
@@ -173,11 +177,6 @@ module.exports = React.createClass({
     loadedAllData: function() {
         return this.state.list.length >= this.state.total||this.state.list.length===0;
     },
-    onDelete: function(rowData){
-        taskListAction.delete({
-            orderId:rowData.id
-        });
-    },
     render: function() {
         if (!this.state.loaded) {
             return this.renderLoadingView();
@@ -190,6 +189,7 @@ module.exports = React.createClass({
                 ref = {(list) => {this.list= list}}
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
+                renderSectionHeader={this.renderSectionHeader}
                 scrollEventThrottle={10}
                 contentContainerStyle={{paddingBottom: 40}}
                 onRefresh = {this.onRefresh}

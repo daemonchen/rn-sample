@@ -18,7 +18,7 @@ module.exports = {
     login: NZAOM_API_DOMAIN + '/api/login',
     token: NZAOM_API_DOMAIN + '/api/token',
 
-    workbench: NZAOM_API_DOMAIN + '/api/order_job/workbench',
+    workbench: NZAOM_API_DOMAIN + '/api/workbench',
 
     contacts: NZAOM_API_DOMAIN + '/api/contacts',
 
@@ -27,8 +27,6 @@ module.exports = {
     invite: NZAOM_API_DOMAIN + '/api/invite',
 
     order: NZAOM_API_DOMAIN + '/api/order',
-    orderList: NZAOM_API_DOMAIN + '/api/order/query',
-
 
     updateTaskStatus: NZAOM_API_DOMAIN + '/api/order_job/over',
 
