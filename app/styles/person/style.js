@@ -26,21 +26,19 @@ var styles = React.StyleSheet.create({
     },
     name: {
         textAlign: 'center',
-        fontSize: 22
+        fontSize: 24
     },
-    contactsItemCircle: {
+    avatarWrapper: {
+        marginTop: 16,
         width: 100,
         height: 100,
         borderRadius: 50,
         backgroundColor: '#000'
     },
-    contactsItemTitle:{
-        position: 'absolute',
+    avatarTitle: {
         width: 100,
         textAlign: 'center',
-        left: 3,
-        top: 12,
         color: '#fff',
-        fontSize: 12
-    },
+        fontSize: 24
+    }
 });

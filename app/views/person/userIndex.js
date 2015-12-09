@@ -1,7 +1,6 @@
 'use strict';
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
-var NavigationBar = require('react-native-navbar');
 var {
     Text,
     TextInput,
@@ -14,9 +13,6 @@ var {
 } = React
 
 var util = require('../../common/util.js');
-var {
-    width, height, scale
-} = util.getDimensions();
 
 var appConstants = require('../../constants/appConstants');
 var commonStyle = require('../../styles/commonStyle');
@@ -73,7 +69,7 @@ module.exports = React.createClass({
     },
     renderAvatar: function(data){
         if (!data) {
-            return(<View style={styles.contactsItemCircle}/>);
+            return(<View style={styles.avatarWrapper}/>);
         };
         if (data.avatar) {
             return(
@@ -87,8 +83,8 @@ module.exports = React.createClass({
                 backgroundColor: data.bgColor
             }
             return(
-                <View style={[styles.contactsItemCircle, circleBackground]}>
-                    <Text style={styles.contactsItemTitle}>
+                <View style={[styles.avatarWrapper, circleBackground]}>
+                    <Text style={styles.avatarTitle}>
                         {data.simpleUserName}
                     </Text>
                 </View>
