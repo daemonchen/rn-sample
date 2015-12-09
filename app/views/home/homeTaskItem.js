@@ -12,26 +12,74 @@ var {
 } = React
 
 var Swipeout = require('react-native-swipeout');
+var taskListAction = require('../../actions/task/taskListAction');
+var taskListStore = require('../../stores/task/taskListStore');
 
-var styles = require('../../styles/home/task');
+var commonStyle = require('../../styles/commonStyle');
+var styles = require('../../styles/order/orderDetail');
+var util = require('../../common/util');
 
 module.exports = React.createClass({
     getInitialState: function(){
         return{
-            done: this.props.rowData.done
+            done: this.props.rowData.status
         }
     },
-    onPress: function(){
-        this.props.onPress(this.props.rowData, this.props.sectionID);
+    componentDidMount: function(){
+        this.unlisten = taskListStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    handleUpdate: function(result){
+        if (result.status != 200) {
+            return;
+        }
+        if (parseInt(result.data) != this.props.rowData.id) {
+            return;
+        };
+        var status = (this.state.done == 1) ? 0 : 1
         this.setState({
-            done: true
+            done: status
         });
     },
+    onChange: function() {
+        var result = taskListStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        switch(result.type){
+            case 'update':
+                return this.handleUpdate(result);
+        }
+    },
+    onPressCircle: function(){
+        var status = (this.state.done == 1) ? 0 : 1
+        taskListAction.update({
+            id: this.props.rowData.id,
+            status: status,
+        });
+    },
+    onPressRow: function(){
+        this.props.onPressRow(this.props.rowData, this.props.sectionID, this.props.rowID);
+    },
     onDelete: function(){
-        console.log('delete stuff');
+        taskListAction.delete({
+            jobId: this.props.rowData.id
+        });
+    },
+    renderCheckIcon: function(){
+        var circleImage = (this.state.done == 1) ? require('../../images/task/task_status_done.png') : require('../../images/task/task_status.png')
+        return(
+            <TouchableWithoutFeedback onPress={this.onPressCircle}
+            style={styles.checkIcon} >
+                <View style={styles.checkIconWrapper}>
+                    <Image source={circleImage} />
+                </View>
+            </TouchableWithoutFeedback>
+            )
     },
     render: function(){
-        var circleImage = this.state.done ? require('../../images/Check_box_done.png') : require('../../images/Check_box_undo.png')
         var swipeoutBtns = [
           {
             text: '删除',
@@ -42,23 +90,18 @@ module.exports = React.createClass({
         ]
         return(
             <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
-                <TouchableHighlight underlayColor='#eee'>
+                <TouchableHighlight
+                underlayColor='#eee'
+                onPress={this.onPressRow}>
                     <View style={styles.rowStyle}>
-                        <TouchableWithoutFeedback onPress={this.onPress} >
-                            <Image source={circleImage} />
-                        </TouchableWithoutFeedback>
-                        <Text style={styles.rowText}>{this.props.rowData.name}</Text>
+                        {this.renderCheckIcon()}
+                        <View style={styles.contentWrapper}>
+                            <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
+                            <Text style={[styles.rowText, commonStyle.textGray]}>{this.props.rowData.jobName}</Text>
+                        </View>
                     </View>
                 </TouchableHighlight>
             </Swipeout>
             )
-        // return (
-        //     <TouchableOpacity onPress={this.onPress}>
-        //         <View style={styles.rowStyle}>
-        //             <View style={[styles.circle, circleDone]} />
-        //             <Text style={styles.rowText}>{this.props.rowData.name}</Text>
-        //         </View>
-        //     </TouchableOpacity>
-        //     )
     }
 });

@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
-var RefreshableListView = require('react-native-refreshable-listview')
+var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
+var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     View,
@@ -10,12 +11,18 @@ var {
     StyleSheet
 } = React
 
-var mockData = require('../../mock/homeList');
+var workbenchListAction = require('../../actions/workbench/workbenchListAction');
+var workbenchListStore = require('../../stores/workbench/workbenchListStore');
+var taskListStore = require('../../stores/task/taskListStore');
+var taskListAction = require('../../actions/task/taskListAction');
+var taskStore = require('../../stores/task/taskStore');
 
 var styles = require('../../styles/home/style.js');
+var commonStyle = require('../../styles/commonStyle');
+var util = require('../../common/util');
 var HomeTaskItem = require('./homeTaskItem');
 
-var homeList = React.createClass({
+module.exports = React.createClass({
     getInitialState: function() {
         var ds = new ListView.DataSource({
             getSectionData: this.getSectionData,
@@ -24,36 +31,60 @@ var homeList = React.createClass({
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2}) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
         return {
+            status: this.props.status,
+            pageNum: 1,
+            pageSize: 20,
             loaded : false,
+            list: [],
             dataSource: ds
         }
     },
-  // reloadArticles() {
-  //   return ArticleStore.reload() // returns a Promise of reload completion
-  // },
-    componentDidMount: function() {
-        this.fetchData();
+    componentWillReceiveProps: function(nextProps){
+        this.setState({
+            status: nextProps.status
+        });
+        if (this._timeout) {
+            this.clearTimeout(this._timeout)
+        };
+        if (nextProps.status != this.props.status) {
+            this._timeout = this.setTimeout(this.onRefresh, 15)
+        };
     },
-    fetchData: function(){
+    componentDidMount: function(){
+        this.onRefresh();
+        this.unlisten = workbenchListStore.listen(this.onChange);
+        this.unlistenTaskChange = taskStore.listen(this.onTaskChange)
+        this.unlistenTaskListChange = taskStore.listen(this.onTaskListChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+        this.unlistenTaskChange();
+    },
+    transfromDataBlob: function(response){
+        var rawData = response.data
         var dataBlob = {};
         var sectionIDs = [];
         var rowIDs = [];
-        for (var i = 0; i <= mockData.length-1; i++) {
+        for (var i = 0; i <= rawData.length-1; i++) {
             sectionIDs.push(i);
-            dataBlob[i] = mockData[i];
+            dataBlob[i] = rawData[i];
             rowIDs[i] = [];
-            var subChildren = mockData[i].subList;
+            var subChildren = rawData[i].data;
             for (var j = 0; j <= subChildren.length - 1; j++) {
                 var sub = subChildren[j];
-                rowIDs[i].push(sub.name);
+                rowIDs[i].push(sub.gmtCreate);
 
-                dataBlob[i + ':' + sub.name] = sub;
+                dataBlob[i + ':' + sub.gmtCreate] = sub;
             };
         };
         this.setState({
             dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
-            loaded     : true
+            loaded     : true,
+            list: rawData || [],
+            total: response.total
         });
+        // this.list.hideHeader();
+        // this.list.hideFooter();
     },
     getSectionData: function(dataBlob, sectionID){
         return dataBlob[sectionID];
@@ -61,43 +92,91 @@ var homeList = React.createClass({
     getRowData: function(dataBlob, sectionID, rowID){
         return dataBlob[sectionID + ':' + rowID];
     },
-    onPressRow: function(rowData, sectionID){
-        console.log(rowData);
-    },
     renderRow: function(rowData, sectionID, rowID) {
         return (
             <HomeTaskItem rowData={rowData} sectionID={sectionID}
             rowID={rowID}
-            onPress={this.onPressRow}></HomeTaskItem>
+            onPress={this.props.onPressRow}
+            onDelete={this.onDelete} />
             )
     },
     renderSectionHeader: function(sectionData, sectionID){
+        console.log('----sectionData', sectionData);
         return(
             <View style={styles.section}>
-                <Text style={styles.text}>{sectionData.timeLabel}</Text>
+                <Text style={styles.text}>{sectionData.time}</Text>
             </View>
             )
     },
-    renderSeparator: function(sectionID, rowID, adjacentRowHighlighted){
-        return(
-            <View style={styles.sepLine}></View>
-            )
+    onTaskListChange: function(){
+        var result = taskStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        if (result.type == 'delete') {
+            this.setTimeout(this.onRefresh, 350)
+        };
     },
-    renderFooter: function(){
-        return (
-          <View>
-            <ActivityIndicatorIOS
-                animating={true}
-                size={'large'} />
-            <Text>My custom footer</Text>
-          </View>
-        )
+    onTaskChange: function(){
+        var result = taskStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        if (result.type == 'create') {
+            this.setTimeout(this.onRefresh, 350)
+        };
+        if (result.type == 'update') {
+            this.setTimeout(this.onRefresh, 350)
+        };
     },
-    onEndReached: function(){
-        console.log('onEndReached')
+    handleGet: function(result){
+        if (result.status != 200 && !!result.message) {
+            this.setState({
+                loaded: true,
+                list: []
+            })
+            return;
+        }
+        this.transfromDataBlob(result);
     },
-    onScroll: function(){
-        console.log('onScroll');
+    onChange: function() {
+        var result = workbenchListStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'get':
+                return this.handleGet(result);
+        }
+    },
+    onRefresh: function() {
+        this.setState({
+            pageNum: 1
+        });
+        workbenchListAction.getList({
+            status: this.state.status,
+            pageNum: this.state.pageNum,
+            pageSize: this.state.pageSize
+        });
+    },
+    onInfinite: function() {
+        this.setState({
+            pageNum: this.state.pageNum + 1
+        });
+        workbenchListAction.loadMore({
+            status: this.state.status,
+            pageNum: this.state.pageNum,
+            pageSize: this.state.pageSize
+        });
+    },
+    loadedAllData: function() {
+        return this.state.list.length >= this.state.total||this.state.list.length===0;
+    },
+    onDelete: function(rowData){
+        taskListAction.delete({
+            orderId:rowData.id
+        });
     },
     render: function() {
         if (!this.state.loaded) {
@@ -107,32 +186,30 @@ var homeList = React.createClass({
     },
     renderListView: function(){
         return (
-            <RefreshableListView
-                style={styles.container}
-                automaticallyAdjustContentInsets={false}
+            <RefreshInfiniteListView
+                ref = {(list) => {this.list= list}}
                 dataSource={this.state.dataSource}
-                renderSectionHeader={this.renderSectionHeader}
                 renderRow={this.renderRow}
-                renderFooter={this.renderFooter}
-                renderSeparator={this.renderSeparator}
-                onEndReached={this.fetchData}
-                onEndReachedThreshold={40}
-                loadData={this.fetchData}
-                refreshDescription="reload" />
+                scrollEventThrottle={10}
+                contentContainerStyle={{paddingBottom: 40}}
+                onRefresh = {this.onRefresh}
+                onInfinite = {this.onInfinite}
+                loadedAllData={this.loadedAllData}
+                >
+            </RefreshInfiniteListView>
             )
     },
     renderLoadingView: function(){
         return (
-            <View style={styles.header}>
-                <Text style={styles.headerText}>User List</Text>
-                <View style={styles.container}>
+            <View style={commonStyle.header}>
+                <Text style={commonStyle.headerText}>User List</Text>
+                <View style={commonStyle.container}>
                     <ActivityIndicatorIOS
                         animating={!this.state.loaded}
-                        style={[styles.activityIndicator, {height: 80}]}
+                        style={[commonStyle.activityIndicator, {height: 80}]}
                         size="large" />
                 </View>
             </View>
         );
     }
 });
-module.exports = homeList;

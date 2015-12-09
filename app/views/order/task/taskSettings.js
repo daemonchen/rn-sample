@@ -73,7 +73,6 @@ module.exports = React.createClass({
         return {
             taskStatus: defaultData.taskStatus || 3,
             orderId: defaultData.id || 0,
-            userName: defaultData.userName || '',
             ownerId: defaultData.ownerId || 0,
             userName: defaultData.userName || '',
             description: defaultData.description || '',

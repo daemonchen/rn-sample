@@ -8,7 +8,8 @@ module.exports = {
     orderList: null,
     taskList: null,
     attachList: null,
-    commentList: null
+    commentList: null,
+    workbenchList: null
 };
 
 // TODO: orderList inboxList

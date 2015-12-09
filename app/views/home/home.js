@@ -9,9 +9,10 @@ var {
     ActionSheetIOS,
     StyleSheet
 } = React;
-var tabViewSample = require('../tabViewSample');
 var HomeSegmentControl = require('./homeSegmentControl');
 var HomeList = require('./homeList');
+var OrderSettings = require('../order/orderSettings');
+var OrderDetail = require('../order/orderDetail');
 
 var RightAddButton = require('../../common/rightAddButton');
 
@@ -22,21 +23,69 @@ var Home =  React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            clicked: 'none'
+            tabIndex: 0
         }
     },
     showActionSheet: function(){
         var self = this;
         ActionSheetIOS.showActionSheetWithOptions({
             options: this.actionList,
-            cancelButtonIndex: 2,
+            cancelButtonIndex: 1,
             // destructiveButtonIndex: 1,
             },
             (buttonIndex) => {
-              self.setState({ clicked: self.actionList[buttonIndex] });
+              self.onSelectActionSheet(buttonIndex);
             });
     },
-    actionList: ['订单','任务','取消'],
+    actionList: ['新建订单','取消'],
+    doPushOrderSetting: function(){
+        _topNavigator.push({
+            title: '新建订单',
+            data: {orderStatus: 1},
+            component: OrderSettings,
+            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+            topNavigator: _topNavigator
+        });
+    },
+    onSelectActionSheet: function(index){
+        switch(index){
+            case 1:
+                return self.doPushOrderSetting();
+            default :
+                return;
+        }
+    },
+    onPressTaskRow: function(rowData, sectionID){
+        //TODO: judge if this is task row or header row
+        _topNavigator.push({
+            title: rowData.title,
+            data: rowData,
+            component: OrderDetail,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
+    },
+    onSegmentChange: function(event){
+        this.setState({
+            tabIndex: event.nativeEvent.selectedSegmentIndex
+        })
+    },
+    renderTabContent: function(){
+        switch(this.state.tabIndex){
+            case 0:
+                return(
+                    <HomeList
+                    onPressRow={this.onPressTaskRow}
+                    status={0} />
+                )
+            case 1:
+                return(
+                    <HomeList
+                    onPressRow={this.onPressTaskRow}
+                    status={1} />
+                )
+        }
+    },
     render:function(){
         return (
             <View style={styles.container}>
@@ -44,8 +93,9 @@ var Home =  React.createClass({
                     title={{ title: '工作台', }}
                     rightButton={<RightAddButton onPress={this.showActionSheet} />} />
                 <View style={styles.main}>
-                    <HomeSegmentControl />
-                    <HomeList />
+                    <HomeSegmentControl
+                    onSegmentChange={this.onSegmentChange} />
+                    {this.renderTabContent()}
                 </View>
             </View>
         );

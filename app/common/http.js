@@ -77,7 +77,8 @@ module.exports = {
             //     return res;
             // })
             .catch((error) => {
-                util.alert(error);
+                console.log(error);
+                util.alert('服务器出错啦');
               });
         }
 }

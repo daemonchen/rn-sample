@@ -16,7 +16,7 @@ var orderListStore = require('../../../stores/order/orderListStore');
 var orderStore = require('../../../stores/order/orderStore');
 var util = require('../../../common/util');
 
-var styles = require('../../../styles/home/style.js');
+var commonStyle = require('../../../styles/commonStyle');
 var OrderItem = require('./orderItem');
 
 var orderList = React.createClass({
@@ -26,7 +26,7 @@ var orderList = React.createClass({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
         return {
-            status: 0,//-1删除，0正常，1结束
+            status: this.props.status,//-1删除，0正常，1结束
             pageNum: 1,
             pageSize: 20,
             loaded : false,
@@ -178,12 +178,12 @@ var orderList = React.createClass({
     },
     renderLoadingView: function(){
         return (
-            <View style={styles.header}>
-                <Text style={styles.headerText}>User List</Text>
-                <View style={styles.container}>
+            <View style={commonStyle.header}>
+                <Text style={commonStyle.headerText}>User List</Text>
+                <View style={commonStyle.container}>
                     <ActivityIndicatorIOS
                         animating={!this.state.loaded}
-                        style={[styles.activityIndicator, {height: 80}]}
+                        style={[commonStyle.activityIndicator, {height: 80}]}
                         size="large" />
                 </View>
             </View>

@@ -28,8 +28,7 @@ var order =  React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            tabIndex: 0,
-            orderStatus: 0
+            tabIndex: 0
         }
     },
     doPushOrderSetting: function(){
@@ -53,14 +52,8 @@ var order =  React.createClass({
     doCreate: function(index){
         switch(index){
             case 0:
-                this.setState({
-                    orderStatus: index
-                })
                 return this.doPushOrderSetting();
             case 1:
-                this.setState({
-                    orderStatus: index
-                })
                 return this.doPushOrderTemplates();
             default:
                 return;
@@ -79,7 +72,7 @@ var order =  React.createClass({
             });
     },
     actionList: ['新建订单','从模版创建','取消'],
-    onPressOrderRow: function(rowData, sectionID){
+    onPressOrderRow: function(rowData){
         _topNavigator.push({
             title: rowData.title,
             data: rowData,
@@ -99,7 +92,6 @@ var order =  React.createClass({
                 return(
                     <OrderList
                     onPressRow={this.onPressOrderRow}
-                    events={{}}
                     status={0} />
                 )
             case 1:
