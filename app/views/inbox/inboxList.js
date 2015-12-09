@@ -144,7 +144,7 @@ module.exports = React.createClass({
             case 2:
                 return this.doPush(TaskDetail, rowData.extra.jobId)
             case 3:
-                return this.doPush(TaskDetail, rowData.extra.jobId)
+                return;
             case 4:
                 return this.doPush(SysMessage, rowData)
             case 5:

@@ -51,7 +51,6 @@ module.exports = React.createClass({
             return;
         }
         appConstants.systemInfo = result.data;
-        console.log('appConstants:', appConstants.systemInfo);
         asyncStorage.setItem('appConstants', appConstants);
         this.doLaunch();
     },

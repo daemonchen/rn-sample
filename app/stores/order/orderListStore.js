@@ -63,9 +63,9 @@ class OrderListStore {
     onDeleteSuccess(data){
         if (!data) {return false};
         data.type = 'delete'
-        appConstants.orderList = this.removeItemFromCache(appConstants.orderList, data.data);
-        asyncStorage.setItem('appConstants', appConstants);
-        data.data = appConstants.orderList;
+        // appConstants.orderList = this.removeItemFromCache(appConstants.orderList, data.data);
+        // asyncStorage.setItem('appConstants', appConstants);
+        // data.data = appConstants.orderList;
         this.setState(data);
     }
     removeItemFromCache(collection, id){

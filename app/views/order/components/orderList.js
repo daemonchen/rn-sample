@@ -91,17 +91,10 @@ var orderList = React.createClass({
     },
     handleDelete: function(result){
         if (result.status != 200 && !!result.message) {
-            this.setState({
-                loaded: true,
-                list: []
-            })
+
             return;
         }
-        this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(result.data || []),
-            list: result.data || [],
-            loaded     : true
-        });
+        this.setTimeout(this.onRefresh, 350);
         return;
     },
     onChange: function() {

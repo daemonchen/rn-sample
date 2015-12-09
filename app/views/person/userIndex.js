@@ -18,18 +18,24 @@ var {
     width, height, scale
 } = util.getDimensions();
 
+var appConstants = require('../../constants/appConstants');
 var commonStyle = require('../../styles/commonStyle');
+var styles = require('../../styles/person/style');
+
 var UserAccount = require('./userAccount');
 var OrderTemplates = require('../order/orderTemplates');
 var MySettings = require('./mySettings');
 var Suggest = require('./suggest');
+
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
-        return {}
+        return {
+            user: appConstants.systemInfo.user
+        }
     },
     goAccount: function(){
         _navigator.push({
@@ -65,15 +71,39 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
+    renderAvatar: function(data){
+        if (!data) {
+            return(<View style={styles.contactsItemCircle}/>);
+        };
+        if (data.avatar) {
+            return(
+                <Image
+                  style={styles.avatar}
+                  source={{uri: data.avatar}} />
+                );
+        }else{
+            console.log('---data', data);
+            var circleBackground = {
+                backgroundColor: data.bgColor
+            }
+            return(
+                <View style={[styles.contactsItemCircle, circleBackground]}>
+                    <Text style={styles.contactsItemTitle}>
+                        {data.simpleUserName}
+                    </Text>
+                </View>
+                )
+        }
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 <View style={styles.topInfo}>
-                    <Image
-                      style={styles.avatar}
-                      source={require('../../images/logo.png')} />
+                    {this.renderAvatar(this.state.user)}
                     <View style={styles.nameWrapper}>
-                        <Text style={styles.name}>name stuff</Text>
+                        <Text style={styles.name}>
+                            {this.state.user.userName}
+                        </Text>
                     </View>
                 </View>
                 <View style={commonStyle.settingGroups}>
@@ -140,28 +170,5 @@ module.exports = React.createClass({
                 </View>
             </View>
             );
-    }
-});
-var styles = StyleSheet.create({
-    topInfo:{
-        // height: 174,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 16
-    },
-    avatar:{
-        marginTop: 16,
-        width: 100,
-        height: 100
-    },
-    nameWrapper: {
-        width: width - 32,
-        borderBottomWidth: 1 / React.PixelRatio.get(),
-        paddingVertical: 22,
-        borderBottomColor: '#bdbdbd'
-    },
-    name: {
-        textAlign: 'center',
-        fontSize: 22
     }
 });
