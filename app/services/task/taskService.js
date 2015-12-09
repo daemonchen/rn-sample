@@ -8,5 +8,9 @@ module.exports = {
     },
     update: function(data){
         return http.put(NZAOM_INTERFACE.task, data)
+    },
+    get: function(data){
+         var urlParams = '/{jobId}'.replace('{jobId}', data.jobId);
+         return http.get(NZAOM_INTERFACE.task + urlParams)
     }
 }

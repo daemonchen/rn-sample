@@ -176,7 +176,7 @@ module.exports = React.createClass({
     onPressTaskRow: function(rowData, sectionID){
         _topNavigator.push({
             title: rowData.name,
-            data: rowData,
+            data: rowData.id,
             component: TaskDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator

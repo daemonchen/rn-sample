@@ -5,6 +5,7 @@ var NavigationBar = require('react-native-navbar');
 var SearchBar = require('react-native-search-bar');
 var moment = require('moment');
 var underscore = require('underscore');
+var TimerMixin = require('react-timer-mixin');
 var {
     View,
     Text,
@@ -25,6 +26,7 @@ var _navigator, _topNavigator = null;
 
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
+var util = require('../../../common/util');
 
 var BlueBackButton = require('../../../common/blueBackButton');
 var RightSettingButton = require('../../../common/rightSettingButton');
@@ -32,36 +34,69 @@ var RightSettingButton = require('../../../common/rightSettingButton');
 var CommentList = require('../comments/commentList');
 var CommentBar = require('../comments/commentBar');
 
+var OrderDetail = require('../orderDetail');
+
 var taskListAction = require('../../../actions/task/taskListAction');
+var taskAction = require('../../../actions/task/taskAction');
+var taskStore = require('../../../stores/task/taskStore');
 var TaskSettings = require('./taskSettings');
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
-        var defaultData = this.props.route.data || {};
-
-        var endTime = defaultData.jobDO.endTime || new Date().valueOf();
         return {
             visibleHeight: Dimensions.get('window').height,
-
-            orderId: defaultData.jobDO.orderId,
-            taskStatus: defaultData.taskStatus || 0,
-            done: defaultData.jobDO.status,
-            jobName: defaultData.jobDO.jobName || '',
-            description: defaultData.jobDO.description || '',
-            endTime: endTime,
-            endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
-            id: defaultData.jobDO.id || 0,
-            ownerId: defaultData.userVO.userId || 0,
-            userName: defaultData.userVO.userName || ''
+            jobId: this.props.route.data || 0,//任务id
+            taskData: {}
         }
     },
     componentDidMount: function(){
-        DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow)
-        DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide)
+        DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow);
+        DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
+
+        this.unlisten = taskStore.listen(this.onChange);
+        if (this._timeout) {
+            this.clearTimeout(this._timeout)
+        };
+        this._timeout = this.setTimeout(this.fetchData, 550)
     },
     componentWillUnmount: function() {
+        this.unlisten();
+    },
+    fetchData: function(){
+        taskAction.get({
+            jobId: this.state.jobId
+        });
+    },
+    onChange: function(){
+        var result = taskStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        };
+        if (result.type == 'get') {
+            this.setState({
+                taskData: this.transformatData(result.data)
+            });
+        };
+    },
+    transformatData: function(data){
+        var endTime = data.endTime || new Date().valueOf();
+        return {
+
+            orderId: data.orderId,
+            taskStatus: data.taskStatus || 0,
+            done: data.status,
+            jobName: data.jobName || '',
+            description: data.description || '',
+            endTime: endTime,
+            endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
+            id: data.id || 0,
+            ownerId: data.ownerId || 0,
+            userName: data.owner || ''
+        }
     },
     keyboardWillShow: function(e) {
         var newSize = Dimensions.get('window').height - e.endCoordinates.height
@@ -71,8 +106,8 @@ module.exports = React.createClass({
         this.setState({visibleHeight: Dimensions.get('window').height})
     },
     _pressSettingButton: function(){
-        var data = Object.assign({taskStatus: 2}, this.props.route.data);
-        _topNavigator.push({
+        var data = Object.assign({taskStatus: 2}, this.state.taskData);
+        _navigator.push({
             title: '任务设置',
             data: data,
             component: TaskSettings,
@@ -81,7 +116,14 @@ module.exports = React.createClass({
         });
     },
     _goOrderDetail: function(){
-        _navigator.pop();
+        _navigator.push({
+            title:'',
+            // data: this.state.taskData.orderId,
+            component: OrderDetail,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        });
+        // _navigator.pop();
     },
     onPressCircle: function(){//更新任务状态
         var status = (this.state.done == 1) ? 0 : 1
@@ -91,7 +133,7 @@ module.exports = React.createClass({
         });
     },
     renderCheckIcon: function(){
-        var circleImage = (this.state.done == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
+        var circleImage = (this.state.taskData.done == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
         return(
             <TouchableWithoutFeedback
             onPress={this.onPressCircle} >
@@ -99,6 +141,26 @@ module.exports = React.createClass({
                     <Image source={circleImage} />
                 </View>
             </TouchableWithoutFeedback>
+            )
+    },
+    renderCommentList: function(){
+        if (!this.state.taskData.id) {
+            return(
+                <View />
+                );
+        }
+        return(
+            <CommentList data={this.state.taskData.id}/>
+            )
+    },
+    renderCommentBar: function(){
+        if (!this.state.taskData.id) {
+            return(
+                <View />
+                );
+        }
+        return(
+            <CommentBar navigator={_navigator} data={this.state.taskData.id}/>
             )
     },
     render: function(){
@@ -113,7 +175,7 @@ module.exports = React.createClass({
                     <View style={styles.taskDetailTop}>
                         <Text placeholder='任务名称'
                         style={[styles.taskTitle]}>
-                            {this.state.jobName}
+                            {this.state.taskData.jobName}
                         </Text>
                         {this.renderCheckIcon()}
                     </View>
@@ -121,7 +183,7 @@ module.exports = React.createClass({
                         <View style={commonStyle.textAreaWrapper}>
                             <Text placeholder='任务描述'
                             style={commonStyle.textArea}>
-                                {this.state.description}
+                                {this.state.taskData.description}
                              </Text>
                         </View>
                     </View>
@@ -135,7 +197,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={commonStyle.settingDetail}>
-                                {this.state.endTimeFormat}
+                                {this.state.taskData.endTimeFormat}
                             </Text>
                         </View>
                     </View>
@@ -149,7 +211,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={commonStyle.settingDetail}>
-                                {this.state.userName}
+                                {this.state.taskData.userName}
                             </Text>
                         </View>
                     </View>
@@ -165,14 +227,14 @@ module.exports = React.createClass({
                                 </Text>
                                 <Text
                                 style={commonStyle.settingDetail}>
-                                {this.state.orderId}
+                                {this.state.taskData.orderId}
                                 </Text>
                             </View>
                         </View>
                     </TouchableHighlight>
-                    <CommentList data={this.state.id}/>
+                    {this.renderCommentList()}
                 </ScrollView>
-                <CommentBar navigator={_navigator} data={this.state.id}/>
+                {this.renderCommentBar()}
             </View>
             );
     }

@@ -13,7 +13,8 @@ var {
 var HomeSegmentControl = require('./homeSegmentControl');
 var HomeList = require('./homeList');
 var OrderSettings = require('../order/orderSettings');
-var OrderDetail = require('../order/orderDetail');
+// var OrderDetail = require('../order/orderDetail');
+var TaskDetail = require('../order/task/taskDetail');
 
 var RightAddButton = require('../../common/rightAddButton');
 
@@ -59,13 +60,21 @@ var Home =  React.createClass({
     },
     onPressTaskRow: function(rowData, sectionID){
         //TODO: judge if this is task row or header row
+        // _topNavigator.push({
+        //     title: rowData.title,
+        //     data: rowData.orderId,
+        //     component: OrderDetail,
+        //     sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+        //     topNavigator: _topNavigator
+        // })
         _topNavigator.push({
             title: rowData.title,
-            data: rowData.orderId,
-            component: OrderDetail,
+            data: rowData.id,
+            component: TaskDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         })
+
     },
     onSegmentChange: function(event){
         this.setState({
