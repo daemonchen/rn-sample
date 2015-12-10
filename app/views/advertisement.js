@@ -70,6 +70,7 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         }
+        console.log('-----init result:', result);
         appConstants.systemInfo = result.data;
         asyncStorage.setItem('appConstants', appConstants);
         this.doLaunch();

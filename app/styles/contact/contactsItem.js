@@ -34,6 +34,12 @@ module.exports = React.StyleSheet.create({
         color: '#727272',
         fontWeight: 'bold',
         flex: 1,
-        paddingLeft: 10
+        paddingLeft: 10,
+        paddingTop: 10
+    },
+    contactRightText: {
+        width: 64,
+        paddingTop: 10,
+        textAlign: 'right'
     }
 });

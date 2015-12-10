@@ -59,11 +59,15 @@ module.exports = React.createClass({
         }
     },
     renderRow: function(data){
+        console.log('--data', data);
         return(
             <TouchableOpacity style={contactsStyle.contactsItem}
             onPress={()=>{this.props.onPressRow(data)}}>
                 {this.renderAvatar(data)}
                 <Text style={contactsStyle.contactsItemDetail}>{data.userName}</Text>
+                <Text style={contactsStyle.contactRightText}>
+                    {data.position}
+                </Text>
             </TouchableOpacity>
             );
     },

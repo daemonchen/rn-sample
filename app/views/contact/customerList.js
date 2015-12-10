@@ -22,9 +22,10 @@ var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
 
 var BlueBackButton = require('../../common/blueBackButton');
+var RightDoneButton = require('../../common/rightDoneButton');
 
-var contactAction = require('../../actions/contact/contactAction');
-var contactStore = require('../../stores/contact/contactStore');
+var customerListAction = require('../../actions/contact/customerListAction');
+var customerListStore = require('../../stores/contact/customerListStore');
 
 var util = require('../../common/util');
 /*
@@ -45,30 +46,22 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        contactAction.getList();
-        this.unlisten = contactStore.listen(this.onChange)
+        customerListAction.getList();
+        this.unlisten = customerListStore.listen(this.onChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
     },
     onChange: function() {
-        var result = contactStore.getState();
+        var result = customerListStore.getState();
         if (result.type != 'get') { return; };
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
         }
-        var customerListData = this.transformList(result.data);
         this.setState({
-            listData: customerListData
+            listData: result.data
         });
-    },
-    transformList: function(list){
-        var result = [];
-        for (var i = 0; i < list.length; i++) {
-            (list[i]['group'] == 2) && result.push(list[i]);
-        };
-        return result;
     },
     onPressRow: function(data){
         if (this.state.target == 3) {
@@ -85,41 +78,21 @@ module.exports = React.createClass({
             _topNavigator.pop();
         }
     },
-    leftButtonConfig:function() {
-        return {
-            title: '<',
-            handler:() =>
-                _navigator.pop()
-        }
-    },
+    onPressDone: function(){},
     renderNavigationBar: function(){
-        if (this.state.target == 3) {
-            return(
-                <NavigationBar
-                    title={{ title: this.props.route.title }} />
-                );
-
-        }else{
-            return(
-                <NavigationBar
-                    title={{ title: this.props.route.title }}
-                    leftButton={<BlueBackButton navigator={_navigator}/>} />
-                );
-        }
+        return(
+            <NavigationBar
+                title={{ title: this.props.route.title }}
+                leftButton={<BlueBackButton navigator={_navigator}/>}
+                rightButton={<RightDoneButton onPress={this.onPressDone} />} />
+            );
     },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
                 <ScrollView style={commonStyle.container}
-                contentOffset={{y: 44}}
-                contentInset={{bottom: 40}}
                 automaticallyAdjustContentInsets={false} >
-                    <SearchBar
-                        placeholder='Search'
-                        textFieldBackgroundColor='#fff'
-                        barTintColor='#bdbdbd'
-                        tintColor='#333' />
                     <ContactList
                         style={contactsStyle.scrollView}
                         data={this.state.listData}

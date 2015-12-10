@@ -16,10 +16,14 @@ var {
 
 var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');
+var appConstants = require('../../constants/appConstants');
+
 
 module.exports = React.createClass({
     getInitialState: function(){
-        return {}
+        return {
+            factoryName: appConstants.systemInfo.user.factoryName
+        }
     },
     openAddress: function(){
         PhonePicker.select(function(phone) {
@@ -32,6 +36,32 @@ module.exports = React.createClass({
             }
         })
     },
+    renderFactoryItem: function(){
+        if (!this.state.factoryName) {
+            return(
+                <TouchableOpacity style={contactsStyle.contactsItem}
+                onPress={this.props.goCreateFactory}>
+                    <Image
+                        style={contactsStyle.contactsItemCircle}
+                        source={require('../../images/contact/organization.png')} />
+                    <Text style={contactsStyle.contactsItemDetail}>组织架构</Text>
+                    <Text style={[contactsStyle.contactRightText, commonStyle.blue]}>
+                        添加工厂
+                    </Text>
+                </TouchableOpacity>
+                );
+        }else{
+            return(
+                <TouchableOpacity style={contactsStyle.contactsItem}
+                onPress={this.props.goCompanyMemberList}>
+                    <Image
+                        style={contactsStyle.contactsItemCircle}
+                        source={require('../../images/contact/organization.png')} />
+                    <Text style={contactsStyle.contactsItemDetail}>{this.state.factoryName}</Text>
+                </TouchableOpacity>
+                );
+        }
+    },
     render: function(){
         var circleBackground = {
             backgroundColor: '#ff7300'
@@ -40,24 +70,19 @@ module.exports = React.createClass({
             <View style={[commonStyle.container, this.props.style]}>
                 <ScrollView
                   style={contactsStyle.scrollView}>
-                    <TouchableOpacity style={contactsStyle.contactsItem}>
-                        <View style={[contactsStyle.contactsItemCircle, circleBackground]}>
-                            <Text style={contactsStyle.contactsItemTitle}>架构</Text>
-                        </View>
-                        <Text style={contactsStyle.contactsItemDetail}>组织架构</Text>
-                    </TouchableOpacity>
+                    {this.renderFactoryItem()}
                     <TouchableOpacity style={contactsStyle.contactsItem}
                     onPress={this.props.goCustomerList}>
-                        <View style={[contactsStyle.contactsItemCircle, circleBackground]}>
-                            <Text style={contactsStyle.contactsItemTitle}>客户</Text>
-                        </View>
+                        <Image
+                        style={contactsStyle.contactsItemCircle}
+                        source={require('../../images/contact/Client.png')} />
                         <Text style={contactsStyle.contactsItemDetail}>客户</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={contactsStyle.contactsItem}
                     onPress={this.openAddress} >
-                        <View style={[contactsStyle.contactsItemCircle, circleBackground]}>
-                            <Text style={contactsStyle.contactsItemTitle}>手机</Text>
-                        </View>
+                        <Image
+                        style={contactsStyle.contactsItemCircle}
+                        source={require('../../images/contact/Phone-contacts-circle.png')} />
                         <Text style={contactsStyle.contactsItemDetail}>手机通讯录</Text>
                     </TouchableOpacity>
                 </ScrollView>

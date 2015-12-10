@@ -99,16 +99,11 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
-    createMember: function(){
-        console.log('---create new member for this order');
-    },
     onActionSelect: function(index){
         switch(index){
             case 0:
                 return this.createTask();
             case 1:
-                return this.createMember();
-            case 2:
                 return this.showCameraRoll();
             default:
                 return
@@ -118,7 +113,7 @@ module.exports = React.createClass({
         var self = this;
         ActionSheetIOS.showActionSheetWithOptions({
             options: this.actionList,
-            cancelButtonIndex: 3,
+            cancelButtonIndex: 2,
             // destructiveButtonIndex: 1,
             },
             (buttonIndex) => {
@@ -126,7 +121,7 @@ module.exports = React.createClass({
               // self.setState({ clicked: self.actionList[buttonIndex] });
             });
     },
-    actionList: ['新建任务','添加成员','上传附件','取消'],
+    actionList: ['新建任务','上传附件','取消'],
     rightButtonConfig: function(){
         var self = this;
         return(

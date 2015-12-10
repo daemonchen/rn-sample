@@ -23,6 +23,7 @@ module.exports = {
     workbench: NZAOM_API_DOMAIN + '/api/workbench',
 
     contacts: NZAOM_API_DOMAIN + '/api/contacts',
+    customer: NZAOM_API_DOMAIN + '/api/customer',
 
     message: NZAOM_API_DOMAIN + '/api/message',
 

@@ -24,6 +24,7 @@ var ContactGroup = require('./group');
 var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
 var CustomerList = require('./customerList');
+var CompanyMemberList = require('./companyMemberList');
 var BlueBackButton = require('../../common/blueBackButton');
 
 var contactAction = require('../../actions/contact/contactAction');
@@ -96,6 +97,24 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         })
     },
+    goCompanyMemberList: function(){
+        _topNavigator.push({
+            title: '组织架构',
+            target: this.state.target,
+            component: CompanyMemberList,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
+    },
+    goCreateFactory: function(){
+        _topNavigator.push({
+            title: '新建工厂',
+            target: this.state.target,
+            component: CustomerList,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        })
+    },
     renderNavigationBar: function(){
         if (this.state.target == 3) {
             return(
@@ -121,7 +140,9 @@ module.exports = React.createClass({
 
                     <ContactGroup
                     style={styles.contactGroup}
-                    goCustomerList={this.goCustomerList} />
+                    goCustomerList={this.goCustomerList}
+                    goCompanyMemberList={this.goCompanyMemberList}
+                    goCreateFactory={this.goCreateFactory} />
                     <View>
                         <Text style={[commonStyle.blue, commonStyle.title]}>
                             常用联系人
