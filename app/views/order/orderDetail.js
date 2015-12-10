@@ -69,7 +69,6 @@ module.exports = React.createClass({
     },
     onOrderChange: function(){
         var result = orderStore.getState();
-        console.log('---result', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;

@@ -125,9 +125,9 @@ module.exports = React.createClass({
         // _navigator.pop();
     },
     onPressCircle: function(){//更新任务状态
-        var status = (this.state.done == 1) ? 0 : 1
+        var status = (this.state.taskData.done == 1) ? 0 : 1
         taskListAction.update({
-            id: this.state.id,
+            id: this.state.taskData.id,
             status: status,
         });
     },
