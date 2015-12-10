@@ -32,5 +32,8 @@ module.exports = {
     },
     feedback: function(data){
         return http.post(NZAOM_INTERFACE.feedback, data)
-    }
+    },
+    resetPassword: function(data){
+        return http.put(NZAOM_INTERFACE.password, data)
+    },
 }

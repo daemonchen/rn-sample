@@ -13,3 +13,5 @@
 - 去掉所有通过props传递的事件回调，改为flux方式触发
 
 - 把所有的asyncstorage统一存放在一个对象下:appConstant。
+
+- 把route抽取出来，通过flux来触发navigation

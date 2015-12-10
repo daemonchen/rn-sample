@@ -95,11 +95,6 @@ module.exports = React.createClass({
                         value={this.state.userName}
                         onSubmitEditing={this.onSubmitEditing} />
                     </View>
-                    <Button
-                    style={commonStyle.blueButton}
-                    onPress={this.doChangeName} >
-                        提交
-                    </Button>
                 </View>
             </View>
             );

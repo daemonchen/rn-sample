@@ -2,14 +2,29 @@
 
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
+var md5 = require('md5');
+var TimerMixin = require('react-timer-mixin');
 var {View,
     Text,
     TextInput,
     Navigator,
     StyleSheet
 } = React;
-var Button = require('../../common/button.js');
+
+var appConstants = require('../../constants/appConstants');
+var asyncStorage = require('../../common/storage');
 var commonStyle = require('../../styles/commonStyle');
+var Button = require('../../common/button.js');
+
+var authAction = require('../../actions/user/authAction');
+var authStore = require('../../stores/user/authStore');
+
+
+var BlueBackButton = require('../../common/blueBackButton');
+var RightDoneButton = require('../../common/rightDoneButton');
+
+var Modal = require('../../common/modal');
+
 
 //获取可视窗口的宽高
 var util = require('../../common/util.js');
@@ -19,44 +34,89 @@ var {
 
 var _navigator, _topNavigator = null;
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
-        return {}
+        return {
+            newPwd: '',
+            oldPwd: ''
+        }
+    },
+    _modal: {},
+    componentDidMount: function(){
+        this.unlisten = authStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function() {
+        var result = authStore.getState();
+        if (result.type != 'update') { return; };
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        this._modal.showModal('修改密码成功');
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            this._modal.hideModal();
+            _navigator.pop();
+        },2000);
     },
     doChangePassword: function(){
-        _navigator.pop();
+        if (this.state.newPwd.length < 6 || this.state.oldPwd.length < 6) {
+            util.alert('密码长度不能小于6位');
+            return false;
+        };
+        authAction.update({
+            newPwd: md5(this.state.newPwd),
+            oldPwd: md5(this.state.oldPwd)
+        });
     },
-    leftButtonConfig: {
-        title: '<',
-        handler:() =>
-            _navigator.pop()
+    onPressDone: function(){
+        this.doChangePassword();
+    },
+    onSubmitEditing: function(){
+        this.doChangePassword();
+    },
+    onChangePasswordText: function(text){
+        this.setState({
+            oldPwd: text
+        });
+    },
+    onChangeNewPasswordText: function(text){
+        this.setState({
+            newPwd: text
+        });
     },
     render: function(){
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title:'修改密码'}}
-                    leftButton={this.leftButtonConfig} />
+                    title={{title: '修改密码'}}
+                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='原密码'
                         secureTextEntry={true}
                         style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}/>
+                        clearButtonMode={'while-editing'}
+                        onChangeText={this.onChangePasswordText} />
                     </View>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='新密码'
                         secureTextEntry={true}
                         style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}/>
+                        clearButtonMode={'while-editing'}
+                        onChangeText={this.onChangeNewPasswordText}
+                        onSubmitEditing={this.onSubmitEditing} />
                     </View>
-                    <Button
-                    style={commonStyle.blueButton}
-                    onPress={this.doChangePassword} >
-                        提交
-                    </Button>
                 </View>
+                <Modal ref={(ref)=>{this._modal = ref}}/>
             </View>
         );
     }

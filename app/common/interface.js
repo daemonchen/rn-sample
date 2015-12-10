@@ -18,6 +18,7 @@ module.exports = {
     login: NZAOM_API_DOMAIN + '/api/login',
     token: NZAOM_API_DOMAIN + '/api/token',
     system: NZAOM_API_DOMAIN + '/api/system',
+    password: NZAOM_API_DOMAIN + '/api/password',
 
     workbench: NZAOM_API_DOMAIN + '/api/workbench',
 

@@ -100,7 +100,6 @@ var setPassWord = React.createClass({
             util.alert('密码长度不能小于6位');
             return false;
         };
-        var data = verifyCodeStore.getState();
         verifyCodeAction.register({
             verifyCode: this.state.verifyCode,
             mobile: this.state.mobile,

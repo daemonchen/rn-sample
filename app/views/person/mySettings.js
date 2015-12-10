@@ -157,7 +157,7 @@ module.exports = React.createClass({
                         style={commonStyle.settingItem}>
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/Setting.png')}/>
+                            source={require('../../images/person/encryption.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
                                 修改密码
