@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
+var TimerMixin = require('react-timer-mixin');
 var md5 = require('md5');
 var {View,
     Text,
@@ -15,6 +16,10 @@ var commonStyle = require('../styles/commonStyle');
 var loginAction = require('../actions/user/loginAction');
 var loginStore = require('../stores/user/loginStore');
 var asyncStorage = require('../common/storage');
+var appConstants = require('../constants/appConstants');
+var systemAction = require('../actions/system/systemAction');
+
+var LeftCloseButton = require('../common/leftCloseButton');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -27,6 +32,7 @@ var ResetPassword = require('../views/person/resetPassword');
 var NavTitleWithLogo = require('../common/navTitleWithLogo');
 var _navigator = null;
 var Login = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         return {}
@@ -44,13 +50,20 @@ var Login = React.createClass({
             util.alert(result.message);
             return;
         }
-        asyncStorage.setItem('xAuthToken', {xAuthToken: result.data});
+        appConstants.xAuthToken = result.data;
+        asyncStorage.setItem('appConstants', appConstants);
+        this.getSystem();
         _navigator.replace({
             title: 'Launch',
             component: Launch,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _navigator
         })
+    },
+    getSystem: function(){
+        this.setTimeout(()=>{
+            systemAction.init();
+        }, 350);
     },
     goResetPassword: function(){
         _navigator.push({
@@ -92,7 +105,7 @@ var Login = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={<NavTitleWithLogo />}
-                    leftButton={{ title: 'X', }} />
+                    leftButton={<LeftCloseButton navigator={_navigator} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='手机号码'

@@ -6,9 +6,10 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var styles = React.StyleSheet.create({
+module.exports = React.StyleSheet.create({
     topInfo:{
         // height: 174,
+        marginTop: 16,
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 16
@@ -32,13 +33,14 @@ var styles = React.StyleSheet.create({
         marginTop: 16,
         width: 100,
         height: 100,
-        borderRadius: 50,
-        backgroundColor: '#000'
+        borderRadius: 50
     },
     avatarTitle: {
+        marginTop: 38,
         width: 100,
         textAlign: 'center',
         color: '#fff',
+        backgroundColor: 'transparent',
         fontSize: 24
     }
 });

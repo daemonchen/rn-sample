@@ -9,6 +9,7 @@ var {View,
     StyleSheet
 } = React;
 var Button = require('../common/button.js');
+var LeftCloseButton = require('../common/leftCloseButton');
 var commonStyle = require('../styles/commonStyle');
 
 var verifyCodeAction = require('../actions/user/verifyCodeAction');
@@ -69,7 +70,7 @@ var register = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={<NavTitleWithLogo />}
-                    leftButton={{ title: 'X', }} />
+                    leftButton={<LeftCloseButton navigator={_navigator} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='手机号码'

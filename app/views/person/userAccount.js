@@ -20,23 +20,36 @@ var {
 } = util.getDimensions();
 
 var commonStyle = require('../../styles/commonStyle');
+var appConstants = require('../../constants/appConstants');
+
+var BlueBackButton = require('../../common/blueBackButton');
+
+var ChangeName = require('./changeName');
+
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
-        return {}
+        return {
+            user: appConstants.systemInfo.user
+        }
     },
     goAccount: function(){
-        console.log('todo...');
+        _topNavigator.push({
+            title: '修改姓名',
+            component: ChangeName,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        });
     },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{ title: '我的账号', }}
-                    leftButton={{ title: '<', }} />
+                    title={{title:'我的账号'}}
+                    leftButton={<BlueBackButton navigator={_topNavigator} />} />
                 <View style={commonStyle.settingGroups}>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
@@ -50,11 +63,11 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={commonStyle.settingDetail}>
-                                XXX
+                                {this.state.user.userName}
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/Arrow_back.png')} />
+                            source={require('../../images/common/arrow_right.png')} />
                         </View>
                     </TouchableHighlight>
                 </View>

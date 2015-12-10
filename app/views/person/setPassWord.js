@@ -3,6 +3,7 @@
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
 var md5 = require('md5');
+var TimerMixin = require('react-timer-mixin');
 var {View,
     Text,
     Image,
@@ -15,8 +16,10 @@ var commonStyle = require('../../styles/commonStyle');
 
 var verifyCodeAction = require('../../actions/user/verifyCodeAction');
 var verifyCodeStore = require('../../stores/user/verifyCodeStore');
+var systemAction = require('../../actions/system/systemAction');
 
 var asyncStorage = require('../../common/storage');
+var appConstants = require('../../constants/appConstants');
 
 //获取可视窗口的宽高
 var util = require('../../common/util.js');
@@ -28,6 +31,7 @@ var Launch = require('../launch');
 
 var _navigator, _topNavigator = null;
 var setPassWord = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
@@ -58,13 +62,20 @@ var setPassWord = React.createClass({
             util.alert(result.message);
             return;
         }
-        asyncStorage.setItem('xAuthToken', {xAuthToken: result.data});
+        appConstants.xAuthToken = result.data;
+        asyncStorage.setItem('appConstants', appConstants);
+        this.getSystem();
         _navigator.immediatelyResetRouteStack([{
             title: 'Launch',
             component: Launch,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _navigator
         }]);
+    },
+    getSystem: function(){
+        this.setTimeout(()=>{
+            systemAction.init();
+        }, 350);
     },
     doRegister: function(){
         if (this.state.password.length < 6) {

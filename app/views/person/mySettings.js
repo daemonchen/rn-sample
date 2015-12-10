@@ -116,6 +116,21 @@ module.exports = React.createClass({
                             </Text>
                         </View>
                     </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this.goChangePassword}>
+                        <View
+                        style={commonStyle.settingItem}>
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/Setting.png')}/>
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                退出登录
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
                 </View>
             </View>
             );

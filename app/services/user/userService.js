@@ -23,5 +23,8 @@ module.exports = {
     },
     system: function(data){
         return http.get(NZAOM_INTERFACE.system)
+    },
+    update: function(data){
+        return http.put(NZAOM_INTERFACE.user, data)
     }
 }

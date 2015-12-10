@@ -34,7 +34,7 @@ module.exports = React.createClass({
         }
     },
     goAccount: function(){
-        _navigator.push({
+        _topNavigator.push({
             title:'我的账号',
             component: UserAccount,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
@@ -43,7 +43,7 @@ module.exports = React.createClass({
     },
     goTemplate: function(){
 
-        _navigator.push({
+        _topNavigator.push({
             title: '我的模版',
             target: 2,
             component: OrderTemplates,
@@ -52,7 +52,7 @@ module.exports = React.createClass({
         });
     },
     goSettings: function(){
-        _navigator.push({
+        _topNavigator.push({
             title:'设置',
             component: MySettings,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
@@ -60,7 +60,7 @@ module.exports = React.createClass({
         });
     },
     goSuggest: function(){
-        _navigator.push({
+        _topNavigator.push({
             title:'意见反馈',
             component: Suggest,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,

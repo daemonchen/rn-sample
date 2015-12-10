@@ -47,7 +47,6 @@ var awesomeMobile = React.createClass({
         }
         appConstants.xAuthToken = result.data;
         asyncStorage.setItem('appConstants', appConstants);
-        appConstants.xAuthToken = result.data;
         this.getSystem();
     },
     getSystem: function(){
@@ -58,7 +57,7 @@ var awesomeMobile = React.createClass({
     getAppState: function(){
         asyncStorage.getItem('appConstants')
         .then((data)=>{
-            if(!data.xAuthToken){
+            if(!data || !data.xAuthToken){
                 this.getSystem();
             }else{
                 appConstants.xAuthToken = data.xAuthToken;

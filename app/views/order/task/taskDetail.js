@@ -227,7 +227,7 @@ module.exports = React.createClass({
                                 </Text>
                                 <Text
                                 style={commonStyle.settingDetail}>
-                                {this.state.taskData.orderId}
+                                {this.state.taskData.orderTitle}
                                 </Text>
                                 <Image
                             style={commonStyle.settingArrow}

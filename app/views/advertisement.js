@@ -50,6 +50,7 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         }
+        console.log('-----init');
         appConstants.systemInfo = result.data;
         asyncStorage.setItem('appConstants', appConstants);
         this.doLaunch();
