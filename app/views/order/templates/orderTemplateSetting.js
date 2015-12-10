@@ -27,7 +27,11 @@ module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
-        return {}
+        return {
+            templateStatus: this.props.route.target,//1新建 2 修改
+            title: this.props.route.data.title || this.props.route.data.templateName,
+            description: this.props.route.data.description
+        }
     },
     componentDidMount: function(){
         this.unlisten = templateStore.listen(this.onChange);
@@ -44,6 +48,9 @@ module.exports = React.createClass({
         if (result.type == 'create') {
             _navigator.popToTop();
         };
+        if (result.type == 'update') {
+            _navigator.pop();
+        };
     },
     onChangeNameText: function(text){
         this.setState({
@@ -56,12 +63,20 @@ module.exports = React.createClass({
         });
     },
     onPressDone: function(){
-        // _navigator.pop();
-        templateAction.create({
-            templateName: this.state.title || '',
-            description: this.state.description || '',
-            orderId: this.props.route.data.id
-        });
+        if (this.state.templateStatus == 1) {//create
+            templateAction.create({
+                templateName: this.state.title || '',
+                description: this.state.description || '',
+                orderId: this.props.route.data.id
+            });
+        }
+        if (this.state.templateStatus == 2) {//update
+            templateAction.update({
+                templateName: this.state.title || '',
+                description: this.state.description || '',
+                id: this.props.route.data.id
+            });
+        }
     },
     render: function(){
         return(

@@ -20,6 +20,7 @@ var {
 } = util.getDimensions();
 
 var appConstants = require('../../constants/appConstants');
+var asyncStorage = require('../../common/storage');
 var commonStyle = require('../../styles/commonStyle');
 var Button = require('../../common/button.js');
 

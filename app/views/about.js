@@ -12,6 +12,8 @@ var {
 } = React
 
 var commonStyle = require('../styles/commonStyle');
+var BlueBackButton = require('../common/blueBackButton');
+
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
@@ -29,11 +31,11 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title:'关于我们'}}
-                    leftButton={this.leftButtonConfig} />
+                    title={{title: '关于我们'}}
+                    leftButton={<BlueBackButton navigator={_topNavigator} />} />
                 <View style={styles.main}>
                     <Image
-                      source={require('../images/logo.png')} />
+                      source={require('../images/logo/logo_welcom.png')} />
                     <Text>你造么 for iPhone 1.0.0</Text>
                 </View>
             </View>

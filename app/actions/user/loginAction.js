@@ -3,4 +3,6 @@
 var alt = require('../../common/alt');
 module.exports = alt.generateActions(
     'login',
-    'loginSuccess');
+    'loginSuccess',
+    'logout',
+    'logoutSuccess');

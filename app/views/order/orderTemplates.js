@@ -20,6 +20,7 @@ var _navigator, _topNavigator = null;
 var OrderSettings = require('./orderSettingsForTemplate');
 var OrderTemplateList = require('./components/orderTemplateList');
 var OrderTemplateDetail = require('./templates/orderTemplateDetail');
+var OrderTemplateSetting = require('./templates/orderTemplateSetting');
 
 var BlueBackButton = require('../../common/blueBackButton');
 
@@ -48,8 +49,9 @@ module.exports = React.createClass({
         if (this.state.target == 2) {//从个人中心进入模版列表
             _topNavigator.push({
                 title: '模版详情',
+                target: 2,
                 data: rowData,
-                component: OrderTemplateDetail,
+                component: OrderTemplateSetting,
                 sceneConfig: Navigator.SceneConfigs.FloatFromRight,
                 topNavigator: _topNavigator
             })

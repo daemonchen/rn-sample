@@ -263,6 +263,7 @@ module.exports = React.createClass({
     _saveTemplate: function(){
         _navigator.push({
             title: '保存为模版',
+            target: 1,
             component: OrderTemplateSetting,
             data: this.props.route.data,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,

@@ -29,6 +29,7 @@ module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
+
         return {
             user: appConstants.systemInfo.user
         }
@@ -111,7 +112,7 @@ module.exports = React.createClass({
                         style={commonStyle.settingItem}>
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/Setting.png')}/>
+                            source={require('../../images/person/account_settings.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
                                 我的账号
@@ -126,7 +127,7 @@ module.exports = React.createClass({
                         style={commonStyle.settingItem}>
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/Setting.png')}/>
+                            source={require('../../images/person/template.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
                                 我的模版
@@ -141,7 +142,7 @@ module.exports = React.createClass({
                         style={commonStyle.settingItem}>
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/Setting.png')}/>
+                            source={require('../../images/person/setting_fill.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
                                 设置
@@ -156,7 +157,7 @@ module.exports = React.createClass({
                         style={commonStyle.settingItem}>
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/Setting.png')}/>
+                            source={require('../../images/person/feedback.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
                                 意见反馈

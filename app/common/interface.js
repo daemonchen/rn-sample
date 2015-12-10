@@ -41,5 +41,7 @@ module.exports = {
 
     template: NZAOM_API_DOMAIN + '/api/job_template',
 
-    comment: NZAOM_API_DOMAIN + '/api/rate'
+    comment: NZAOM_API_DOMAIN + '/api/rate',
+
+    feedback: NZAOM_API_DOMAIN + '/api/feedback'
 }

@@ -23,6 +23,19 @@ class UserStore {
         data.type = 'update'
         this.setState(data);
     }
+    onFeedback(data) {
+        userService.feedback(data)
+        .then((responseData) => {
+            userAction.feedbackSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onFeedbackSuccess(data){
+        if (!data) {return false};
+        data.type = 'feedback'
+        this.setState(data);
+    }
 }
 
 export default alt.createStore(UserStore, 'UserStore');

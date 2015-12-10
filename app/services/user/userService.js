@@ -18,6 +18,9 @@ module.exports = {
     login: function(data){
         return http.post(NZAOM_INTERFACE.login, data)
     },
+    logout: function(data){
+        return http.delete(NZAOM_INTERFACE.login)
+    },
     token: function(data){
         return http.get(NZAOM_INTERFACE.token)
     },
@@ -26,5 +29,8 @@ module.exports = {
     },
     update: function(data){
         return http.put(NZAOM_INTERFACE.user, data)
+    },
+    feedback: function(data){
+        return http.post(NZAOM_INTERFACE.feedback, data)
     }
 }

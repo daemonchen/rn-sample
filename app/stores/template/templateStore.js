@@ -28,6 +28,23 @@ class TemplateStore {
         // this.mergeList(responseData)
         this.setState(responseData);
     }
+    onUpdate(data) {
+        templateService.update(data)
+        .then((responseData) => {
+            templateAction.updateSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onUpdateSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'update'
+
+        // appConstants.memberList = responseData.data
+        // asyncStorage.setItem('appConstants', appConstants);
+        // this.mergeList(responseData)
+        this.setState(responseData);
+    }
 }
 
 export default alt.createStore(TemplateStore, 'TemplateStore');

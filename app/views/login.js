@@ -18,6 +18,7 @@ var loginStore = require('../stores/user/loginStore');
 var asyncStorage = require('../common/storage');
 var appConstants = require('../constants/appConstants');
 var systemAction = require('../actions/system/systemAction');
+var systemStore = require('../stores/system/systemStore');
 
 var LeftCloseButton = require('../common/leftCloseButton');
 
@@ -39,9 +40,26 @@ var Login = React.createClass({
     },
     componentDidMount: function(){
         this.unlisten = loginStore.listen(this.onChange)
+        this.unlistenSystem = systemStore.listen(this.onSystemChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenSystem();
+    },
+    onSystemChange: function(){
+        var result = systemStore.getState();
+        if (result.type != 'init') { return; };
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        appConstants.systemInfo = result.data;
+        asyncStorage.setItem('appConstants', appConstants);
+        _navigator.replace({
+            title: 'Launch',
+            component: Launch,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _navigator
+        })
     },
     onChange: function() {
         var result = loginStore.getState();
@@ -53,12 +71,6 @@ var Login = React.createClass({
         appConstants.xAuthToken = result.data;
         asyncStorage.setItem('appConstants', appConstants);
         this.getSystem();
-        _navigator.replace({
-            title: 'Launch',
-            component: Launch,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        })
     },
     getSystem: function(){
         this.setTimeout(()=>{
@@ -75,7 +87,7 @@ var Login = React.createClass({
     },
     doLogin: function(){
         if (!this.state.mobile || !/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(this.state.mobile)) {
-            util.alert('请输入手机号码');
+            util.alert('请输入正确的手机号码');
             return;
         };
         if (!this.state.password) {

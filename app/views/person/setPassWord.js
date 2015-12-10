@@ -17,6 +17,7 @@ var commonStyle = require('../../styles/commonStyle');
 var verifyCodeAction = require('../../actions/user/verifyCodeAction');
 var verifyCodeStore = require('../../stores/user/verifyCodeStore');
 var systemAction = require('../../actions/system/systemAction');
+var systemStore = require('../../stores/system/systemStore');
 
 var asyncStorage = require('../../common/storage');
 var appConstants = require('../../constants/appConstants');
@@ -51,9 +52,26 @@ var setPassWord = React.createClass({
             });
         }).done();
         this.unlisten = verifyCodeStore.listen(this.onChange)
+        this.unlistenSystem = systemStore.listen(this.onSystemChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenSystem();
+    },
+    onSystemChange: function(){
+        var result = systemStore.getState();
+        if (result.type != 'init') { return; };
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        appConstants.systemInfo = result.data;
+        asyncStorage.setItem('appConstants', appConstants);
+        _navigator.replace({
+            title: 'Launch',
+            component: Launch,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _navigator
+        })
     },
     onChange: function() {
         var result = verifyCodeStore.getState();

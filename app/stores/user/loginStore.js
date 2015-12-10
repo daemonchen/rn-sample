@@ -23,6 +23,19 @@ class LoginStore {
         data.type = 'login'
         this.setState(data);
     }
+    onLogout(data) {
+        userService.logout(data)
+        .then((responseData) => {
+            loginAction.logoutSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onLogoutSuccess(data){
+        if (!data) {return false};
+        data.type = 'logout'
+        this.setState(data);
+    }
 }
 
 export default alt.createStore(LoginStore, 'LoginStore');

@@ -26,6 +26,7 @@ var util = require('../../../common/util');
 
 var templateListAction = require('../../../actions/template/templateListAction');
 var templateListStore = require('../../../stores/template/templateListStore');
+var templateStore = require('../../../stores/template/templateStore');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -38,6 +39,7 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
+        this.unlistenTemplate = templateStore.listen(this.onTemplateChange);
         this.unlisten = templateListStore.listen(this.onChange);
         if (this._timeout) {
             this.clearTimeout(this._timeout)
@@ -46,6 +48,7 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenTemplate();
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {
@@ -63,6 +66,10 @@ module.exports = React.createClass({
         });
     },
     handleUpdate: function(result){
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        this.setTimeout(this.fetchData, 350);
         return;
     },
     handleDelete: function(result){
@@ -82,6 +89,20 @@ module.exports = React.createClass({
                 return this.handleGet(result);
             case 'delete':
                 return this.handleDelete(result);
+            default:
+                return;
+        }
+    },
+    onTemplateChange: function(){
+        var result = templateStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        switch(result.type){
+            case 'update':
+                return this.handleUpdate(result);
+            default:
+                return;
         }
     },
     fetchData: function() {

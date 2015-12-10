@@ -47,6 +47,10 @@ module.exports = React.StyleSheet.create({
         paddingLeft: 16,
         paddingRight: 16
     },
+    topBorder: {
+        borderTopWidth: 1 / React.PixelRatio.get(),
+        borderTopColor: '#bdbdbd'
+    },
     bottomBorder: {
         borderBottomWidth: 1 / React.PixelRatio.get(),
         borderBottomColor: '#bdbdbd'
@@ -62,11 +66,9 @@ module.exports = React.StyleSheet.create({
     },
     button: {
         width: width - 32,
-        marginTop: 10,
-        marginBottom: 10,
+        height: 48,
         paddingVertical: 16,
-        fontSize: 16,
-        paddingVertical: 16
+        fontSize: 16
     },
     textInputWrapper: {//带有下划线的输入框
         width: width - 32,
@@ -96,7 +98,22 @@ module.exports = React.StyleSheet.create({
         alignSelf: 'center',
         height: 100
     },
+    logoutWrapper: {
+        width: width,
+        height: 49,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 0
+    },
+    logoutBorder: {
+        width: width,
+        height: 48,
+        borderTopWidth: 1 / React.PixelRatio.get(),
+        borderTopColor: '#bdbdbd'
+    },
     settingGroups: {
+        flex: 1,
         paddingTop: 16,
         backgroundColor: '#fff'
     },
