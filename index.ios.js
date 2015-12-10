@@ -24,6 +24,8 @@ var authTokenStore = require('./app/stores/user/authTokenStore');
 var systemAction = require('./app/actions/system/systemAction');
 var systemStore = require('./app/stores/system/systemStore');
 
+var util = require('./app/common/util');
+
 var awesomeMobile = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
@@ -33,7 +35,7 @@ var awesomeMobile = React.createClass({
         this.getAppState();
     },
     componentDidMount: function(){
-        this.unlisten = authTokenStore.listen(this.onChange)
+        this.unlisten = authTokenStore.listen(this.onChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
@@ -42,7 +44,7 @@ var awesomeMobile = React.createClass({
         var result = authTokenStore.getState();
         if (result.type != 'updateToken') { return; };
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
+            this.getSystem();
             return;
         }
         appConstants.xAuthToken = result.data;

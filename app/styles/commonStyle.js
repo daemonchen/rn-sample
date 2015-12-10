@@ -108,6 +108,7 @@ module.exports = React.StyleSheet.create({
     },
     logoutBorder: {
         width: width,
+        alignItems: 'center',
         height: 48,
         borderTopWidth: 1 / React.PixelRatio.get(),
         borderTopColor: '#bdbdbd'

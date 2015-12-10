@@ -115,7 +115,8 @@ var Home =  React.createClass({
 
 var styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: '#fff'
     },
     main:{
         flex:1,

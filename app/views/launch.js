@@ -10,9 +10,11 @@ var Order = require('../views/order/order');
 var Inbox = require('../views/inbox/inboxList');
 var Contact = require('../views/contact/contact');
 var UserIndex = require('../views/person/userIndex');
+
 var appConstants = require('../constants/appConstants');
 
-var appCon
+var asyncStorage = require('../common/storage');
+
 //获取可视窗口的宽高
 var util = require('../common/util.js');
 var {

@@ -39,26 +39,8 @@ module.exports = React.createClass({
         return {}
     },
     componentDidMount: function(){
-        this.unlisten = loginStore.listen(this.onChange)
     },
     componentWillUnmount: function() {
-        this.unlisten();
-    },
-    onChange: function() {
-        var result = loginStore.getState();
-        if (result.type != 'logout') { return; };
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
-        appConstants = {};
-        asyncStorage.setItem('appConstants', appConstants);
-        _navigator.immediatelyResetRouteStack([{
-            title: 'welcome',
-            component: Welcome,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        }])
     },
     _modal: {},
     doRate: function(){
