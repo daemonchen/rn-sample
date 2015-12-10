@@ -34,7 +34,6 @@ var RightWhiteAddButton = require('../../common/rightWhiteAddButton');
 var RightWhiteSettingButton = require('../../common/rightWhiteSettingButton');
 
 var util = require('../../common/util');
-var taskListStore = require('../../stores/task/taskListStore');
 var attachAction = require('../../actions/attach/attachAction');
 var orderStore = require('../../stores/order/orderStore');
 var orderAction = require('../../actions/order/orderAction');
@@ -49,15 +48,11 @@ module.exports = React.createClass({
         return {
             orderId: this.props.route.data || 0,//订单id
             orderData: {},
-            overNum: 0,
-            endTime: new Date(),
-            totaleJobNum: 0,
             tabIndex: 0,
             images: []
         }
     },
     componentDidMount: function(){
-        this.unlisten = taskListStore.listen(this.onChange);
         this.unlistenOrder = orderStore.listen(this.onOrderChange);
         if (this._timeout) {
             this.clearTimeout(this._timeout)
@@ -65,7 +60,6 @@ module.exports = React.createClass({
         this._timeout = this.setTimeout(this.fetchData, 350)
     },
     componentWillUnmount: function() {
-        this.unlisten();
         this.unlistenOrder();
     },
     fetchData: function(){
@@ -75,6 +69,7 @@ module.exports = React.createClass({
     },
     onOrderChange: function(){
         var result = orderStore.getState();
+        console.log('---result', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
@@ -84,29 +79,6 @@ module.exports = React.createClass({
                 orderData: result.data
             });
         };
-    },
-    handleGet: function(result){
-        if (result.status != 200 && !!result.message) {
-            return;
-        };
-        this.setState({
-            overNum: result.data.overNum,
-            endTime: result.data.endTime,
-            totaleJobNum: result.data.totaleJobNum
-        });
-    },
-    onChange: function() {
-        var result = taskListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
-        switch(result.type){
-            case 'get':
-                return this.handleGet(result);
-            // case 'delete':
-            //     return this.handleDelete(result);
-        }
     },
     _pressSettingButton: function(){
         var data = Object.assign({orderStatus: 2}, this.state.orderData);
@@ -216,12 +188,12 @@ module.exports = React.createClass({
         })
     },
     renderSummary: function(){
-        var time = moment(this.state.endTime).format('YYYY.MM.DD');
-        var undoNumber = this.state.totaleJobNum - this.state.overNum;
+        var time = moment(this.state.orderData.endTime).format('YYYY.MM.DD');
+        var undoNumber = this.state.orderData.jobNum - this.state.orderData.overNum;
         return(
             <View style={{flexDirection:'row', height: 68, backgroundColor: '#4285f4'}}>
                 <View style={{flex: 1}}>
-                    <Text style={styles.taskTotalText}>{this.state.overNum}</Text>
+                    <Text style={styles.taskTotalText}>{this.state.orderData.overNum}</Text>
                     <Text style={styles.taskTotalText}>已完成</Text>
                 </View>
                 <View style={{flex: 1}}>

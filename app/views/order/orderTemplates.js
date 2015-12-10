@@ -17,7 +17,7 @@ target: 表示从哪里打开模版 enum
 var commonStyle = require('../../styles/commonStyle');
 var _navigator, _topNavigator = null;
 
-var OrderSettings = require('./orderSettings');
+var OrderSettings = require('./orderSettingsForTemplate');
 var OrderTemplateList = require('./components/orderTemplateList');
 var OrderTemplateDetail = require('./templates/orderTemplateDetail');
 
