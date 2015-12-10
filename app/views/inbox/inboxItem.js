@@ -54,7 +54,6 @@ module.exports = React.createClass({
     iconList:[
         require('../../images/inbox/Order_icon.png'),
         require('../../images/inbox/task_icon.png'),
-        require('../../images/inbox/sys_icon.png'),
         require('../../images/inbox/sys_icon.png')
     ],
     renderUserAvatar: function(){
@@ -80,7 +79,7 @@ module.exports = React.createClass({
     },
     renderAvatar: function(){
         var data = this.props.rowData;
-        var circleImage = this.iconList[data.msgType-1];
+        var circleImage = this.iconList[data.msgType-1] || require('../../images/inbox/sys_icon.png');
         if (!data.fromUser) {
             return(
                 <Image source={circleImage} style={styles.inboxIcon}/>
