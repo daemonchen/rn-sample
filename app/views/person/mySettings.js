@@ -9,6 +9,7 @@ var {
     Text,
     Navigator,
     AlertIOS,
+    LinkingIOS,
     TouchableHighlight,
     StyleSheet
 } = React
@@ -44,7 +45,8 @@ module.exports = React.createClass({
     },
     _modal: {},
     doRate: function(){
-        console.log('TODO: open app store to set score...');
+        var url = 'https://itunes.apple.com/us/app/ni-zao-me/id1025294933?l=zh&ls=1&mt=8'
+        LinkingIOS.openURL(url)
     },
     goAbout: function(){
         _navigator.push({
@@ -85,7 +87,6 @@ module.exports = React.createClass({
         });
     },
     doLogout: function(){
-        console.log('---doLogout');
         AlertIOS.alert(
             '退出登录',
             '您确定要退出登录吗',
