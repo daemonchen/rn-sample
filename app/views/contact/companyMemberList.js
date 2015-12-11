@@ -3,6 +3,7 @@
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
 var SearchBar = require('react-native-search-bar');
+var PhonePicker = require('react-native-phone-picker');
 var {
     View,
     Text,
@@ -22,6 +23,7 @@ var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
 
 var BlueBackButton = require('../../common/blueBackButton');
+var RightAddButton = require('../../common/rightAddButton');
 
 var contactAction = require('../../actions/contact/contactAction');
 var contactStore = require('../../stores/contact/contactStore');
@@ -77,11 +79,45 @@ module.exports = React.createClass({
             _topNavigator.pop();
         }
     },
+    doInviteEmployee: function(){},
+    openAddress: function(){
+        PhonePicker.select(function(phone) {
+            if (phone) {
+                phone = phone.replace(/[^\d]/g, '');
+                if (/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
+                    console.log(phone);
+                }
+            }
+        })
+    },
+    doPushInviteEmployee: function(){},
+    onSelectActionSheet: function(index){
+        switch(index){
+            case 0:
+                return this.openAddress();
+            case 1:
+                return this.doPushInviteEmployee();
+            default :
+                return;
+        }
+    },
+    showActionSheet: function(){
+        var self = this;
+        ActionSheetIOS.showActionSheetWithOptions({
+            options: this.actionList,
+            cancelButtonIndex: 2,
+            },
+            (buttonIndex) => {
+              self.onSelectActionSheet(buttonIndex);
+            });
+    },
+    actionList: ['手机通讯录邀请','手机号码邀请','取消'],
     renderNavigationBar: function(){
         return(
             <NavigationBar
                 title={{ title: this.props.route.title }}
-                leftButton={<BlueBackButton navigator={_navigator}/>} />
+                leftButton={<BlueBackButton navigator={_navigator}/>}
+                rightButton={<RightAddButton onPress={this.showActionSheet} />} />
             );
     },
     render: function(){

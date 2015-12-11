@@ -25,6 +25,7 @@ var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
 var CustomerList = require('./customerList');
 var CompanyMemberList = require('./companyMemberList');
+var CreateFactory = require('./createFactory');
 var BlueBackButton = require('../../common/blueBackButton');
 
 var contactAction = require('../../actions/contact/contactAction');
@@ -109,8 +110,7 @@ module.exports = React.createClass({
     goCreateFactory: function(){
         _topNavigator.push({
             title: '新建工厂',
-            target: this.state.target,
-            component: CustomerList,
+            component: CreateFactory,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
         })

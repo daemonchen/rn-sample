@@ -45,5 +45,7 @@ module.exports = {
 
     comment: NZAOM_API_DOMAIN + '/api/rate',
 
-    feedback: NZAOM_API_DOMAIN + '/api/feedback'
+    feedback: NZAOM_API_DOMAIN + '/api/feedback',
+
+    factory: NZAOM_API_DOMAIN + '/api/factory'
 }
