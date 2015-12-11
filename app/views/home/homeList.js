@@ -63,6 +63,7 @@ module.exports = React.createClass({
     },
     transfromDataBlob: function(response){
         var rawData = response.data
+        if (!rawData) { rawData = [];};
         var dataBlob = {};
         var sectionIDs = [];
         var rowIDs = [];

@@ -70,17 +70,17 @@ module.exports = React.StyleSheet.create({
         paddingVertical: 16,
         fontSize: 16
     },
-    textInputWrapper: {//带有下划线的输入框
+    textIcon: {
+        marginTop: 5,
+        marginRight: 16
+    },
+    textInputWrapper: {
         width: width - 32,
-        height: 40,
-        flexDirection: 'row',
-        borderStyle: 'solid',
-        borderBottomWidth: 1 / React.PixelRatio.get(),
-        borderBottomColor: '#bdbdbd'
+        height: 41,
+        flexDirection: 'row'
     },
     textInput: {
-        width: width - 32,
-        alignSelf: 'center',
+        flex: 1,
         height: 40,
         fontSize: 16
     },

@@ -79,7 +79,6 @@ module.exports = React.createClass({
                   source={{uri: data.avatar}} />
                 );
         }else{
-            console.log('---data', data);
             var circleBackground = {
                 backgroundColor: data.bgColor
             }

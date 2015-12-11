@@ -3,6 +3,7 @@
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
 var SearchBar = require('react-native-search-bar');
+var TimerMixin = require('react-timer-mixin');
 var {
     View,
     Text,
@@ -20,12 +21,14 @@ var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');
 var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
+var CustomerSettings = require('./customerSettings');
 
 var BlueBackButton = require('../../common/blueBackButton');
-var RightDoneButton = require('../../common/rightDoneButton');
+var RightAddButton = require('../../common/rightAddButton');
 
 var customerListAction = require('../../actions/contact/customerListAction');
 var customerListStore = require('../../stores/contact/customerListStore');
+var customerStore = require('../../stores/contact/customerStore');
 
 var util = require('../../common/util');
 /*
@@ -37,6 +40,7 @@ target: 表示从哪里打开通讯录 enum
 }
 */
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
@@ -47,10 +51,20 @@ module.exports = React.createClass({
     },
     componentDidMount: function(){
         customerListAction.getList();
-        this.unlisten = customerListStore.listen(this.onChange)
+        this.unlisten = customerListStore.listen(this.onChange);
+        this.unlistenCustomer = customerStore.listen(this.onCustomerChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenCustomer();
+    },
+    onCustomerChange: function(){
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            customerListAction.getList();
+        },2000);
     },
     onChange: function() {
         var result = customerListStore.getState();
@@ -78,13 +92,21 @@ module.exports = React.createClass({
             _topNavigator.pop();
         }
     },
-    onPressDone: function(){},
+    goSetting: function(){
+        _navigator.push({
+            title: '新建客户',
+            target: 1,
+            component: CustomerSettings,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        });
+    },
     renderNavigationBar: function(){
         return(
             <NavigationBar
                 title={{ title: this.props.route.title }}
                 leftButton={<BlueBackButton navigator={_navigator}/>}
-                rightButton={<RightDoneButton onPress={this.onPressDone} />} />
+                rightButton={<RightAddButton onPress={this.goSetting} />} />
             );
     },
     render: function(){

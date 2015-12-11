@@ -94,9 +94,9 @@ module.exports = React.createClass({
                     leftButton={<BlueBackButton navigator={_topNavigator} />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
-                    <View style={commonStyle.textInput}>
+                    <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='请输入工厂名称'
-                        style={commonStyle.textArea}
+                        style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
                         onChangeText={this.onChangeNameText}
                         onSubmitEditing={this.onSubmitEditing} />
