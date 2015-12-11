@@ -54,7 +54,7 @@ module.exports = React.createClass({
     },
     doDeleteEmployee: function(){
         employeeAction.delete({
-            userId: this.state.id
+            userId: this.state.data.userId
         });
     },
     renderNavigationBar: function(){

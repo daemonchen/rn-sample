@@ -3,6 +3,7 @@
 var alt = require('../../common/alt');
 var inboxAction = require('../../actions/inbox/inboxAction');
 var inboxService = require('../../services/inbox/inboxService')
+var appConstants = require('../../constants/appConstants');
 var asyncStorage = require('../../common/storage');
 class InboxStore {
     constructor() {
@@ -18,11 +19,12 @@ class InboxStore {
 
         this.preventDefault();
     }
-    onGetListSuccess(data){
-        if (!data) {return false};
-        data.type = 'get'
-        asyncStorage.setItem('inboxList', {list: data.data});
-        this.setState(data);
+    onGetListSuccess(response){
+        if (!response) {return false};
+        response.type = 'get';
+        appConstants.inboxList = response.data
+        asyncStorage.setItem('appConstants', appConstants);
+        this.setState(response);
     }
     onLoadMore(data) {
         inboxService.getList(data)
@@ -32,21 +34,23 @@ class InboxStore {
 
         this.preventDefault();
     }
-    onLoadMoreSuccess(data){
-        if (!data || !data.data) {return false};
-        data.type = 'get'
-        this.mergeList(data)
+    onLoadMoreSuccess(response){
+         console.log('----loadmore', response);
+        if (!response || !response.data) {return false};
+        response.type = 'get'
+        this.mergeList(response)
     }
-    mergeList(data){
+    mergeList(response){
         asyncStorage.getItem('inboxList')
         .then((result)=>{
-            if (!!result.list) {
-                data.data = result.list.concat(data.data)
-                this.setState(data);
+            if (!!result.inboxList) {
+                response.data = result.inboxList.concat(response.data)
+                this.setState(response);
             }else{
-                this.setState(data);
+                this.setState(response);
             }
-            asyncStorage.setItem('inboxList', {list: data.data});
+            appConstants.inboxList = response.data
+            asyncStorage.setItem('appConstants', appConstants);
         }).done();
     }
     onUpdate(data){

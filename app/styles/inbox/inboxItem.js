@@ -49,7 +49,7 @@ module.exports = React.StyleSheet.create({
     },
     dot: {
         position: 'absolute',
-        left: 45,
-        top: 10
+        left: 35,
+        top: 15
     }
 });
