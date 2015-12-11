@@ -89,6 +89,7 @@ module.exports = React.createClass({
             orderId: data.orderId,
             done: data.status,
             jobName: data.jobName || '',
+            orderTitle: data.orderTitle || '',
             description: data.description || '',
             endTime: endTime,
             endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),

@@ -59,9 +59,9 @@ module.exports = React.createClass({
             var subChildren = rawData[i].data;
             for (var j = 0; j <= subChildren.length - 1; j++) {
                 var sub = subChildren[j];
-                rowIDs[i].push(j);
+                rowIDs[i].push(sub.dynamic.id);
 
-                dataBlob[i + ':' + j] = sub;
+                dataBlob[i + ':' + sub.dynamic.id] = sub;
             };
         };
         this.setState({

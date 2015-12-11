@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
 var NavigationBar = require('react-native-navbar');
+var DeviceInfo = require('react-native-device-info');
 var {
     View,
     ListView,
@@ -20,12 +21,9 @@ module.exports = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
-        return {}
-    },
-    leftButtonConfig: {
-        title: '<',
-        handler:() =>
-            _navigator.pop()
+        return {
+            version: DeviceInfo.getVersion()
+        }
     },
     render: function(){
         return(
@@ -36,7 +34,7 @@ module.exports = React.createClass({
                 <View style={styles.main}>
                     <Image
                       source={require('../images/logo/logo_welcom.png')} />
-                    <Text>你造么 for iPhone 1.0.0</Text>
+                    <Text>你造么 for iPhone {this.state.version}</Text>
                 </View>
             </View>
             );

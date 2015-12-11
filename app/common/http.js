@@ -7,9 +7,6 @@ var util = require('./util');
 var asyncStorage = require('./storage');
 var appConstants = require('../constants/appConstants');
 
-console.log("Device Unique ID", DeviceInfo.getUniqueID());
-console.log('version--:', DeviceInfo.getVersion());
-
 
 module.exports = {
     fetchOptions: {
