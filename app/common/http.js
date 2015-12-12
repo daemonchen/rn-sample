@@ -1,5 +1,6 @@
 'use strict';
 
+var React = require('react-native')
 var queryString = require('query-string')
 var DeviceInfo = require('react-native-device-info');
 var md5 = require('md5');
@@ -35,30 +36,51 @@ module.exports = {
     },
     get: function(url, data){
         url += '?' + this.getUrlParams(data)
-        this.factoryHeader('GET');
+        this.factoryFetchOptions('GET');
         console.log('http get', url);
         return this.fetchData(url);
     },
     post: function(url, body){
         url += '?' + this.getUrlParams()
-        this.factoryHeader('POST', body);
+        this.factoryFetchOptions('POST', body);
         console.log('http post', url, body);
         return this.fetchData(url);
     },
     put: function(url, body){
         url += '?' + this.getUrlParams()
-        this.factoryHeader('PUT', body);
+        this.factoryFetchOptions('PUT', body);
         console.log('http put', url, body);
         return this.fetchData(url);
     },
     delete: function(url){
         url += '?' + this.getUrlParams()
-        this.factoryHeader('DELETE');
+        this.factoryFetchOptions('DELETE');
         console.log('http delete', url);
         return this.fetchData(url);
     },
-    factoryHeader: function(type, data){
+    fileUpload: function(type, url, fileURL){
+        url += '?' + this.getUrlParams()
         this.fetchOptions.method = type;
+        this.fetchOptions.headers['x-auth-token'] = this.getAuthToken();
+        this.fetchOptions.headers['Content-Type'] = 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d';
+
+        var data = new FormData()
+         if (fileURL) {
+           data.append('file', {uri: fileURL, name: 'image.jpg', type: 'image/jpg'})
+         }
+
+        this.fetchOptions.body = data;
+        console.log('http fileUpload', data);
+        return fetch(url, this.fetchOptions)
+            .then(res => res.json())
+            .catch((error) => {
+                console.log(error);
+                util.alert('服务器出错啦');
+              });
+    },
+    factoryFetchOptions: function(type, data){
+        this.fetchOptions.method = type;
+        this.fetchOptions.headers['Content-Type'] = 'application/json';
         this.fetchOptions.headers['x-auth-token'] = this.getAuthToken();
         if(!!data){
             this.fetchOptions.body = JSON.stringify(data)

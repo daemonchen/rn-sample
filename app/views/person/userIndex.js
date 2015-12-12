@@ -108,13 +108,14 @@ module.exports = React.createClass({
     },
     openPhoto: function(){
         util.showPhotoPicker({
-            title: ''
+            title: '',
+            noData: true
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1);
             console.log('----select result', response);
-            // attachAction.create([{
-            //     base64: response.data,
-            //     fileName: name}]);
+            avatarAction.update({
+                uri: response.uri
+            });
         });
     },
     doDeleteAvatar: function(){

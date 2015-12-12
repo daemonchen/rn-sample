@@ -1,11 +1,13 @@
 var React = require('react-native')
 var Dimensions = require('Dimensions')
 var moment = require('moment');
-var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var {
     AlertIOS,
+    NativeModules,
     LinkingIOS
 } = React
+
+var UIImagePickerManager = NativeModules.UIImagePickerManager;
 
 module.exports = {
     getObjectKeysAlphabetical: function(obj) {
@@ -70,7 +72,7 @@ module.exports = {
     showPhotoPicker: function(customerOptions, callback){
         var defaultOptions = {
           title: '添加附件', // specify null or empty string to remove the title
-          cancelButtonTitle: 'Cancel',
+          cancelButtonTitle: '取消',
           takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
           chooseFromLibraryButtonTitle: '选择图片', // specify null or empty string to remove this button
           maxWidth: 20000,
