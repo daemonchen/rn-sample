@@ -25,6 +25,8 @@ var Button = require('../../common/button.js');
 
 var employeeAction = require('../../actions/employee/employeeAction');
 var employeeStore = require('../../stores/employee/employeeStore');
+var userAction = require('../../actions/user/userAction');
+var userStore = require('../../stores/user/userStore');
 
 var BlueBackButton = require('../../common/blueBackButton');
 var RightSettingButton = require('../../common/rightSettingButton');
@@ -41,6 +43,28 @@ module.exports = React.createClass({
             group: this.props.route.data.group,//1: 工厂员工 2: 客户,
             data: this.props.route.data
         }
+    },
+    componentDidMount: function(){
+        this.unlisten = userStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function() {
+        var result = userStore.getState();
+        if (result.type == 'update') {
+            if (result.status != 200 && !!result.message) {
+                return;
+            }
+            console.log('---user', this.state.data);
+            console.log('---result', result);
+            if (result.userId == this.state.data.userId) {
+                this.props.route.data.roleName = result.roleName;
+                this.setState({
+                    data: this.props.route.data
+                });
+            };
+        };
     },
     goSetting: function(){
         _navigator.push({

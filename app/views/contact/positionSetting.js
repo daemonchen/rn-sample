@@ -35,7 +35,8 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            position: this.props.route.data.position || ''
+            position: this.props.route.data.position || '',
+            targetUserId: this.props.route.data.userId || 0
         }
     },
     _modal: {},
@@ -69,7 +70,8 @@ module.exports = React.createClass({
     },
     doCommit: function(){
         userAction.update({
-            position: this.state.position
+            position: this.state.position,
+            targetUserId: this.state.targetUserId
         });
     },
     onPressDone: function(){

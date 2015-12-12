@@ -47,5 +47,7 @@ module.exports = {
 
     feedback: NZAOM_API_DOMAIN + '/api/feedback',
 
-    factory: NZAOM_API_DOMAIN + '/api/factory'
+    factory: NZAOM_API_DOMAIN + '/api/factory',
+
+    role: NZAOM_API_DOMAIN + '/api/role'
 }
