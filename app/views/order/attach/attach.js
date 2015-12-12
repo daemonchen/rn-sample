@@ -51,13 +51,25 @@ module.exports = React.createClass({
         }
     },
     onEmptyButtonPress: function(){
+        var params = {};
+        if (this.state.orderStatus == 1) {
+            params = {
+                hostType: 1
+            }
+        }else{
+            params = {
+                hostId: this.state.orderId,
+                hostType: 1
+            }
+        }
         util.showPhotoPicker({
             title: ''
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
-            attachAction.create([{
-                base64: response.data,
-                fileName: name}]);
+            attachAction.create({
+                uris: [response.uri],
+                params: params
+            });
         });
     },
     _onPressRow: function(rowData, sectionID){
@@ -77,6 +89,7 @@ module.exports = React.createClass({
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>
                     <AttachList
+                    data={this.props.route.data}
                     onPressRow={this._onPressRow}
                     onEmptyButtonPress={this.onEmptyButtonPress}/>
                 </View>

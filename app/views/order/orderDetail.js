@@ -162,15 +162,25 @@ module.exports = React.createClass({
         })
     },
     showCameraRoll: function(){
+        var params = {};
+        if (this.state.orderStatus == 1) {
+            params = {
+                hostType: 1
+            }
+        }else{
+            params = {
+                hostId: this.state.orderId,
+                hostType: 1
+            }
+        }
         util.showPhotoPicker({
             title: ''
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
-            attachAction.create([{
-                hostId: this.state.orderData.id,
-                hostType: 1,
-                base64: response.data,
-                fileName: name}]);
+            attachAction.create({
+                uris: [response.uri],
+                params: params
+            });
         });
     },
     onAttachEmptyButtonPress: function(){

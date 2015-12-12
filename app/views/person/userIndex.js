@@ -49,7 +49,6 @@ module.exports = React.createClass({
     },
     onChange: function(){
         var result = avatarStore.getState();
-        console.log('---result after change avatar', result);
         if (result.type == 'update') {
             if (result.status != 200 && !!result.message) {
                 util.alert('修改失败');
@@ -108,13 +107,11 @@ module.exports = React.createClass({
     },
     openPhoto: function(){
         util.showPhotoPicker({
-            title: '',
-            noData: true
+            title: ''
         }, (response)=>{
-            var name = response.uri.substring(response.uri.lastIndexOf('/') + 1);
-            console.log('----select result', response);
             avatarAction.update({
-                uri: response.uri
+                uri: response.uri,
+                params:{}
             });
         });
     },

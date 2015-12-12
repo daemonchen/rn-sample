@@ -176,15 +176,25 @@ module.exports = React.createClass({
         });
     },
     _addAttachs: function(){
+        var params = {};
+        if (this.state.orderStatus == 1) {
+            params = {
+                hostType: 1
+            }
+        }else{
+            params = {
+                hostId: this.state.orderId,
+                hostType: 1
+            }
+        }
         util.showPhotoPicker({
             title: ''
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
-            attachAction.create([{
-                // hostId: this.props.route.data.id,
-                hostType: 1,
-                base64: response.data,
-                fileName: name}]);
+            attachAction.create({
+                uris: [response.uri],
+                params: params
+            });
         });
     },
     _selectTemplate: function(){

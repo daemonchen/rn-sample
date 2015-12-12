@@ -17,7 +17,8 @@ module.exports = React.StyleSheet.create({
     avatar:{
         marginTop: 16,
         width: 100,
-        height: 100
+        height: 100,
+        borderRadius: 50
     },
     nameWrapper: {
         width: width - 32,

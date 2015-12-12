@@ -50,6 +50,7 @@ module.exports = React.createClass({
     },
     onAttachChange: function(){
         var result = attachStore.getState();
+        console.log('----attach upload result:', result);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -59,6 +60,7 @@ module.exports = React.createClass({
         }
         if (result.type == 'create') {
             // this.fetchData();
+            console.log('-----after upload', result);
             this.setTimeout(this.fetchData, 350);
             // this.setState({
             //     dataSource : this.state.dataSource.cloneWithRows(result.data || []),

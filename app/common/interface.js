@@ -51,5 +51,7 @@ module.exports = {
 
     role: NZAOM_API_DOMAIN + '/api/role',
 
-    avatar: NZAOM_API_DOMAIN + '/api/user/avatar'
+    avatar: NZAOM_API_DOMAIN + '/api/user/avatar',
+
+    file: NZAOM_API_DOMAIN + '/api/file'
 }
