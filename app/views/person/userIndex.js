@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
+var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     TextInput,
@@ -8,6 +9,7 @@ var {
     ListView,
     Image,
     Navigator,
+    ActionSheetIOS,
     TouchableHighlight,
     StyleSheet
 } = React
@@ -18,14 +20,19 @@ var appConstants = require('../../constants/appConstants');
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/person/style');
 
+
 var UserAccount = require('./userAccount');
 var OrderTemplates = require('../order/orderTemplates');
 var MySettings = require('./mySettings');
 var Suggest = require('./suggest');
 
+var avatarAction = require('../../actions/avatar/avatarAction');
+var avatarStore = require('../../stores/avatar/avatarStore');
+
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
@@ -33,6 +40,37 @@ module.exports = React.createClass({
         return {
             user: appConstants.systemInfo.user
         }
+    },
+    componentDidMount: function(){
+        this.unlisten = avatarStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function(){
+        var result = avatarStore.getState();
+        console.log('---result after change avatar', result);
+        if (result.type == 'update') {
+            if (result.status != 200 && !!result.message) {
+                util.alert('修改失败');
+                return;
+            }
+            appConstants.systemInfo.user = result.data;
+            this.setState({
+                user: appConstants.systemInfo.user
+            });
+
+        };
+        if (result.type == 'delete') {
+            if (result.status != 200 && !!result.message) {
+                util.alert('删除失败');
+                return;
+            }
+            appConstants.systemInfo.user = result.data;
+            this.setState({
+                user: appConstants.systemInfo.user
+            });
+        };
     },
     goAccount: function(){
         _topNavigator.push({
@@ -68,26 +106,70 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
+    openPhoto: function(){
+        util.showPhotoPicker({
+            title: ''
+        }, (response)=>{
+            var name = response.uri.substring(response.uri.lastIndexOf('/') + 1);
+            console.log('----select result', response);
+            // attachAction.create([{
+            //     base64: response.data,
+            //     fileName: name}]);
+        });
+    },
+    doDeleteAvatar: function(){
+        avatarAction.delete();
+    },
+    onSelectActionSheet: function(index){
+        switch(index){
+            case 0:
+                return this.openPhoto();
+            case 1:
+                return this.doDeleteAvatar();
+            default :
+                return;
+        }
+    },
+    showActionSheet: function(){
+        var self = this;
+        ActionSheetIOS.showActionSheetWithOptions({
+            options: this.actionList,
+            destructiveButtonIndex: 1,
+            cancelButtonIndex: 2,
+            },
+            (buttonIndex) => {
+              self.onSelectActionSheet(buttonIndex);
+            });
+    },
+    actionList: ['修改头像', '删除头像', '取消'],
     renderAvatar: function(data){
         if (!data) {
             return(<View style={styles.avatarWrapper}/>);
         };
         if (data.avatar) {
             return(
-                <Image
-                  style={styles.avatar}
-                  source={{uri: data.avatar}} />
+                <TouchableHighlight
+                    underlayColor='#eee'
+                    onPress={this.showActionSheet}>
+                    <Image
+                      style={styles.avatar}
+                      source={{uri: data.avatar}} />
+                </TouchableHighlight>
                 );
         }else{
             var circleBackground = {
                 backgroundColor: data.bgColor
             }
             return(
-                <View style={[styles.avatarWrapper, circleBackground]}>
-                    <Text style={styles.avatarTitle}>
-                        {data.simpleUserName}
-                    </Text>
-                </View>
+                <TouchableHighlight
+                    underlayColor='#eee'
+                    onPress={this.showActionSheet}>
+                    <View style={[styles.avatarWrapper, circleBackground]}>
+                        <Text style={styles.avatarTitle}>
+                            {data.simpleUserName}
+                        </Text>
+                    </View>
+                </TouchableHighlight>
                 )
         }
     },

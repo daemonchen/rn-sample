@@ -21,6 +21,7 @@ var _navigator, _topNavigator = null;
 
 var attachAction = require('../../../actions/attach/attachAction');
 var commonStyle = require('../../../styles/commonStyle');
+var util = require('../../../common/util');
 
 var AttachList = require('./attachList');
 var AttachDetail = require('./attachDetail');

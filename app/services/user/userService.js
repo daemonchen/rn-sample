@@ -35,5 +35,5 @@ module.exports = {
     },
     resetPassword: function(data){
         return http.put(NZAOM_INTERFACE.password, data)
-    },
+    }
 }

@@ -56,10 +56,9 @@ module.exports = React.createClass({
             if (result.status != 200 && !!result.message) {
                 return;
             }
-            console.log('---user', this.state.data);
-            console.log('---result', result);
-            if (result.userId == this.state.data.userId) {
-                this.props.route.data.roleName = result.roleName;
+            if (result.data.userId == this.state.data.userId) {
+                this.props.route.data.roleName = result.data.roleName;
+                this.props.route.data.position = result.data.position;
                 this.setState({
                     data: this.props.route.data
                 });
