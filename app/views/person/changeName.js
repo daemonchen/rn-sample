@@ -55,7 +55,7 @@ module.exports = React.createClass({
         }
         appConstants.systemInfo.user = result.data;
         asyncStorage.setItem('appConstants', appConstants);
-        _navigator.popToTop()
+        _navigator.pop()
     },
     onPressDone: function(){
         // this.props.route.onCalendarPressDone(this.state.date);

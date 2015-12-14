@@ -41,7 +41,7 @@ module.exports = React.createClass({
             target: this.props.route.target || 1,//1: create 2: update
             id: defaultData ? defaultData.id : 0,//客户id
             userName: defaultData ? defaultData.userName :'',
-            mobiles: defaultData ? defaultData.mobiles :[],
+            mobile: defaultData ? defaultData.mobile :'',
             company: defaultData ? defaultData.company :'',
             position: defaultData ? defaultData.position :''
         }
@@ -102,7 +102,7 @@ module.exports = React.createClass({
     },
     onChangePhoneText: function(text){
         this.setState({
-            mobiles: [text]
+            mobile: text
         });
     },
     onChangePositionText: function(text){
@@ -115,7 +115,7 @@ module.exports = React.createClass({
             util.alert('请输入姓名');
             return;
         };
-        var phone = this.state.mobiles[0];
+        var phone = this.state.mobile;
         if (!/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
             util.alert('手机号码格式错误');
             return;
@@ -123,7 +123,7 @@ module.exports = React.createClass({
         }
         customerAction.create({
             userName: this.state.userName,
-            mobiles: this.state.mobiles,
+            mobile: this.state.mobile,
             company: this.state.company,
             position: this.state.position
         });
@@ -185,7 +185,7 @@ module.exports = React.createClass({
                         <TextInput placeholder='请输入客户手机号码'
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
-                        value={this.state.mobiles[0]}
+                        value={this.state.mobile}
                         onChangeText={this.onChangePhoneText} />
                     </View>
                     <View style={commonStyle.textInputWrapper}>

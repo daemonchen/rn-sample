@@ -140,9 +140,14 @@ module.exports = React.createClass({
         });
     },
     doCall: function(){
-        if (this.state.data.mobiles.length == 0) {return;};
-        var url = 'tel:' + this.state.data.mobiles[0];
-        util.link(url);
+        var url = '';
+        if (this.state.data.mobiles && this.state.data.mobiles.length > 0) {
+            url = 'tel:' + this.state.data.mobiles[0];
+        };
+        if (!!this.state.data.mobile) {
+            url = 'tel:' + this.state.data.mobile;
+        };
+            util.link(url);
     },
     renderContent: function(){
         if (this.state.group == 1) {//工厂
@@ -160,7 +165,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={commonStyle.settingDetail}>
-                                {this.state.data.mobiles[0]}
+                                {this.state.data.mobile}
                             </Text>
                         </View>
                     </TouchableHighlight>
