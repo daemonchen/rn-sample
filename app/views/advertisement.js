@@ -76,6 +76,7 @@ module.exports = React.createClass({
         this.doLaunch();
     },
     doLaunch: function(){
+        console.log('-----after init', !appConstants.systemInfo.user);
         if (!appConstants.systemInfo.user) {
             _navigator.push({
                 title: 'welcome' ,

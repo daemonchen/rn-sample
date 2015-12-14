@@ -11,7 +11,7 @@ class AuthStore {
     }
 
     onUpdate(data) {
-        userService.resetPassword(data)
+        userService.updatePassword(data)
         .then((responseData) => {
             authAction.updateSuccess(responseData)
         }).done();
@@ -21,6 +21,19 @@ class AuthStore {
     onUpdateSuccess(data){
         if (!data) {return false};
         data.type = 'update'
+        this.setState(data);
+    }
+    onReset(data) {
+        userService.resetPassword(data)
+        .then((responseData) => {
+            authAction.resetSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onResetSuccess(data){
+        if (!data) {return false};
+        data.type = 'reset'
         this.setState(data);
     }
 }

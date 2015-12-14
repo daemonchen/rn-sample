@@ -42,6 +42,7 @@ var register = React.createClass({
         }
         _navigator.push({
             title: 'ValidationCode',
+            type: 1,
             component: ValidationCode,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _navigator

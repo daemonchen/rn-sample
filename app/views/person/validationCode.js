@@ -36,7 +36,7 @@ var validationCode = React.createClass({
         return {
             mobile: '',
             code: '',
-            type: 1,
+            type: this.props.route.type,
             canReGetCode: false,
             timer: 60
         }
@@ -86,18 +86,27 @@ var validationCode = React.createClass({
             util.alert(result.message);
             return;
         }
-        if (result.type != 'check') { return; };
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
-        this.clearInterval(this._timeInterval);
-        _navigator.push({
-            title: 'ValidationCode',
-            component: SetPassword,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        })
+        if (result.type == 'check') {
+            if (result.status != 200 && !!result.message) {
+                util.alert(result.message);
+                return;
+            }
+            this.clearInterval(this._timeInterval);
+            asyncStorage.setItem('verifyData', {
+                mobile: this.state.mobile,
+                code: this.state.code,
+                token: result.data
+            }).then(()=>{
+                _navigator.push({
+                    title: 'ValidationCode',
+                    type: this.state.type,
+                    data: result.data,
+                    component: SetPassword,
+                    sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+                    topNavigator: _navigator
+                })
+            });
+         };
     },
     reGetCode: function(){
         verifyCodeAction.getVerifyCode({
@@ -125,10 +134,6 @@ var validationCode = React.createClass({
     },
     onChangeText: function(text){
         this.setState({
-            code: text
-        });
-        asyncStorage.setItem('verifyData', {
-            mobile: this.state.mobile,
             code: text
         });
     },

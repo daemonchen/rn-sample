@@ -66,6 +66,7 @@ module.exports = React.createClass({
     _onPressRow: function(rowData, sectionID){
         _topNavigator.push({
             title: rowData.name,
+            data: rowData,
             component: AttachDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator

@@ -40,26 +40,11 @@ var Login = React.createClass({
     },
     componentDidMount: function(){
         this.unlisten = loginStore.listen(this.onChange)
-        this.unlistenSystem = systemStore.listen(this.onSystemChange)
+        // this.unlistenSystem = systemStore.listen(this.onSystemChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.unlistenSystem();
-    },
-    onSystemChange: function(){
-        var result = systemStore.getState();
-        if (result.type != 'init') { return; };
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
-        appConstants.systemInfo = result.data;
-        asyncStorage.setItem('appConstants', appConstants);
-        _navigator.replace({
-            title: 'Launch',
-            component: Launch,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        })
+        // this.unlistenSystem();
     },
     onChange: function() {
         var result = loginStore.getState();

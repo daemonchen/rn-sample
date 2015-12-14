@@ -49,6 +49,7 @@ module.exports = React.createClass({
         _navigator.push({
             title: 'ValidationCode',
             component: ValidationCode,
+            type: 2,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _navigator
         })
