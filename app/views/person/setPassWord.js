@@ -14,6 +14,8 @@ var {View,
 var Button = require('../../common/button.js');
 var commonStyle = require('../../styles/commonStyle');
 
+var BlueBackButton = require('../../common/blueBackButton');
+
 var verifyCodeAction = require('../../actions/user/verifyCodeAction');
 var verifyCodeStore = require('../../stores/user/verifyCodeStore');
 var systemAction = require('../../actions/system/systemAction');
@@ -107,13 +109,6 @@ var setPassWord = React.createClass({
             password: md5(this.state.password)
         });
     },
-    leftButtonConfig: function() {
-        return {
-            title: '<',
-            handler:() =>
-                _navigator.pop()
-        }
-    },
     onSubmitEditing: function(){
         this.doRegister();
     },
@@ -132,7 +127,7 @@ var setPassWord = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'设置登录密码'}}
-                    leftButton={this.leftButtonConfig()} />
+                    leftButton={<BlueBackButton navigator={_navigator} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='姓名'

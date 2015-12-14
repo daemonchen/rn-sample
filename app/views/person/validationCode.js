@@ -13,6 +13,8 @@ var {View,
 var Button = require('../../common/button.js');
 var commonStyle = require('../../styles/commonStyle');
 
+var BlueBackButton = require('../../common/blueBackButton');
+
 var verifyCodeAction = require('../../actions/user/verifyCodeAction');
 var verifyCodeStore = require('../../stores/user/verifyCodeStore');
 
@@ -117,13 +119,6 @@ var validationCode = React.createClass({
             type: this.state.type
         });
     },
-    leftButtonConfig:function() {
-        return{
-            title: '<',
-            handler:() =>
-                _navigator.pop()
-        }
-    },
 
     onSubmitEditing: function(){
         this.doVerify();
@@ -182,11 +177,11 @@ var validationCode = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'验证'}}
-                    leftButton={this.leftButtonConfig()} />
+                    leftButton={<BlueBackButton navigator={_navigator} />} />
                 <View style={styles.main}>
                     <View style={styles.phoneWrapper}>
                         <Image source={require('../../images/Send.png')}/>
-                        <Text>{this.state.mobile}</Text>
+                        <Text style={styles.phoneText}>{this.state.mobile}</Text>
                     </View>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='请输入验证码'
@@ -213,7 +208,7 @@ var styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     phoneWrapper: {
-        width: width,
+        width: width - 32,
         alignItems: 'flex-start',
         flexDirection: 'row'
     },
@@ -223,6 +218,9 @@ var styles = StyleSheet.create({
         position: 'absolute',
         right: 0,
         top: 12
+    },
+    phoneText: {
+        paddingLeft: 16
     }
 });
 

@@ -79,7 +79,8 @@ module.exports = React.createClass({
             <ListView
               style={contactsStyle.scrollView}
               dataSource={this.state.dataSource}
-              renderRow={this.renderRow} />
+              renderRow={this.renderRow}
+              contentContainerStyle={{paddingBottom: 40}} />
             );
     }
 });

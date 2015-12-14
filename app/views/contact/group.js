@@ -22,7 +22,7 @@ var appConstants = require('../../constants/appConstants');
 module.exports = React.createClass({
     getInitialState: function(){
         return {
-            factoryName: appConstants.systemInfo.user.factoryName
+            factoryName: !!appConstants.systemInfo.user ? appConstants.systemInfo.user.factoryName : ''
         }
     },
     openAddress: function(){

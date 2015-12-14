@@ -101,7 +101,7 @@ module.exports = React.createClass({
         }
         if (result.type == 'create') {
             // this.fetchData();
-            this.setAccessoryIds(result);
+            this.setAccessoryIds(result.data);
         };
     },
     setAccessoryIds: function(data){

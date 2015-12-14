@@ -38,7 +38,7 @@ module.exports = React.createClass({
         _topNavigator = this.props.route.topNavigator;
 
         return {
-            user: appConstants.systemInfo.user
+            user: !!appConstants.systemInfo.user ? appConstants.systemInfo.user : {}
         }
     },
     componentDidMount: function(){
