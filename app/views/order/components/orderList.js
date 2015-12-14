@@ -57,7 +57,6 @@ var orderList = React.createClass({
     onOrderChange: function(){
         var result = orderStore.getState();
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
             return;
         }
         if (result.type == 'create') {

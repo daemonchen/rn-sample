@@ -28,6 +28,8 @@ var Calendar = require('../calendar');
 var Contact = require('../contact/contact');
 // var OrderTemplates = require('./orderTemplates');
 var OrderTemplateSetting = require('./templates/orderTemplateSetting');
+var CustomerList = require('../contact/customerList');
+var CompanyMemberList = require('../contact/companyMemberList');
 
 var BlueBackButton = require('../../common/blueBackButton');
 var LeftCloseButton = require('../../common/leftCloseButton');
@@ -115,11 +117,10 @@ module.exports = React.createClass({
     onChange: function(){
         var result = orderStore.getState();
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
             return;
         }
         if (result.type == 'create') {
-            _navigator.popToTop();
+            _navigator.pop();
         };
         if (result.type == 'update') {
             _navigator.pop();
@@ -157,7 +158,7 @@ module.exports = React.createClass({
     _setCustomer: function(){
         _navigator.push({
             title:'选择客户',
-            component: Contact,
+            component: CustomerList,
             target: 2,
             onPressContactRow: this.onGetCustomer,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
@@ -167,7 +168,7 @@ module.exports = React.createClass({
     _setSales: function(){
         _navigator.push({
             title:'业务员',
-            component: Contact,
+            component: CompanyMemberList,
             target: 2,
             onPressContactRow: this.onGetSales,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,

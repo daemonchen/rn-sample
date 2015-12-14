@@ -24,6 +24,7 @@ var SettingsWrapper = require('./settingsWrapper');
 var TaskList = require('./taskList');
 var TaskDetail = require('./taskDetail');
 var OrderList = require('../components/orderList');
+var CompanyMemberList = require('../../contact/companyMemberList');
 
 var BlueBackButton = require('../../../common/blueBackButton');
 var LeftCloseButton = require('../../../common/leftCloseButton');
@@ -110,7 +111,6 @@ module.exports = React.createClass({
         };
     },
     setAccessoryIds: function(data){
-        console.log('-----after attach upload', data);
         this.accessoryIds = this.state.accessoryIds;
         if (!data || data.length == 0) { return; };
         if (!underscore.contains(this.accessoryIds, data[0].id)) {
@@ -203,10 +203,10 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
-    _setCustomer: function(){
+    _setResponsibility: function(){
         _navigator.push({
-            title:'客户',
-            component: Contact,
+            title:'负责人',
+            component: CompanyMemberList,
             target: 1,
             onPressContactRow: this.onPressContactRow,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
@@ -382,7 +382,7 @@ module.exports = React.createClass({
                     <TouchableHighlight
                     style={commonStyle.settingItemWrapper}
                     underlayColor='#eee'
-                    onPress={this._setCustomer}>
+                    onPress={this._setResponsibility}>
                         <View
                         style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
                             <Text

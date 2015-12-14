@@ -87,7 +87,7 @@ module.exports = React.StyleSheet.create({
     timeline: {
         flex: 1,
         width: 2 / React.PixelRatio.get(),
-        height: 36,
+        height: 100,
         backgroundColor: '#bdbdbd'
     },
     timelineDone: {

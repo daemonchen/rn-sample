@@ -87,19 +87,14 @@ module.exports = React.createClass({
     transformatData: function(data){
         console.log('----task data', data);
         var endTime = data.endTime || new Date().valueOf();
-        return {
-
-            orderId: data.orderId,
+        return Object.assign(data, {
+            id: data.id || 0,
             done: data.status,
-            jobName: data.jobName || '',
-            orderTitle: data.orderTitle || '',
-            description: data.description || '',
             endTime: endTime,
             endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
-            id: data.id || 0,
-            ownerId: data.ownerId || 0,
             userName: data.owner || ''
-        }
+
+        })
     },
     keyboardWillShow: function(e) {
         var newSize = Dimensions.get('window').height - e.endCoordinates.height
@@ -169,6 +164,30 @@ module.exports = React.createClass({
             <CommentBar navigator={_navigator} data={this.state.taskData.id}/>
             )
     },
+    renderOverTime: function(){
+        if (!this.state.taskData.overTime) {
+            return(
+                <View />
+                );
+        };
+        var overTimeFormat = moment(this.state.taskData.overTime).format('YYYY年MM月DD日')
+        return(
+            <View
+            style={commonStyle.settingItemWrapper} >
+                <View
+                style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                    <Text
+                    style={commonStyle.settingTitle}>
+                        完成日期
+                    </Text>
+                    <Text
+                    style={commonStyle.settingDetail}>
+                        {overTimeFormat}
+                    </Text>
+                </View>
+            </View>
+            );
+    },
     render: function(){
         return(
             <View style={{height: this.state.visibleHeight}} >
@@ -221,6 +240,7 @@ module.exports = React.createClass({
                             </Text>
                         </View>
                     </View>
+                    {this.renderOverTime()}
                     <TouchableHighlight
                     underlayColor='#eee'
                     onPress={this._goOrderDetail} >
