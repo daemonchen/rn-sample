@@ -89,7 +89,10 @@ module.exports = React.createClass({
           }
         ]
         return(
-            <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
+            <Swipeout autoClose={true} right={swipeoutBtns}
+            backgroundColor='transparent'
+            scroll={()=>{return false;}}
+            style={styles.swipeWrapper}>
                 <TouchableHighlight
                 underlayColor='#eee'
                 onPress={this.onPressRow}>

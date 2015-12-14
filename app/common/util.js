@@ -63,7 +63,7 @@ module.exports = {
     },
     formatTimestamp: function(timestamp){
         if (moment().valueOf() - timestamp < 24 * 60 * 60 * 1000) {
-            return moment(timestamp).format('HH:SS')
+            return moment(timestamp).format('HH:mm')
         }
         if (moment().valueOf() - timestamp > 24 * 60 * 60 * 1000){
             return moment(timestamp).format('MM月DD日');

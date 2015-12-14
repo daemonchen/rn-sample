@@ -20,8 +20,7 @@ var commonStyle = require('../../styles/commonStyle');
 var Button = require('../../common/button.js');
 var Modal = require('../../common/modal');
 
-var userAction = require('../../actions/user/userAction');
-var userStore = require('../../stores/user/userStore');
+
 var loginAction = require('../../actions/user/loginAction');
 var loginStore = require('../../stores/user/loginStore');
 
