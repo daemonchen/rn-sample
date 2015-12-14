@@ -33,6 +33,8 @@ var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
 var taskListAction = require('../../../actions/task/taskListAction');
 var taskListStore = require('../../../stores/task/taskListStore');
+var attachAction = require('../../../actions/attach/attachAction');
+var attachStore = require('../../../stores/attach/attachStore');
 
 var _navigator, _topNavigator = null;
 
@@ -65,7 +67,9 @@ module.exports = React.createClass({
                 ownerId: defaultData.userId || 0,
                 userName: defaultData.userName || '',
                 lastIds: lastIds,
-                lastIdsNumber: lastIds.length
+                lastIdsNumber: lastIds.length,
+                accessoryNum: defaultData.accessoryNum || '',
+                accessoryIds: defaultData.accessoryIds || []
             }
         };
         var endTime = defaultData.endTime || new Date().valueOf();
@@ -80,16 +84,42 @@ module.exports = React.createClass({
             endTime: endTime,
             endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
             lastIds: lastIds,
-            lastIdsNumber: lastIds.length
+            lastIdsNumber: lastIds.length,
+            accessoryNum: defaultData.accessoryNum || '',
+            accessoryIds: defaultData.accessoryIds || []
         }
     },
     componentDidMount: function(){
         this.unlisten = taskStore.listen(this.onChange);
+        this.unlistenAttach = attachStore.listen(this.onAttachChange);
         this.unlistenTaskList = taskListStore.listen(this.onTaskListChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenTaskList();
+        this.unlistenAttach();
+    },
+    onAttachChange: function(){
+        var result = attachStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        if (result.type == 'create') {
+            // this.fetchData();
+            this.setAccessoryIds(result.data);
+        };
+    },
+    setAccessoryIds: function(data){
+        console.log('-----after attach upload', data);
+        this.accessoryIds = this.state.accessoryIds;
+        if (!data || data.length == 0) { return; };
+        if (!underscore.contains(this.accessoryIds, data[0].id)) {
+            this.accessoryIds.push(data[0].id);
+        }
+        this.setState({
+            accessoryIds: this.accessoryIds,
+            accessoryNum: this.accessoryIds.length
+        });
     },
     onChange: function(){
         var result = taskStore.getState();
@@ -120,7 +150,9 @@ module.exports = React.createClass({
                 description: this.state.description || '',
                 jobName: this.state.jobName || '',
                 endTime: this.state.endTime || new Date().valueOf(),
-                lastIds: this.state.lastIds || []
+                lastIds: this.state.lastIds || [],
+                accessoryIds: this.state.accessoryIds || [],
+                accessoryNum: this.state.accessoryNum || ''
             });
         }
         if (this.state.taskStatus == 1) {//新增任务
@@ -130,7 +162,9 @@ module.exports = React.createClass({
                 description: this.state.description || '',
                 jobName: this.state.jobName || '',
                 endTime: this.state.endTime || new Date().valueOf(),
-                lastIds: this.state.lastIds || []
+                lastIds: this.state.lastIds || [],
+                accessoryIds: this.state.accessoryIds || [],
+                accessoryNum: this.state.accessoryNum || ''
             });
         };
     },
@@ -177,6 +211,29 @@ module.exports = React.createClass({
             onPressContactRow: this.onPressContactRow,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
+        });
+    },
+    _addAttachs: function(){
+        var params = {};
+        if (this.state.taskStatus == 1) {//如果是创建任务，则没有订任务字段
+            params = {
+                hostType: 2
+            }
+        }else{
+            params = {
+                hostId: this.state.id,
+                hostType: 2
+            }
+        }
+        util.showPhotoPicker({
+            title: ''
+        }, (response)=>{
+            var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
+            var fileObj = Object.assign({
+                base64: response.data,
+                fileName: name
+            }, params);
+            attachAction.create([fileObj]);
         });
     },
     onCalendarPressDone: function(date){
@@ -354,6 +411,25 @@ module.exports = React.createClass({
                             <Text
                             style={commonStyle.settingDetail}>
                                 {this.state.lastIdsNumber}
+                            </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../../images/common/arrow_right.png')} />
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this._addAttachs} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                添加附件
+                            </Text>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                                {this.state.accessoryNum}
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
