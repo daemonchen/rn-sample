@@ -26,7 +26,6 @@ var commonStyle = require('../../styles/commonStyle');
 var DatePicker = require('../datePicker');
 var Calendar = require('../calendar');
 var Contact = require('../contact/contact');
-var Attach = require('./attach/attach');
 // var OrderTemplates = require('./orderTemplates');
 var OrderTemplateSetting = require('./templates/orderTemplateSetting');
 
@@ -191,10 +190,11 @@ module.exports = React.createClass({
             title: ''
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
-            attachAction.create({
-                uris: [response.uri],
-                params: params
-            });
+            var fileObj = Object.assign({
+                base64: response.data,
+                fileName: name
+            }, params);
+            attachAction.create([fileObj]);
         });
     },
     _selectTemplate: function(){

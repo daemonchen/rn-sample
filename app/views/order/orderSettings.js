@@ -26,7 +26,6 @@ var commonStyle = require('../../styles/commonStyle');
 var DatePicker = require('../datePicker');
 var Calendar = require('../calendar');
 var Contact = require('../contact/contact');
-var Attach = require('./attach/attach');
 var OrderTemplates = require('./orderTemplates');
 var OrderTemplateSetting = require('./templates/orderTemplateSetting');
 
@@ -120,7 +119,8 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            _navigator.popToTop();
+            _navigator.pop();
+            // _navigator.popToTop();
         };
         if (result.type == 'update') {
             _navigator.pop();
@@ -177,7 +177,7 @@ module.exports = React.createClass({
     },
     _addAttachs: function(){
         var params = {};
-        if (this.state.orderStatus == 1) {
+        if (this.state.orderStatus == 1) {//如果是创建订单，则没有订单号字段
             params = {
                 hostType: 1
             }
@@ -191,10 +191,11 @@ module.exports = React.createClass({
             title: ''
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
-            attachAction.create({
-                uris: [response.uri],
-                params: params
-                });
+            var fileObj = Object.assign({
+                base64: response.data,
+                fileName: name
+            }, params);
+            attachAction.create([fileObj]);
         });
     },
     _selectTemplate: function(){

@@ -79,7 +79,7 @@ module.exports = {
           maxHeight: 20000,
           quality: 1,
           allowsEditing: false, // Built in iOS functionality to resize/reposition the image
-          noData: true, // Disables the base64 `data` field from being generated (greatly improves performance on large photos)
+          noData: false, // Disables the base64 `data` field from being generated (greatly improves performance on large photos)
           storageOptions: { // if this key is provided, the image will get saved in the documents directory (rather than a temporary directory)
             skipBackup: true, // image will NOT be backed up to icloud
             path: 'images' // will save image at /Documents/images rather than the root

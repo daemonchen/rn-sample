@@ -1,6 +1,6 @@
 'use strict';
 /*
-    add attach from order settings
+    add attach from task settings
 */
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
@@ -23,6 +23,9 @@ var attachAction = require('../../../actions/attach/attachAction');
 var commonStyle = require('../../../styles/commonStyle');
 var util = require('../../../common/util');
 
+var BlueBackButton = require('../../../common/blueBackButton');
+var RightAddButton = require('../../../common/rightAddButton');
+
 var AttachList = require('./attachList');
 var AttachDetail = require('./attachDetail');
 
@@ -31,45 +34,33 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            images: []
+            taskId: this.props.route.data.id
         }
     },
-    leftButtonConfig: function(){
-        return{
-            title: '<',
-            handler:function(){
-                _topNavigator.pop();
-            }
-        }
-    },
-    rightButtonConfig:function(){
-        var self = this;
-        return {
-            title: '+',
-            handler:() =>
-                self.onEmptyButtonPress()
-        }
+    doAddPhoto: function(){
+        this.onEmptyButtonPress();
     },
     onEmptyButtonPress: function(){
         var params = {};
         if (this.state.orderStatus == 1) {
             params = {
-                hostType: 1
+                hostType: 2
             }
         }else{
             params = {
-                hostId: this.state.orderId,
-                hostType: 1
+                hostId: this.state.taskId,
+                hostType: 2
             }
         }
         util.showPhotoPicker({
             title: ''
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
-            attachAction.create({
-                uris: [response.uri],
-                params: params
-            });
+            var fileObj = Object.assign({
+                base64: response.data,
+                fileName: name
+            }, params);
+            attachAction.create([fileObj]);
         });
     },
     _onPressRow: function(rowData, sectionID){
@@ -84,12 +75,13 @@ module.exports = React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{ title: '添加附件', }}
-                    leftButton={this.leftButtonConfig()}
-                    rightButton={this.rightButtonConfig()} />
+                    title={{ title: '附件' }}
+                    leftButton={<BlueBackButton navigator={_navigator}/>}
+                    rightButton={<RightAddButton onPress={this.doAddPhoto} />} />
                 <View style={styles.main}>
                     <AttachList
                     data={this.props.route.data}
+                    hostType={2}
                     onPressRow={this._onPressRow}
                     onEmptyButtonPress={this.onEmptyButtonPress}/>
                 </View>

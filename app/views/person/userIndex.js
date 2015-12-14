@@ -107,7 +107,8 @@ module.exports = React.createClass({
     },
     openPhoto: function(){
         util.showPhotoPicker({
-            title: ''
+            title: '',
+            noData: true
         }, (response)=>{
             avatarAction.update({
                 uri: response.uri,

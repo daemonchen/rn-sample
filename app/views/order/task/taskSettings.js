@@ -55,7 +55,7 @@ module.exports = React.createClass({
             var endTime = defaultData.endTime || new Date().valueOf();
             var lastIds = defaultData.lastIds || [];
             return {
-                taskStatus: defaultData.taskStatus || 0,
+                taskStatus: defaultData.taskStatus || 3,
                 done: defaultData.status,
                 jobName: defaultData.jobName || '',
                 description: defaultData.description || '',

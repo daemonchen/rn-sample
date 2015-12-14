@@ -74,9 +74,9 @@ module.exports = React.createClass({
             var subChildren = rawData[i].data;
             for (var j = 0; j <= subChildren.length - 1; j++) {
                 var sub = subChildren[j];
-                rowIDs[i].push(sub.gmtCreate);
+                rowIDs[i].push(sub.id);
 
-                dataBlob[i + ':' + sub.gmtCreate] = sub;
+                dataBlob[i + ':' + sub.id] = sub;
             };
         };
         this.setState({

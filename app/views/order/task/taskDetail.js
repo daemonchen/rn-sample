@@ -39,7 +39,9 @@ var CommentBar = require('../comments/commentBar');
 var taskListAction = require('../../../actions/task/taskListAction');
 var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
+
 var TaskSettings = require('./taskSettings');
+var TaskAttach = require('../attach/taskAttach');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -83,11 +85,11 @@ module.exports = React.createClass({
         };
     },
     transformatData: function(data){
+        console.log('----task data', data);
         var endTime = data.endTime || new Date().valueOf();
         return {
 
             orderId: data.orderId,
-            taskStatus: data.taskStatus || 0,
             done: data.status,
             jobName: data.jobName || '',
             orderTitle: data.orderTitle || '',
@@ -116,14 +118,17 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
+    _goTaskAttachList: function(){
+        var data = Object.assign({taskStatus: 2}, this.state.taskData);
+        _navigator.push({
+            title: '任务设置',
+            data: data,
+            component: TaskAttach,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        });
+    },
     _goOrderDetail: function(){
-        // _navigator.push({
-        //     title:'',
-        //     data: this.state.taskData.orderId,
-        //     component: OrderDetail,
-        //     sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-        //     topNavigator: _topNavigator
-        // });
         _navigator.pop();
     },
     onPressCircle: function(){//更新任务状态
@@ -229,6 +234,26 @@ module.exports = React.createClass({
                                 <Text
                                 style={commonStyle.settingDetail}>
                                 {this.state.taskData.orderTitle}
+                                </Text>
+                                <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../../images/common/arrow_right.png')} />
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    underlayColor='#eee'
+                    onPress={this._goTaskAttachList} >
+                        <View style={commonStyle.settingItemWrapper}>
+                            <View
+                            style={commonStyle.settingItem} >
+                                <Text
+                                style={commonStyle.settingTitle}>
+                                    附件
+                                </Text>
+                                <Text
+                                style={commonStyle.settingDetail}>
+                                {this.state.taskData.accessoryNum}
                                 </Text>
                                 <Image
                             style={commonStyle.settingArrow}

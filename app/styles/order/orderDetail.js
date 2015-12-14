@@ -113,13 +113,15 @@ module.exports = React.StyleSheet.create({
         height: height / 2
     },
     attachTitle: {
-        height: 54,
-        paddingVertical: 16,
+        // height: 54,
+        // paddingVertical: 16,
+        padding: 16,
         fontSize: 22,
         textAlign: 'center',
         fontWeight: '800'
     },
     attachItemText: {
+        flex: 1,
         fontSize: 16,
         justifyContent: 'center'
     },
