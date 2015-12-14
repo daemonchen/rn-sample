@@ -1,5 +1,6 @@
 'use strict';
-var React = require('react-native')
+var React = require('react-native');
+var moment = require('moment');
 var {
     Text,
     View,
@@ -52,7 +53,14 @@ var orderItem = React.createClass({
         this.props.onDelete(this.props.rowData, this.props.sectionID);
     },
     renderTimeLabel: function(timestamp){
-        var time = util.formatTimestamp(timestamp);
+        var time = moment(timestamp).format('YYYY-MM-DD');
+        if (moment().valueOf() > timestamp) {//任务过期
+            return(
+                <Text style={[styles.orderTextLeft, commonStyle.red]}>
+                    {time}
+                </Text>
+                );
+        };
         return(
             <Text style={[styles.orderTextLeft, commonStyle.textLight]}>
                 {time}
@@ -96,7 +104,7 @@ var orderItem = React.createClass({
                                 {this.props.rowData.title}
                             </Text>
                             <View style={styles.orderContent}>
-                                {this.renderTimeLabel(this.props.rowData.gmtCreate)}
+                                {this.renderTimeLabel(this.props.rowData.endTime)}
                                 <Text style={[styles.orderTextRight, commonStyle.textLight]}>
                                     客户:{this.props.rowData.customerName}
                                 </Text>

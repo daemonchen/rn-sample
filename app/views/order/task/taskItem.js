@@ -1,5 +1,6 @@
 'use strict';
-var React = require('react-native')
+var React = require('react-native');
+var moment = require('moment');
 var {
     Text,
     View,
@@ -114,7 +115,7 @@ module.exports = React.createClass({
         }
     },
     renderTimeLabel: function(timestamp){
-        var time = util.formatTimestamp(timestamp);
+        var time = moment(timestamp).format('YYYY-MM-DD');
         return(
             <Text style={[styles.rowText, commonStyle.textGray]}>
                 {time}
@@ -176,7 +177,7 @@ module.exports = React.createClass({
                         {this.renderCheckIcon()}
                         <View style={styles.contentWrapper}>
                             <Text style={styles.rowText}>{this.props.rowData.jobDO.jobName}</Text>
-                            {this.renderTimeLabel(this.props.rowData.jobDO.gmtCreate)}
+                            {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
                         </View>
                         {this.renderAvatar(this.props.rowData.userVO)}
                     </View>
