@@ -15,6 +15,8 @@ var appConstants = require('../constants/appConstants');
 
 var asyncStorage = require('../common/storage');
 
+var inboxStore = require('../stores/inbox/inboxStore');
+
 //获取可视窗口的宽高
 var util = require('../common/util.js');
 var {
@@ -29,7 +31,37 @@ var Launch = React.createClass({
             presses: 0,
         };
     },
-
+    componentDidMount: function(){
+        this.unlisten = inboxStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    handleUpdate: function(result){
+        appConstants.systemInfo.unreadMsg = appConstants.systemInfo.unreadMsg - 1;
+        this.setState({
+            notifCount: appConstants.systemInfo.unreadMsg
+        });
+    },
+    handleDelete: function(result){
+        appConstants.systemInfo.unreadMsg = appConstants.systemInfo.unreadMsg - 1;
+        this.setState({
+            notifCount: appConstants.systemInfo.unreadMsg
+        });
+    },
+    onChange: function() {
+        var result = inboxStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'update':
+                return this.handleUpdate(result);
+            case 'delete':
+                return this.handleDelete(result);
+        }
+    },
     _handlePress: function (tab) {
         var self = this;
         return function () {

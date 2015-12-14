@@ -49,7 +49,6 @@ module.exports = React.createClass({
         var result = userStore.getState();
         if (result.type != 'feedback') { return; };
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
             return;
         }
         this._modal.showModal('感谢您的建议');

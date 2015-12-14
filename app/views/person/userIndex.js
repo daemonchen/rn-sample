@@ -41,6 +41,11 @@ module.exports = React.createClass({
             user: !!appConstants.systemInfo.user ? appConstants.systemInfo.user : {}
         }
     },
+    componentWillReceiveProps: function(){
+        this.setState({
+            user: !!appConstants.systemInfo.user ? appConstants.systemInfo.user : {}
+        });
+    },
     componentDidMount: function(){
         this.unlisten = avatarStore.listen(this.onChange)
     },

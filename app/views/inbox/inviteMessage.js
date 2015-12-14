@@ -58,7 +58,6 @@ module.exports = React.createClass({
     onChange: function(){
         var result = inboxStore.getState();
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
             return;
         }
         switch(result.type){

@@ -60,7 +60,8 @@ module.exports = React.StyleSheet.create({
         marginTop: 12,
         marginBottom: 12,
         paddingVertical: 10,
-        fontSize: 14,
+        fontSize: 16,
+        fontWeight: '500',
         color:'#fff',
         backgroundColor:'#4285f4'
     },
@@ -68,6 +69,7 @@ module.exports = React.StyleSheet.create({
         width: width - 32,
         height: 48,
         paddingVertical: 16,
+        fontWeight: '500',
         fontSize: 16
     },
     textIcon: {

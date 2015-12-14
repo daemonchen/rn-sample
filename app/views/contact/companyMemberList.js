@@ -63,13 +63,7 @@ module.exports = React.createClass({
         this.unlisten();
         this.unlistenEmployee();
     },
-    onEmployeeChange: function(){
-        var result = employeeStore.getState();
-        if (result.type != 'create') { return; };
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
+    handleCreate: function(result){
         this._modal.showModal('邀请成功');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
@@ -77,6 +71,27 @@ module.exports = React.createClass({
         this._timeout = this.setTimeout(()=>{
             this._modal.hideModal();
         },2000);
+    },
+    handleDelete: function(result){
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            contactAction.getList();
+        },350);
+    },
+    onEmployeeChange: function(){
+        var result = employeeStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'create':
+                return this.handleCreate(result);
+            case 'delete':
+                return this.handleDelete(result);
+        }
     },
     onChange: function() {
         var result = contactStore.getState();

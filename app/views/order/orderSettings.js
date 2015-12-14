@@ -53,7 +53,7 @@ module.exports = React.createClass({
 
         var defaultData = this.props.route.data || {};
         var endTime = defaultData.endTime || new Date().valueOf();
-
+        console.log('------ordersettings data', defaultData);
         return {
             orderId: defaultData.id || 0,
             orderStatus: defaultData.orderStatus || 3,
@@ -304,9 +304,6 @@ module.exports = React.createClass({
                             style={commonStyle.settingDetail}>
                             {this.state.creatorName}
                             </Text>
-                            <Image
-                            style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight

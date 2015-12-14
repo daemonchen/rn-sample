@@ -86,25 +86,14 @@ module.exports = React.createClass({
         this.list.hideHeader();
         this.list.hideFooter();
     },
-    handleUpdate: function(result){
-        return;
-    },
-    handleDelete: function(result){
-        return;
-    },
     onChange: function() {
         var result = inboxStore.getState();
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
             return;
         }
         switch(result.type){
             case 'get':
                 return this.handleGet(result);
-            case 'update':
-                return this.handleUpdate(result);
-            case 'delete':
-                return this.handleDelete(result);
         }
     },
     onRefresh: function() {

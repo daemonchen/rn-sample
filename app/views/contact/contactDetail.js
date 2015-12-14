@@ -54,6 +54,7 @@ module.exports = React.createClass({
         var result = userStore.getState();
         if (result.type == 'update') {
             if (result.status != 200 && !!result.message) {
+                util.alert(result.message);
                 return;
             }
             if (result.data.userId == this.state.data.userId) {

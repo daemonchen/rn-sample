@@ -50,7 +50,6 @@ module.exports = React.createClass({
         var result = userStore.getState();
         if (result.type != 'update') { return; };
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
             return;
         }
         appConstants.systemInfo.user = result.data;
