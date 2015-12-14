@@ -75,6 +75,7 @@ module.exports = React.createClass({
 
 var styles = StyleSheet.create({
     welcome: {
+        backgroundColor: '#fff',
         flex: 1,
         alignItems: 'center'
     },

@@ -23,7 +23,7 @@ var register = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         return {
-            mobile: '13750892695',
+            mobile: '',
             type: 1
         }
     },

@@ -202,8 +202,7 @@ module.exports = React.createClass({
                     onRefresh = {this.onRefresh}
                     onInfinite = {this.onInfinite}
                     loadedAllData={this.loadedAllData}
-                    contentContainerStyle={{paddingBottom: 40}}
-                    >
+                    contentContainerStyle={{paddingBottom: 40}} >
                 </RefreshInfiniteListView>
             </View>
             )

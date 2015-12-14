@@ -78,7 +78,8 @@ module.exports = React.createClass({
         };
         this._timeout = this.setTimeout(()=>{
             this._modal.hideModal();
-            _navigator.popToTop();
+            _navigator.pop();
+            // _navigator.popToTop();
         },2000);
     },
     onChange: function() {

@@ -46,7 +46,7 @@ var Launch = React.createClass({
                 barTintColor = "#fff"
                 translucent = {true} >
                 <TabBarIOS.Item
-                    title="Workspace"
+                    title="工作台"
                     icon={require('../images/TabBar/Workspace.png')}
                     selectedIcon={require('../images/TabBar/Workspace_selected.png')}
                     selected={this.state.selectedTab === 'Workspace'}
@@ -54,7 +54,7 @@ var Launch = React.createClass({
                     <AppNavigator initialRoute={{title: 'Workspace', component:Home, topNavigator: this.props.navigator}} key='Workspace' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
-                    title="Order"
+                    title="订单"
                     icon={require('../images/TabBar/Order.png')}
                     selectedIcon={require('../images/TabBar/Order_selected.png')}
                     selected={this.state.selectedTab === 'Order'}
@@ -62,7 +62,7 @@ var Launch = React.createClass({
                     <AppNavigator initialRoute={{title: 'Order', component:Order, topNavigator: this.props.navigator}} key='Order' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
-                    title="Inbox"
+                    title="消息"
                     badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
                     icon={require('../images/TabBar/Inbox.png')}
                     selectedIcon={require('../images/TabBar/Inbox_selected.png')}
@@ -71,7 +71,7 @@ var Launch = React.createClass({
                     <AppNavigator initialRoute={{title: 'Inbox', component:Inbox, topNavigator: this.props.navigator}} key='Inbox' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
-                    title="Contact"
+                    title="通讯录"
                     icon={require('../images/TabBar/Contacts.png')}
                     selectedIcon={require('../images/TabBar/Contacts_selected.png')}
                     selected={this.state.selectedTab === 'Contact'}
@@ -79,7 +79,7 @@ var Launch = React.createClass({
                     <AppNavigator initialRoute={{title: '通讯录', target: 3, component:Contact, topNavigator: this.props.navigator}} key='Contact' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
-                    title="Person"
+                    title="我"
                     icon={require('../images/TabBar/Person.png')}
                     selectedIcon={require('../images/TabBar/Person_selected.png')}
                     selected={this.state.selectedTab === 'Person'}

@@ -91,7 +91,7 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'delete') {
-            _navigator.popToTop();
+            _navigator.pop();
         };
     },
     onAttachChange: function(){
@@ -121,7 +121,6 @@ module.exports = React.createClass({
         }
         if (result.type == 'create') {
             _navigator.pop();
-            // _navigator.popToTop();
         };
         if (result.type == 'update') {
             _navigator.pop();

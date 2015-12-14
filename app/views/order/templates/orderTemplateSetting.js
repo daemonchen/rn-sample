@@ -46,7 +46,7 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            _navigator.popToTop();
+            _navigator.pop();
         };
         if (result.type == 'update') {
             _navigator.pop();

@@ -139,7 +139,7 @@ module.exports = React.createClass({
             this.setLastIds(result)
         };
         if (result.type == 'delete') {
-            _navigator.popToTop();
+            _navigator.pop();
         };
     },
     onPressDone: function(){

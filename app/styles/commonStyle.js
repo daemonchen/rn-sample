@@ -59,8 +59,8 @@ module.exports = React.StyleSheet.create({
         width: width - 32,
         marginTop: 12,
         marginBottom: 12,
-        paddingVertical: 16,
-        fontSize: 16,
+        paddingVertical: 10,
+        fontSize: 14,
         color:'#fff',
         backgroundColor:'#4285f4'
     },
