@@ -36,7 +36,8 @@ var Swipeout = require('react-native-swipeout');
 var util = require('../../../common/util');
 var CircleProgressView = require('../../../common/circleProgress')
 var styles = require('../../../styles/order/orderItem.js');
-var commonStyle = require('../../../styles/commonStyle')
+var commonStyle = require('../../../styles/commonStyle');
+var appConstants = require('../../../constants/appConstants');
 var orderItem = React.createClass({
     getInitialState: function(){
         return{
@@ -84,9 +85,41 @@ var orderItem = React.createClass({
             // backgroundColor: ''
           }
         ]
-        return(
-            <Swipeout autoClose={true} right={swipeoutBtns}
-            backgroundColor='transparent' style={styles.swipeWrapper}>
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['4'];
+        if (rights ^ targetRights == rights){
+            return(
+                <Swipeout autoClose={true} right={swipeoutBtns}
+                backgroundColor='transparent' style={styles.swipeWrapper}>
+                    <TouchableHighlight underlayColor='#eee'
+                    onPress={this.onPress}>
+                        <View style={styles.rowStyle}>
+                            <CircleProgressView
+                              progress={this.state.progress}
+                              lineWidth={2}
+                              lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
+                              circleRadius={20}
+                              circleColor='#34a853'
+                              circleUnderlayColor='#e6e6e6'
+                              style={styles.circle}/>
+                            {this.renderPercent(this.props.rowData.overPercent)}
+                            <View style={styles.orderContentWrapper}>
+                                <Text style={[styles.orderTitle, commonStyle.textDark]}>
+                                    {this.props.rowData.title}
+                                </Text>
+                                <View style={styles.orderContent}>
+                                    {this.renderTimeLabel(this.props.rowData.endTime)}
+                                    <Text style={[styles.orderTextRight, commonStyle.textLight]}>
+                                        客户:{this.props.rowData.customerName}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                </Swipeout>
+                )
+        }else{
+            return(
                 <TouchableHighlight underlayColor='#eee'
                 onPress={this.onPress}>
                     <View style={styles.rowStyle}>
@@ -112,8 +145,8 @@ var orderItem = React.createClass({
                         </View>
                     </View>
                 </TouchableHighlight>
-            </Swipeout>
-            )
+                )
+        }
     }
 });
 

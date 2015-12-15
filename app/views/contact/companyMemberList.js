@@ -35,6 +35,7 @@ var employeeAction = require('../../actions/employee/employeeAction');
 var employeeStore = require('../../stores/employee/employeeStore');
 
 var util = require('../../common/util');
+var appConstants = require('../../constants/appConstants');
 /*
 target: 表示从哪里打开通讯录 enum
 {
@@ -167,12 +168,22 @@ module.exports = React.createClass({
     },
     actionList: ['手机通讯录邀请','手机号码邀请','取消'],
     renderNavigationBar: function(){
-        return(
-            <NavigationBar
-                title={{ title: this.props.route.title }}
-                leftButton={<BlueBackButton navigator={_navigator}/>}
-                rightButton={<RightAddButton onPress={this.showActionSheet} />} />
-            );
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['65536'];
+        if (rights ^ targetRights == rights){
+            return(
+                <NavigationBar
+                    title={{ title: this.props.route.title }}
+                    leftButton={<BlueBackButton navigator={_navigator}/>}
+                    rightButton={<RightAddButton onPress={this.showActionSheet} />} />
+                );
+        }else{
+            return(
+                <NavigationBar
+                    title={{ title: this.props.route.title }}
+                    leftButton={<BlueBackButton navigator={_navigator}/>} />
+                );
+        }
     },
     render: function(){
         return(

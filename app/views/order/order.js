@@ -20,6 +20,7 @@ var OrderDetail = require('./orderDetail');
 var RightAddButton = require('../../common/rightAddButton');
 
 var util = require('../../common/util');
+var appConstants = require('../../constants/appConstants');
 
 var _navigator, _topNavigator = null;
 
@@ -102,12 +103,26 @@ var order =  React.createClass({
                 )
         }
     },
+    renderNavigationBar: function(){
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['2'];
+        if (rights ^ targetRights == rights) {
+            return(
+                <NavigationBar
+                    title={{ title: '订单' }}
+                    rightButton={<RightAddButton onPress={this.showActionSheet} />} />
+                );
+        }else{
+            return(
+                <NavigationBar
+                    title={{ title: '订单' }} />
+                );
+        }
+    },
     render:function(){
         return (
             <View style={commonStyle.container}>
-                <NavigationBar
-                    title={{ title: '订单', }}
-                    rightButton={<RightAddButton onPress={this.showActionSheet} />} />
+                {this.renderNavigationBar()}
                 <View style={styles.main}>
                     <OrderSegmentControl
                     onSegmentChange={this.onSegmentChange} />

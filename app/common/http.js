@@ -131,6 +131,10 @@ module.exports = {
             // })
             .catch((error) => {
                 console.log(error);
+                if (!!appConstants.netError) {
+                    return;
+                };
+                appConstants.netError = true;
                 util.alert('网络异常，请稍后再试');
               });
         }

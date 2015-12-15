@@ -22,6 +22,7 @@ var _navigator, _topNavigator = null;
 var attachAction = require('../../../actions/attach/attachAction');
 var commonStyle = require('../../../styles/commonStyle');
 var util = require('../../../common/util');
+var appConstants = require('../../../constants/appConstants');
 
 var BlueBackButton = require('../../../common/blueBackButton');
 var RightAddButton = require('../../../common/rightAddButton');
@@ -72,13 +73,28 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         })
     },
-    render:function(){
-        return (
-            <View style={commonStyle.container}>
+    renderNavigationBar: function(){
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['512'];
+        if (rights ^ targetRights == rights){
+            return(
                 <NavigationBar
                     title={{ title: '附件' }}
                     leftButton={<BlueBackButton navigator={_navigator}/>}
                     rightButton={<RightAddButton onPress={this.doAddPhoto} />} />
+                );
+        }else{
+            return(
+                <NavigationBar
+                    title={{ title: '附件' }}
+                    leftButton={<BlueBackButton navigator={_navigator}/>} />
+                );
+        }
+    },
+    render:function(){
+        return (
+            <View style={commonStyle.container}>
+                {this.renderNavigationBar()}
                 <View style={styles.main}>
                     <AttachList
                     data={this.props.route.data}

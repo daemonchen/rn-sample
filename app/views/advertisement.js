@@ -42,11 +42,16 @@ module.exports = React.createClass({
         return {}
     },
     componentDidMount: function(){
-        systemAction.init();
         this.unlisten = systemStore.listen(this.onChange);
         this.unlistenLogin = loginStore.listen(this.onLoginChange);
         this.unlistenVerifyCode = verifyCodeStore.listen(this.onVerifyCodeChange)
         this.unAuthlisten = authTokenStore.listen(this.onAuthChange);
+        // if (!!this._timeout) {
+        //     this.clearTimeout(this._timeout);
+        // };
+        // this.setTimeout(()=>{
+        //     this.doLaunch();
+        // }, 1050);
     },
     componentWillUnmount: function() {
         this.unlisten();
@@ -93,14 +98,20 @@ module.exports = React.createClass({
         }
     },
     doLogin: function(result){
-        console.log('login type', result.type, result);
         appConstants.xAuthToken = result.data.token;
         appConstants.user = result.data.user;
         appConstants.userRights = result.data.userRights;
-        asyncStorage.setItem('appConstants', appConstants)
-        .then(()=>{
-            this.doLaunch();
-        });
+        console.log('---userRights:', appConstants.userRights);
+        this.getAppState();
+        asyncStorage.setItem('appConstants', appConstants);
+    },
+    getAppState: function(){
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            systemAction.init();
+        }, 350);
     },
     doLogout: function(){
         appConstants = {};
@@ -114,14 +125,16 @@ module.exports = React.createClass({
     },
     onChange: function(){
         var result = systemStore.getState();
-        console.log('----result', result);
         if (result.type != 'init') { return; };
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
         }
         appConstants.unreadMsg = result.data.unreadMsg;
-        asyncStorage.setItem('appConstants', appConstants);
+        asyncStorage.setItem('appConstants', appConstants)
+        .then(()=>{
+            this.doLaunch();
+        });;
 
     },
     goWelcome: function(){
@@ -133,7 +146,6 @@ module.exports = React.createClass({
         })
     },
     goMain: function(){
-        console.log('----goMain');
         _navigator.push({
             title: 'Launch',
             component: Launch,

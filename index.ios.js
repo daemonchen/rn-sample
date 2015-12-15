@@ -36,12 +36,11 @@ var awesomeMobile = React.createClass({
     getAppState: function(){
         asyncStorage.getItem('appConstants')
         .then((data)=>{
-            console.log('getAppState');
+            console.log('getAppState',data);
             if(!!data && !!data.xAuthToken){
                 appConstants.xAuthToken = data.xAuthToken;
-                this.getNewXAuthToken();
-                return;
             }
+            this.getNewXAuthToken();
         }).done();
     },
     getNewXAuthToken: function(){

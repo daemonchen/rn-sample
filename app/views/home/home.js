@@ -18,6 +18,8 @@ var TaskDetail = require('../order/task/taskDetailForWorkbench');
 
 var RightAddButton = require('../../common/rightAddButton');
 
+var appConstants = require('../../constants/appConstants');
+
 var _navigator, _topNavigator = null;
 
 var Home =  React.createClass({
@@ -97,13 +99,27 @@ var Home =  React.createClass({
                 )
         }
     },
-    render:function(){
-        return (
-            <View style={styles.container}>
+    renderNavigationBar: function(){
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['2'];
+        if (rights ^ targetRights == rights) {
+            return(
                 <NavigationBar
                     title={{ title: '工作台' }}
                     rightButton={<RightAddButton onPress={this.showActionSheet} />} />
+                );
+        }else{
+            return(
+                <NavigationBar
+                    title={{ title: '工作台' }} />
+                );
+        }
+    },
+    render:function(){
+        return (
+            <View style={styles.container}>
                 <View style={styles.main}>
+                    {this.renderNavigationBar()}
                     <HomeSegmentControl
                     onSegmentChange={this.onSegmentChange} />
                     {this.renderTabContent()}

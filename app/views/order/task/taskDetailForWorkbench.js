@@ -27,6 +27,7 @@ var _navigator, _topNavigator = null;
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
 var util = require('../../../common/util');
+var appConstants = require('../../../constants/appConstants');
 
 var BlueBackButton = require('../../../common/blueBackButton');
 var RightSettingButton = require('../../../common/rightSettingButton');
@@ -197,13 +198,28 @@ module.exports = React.createClass({
             <CommentBar navigator={_navigator} data={this.state.taskData.id}/>
             )
     },
-    render: function(){
-        return(
-            <View style={{height: this.state.visibleHeight}} >
+    renderNavigationBar: function(){
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['128'];
+        if (rights ^ targetRights == rights){
+            return(
                 <NavigationBar
                     title={{ title: '任务详情'}}
                     leftButton={<BlueBackButton navigator={_topNavigator} />}
                     rightButton={<RightSettingButton onPress={this._pressSettingButton} />} />
+                );
+        }else{
+            return(
+                <NavigationBar
+                    title={{ title: '任务详情'}}
+                    leftButton={<BlueBackButton navigator={_topNavigator} />} />
+                );
+        }
+    },
+    render: function(){
+        return(
+            <View style={{height: this.state.visibleHeight}} >
+                {this.renderNavigationBar()}
                 <ScrollView style={styles.main}
                 keyboardDismissMode={'interactive'} >
                     <View style={styles.taskDetailTop}>

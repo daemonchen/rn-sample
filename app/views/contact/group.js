@@ -36,6 +36,21 @@ module.exports = React.createClass({
             }
         })
     },
+    renderCustomerItem: function(){
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['65536'];
+        if (rights ^ targetRights == rights){
+            <TouchableOpacity style={contactsStyle.contactsItem}
+            onPress={this.props.goCustomerList}>
+                <Image
+                style={contactsStyle.contactsItemCircle}
+                source={require('../../images/contact/Client.png')} />
+                <Text style={contactsStyle.contactsItemDetail}>客户</Text>
+            </TouchableOpacity>
+        }else{
+            <View />
+        }
+    },
     renderFactoryItem: function(){
         if (!this.state.factoryName) {
             return(
@@ -71,13 +86,7 @@ module.exports = React.createClass({
                 <ScrollView
                   style={contactsStyle.scrollView}>
                     {this.renderFactoryItem()}
-                    <TouchableOpacity style={contactsStyle.contactsItem}
-                    onPress={this.props.goCustomerList}>
-                        <Image
-                        style={contactsStyle.contactsItemCircle}
-                        source={require('../../images/contact/Client.png')} />
-                        <Text style={contactsStyle.contactsItemDetail}>客户</Text>
-                    </TouchableOpacity>
+                    {this.renderCustomerItem()}
                     <TouchableOpacity style={contactsStyle.contactsItem}
                     onPress={this.openAddress} >
                         <Image

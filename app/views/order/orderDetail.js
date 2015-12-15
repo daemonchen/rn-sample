@@ -17,6 +17,7 @@ var {
 
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/order/orderDetail');
+var appConstants = require('../../constants/appConstants');
 
 var TaskList = require('./task/taskList');
 var NewsList = require('./news/newsList');
@@ -124,12 +125,18 @@ module.exports = React.createClass({
     actionList: ['新建任务','上传附件','取消'],
     rightButtonConfig: function(){
         var self = this;
-        return(
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['8'];
+        if (rights ^ targetRights == rights){
             <View style={{flexDirection:'row'}}>
                 <RightWhiteAddButton onPress={this._pressCreateButton} />
                 <RightWhiteSettingButton onPress={this._pressSettingButton} />
             </View>
-            );
+        }else{
+            <View style={{flexDirection:'row'}}>
+            </View>
+        }
+
     },
     onPressMemberRow: function(rowData, sectionID){
         _topNavigator.push({

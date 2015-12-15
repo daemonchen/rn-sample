@@ -20,6 +20,7 @@ var taskListStore = require('../../../stores/task/taskListStore');
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
 var util = require('../../../common/util');
+var appConstants = require('../../../constants/appConstants');
 /*
 target: 表示从哪里打开任务列表 enum
 {
@@ -167,8 +168,28 @@ module.exports = React.createClass({
             // backgroundColor: ''
           }
         ]
-        return(
-            <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['1024'];
+        if (rights ^ targetRights == rights){
+            return(
+                <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
+                    <TouchableHighlight
+                    underlayColor='#eee'
+                    onPress={this.onPressRow}>
+                        <View style={styles.rowStyle}>
+                            {this.renderTimeLine()}
+                            {this.renderCheckIcon()}
+                            <View style={styles.contentWrapper}>
+                                <Text style={styles.rowText}>{this.props.rowData.jobDO.jobName}</Text>
+                                {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                            </View>
+                            {this.renderAvatar(this.props.rowData.userVO)}
+                        </View>
+                    </TouchableHighlight>
+                </Swipeout>
+                )
+        }else{
+            return(
                 <TouchableHighlight
                 underlayColor='#eee'
                 onPress={this.onPressRow}>
@@ -182,8 +203,8 @@ module.exports = React.createClass({
                         {this.renderAvatar(this.props.rowData.userVO)}
                     </View>
                 </TouchableHighlight>
-            </Swipeout>
-            )
+                )
+        }
         // return (
         //     <TouchableOpacity onPress={this.onPress}>
         //         <View style={styles.rowStyle}>

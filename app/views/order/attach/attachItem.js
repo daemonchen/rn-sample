@@ -14,6 +14,7 @@ var attachListAction = require('../../../actions/attach/attachListAction');
 var Swipeout = require('react-native-swipeout');
 
 var styles = require('../../../styles/order/orderDetail');
+var appConstants = require('../../../constants/appConstants');
 
 module.exports = React.createClass({
     getInitialState: function(){
@@ -36,8 +37,25 @@ module.exports = React.createClass({
             // backgroundColor: ''
           }
         ]
-        return(
-            <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['1024'];
+        if (rights ^ targetRights == rights){
+            return(
+                <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
+                    <TouchableOpacity onPress={this.onPress}>
+                        <View style={styles.rowStyle}>
+                            <Image source={{uri: this.props.rowData.fileAddress}}
+                            style={styles.attachImage} />
+                            <Text style={styles.attachItemText}
+                            numberOfLines={1}>
+                                {this.props.rowData.fileName}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                </Swipeout>
+                )
+        }else{
+            return(
                 <TouchableOpacity onPress={this.onPress}>
                     <View style={styles.rowStyle}>
                         <Image source={{uri: this.props.rowData.fileAddress}}
@@ -48,15 +66,7 @@ module.exports = React.createClass({
                         </Text>
                     </View>
                 </TouchableOpacity>
-            </Swipeout>
-            )
-        // return (
-        //     <TouchableOpacity onPress={this.onPress}>
-        //         <View style={styles.rowStyle}>
-        //             <View style={[styles.circle, circleDone]} />
-        //             <Text style={styles.rowText}>{this.props.rowData.name}</Text>
-        //         </View>
-        //     </TouchableOpacity>
-        //     )
+                )
+        }
     }
 });

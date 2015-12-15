@@ -18,6 +18,7 @@ var taskListStore = require('../../stores/task/taskListStore');
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/order/orderDetail');
 var util = require('../../common/util');
+var appConstants = require('../../constants/appConstants');
 
 module.exports = React.createClass({
     getInitialState: function(){
@@ -88,11 +89,31 @@ module.exports = React.createClass({
             // backgroundColor: ''
           }
         ]
-        return(
-            <Swipeout autoClose={true} right={swipeoutBtns}
-            backgroundColor='transparent'
-            scroll={()=>{return false;}}
-            style={styles.swipeWrapper}>
+        var rights = appConstants.userRights.rights;
+        var targetRights = appConstants.userRights.rightsMap['64'];
+        if (rights ^ targetRights == rights) {
+            return(
+                <Swipeout autoClose={true} right={swipeoutBtns}
+                backgroundColor='transparent'
+                scroll={()=>{return false;}}
+                style={styles.swipeWrapper}>
+                    <TouchableHighlight
+                    underlayColor='#eee'
+                    onPress={this.onPressRow}>
+                        <View style={styles.rowStyle}>
+                            {this.renderCheckIcon()}
+                            <View style={styles.contentWrapper}>
+                                <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
+                                <Text style={[styles.rowText, commonStyle.textGray]}>
+                                    订单：{this.props.rowData.orderTitle}
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                </Swipeout>
+                );
+        }else{
+            return(
                 <TouchableHighlight
                 underlayColor='#eee'
                 onPress={this.onPressRow}>
@@ -106,7 +127,7 @@ module.exports = React.createClass({
                         </View>
                     </View>
                 </TouchableHighlight>
-            </Swipeout>
-            )
+                );
+        }
     }
 });
