@@ -37,7 +37,7 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            userName: appConstants.systemInfo.user.userName
+            userName: appConstants.user.userName
         }
     },
     componentDidMount: function(){
@@ -52,7 +52,7 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         }
-        appConstants.systemInfo.user = result.data;
+        appConstants.user = result.data;
         asyncStorage.setItem('appConstants', appConstants);
         _navigator.pop()
     },

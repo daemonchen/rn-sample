@@ -83,12 +83,10 @@ var validationCode = React.createClass({
                 canReGetCode: true,
                 timer: 0
             });
-            util.alert(result.message);
             return;
         }
         if (result.type == 'check') {
             if (result.status != 200 && !!result.message) {
-                util.alert(result.message);
                 return;
             }
             this.clearInterval(this._timeInterval);

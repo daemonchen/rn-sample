@@ -38,12 +38,12 @@ module.exports = React.createClass({
         _topNavigator = this.props.route.topNavigator;
 
         return {
-            user: !!appConstants.systemInfo.user ? appConstants.systemInfo.user : {}
+            user: !!appConstants.user ? appConstants.user : {}
         }
     },
     componentWillReceiveProps: function(){
         this.setState({
-            user: !!appConstants.systemInfo.user ? appConstants.systemInfo.user : {}
+            user: !!appConstants.user ? appConstants.user : {}
         });
     },
     componentDidMount: function(){
@@ -59,9 +59,9 @@ module.exports = React.createClass({
                 util.alert('修改失败');
                 return;
             }
-            appConstants.systemInfo.user = result.data;
+            appConstants.user = result.data;
             this.setState({
-                user: appConstants.systemInfo.user
+                user: appConstants.user
             });
 
         };
@@ -70,9 +70,9 @@ module.exports = React.createClass({
                 util.alert('删除失败');
                 return;
             }
-            appConstants.systemInfo.user = result.data;
+            appConstants.user = result.data;
             this.setState({
-                user: appConstants.systemInfo.user
+                user: appConstants.user
             });
         };
     },

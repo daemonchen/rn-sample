@@ -52,8 +52,8 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         }
-        appConstants.systemInfo.user.factoryId = result.data.factoryId;
-        appConstants.systemInfo.user.factoryName = result.data.factoryName;
+        appConstants.user.factoryId = result.data.factoryId;
+        appConstants.user.factoryName = result.data.factoryName;
         asyncStorage.setItem('appConstants', appConstants)
         .then((error)=>{
             this._modal.showModal('工厂添加成功');

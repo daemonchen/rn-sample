@@ -17,9 +17,8 @@ var commonStyle = require('../../styles/commonStyle');
 var BlueBackButton = require('../../common/blueBackButton');
 
 var verifyCodeAction = require('../../actions/user/verifyCodeAction');
-var verifyCodeStore = require('../../stores/user/verifyCodeStore');
-var systemAction = require('../../actions/system/systemAction');
-var systemStore = require('../../stores/system/systemStore');
+
+
 var authAction = require('../../actions/user/authAction');
 var authStore = require('../../stores/user/authStore');
 
@@ -32,8 +31,6 @@ var util = require('../../common/util.js');
 var {
     width, height, scale
 } = util.getDimensions();
-
-var Launch = require('../launch');
 
 var _navigator, _topNavigator = null;
 var setPassWord = React.createClass({
@@ -58,14 +55,13 @@ var setPassWord = React.createClass({
                 token: value.token
             });
         }).done();
-        this.unlisten = verifyCodeStore.listen(this.onChange)
-        this.unlistenAuth = authStore.listen(this.onAuthChange)
+
+        this.unlisten = authStore.listen(this.onChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.unlistenAuth();
     },
-    onAuthChange: function(){
+    onChange: function(){
         var result = authStore.getState();
         if (result.type != 'reset') { return; };
         if (result.status != 200 && !!result.message) {
@@ -82,22 +78,6 @@ var setPassWord = React.createClass({
         this._timeout = this.setTimeout(()=>{
             this._modal.hideModal();
         },2000);
-    },
-    onChange: function() {
-        var result = verifyCodeStore.getState();
-        if (result.type != 'register') { return; };
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
-        appConstants.xAuthToken = result.data;
-        asyncStorage.setItem('appConstants', appConstants);
-        this.getSystem();
-    },
-    getSystem: function(){
-        this.setTimeout(()=>{
-            systemAction.init();
-        }, 350);
     },
     doRegister: function(){
         if (this.state.password.length < 6) {

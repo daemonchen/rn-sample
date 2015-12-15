@@ -14,11 +14,7 @@ var Button = require('../common/button.js');
 var commonStyle = require('../styles/commonStyle');
 
 var loginAction = require('../actions/user/loginAction');
-var loginStore = require('../stores/user/loginStore');
-var asyncStorage = require('../common/storage');
-var appConstants = require('../constants/appConstants');
-var systemAction = require('../actions/system/systemAction');
-var systemStore = require('../stores/system/systemStore');
+
 
 var LeftCloseButton = require('../common/leftCloseButton');
 
@@ -28,7 +24,6 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var Launch = require('../views/launch');
 var ResetPassword = require('../views/person/resetPassword');
 var NavTitleWithLogo = require('../common/navTitleWithLogo');
 var _navigator = null;
@@ -37,30 +32,6 @@ var Login = React.createClass({
     getInitialState: function(){
         _navigator = this.props.navigator;
         return {}
-    },
-    componentDidMount: function(){
-        this.unlisten = loginStore.listen(this.onChange)
-        // this.unlistenSystem = systemStore.listen(this.onSystemChange)
-    },
-    componentWillUnmount: function() {
-        this.unlisten();
-        // this.unlistenSystem();
-    },
-    onChange: function() {
-        var result = loginStore.getState();
-        if (result.type != 'login') { return; };
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
-        appConstants.xAuthToken = result.data;
-        asyncStorage.setItem('appConstants', appConstants);
-        this.getSystem();
-    },
-    getSystem: function(){
-        this.setTimeout(()=>{
-            systemAction.init();
-        }, 350);
     },
     goResetPassword: function(){
         _navigator.push({

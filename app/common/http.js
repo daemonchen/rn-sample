@@ -131,7 +131,7 @@ module.exports = {
             // })
             .catch((error) => {
                 console.log(error);
-                util.alert('服务器出错啦');
+                util.alert('网络异常，请稍后再试');
               });
         }
 }

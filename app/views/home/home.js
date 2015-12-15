@@ -119,9 +119,7 @@ var styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     main:{
-        flex:1,
-        borderTopWidth:1 / React.PixelRatio.get(),
-        borderTopColor:'#e1e1e1'
+        flex:1
     }
 });
 

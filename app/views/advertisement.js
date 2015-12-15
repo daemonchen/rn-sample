@@ -21,6 +21,8 @@ var asyncStorage = require('../common/storage');
 var systemAction = require('../actions/system/systemAction');
 var systemStore = require('../stores/system/systemStore');
 var loginStore = require('../stores/user/loginStore');
+var verifyCodeStore = require('../stores/user/verifyCodeStore');
+var authTokenStore = require('../stores/user/authTokenStore');
 
 
 var Welcome = require('./welcome');
@@ -40,20 +42,67 @@ module.exports = React.createClass({
         return {}
     },
     componentDidMount: function(){
+        systemAction.init();
         this.unlisten = systemStore.listen(this.onChange);
-        this.unlistenLogout = loginStore.listen(this.onLogout);
+        this.unlistenLogin = loginStore.listen(this.onLoginChange);
+        this.unlistenVerifyCode = verifyCodeStore.listen(this.onVerifyCodeChange)
+        this.unAuthlisten = authTokenStore.listen(this.onAuthChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.unlistenLogout();
+        this.unlistenLogin();
+        this.unlistenVerifyCode();
+        this.unAuthlisten();
     },
-    onLogout: function(){
-        var result = loginStore.getState();
-        if (result.type != 'logout') { return; };
+    onAuthChange: function(){
+        var result = authTokenStore.getState();
+        if (result.status != 200 && !!result.message) {
+            this.goWelcome();
+            return;
+        }
+        switch(result.type){
+            case 'updateToken':
+                return this.doLogin(result);
+            default: return;
+        }
+    },
+    onVerifyCodeChange: function(){
+        var result = verifyCodeStore.getState();
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
         }
+        switch(result.type){
+            case 'register':
+                return this.doLogin(result);
+            default: return;
+        }
+    },
+    onLoginChange: function(){
+        var result = loginStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'login':
+                return this.doLogin(result);
+            case 'logout':
+                return this.doLogout(result);
+            default: return;
+        }
+    },
+    doLogin: function(result){
+        console.log('login type', result.type, result);
+        appConstants.xAuthToken = result.data.token;
+        appConstants.user = result.data.user;
+        appConstants.userRights = result.data.userRights;
+        asyncStorage.setItem('appConstants', appConstants)
+        .then(()=>{
+            this.doLaunch();
+        });
+    },
+    doLogout: function(){
         appConstants = {};
         asyncStorage.setItem('appConstants', appConstants);
         _navigator.immediatelyResetRouteStack([{
@@ -65,32 +114,38 @@ module.exports = React.createClass({
     },
     onChange: function(){
         var result = systemStore.getState();
+        console.log('----result', result);
         if (result.type != 'init') { return; };
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
         }
-        console.log('-----init result:', result);
-        appConstants.systemInfo = result.data;
+        appConstants.unreadMsg = result.data.unreadMsg;
         asyncStorage.setItem('appConstants', appConstants);
-        this.doLaunch();
+
+    },
+    goWelcome: function(){
+        _navigator.push({
+            title: 'welcome',
+            component: Welcome,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _navigator
+        })
+    },
+    goMain: function(){
+        console.log('----goMain');
+        _navigator.push({
+            title: 'Launch',
+            component: Launch,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _navigator
+        })
     },
     doLaunch: function(){
-        console.log('-----after init', !appConstants.systemInfo.user);
-        if (!appConstants.systemInfo.user) {
-            _navigator.push({
-                title: 'welcome' ,
-                component: Welcome,
-                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-                topNavigator: _navigator
-            })
+        if (!appConstants.user) {
+            this.goWelcome();
         }else{
-            _navigator.push({
-                title: 'Launch' ,
-                component: Launch,
-                sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-                topNavigator: _navigator
-            })
+            this.goMain();
         }
     },
     render: function(){

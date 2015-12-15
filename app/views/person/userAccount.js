@@ -33,12 +33,12 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
         return {
-            user: !!appConstants.systemInfo.user ? appConstants.systemInfo.user : {}
+            user: !!appConstants.user ? appConstants.user : {}
         }
     },
     componentWillReceiveProps: function(){
         this.setState({
-            user: !!appConstants.systemInfo.user ? appConstants.systemInfo.user : {}
+            user: !!appConstants.user ? appConstants.user : {}
         });
     },
     goAccount: function(){

@@ -8,7 +8,7 @@ var {
   Navigator,
   Image,
   Text,
-  View,
+  View
 } = React;
 
 var Login = require('../views/login');
@@ -18,7 +18,6 @@ var commonStyle = require('../styles/commonStyle');
 var asyncStorage = require('../common/storage');
 
 var authTokenAction = require('../actions/user/authTokenAction');
-var authTokenStore = require('../stores/user/authTokenStore');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');

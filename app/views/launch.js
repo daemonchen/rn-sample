@@ -1,8 +1,15 @@
 'use strict';
 
 var React = require('react-native');
-
-var {StyleSheet, TabBarIOS} = React;
+var {
+  AppRegistry,
+  StyleSheet,
+  TabBarIOS,
+  Navigator,
+  Image,
+  Text,
+  View
+} = React;
 
 var AppNavigator = require('../common/navbar');
 var Home = require('../views/home/home');
@@ -27,7 +34,7 @@ var Launch = React.createClass({
     getInitialState: function () {
         return {
             selectedTab: 'Workspace',
-            notifCount: appConstants.systemInfo.unreadMsg || 0,
+            notifCount: appConstants.unreadMsg || 0,
             presses: 0,
         };
     },
@@ -39,18 +46,18 @@ var Launch = React.createClass({
     },
     handleUpdate: function(result){
         if (result.readStatus == 1) {
-            appConstants.systemInfo.unreadMsg = appConstants.systemInfo.unreadMsg + 1;
+            appConstants.unreadMsg = appConstants.unreadMsg + 1;
         }else{
-            appConstants.systemInfo.unreadMsg = appConstants.systemInfo.unreadMsg - 1;
+            appConstants.unreadMsg = appConstants.unreadMsg - 1;
         }
         this.setState({
-            notifCount: appConstants.systemInfo.unreadMsg
+            notifCount: appConstants.unreadMsg
         });
     },
     handleDelete: function(result){
-        appConstants.systemInfo.unreadMsg = appConstants.systemInfo.unreadMsg - 1;
+        appConstants.unreadMsg = appConstants.unreadMsg - 1;
         this.setState({
-            notifCount: appConstants.systemInfo.unreadMsg
+            notifCount: appConstants.unreadMsg
         });
     },
     onChange: function() {
@@ -127,8 +134,6 @@ var Launch = React.createClass({
     }
 });
 var styles = StyleSheet.create({
-    tabbarView: {
 
-    }
 });
 module.exports = Launch;
