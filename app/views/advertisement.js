@@ -40,6 +40,7 @@ module.exports = React.createClass({
         return {}
     },
     componentDidMount: function(){
+        console.log('---systemStore', systemStore);
         this.unlisten = systemStore.listen(this.onChange);
         this.unlistenLogout = loginStore.listen(this.onLogout);
     },

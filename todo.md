@@ -15,3 +15,9 @@
 - 把所有的asyncstorage统一存放在一个对象下:appConstant。
 
 - 把route抽取出来，通过flux来触发navigation
+
+ps: 如果遇到babelrc文件错误，删掉报错的babel文件即可
+
+`find node_modules -type f -name '.babelrc' | grep -v 'node_modules/react-native/packager/react-packager/.babelrc' | xargs rm`
+
+ps: [rn0.15到0.16升级方法](https://gist.github.com/plougsgaard/33297a026ed549d910af)

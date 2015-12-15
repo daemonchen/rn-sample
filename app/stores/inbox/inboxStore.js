@@ -54,6 +54,7 @@ class InboxStore {
         }).done();
     }
     onUpdate(data){
+        console.log('----read status', data);
         inboxService.updateList(data)
         .then((responseData) => {
             inboxAction.updateSuccess(responseData)

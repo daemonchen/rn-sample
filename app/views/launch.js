@@ -38,6 +38,7 @@ var Launch = React.createClass({
         this.unlisten();
     },
     handleUpdate: function(result){
+        console.log('---result', result);
         appConstants.systemInfo.unreadMsg = appConstants.systemInfo.unreadMsg - 1;
         this.setState({
             notifCount: appConstants.systemInfo.unreadMsg

@@ -37,6 +37,7 @@ var CommentBar = require('../comments/commentBar');
 var OrderDetail = require('../orderDetail');
 
 var taskListAction = require('../../../actions/task/taskListAction');
+var taskListStore = require('../../../stores/task/taskListStore');
 var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
 
@@ -59,6 +60,7 @@ module.exports = React.createClass({
         DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
 
         this.unlisten = taskStore.listen(this.onChange);
+        this.unlistenTaskList = taskListStore.listen(this.onTaskListChange)
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
@@ -66,6 +68,26 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenTaskList();
+    },
+    handleUpdate: function(result){
+        if (parseInt(result.data) != this.props.rowData.jobDO.id) {
+            return;
+        };
+        var status = (this.state.done == 1) ? 0 : 1
+        this.setState({
+            done: status
+        });
+    },
+    onTaskListChange: function(){
+        var result = taskListStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        switch(result.type){
+            case 'update':
+                return this.handleUpdate(result);
+        }
     },
     fetchData: function(){
         taskAction.get({

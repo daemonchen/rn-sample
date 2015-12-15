@@ -33,17 +33,25 @@ module.exports = React.createClass({
         });
     },
     onPress: function(){
-        this.setState({
+        var rowData = Object.assign(this.props.rowData, {
             readStatus: 2
         });
-        this.props.onUpdate(this.props.rowData);
-        this.props.onPress(this.props.rowData, this.props.sectionID);
+        if (this.state.readStatus == 1) {//如果是未读状态，需要标记已读
+            this.setState({
+                readStatus: 2
+            });
+            this.props.onUpdate(rowData);
+        };
+        this.props.onPress(rowData, this.props.sectionID);
     },
     onUpdate: function(){
         this.setState({
             readStatus: (this.state.readStatus == 1) ? 2 : 1
         });
-        this.props.onUpdate(this.props.rowData);
+        var rowData = Object.assign(this.props.rowData, {
+            readStatus: this.state.readStatus
+        });
+        this.props.onUpdate(rowData);
     },
     onDelete: function(){
         this.setState({

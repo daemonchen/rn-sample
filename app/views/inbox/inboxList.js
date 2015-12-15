@@ -144,7 +144,7 @@ module.exports = React.createClass({
     onUpdate: function(rowData){
         inboxAction.update({
             msgIds:[rowData.msgId],
-            readStatus: (rowData.readStatus == 1) ? 2 : 1
+            readStatus: rowData.readStatus
         });
     },
     onDelete: function(rowData){
