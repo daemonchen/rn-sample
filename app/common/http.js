@@ -22,12 +22,19 @@ module.exports = {
     getAuthToken: function(callback){
         return appConstants.xAuthToken;
     },
+    getLocation: function(){
+
+    },
     getUrlParams: function(data){
         var result = data || {}
         result.appkey = 997251497892209797;
         result.imei = DeviceInfo.getUniqueID();
         result.imsi = DeviceInfo.getUniqueID();
         result.t = new Date().valueOf();
+        if (!!appConstants.location) {
+            result.lng = appConstants.location.coords.longitude
+            result.lat = appConstants.location.coords.latitude
+        };
         result.sign = this.md5Params(result);
         return queryString.stringify(result);
     },

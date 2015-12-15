@@ -212,8 +212,8 @@ module.exports = React.createClass({
     },
     renderNavigationBar: function(){
         var rights = appConstants.userRights.rights;
-        var targetRights = appConstants.userRights.rightsMap['128'];
-        if (rights ^ targetRights == rights){
+        var targetRights = 128;
+        if ((rights & targetRights) == targetRights){
             return(
                 <NavigationBar
                     title={{ title: '任务详情'}}

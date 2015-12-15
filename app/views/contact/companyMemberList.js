@@ -169,8 +169,8 @@ module.exports = React.createClass({
     actionList: ['手机通讯录邀请','手机号码邀请','取消'],
     renderNavigationBar: function(){
         var rights = appConstants.userRights.rights;
-        var targetRights = appConstants.userRights.rightsMap['65536'];
-        if (rights ^ targetRights == rights){
+        var targetRights = 65536;
+        if ((rights & targetRights) == targetRights){
             return(
                 <NavigationBar
                     title={{ title: this.props.route.title }}

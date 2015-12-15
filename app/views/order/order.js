@@ -105,8 +105,8 @@ var order =  React.createClass({
     },
     renderNavigationBar: function(){
         var rights = appConstants.userRights.rights;
-        var targetRights = appConstants.userRights.rightsMap['2'];
-        if (rights ^ targetRights == rights) {
+        var targetRights = 2;
+        if ((rights & targetRights) == targetRights) {
             return(
                 <NavigationBar
                     title={{ title: '订单' }}

@@ -126,8 +126,9 @@ module.exports = React.createClass({
     rightButtonConfig: function(){
         var self = this;
         var rights = appConstants.userRights.rights;
-        var targetRights = appConstants.userRights.rightsMap['8'];
-        if (rights ^ targetRights == rights){
+        var targetRights = 8;
+        console.log('(rights & targetRights)',(rights & targetRights));
+        if ((rights & targetRights) == targetRights){
             <View style={{flexDirection:'row'}}>
                 <RightWhiteAddButton onPress={this._pressCreateButton} />
                 <RightWhiteSettingButton onPress={this._pressSettingButton} />

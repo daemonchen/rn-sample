@@ -31,12 +31,22 @@ var awesomeMobile = React.createClass({
     componentWillMount: function(){
         Orientation.lockToPortrait();
         this.getAppState();
+        this.getLocation();
     },
-
+    getLocation: function(){
+        var location = {};
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                appConstants.location = position;
+                asyncStorage.setItem('appConstants', appConstants);
+            },
+            (error) => console.log(error.message),
+            {enableHighAccuracy: true, timeout: 2000, maximumAge: 1000}
+        );
+    },
     getAppState: function(){
         asyncStorage.getItem('appConstants')
         .then((data)=>{
-            console.log('getAppState',data);
             if(!!data && !!data.xAuthToken){
                 appConstants.xAuthToken = data.xAuthToken;
             }

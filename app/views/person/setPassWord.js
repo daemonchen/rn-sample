@@ -56,28 +56,9 @@ var setPassWord = React.createClass({
             });
         }).done();
 
-        this.unlisten = authStore.listen(this.onChange)
+
     },
     componentWillUnmount: function() {
-        this.unlisten();
-    },
-    onChange: function(){
-        var result = authStore.getState();
-        if (result.type != 'reset') { return; };
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
-        appConstants.xAuthToken = result.data;
-        asyncStorage.setItem('appConstants', appConstants);
-        this.getSystem();
-        this._modal.showModal('密码设置成功');
-        if (this._timeout) {
-            this.clearTimeout(this._timeout);
-        };
-        this._timeout = this.setTimeout(()=>{
-            this._modal.hideModal();
-        },2000);
     },
     doRegister: function(){
         if (this.state.password.length < 6) {

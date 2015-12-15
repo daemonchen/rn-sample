@@ -169,8 +169,8 @@ module.exports = React.createClass({
           }
         ]
         var rights = appConstants.userRights.rights;
-        var targetRights = appConstants.userRights.rightsMap['1024'];
-        if (rights ^ targetRights == rights){
+        var targetRights = 1024;
+        if ((rights & targetRights) == targetRights){
             return(
                 <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>
                     <TouchableHighlight

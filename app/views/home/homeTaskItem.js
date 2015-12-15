@@ -90,8 +90,8 @@ module.exports = React.createClass({
           }
         ]
         var rights = appConstants.userRights.rights;
-        var targetRights = appConstants.userRights.rightsMap['64'];
-        if (rights ^ targetRights == rights) {
+        var targetRights = 64;
+        if ((rights & targetRights) == targetRights) {
             return(
                 <Swipeout autoClose={true} right={swipeoutBtns}
                 backgroundColor='transparent'

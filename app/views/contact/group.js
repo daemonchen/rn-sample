@@ -38,8 +38,8 @@ module.exports = React.createClass({
     },
     renderCustomerItem: function(){
         var rights = appConstants.userRights.rights;
-        var targetRights = appConstants.userRights.rightsMap['65536'];
-        if (rights ^ targetRights == rights){
+        var targetRights = 65536;
+        if ((rights & targetRights) == targetRights){
             <TouchableOpacity style={contactsStyle.contactsItem}
             onPress={this.props.goCustomerList}>
                 <Image

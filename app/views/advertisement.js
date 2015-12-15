@@ -23,10 +23,12 @@ var systemStore = require('../stores/system/systemStore');
 var loginStore = require('../stores/user/loginStore');
 var verifyCodeStore = require('../stores/user/verifyCodeStore');
 var authTokenStore = require('../stores/user/authTokenStore');
+var authStore = require('../stores/user/authStore');
 
 
 var Welcome = require('./welcome');
 var Launch = require('./launch');
+var Modal = require('../common/modal');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -41,25 +43,44 @@ module.exports = React.createClass({
         _navigator = this.props.navigator;
         return {}
     },
+    _modal: {},
     componentDidMount: function(){
         this.unlisten = systemStore.listen(this.onChange);
         this.unlistenLogin = loginStore.listen(this.onLoginChange);
         this.unlistenVerifyCode = verifyCodeStore.listen(this.onVerifyCodeChange)
-        this.unAuthlisten = authTokenStore.listen(this.onAuthChange);
-        // if (!!this._timeout) {
-        //     this.clearTimeout(this._timeout);
-        // };
-        // this.setTimeout(()=>{
-        //     this.doLaunch();
-        // }, 1050);
+        this.unAuthTokenlisten = authTokenStore.listen(this.onAuthTokenChange);
+        this.unlistenAuth = authStore.listen(this.onAuthChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenLogin();
         this.unlistenVerifyCode();
-        this.unAuthlisten();
+        this.unAuthTokenlisten();
+        this.unlistenAuth();
     },
     onAuthChange: function(){
+        var result = authStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'reset':
+                return this.doLogout(result);
+            default: return;
+        }
+        // appConstants.xAuthToken = result.data;
+        // asyncStorage.setItem('appConstants', appConstants);
+        // // this.getSystem();
+        // this._modal.showModal('密码设置成功');
+        // if (this._timeout) {
+        //     this.clearTimeout(this._timeout);
+        // };
+        // this._timeout = this.setTimeout(()=>{
+        //     this._modal.hideModal();
+        // },2000);
+    },
+    onAuthTokenChange: function(){
         var result = authTokenStore.getState();
         if (result.status != 200 && !!result.message) {
             this.goWelcome();
@@ -166,7 +187,7 @@ module.exports = React.createClass({
                 <Image
                   style={{width: width, height: height}}
                   source={require('../images/default.png')} />
-
+                  <Modal ref={(ref)=>{this._modal = ref}}/>
             </View>
         );
     }
