@@ -25,4 +25,4 @@ class CustomerListStore {
     }
 }
 
-export default alt.createStore(CustomerListStore, 'CustomerListStore');
+module.exports = alt.createStore(CustomerListStore, 'CustomerListStore');

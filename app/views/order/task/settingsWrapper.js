@@ -3,7 +3,7 @@
 这是一个wrapper页面，用来承载每一个任务设置选项的内容页
 */
 var React = require('react-native');
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var {
     View,
     Text,

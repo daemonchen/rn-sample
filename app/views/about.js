@@ -1,6 +1,6 @@
 'use strict';
 var React = require('react-native')
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var DeviceInfo = require('react-native-device-info');
 var {
     View,

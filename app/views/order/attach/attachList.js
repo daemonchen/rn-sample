@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var TimerMixin = require('react-timer-mixin');
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var SearchBar = require('react-native-search-bar');
 var RefreshableListView = require('react-native-refreshable-listview')
 var {

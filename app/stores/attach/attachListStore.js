@@ -52,4 +52,4 @@ class AttachListStore {
     }
 }
 
-export default alt.createStore(AttachListStore, 'AttachListStore');
+module.exports = alt.createStore(AttachListStore, 'AttachListStore');

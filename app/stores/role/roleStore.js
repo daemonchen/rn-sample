@@ -29,4 +29,4 @@ class RoleStore {
     }
 }
 
-export default alt.createStore(RoleStore, 'RoleStore');
+module.exports = alt.createStore(RoleStore, 'RoleStore');

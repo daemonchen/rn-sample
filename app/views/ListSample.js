@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var {View, Text, Navigator, ScrollView, StyleSheet} = React;
 
 var Article = React.createClass({

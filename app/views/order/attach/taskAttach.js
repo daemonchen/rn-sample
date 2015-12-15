@@ -3,7 +3,7 @@
     add attach from task settings
 */
 var React = require('react-native');
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var SearchBar = require('react-native-search-bar');
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var {

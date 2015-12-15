@@ -64,4 +64,4 @@ class OrderStore {
     }
 }
 
-export default alt.createStore(OrderStore, 'OrderStore');
+module.exports = alt.createStore(OrderStore, 'OrderStore');

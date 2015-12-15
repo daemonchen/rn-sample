@@ -25,4 +25,4 @@ class SystemStore {
     }
 }
 
-export default alt.createStore(SystemStore, 'SystemStore');
+module.exports = alt.createStore(SystemStore, 'SystemStore');

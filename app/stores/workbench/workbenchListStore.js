@@ -54,4 +54,4 @@ class WorkbenchListStore {
     }
 }
 
-export default alt.createStore(WorkbenchListStore, 'WorkbenchListStore');
+module.exports = alt.createStore(WorkbenchListStore, 'WorkbenchListStore');

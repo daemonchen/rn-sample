@@ -27,4 +27,4 @@ class FactoryStore {
     }
 }
 
-export default alt.createStore(FactoryStore, 'FactoryStore');
+module.exports = alt.createStore(FactoryStore, 'FactoryStore');

@@ -108,4 +108,4 @@ class InboxStore {
     }
 }
 
-export default alt.createStore(InboxStore, 'InboxStore');
+module.exports = alt.createStore(InboxStore, 'InboxStore');

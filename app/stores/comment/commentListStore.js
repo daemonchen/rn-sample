@@ -88,4 +88,4 @@ class CommentListStore {
     }
 }
 
-export default alt.createStore(CommentListStore, 'CommentListStore');
+module.exports = alt.createStore(CommentListStore, 'CommentListStore');

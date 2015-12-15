@@ -57,4 +57,4 @@ class VerifyCodeStore {
     }
 }
 
-export default alt.createStore(VerifyCodeStore, 'VerifyCodeStore');
+module.exports = alt.createStore(VerifyCodeStore, 'VerifyCodeStore');

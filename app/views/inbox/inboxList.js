@@ -1,7 +1,7 @@
 'use strict';
 var React = require('react-native')
 var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var {
     Text,
     TextInput,

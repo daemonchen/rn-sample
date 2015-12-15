@@ -41,4 +41,4 @@ class EmployeeStore {
     }
 }
 
-export default alt.createStore(EmployeeStore, 'EmployeeStore');
+module.exports = alt.createStore(EmployeeStore, 'EmployeeStore');

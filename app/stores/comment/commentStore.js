@@ -29,4 +29,4 @@ class commentStore {
     }
 }
 
-export default alt.createStore(commentStore, 'commentStore');
+module.exports = alt.createStore(commentStore, 'commentStore');

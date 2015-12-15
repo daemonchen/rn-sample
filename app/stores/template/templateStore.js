@@ -47,4 +47,4 @@ class TemplateStore {
     }
 }
 
-export default alt.createStore(TemplateStore, 'TemplateStore');
+module.exports = alt.createStore(TemplateStore, 'TemplateStore');

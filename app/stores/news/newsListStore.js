@@ -54,4 +54,4 @@ class NewsListStore {
     }
 }
 
-export default alt.createStore(NewsListStore, 'NewsListStore');
+module.exports = alt.createStore(NewsListStore, 'NewsListStore');

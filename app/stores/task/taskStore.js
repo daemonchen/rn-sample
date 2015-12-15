@@ -60,4 +60,4 @@ class TaskStore {
     }
 }
 
-export default alt.createStore(TaskStore, 'TaskStore');
+module.exports = alt.createStore(TaskStore, 'TaskStore');

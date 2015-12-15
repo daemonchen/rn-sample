@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var TimerMixin = require('react-timer-mixin');
 var {
     View,
@@ -101,7 +101,7 @@ var Home =  React.createClass({
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={{ title: '工作台', }}
+                    title={{ title: '工作台' }}
                     rightButton={<RightAddButton onPress={this.showActionSheet} />} />
                 <View style={styles.main}>
                     <HomeSegmentControl

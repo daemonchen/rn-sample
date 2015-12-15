@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var CalendarPicker = require('../common/calendarPicker/CalendarPicker');
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var {
     View,
     Text,

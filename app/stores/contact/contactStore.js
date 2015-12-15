@@ -25,4 +25,4 @@ class ContactStore {
     }
 }
 
-export default alt.createStore(ContactStore, 'ContactStore');
+module.exports = alt.createStore(ContactStore, 'ContactStore');

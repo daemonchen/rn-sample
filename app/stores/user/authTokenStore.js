@@ -25,4 +25,4 @@ class AuthTokenStore {
     }
 }
 
-export default alt.createStore(AuthTokenStore, 'AuthTokenStore');
+module.exports = alt.createStore(AuthTokenStore, 'AuthTokenStore');

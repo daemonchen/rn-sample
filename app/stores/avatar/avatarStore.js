@@ -40,4 +40,4 @@ class AvatarStore {
     }
 }
 
-export default alt.createStore(AvatarStore, 'AvatarStore');
+module.exports = alt.createStore(AvatarStore, 'AvatarStore');

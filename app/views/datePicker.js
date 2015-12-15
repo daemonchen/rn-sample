@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var moment = require('moment');
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var {View, Text, Navigator, DatePickerIOS, StyleSheet} = React;
 var Button = require('../common/button.js');
 

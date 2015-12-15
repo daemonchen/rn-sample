@@ -1,7 +1,7 @@
 'use strict';
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
-var NavigationBar = require('react-native-navbar');
+import NavigationBar from 'react-native-navbar'
 var {
     Text,
     TextInput,

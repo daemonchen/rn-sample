@@ -38,4 +38,4 @@ class UserStore {
     }
 }
 
-export default alt.createStore(UserStore, 'UserStore');
+module.exports = alt.createStore(UserStore, 'UserStore');
