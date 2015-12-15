@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var TimerMixin = require('react-timer-mixin');
+var Orientation = require('react-native-orientation');
 var {
   AppRegistry,
   StyleSheet,
@@ -32,6 +33,7 @@ var awesomeMobile = React.createClass({
         return {}
     },
     componentWillMount: function(){
+        Orientation.lockToPortrait();
         this.getAppState();
     },
     componentDidMount: function(){
