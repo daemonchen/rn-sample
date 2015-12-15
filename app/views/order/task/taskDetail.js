@@ -71,12 +71,12 @@ module.exports = React.createClass({
         this.unlistenTaskList();
     },
     handleUpdate: function(result){
-        if (parseInt(result.data) != this.props.rowData.jobDO.id) {
+        if (parseInt(result.data) != this.state.taskData.id) {
             return;
         };
-        var status = (this.state.done == 1) ? 0 : 1
+        this.state.taskData.status = (this.state.taskData.done == 1) ? 0 : 1
         this.setState({
-            done: status
+            taskData: this.transformatData(this.state.taskData)
         });
     },
     onTaskListChange: function(){
@@ -107,7 +107,6 @@ module.exports = React.createClass({
         };
     },
     transformatData: function(data){
-        console.log('----task data', data);
         var endTime = data.endTime || new Date().valueOf();
         return Object.assign(data, {
             id: data.id || 0,
