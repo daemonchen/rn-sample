@@ -11,6 +11,7 @@
 
 #import "RCTRootView.h"
 #import "RCTPushNotificationManager.h"
+#import "GeTuiManager.h"
 
 @interface AppDelegate ()
 
@@ -37,7 +38,7 @@
    * on the same Wi-Fi network.
    */
 
-  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.103:8081/index.ios.bundle?platform=ios&dev=false"];
+  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.103:8081/index.ios.bundle?platform=ios&dev=true"];
 
   /**
    * OPTION 2
@@ -153,7 +154,8 @@
 /** SDK启动成功返回cid */
 - (void)GeTuiSdkDidRegisterClient:(NSString *)clientId {
   // [4-EXT-1]: 个推SDK已注册，返回clientId
-  NSLog(@"\n>>>[GeTuiSdk RegisterClient]:%@\n\n", clientId);
+  NSLog(@"------GeTuiSdk RegisterClient------%@", clientId);
+  [GeTuiManager setClientId:clientId];
 }
 
 @end

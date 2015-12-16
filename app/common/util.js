@@ -8,8 +8,14 @@ var {
 } = React
 
 var UIImagePickerManager = NativeModules.UIImagePickerManager;
+var GeTuiManager = NativeModules.GeTuiManager;
 
 module.exports = {
+    getClientId: function(callback){
+        return GeTuiManager.getClientId(function(id){
+            !!id && callback(id);
+        });
+    },
     getObjectKeysAlphabetical: function(obj) {
         var keys = [],
             key;

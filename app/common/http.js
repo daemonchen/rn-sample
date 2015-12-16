@@ -22,9 +22,6 @@ module.exports = {
     getAuthToken: function(callback){
         return appConstants.xAuthToken;
     },
-    getLocation: function(){
-
-    },
     getUrlParams: function(data){
         var result = data || {}
         result.appkey = 997251497892209797;
@@ -135,7 +132,7 @@ module.exports = {
             .then((res)=>{
                 var result = null;
                 try{
-                    // console.log('[NZAOM]http response:',res);
+                    console.log('[NZAOM]http response:',res);
                     result = res.json();
                 }catch(error){
                     console.log(error);

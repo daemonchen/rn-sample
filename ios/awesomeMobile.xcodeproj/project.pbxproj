@@ -39,6 +39,7 @@
 		D2BF47321C21494E002C7185 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47311C21494E002C7185 /* CoreLocation.framework */; };
 		D2BF47341C21495A002C7185 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47331C21495A002C7185 /* CoreBluetooth.framework */; };
 		D2BF47F51C215158002C7185 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47F41C215134002C7185 /* libRCTPushNotification.a */; };
+		D2BF48341C219DFE002C7185 /* GeTuiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF48331C219DFE002C7185 /* GeTuiManager.m */; };
 		D2ED5D5C1C00788C008826C6 /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */; };
 		D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */; };
 		D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D771C06DFCA008826C6 /* libRNDeviceInfo.a */; };
@@ -222,6 +223,8 @@
 		D2BF47311C21494E002C7185 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D2BF47331C21495A002C7185 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		D2BF48331C219DFE002C7185 /* GeTuiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeTuiManager.m; sourceTree = "<group>"; };
+		D2BF48351C219E1C002C7185 /* GeTuiManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeTuiManager.h; sourceTree = "<group>"; };
 		D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
@@ -376,6 +379,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D2BF48321C219DBD002C7185 /* GeTui */,
 				D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */,
 				D2BF47201C21476C002C7185 /* GtSdkLib */,
 				D2BF469B1C1FFD00002C7185 /* RCTOrientation */,
@@ -506,6 +510,15 @@
 				D2BF47F41C215134002C7185 /* libRCTPushNotification.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D2BF48321C219DBD002C7185 /* GeTui */ = {
+			isa = PBXGroup;
+			children = (
+				D2BF48331C219DFE002C7185 /* GeTuiManager.m */,
+				D2BF48351C219E1C002C7185 /* GeTuiManager.h */,
+			);
+			name = GeTui;
 			sourceTree = "<group>";
 		};
 		D2ED5D4A1C007876008826C6 /* Products */ = {
@@ -864,6 +877,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2BF469E1C1FFD00002C7185 /* Orientation.m in Sources */,
+				D2BF48341C219DFE002C7185 /* GeTuiManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				D22832FF1C0FCAFA00027EA3 /* UIImagePickerManager.m in Sources */,

@@ -4,6 +4,7 @@ var alt = require('../../common/alt');
 var systemAction = require('../../actions/system/systemAction');
 var systemService = require('../../services/system/systemService')
 var asyncStorage = require('../../common/storage');
+var util = require('../../common/util');
 class SystemStore {
     constructor() {
         this.bindActions(systemAction);
@@ -11,12 +12,16 @@ class SystemStore {
     }
 
     onInit(data) {
-        systemService.system(data)
-        .then((responseData) => {
-            systemAction.initSuccess(responseData)
-        }).done();
+        var obj = Object.assign({}, data);
+        util.getClientId((id)=>{
+            obj.clientId = id;
+            systemService.system(obj)
+            .then((responseData) => {
+                systemAction.initSuccess(responseData)
+            }).done();
 
-        this.preventDefault();
+            this.preventDefault();
+        });
     }
     onInitSuccess(data){
         if (!data) {return false};
