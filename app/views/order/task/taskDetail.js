@@ -19,6 +19,7 @@ var {
     ActionSheetIOS,
     DeviceEventEmitter,
     Dimensions,
+    AlertIOS,
     StyleSheet
 } = React;
 
@@ -150,10 +151,19 @@ module.exports = React.createClass({
     },
     onPressCircle: function(){//更新任务状态
         var status = (this.state.taskData.done == 1) ? 0 : 1
-        taskListAction.update({
-            id: this.state.taskData.id,
-            status: status,
-        });
+        AlertIOS.alert(
+            '',
+            '您确定要更改任务状态吗',
+            [
+                {text: '确定', onPress: () => {
+                    taskListAction.update({
+                        id: this.state.taskData.id,
+                        status: status,
+                    });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
     },
     renderCheckIcon: function(){
         var circleImage = (this.state.taskData.done == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')

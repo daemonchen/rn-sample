@@ -6,6 +6,7 @@ var {
     View,
     ListView,
     Image,
+    AlertIOS,
     TouchableOpacity,
     TouchableHighlight,
     TouchableWithoutFeedback,
@@ -78,10 +79,19 @@ module.exports = React.createClass({
                 isCheck: isCheck
             });
         }else{
-            taskListAction.update({
-                id: this.props.rowData.jobDO.id,
-                status: status,
-            });
+            AlertIOS.alert(
+                '',
+                '您确定要更改任务状态吗',
+                [
+                    {text: '确定', onPress: () => {
+                        taskListAction.update({
+                            id: this.props.rowData.jobDO.id,
+                            status: status,
+                        });
+                    } },
+                    {text: '取消', onPress: () => {return}, style: 'cancel'},
+                ]
+            )
         }
     },
     onPressRow: function(){

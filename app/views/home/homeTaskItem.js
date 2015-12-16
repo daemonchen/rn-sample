@@ -9,6 +9,7 @@ var {
     TouchableOpacity,
     TouchableHighlight,
     TouchableWithoutFeedback,
+    AlertIOS,
     StyleSheet
 } = React
 
@@ -58,10 +59,19 @@ module.exports = React.createClass({
     },
     onPressCircle: function(){
         var status = (this.state.done == 1) ? 0 : 1
-        taskListAction.update({
-            id: this.props.rowData.id,
-            status: status,
-        });
+        AlertIOS.alert(
+            '',
+            '您确定要更改任务状态吗',
+            [
+                {text: '确定', onPress: () => {
+                    taskListAction.update({
+                        id: this.props.rowData.id,
+                        status: status,
+                    });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
     },
     onPressRow: function(){
         this.props.onPressRow(this.props.rowData, this.props.sectionID, this.props.rowID);
