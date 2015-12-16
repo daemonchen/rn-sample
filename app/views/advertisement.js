@@ -129,7 +129,6 @@ module.exports = React.createClass({
         appConstants.xAuthToken = result.data.token;
         appConstants.user = result.data.user;
         appConstants.userRights = result.data.userRights;
-        console.log('---userRights:', appConstants.userRights);
         this.getAppState();
         asyncStorage.setItem('appConstants', appConstants);
     },

@@ -35,13 +35,12 @@ class InboxStore {
         this.preventDefault();
     }
     onLoadMoreSuccess(response){
-         console.log('----loadmore', response);
         if (!response || !response.data) {return false};
         response.type = 'get'
         this.mergeList(response)
     }
     mergeList(response){
-        asyncStorage.getItem('inboxList')
+        asyncStorage.getItem('appConstants')
         .then((result)=>{
             if (!!result.inboxList) {
                 response.data = result.inboxList.concat(response.data)

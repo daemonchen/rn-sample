@@ -45,25 +45,25 @@ module.exports = {
     get: function(url, data){
         url += '?' + this.getUrlParams(data)
         this.factoryFetchOptions('GET');
-        console.log('http get', url);
+        console.log('[NZAOM]http get', url);
         return this.fetchData(url);
     },
     post: function(url, body){
         url += '?' + this.getUrlParams()
         this.factoryFetchOptions('POST', body);
-        console.log('http post', url, body);
+        console.log('[NZAOM]http post', url, body);
         return this.fetchData(url);
     },
     put: function(url, body){
         url += '?' + this.getUrlParams()
         this.factoryFetchOptions('PUT', body);
-        console.log('http put', url, body);
+        console.log('[NZAOM]http put', url, body);
         return this.fetchData(url);
     },
     delete: function(url){
         url += '?' + this.getUrlParams()
         this.factoryFetchOptions('DELETE');
-        console.log('http delete', url);
+        console.log('[NZAOM]http delete', url);
         return this.fetchData(url);
     },
     filesUpload: function(url, uris, params){
@@ -131,7 +131,17 @@ module.exports = {
     },
     fetchData: function(url){
         return fetch(url, this.fetchOptions)
-            .then(res => res.json())
+            // .then(res => res.json())
+            .then((res)=>{
+                var result = null;
+                try{
+                    console.log('[NZAOM]http response:',res);
+                    result = res.json();
+                }catch(error){
+                    console.log(error);
+                }
+                return result;
+            })
             // .then( res =>{
             //     console.log(res);
             //     return res;

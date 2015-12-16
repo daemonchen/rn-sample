@@ -98,7 +98,6 @@ module.exports = React.createClass({
     },
     onChange: function(){
         var result = attachListStore.getState();
-        console.log('---result in attachlist', result);
         if (result.status != 200 && !!result.message) {
             return;
         }

@@ -53,7 +53,6 @@ module.exports = React.createClass({
 
         var defaultData = this.props.route.data || {};
         var endTime = defaultData.endTime || new Date().valueOf();
-        console.log('------ordersettings data', defaultData);
         return {
             orderId: defaultData.id || 0,
             orderStatus: defaultData.orderStatus || 3,
