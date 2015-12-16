@@ -1,5 +1,6 @@
 'use strict';
-var React = require('react-native')
+var React = require('react-native');
+var moment = require('moment');
 var {
     Text,
     View,
@@ -80,6 +81,22 @@ module.exports = React.createClass({
             </TouchableWithoutFeedback>
             )
     },
+    renderTimeLabel: function(timestamp){
+        var time = moment(timestamp).format('YYYY-MM-DD');
+        if (moment().valueOf() > timestamp) {//任务过期
+            return(
+                <Text style={[styles.timeLabel, commonStyle.red]}>
+                    {time}
+                </Text>
+                );
+        };
+        return(
+            <Text style={[styles.timeLabel, commonStyle.textLight]}>
+                {time}
+            </Text>
+            );
+
+    },
     render: function(){
         var swipeoutBtns = [
           {
@@ -108,6 +125,7 @@ module.exports = React.createClass({
                                     订单：{this.props.rowData.orderTitle}
                                 </Text>
                             </View>
+                            {this.renderTimeLabel(this.props.rowData.endTime)}
                         </View>
                     </TouchableHighlight>
                 </Swipeout>
@@ -125,6 +143,7 @@ module.exports = React.createClass({
                                 订单：{this.props.rowData.orderTitle}
                             </Text>
                         </View>
+                        {this.renderTimeLabel(this.props.rowData.endTime)}
                     </View>
                 </TouchableHighlight>
                 );

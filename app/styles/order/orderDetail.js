@@ -41,6 +41,11 @@ module.exports = React.StyleSheet.create({
     contentWrapper: {
         flex: 1
     },
+    timeLabel: {
+        width:80,
+        marginTop: 5,
+        textAlign: 'right'
+    },
     taskItemCircle: {
         width: 36,
         height: 36,

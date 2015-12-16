@@ -66,19 +66,9 @@ module.exports = React.createClass({
         }
         switch(result.type){
             case 'reset':
-                return this.doLogout(result);
+                return this.doReset(result);
             default: return;
         }
-        // appConstants.xAuthToken = result.data;
-        // asyncStorage.setItem('appConstants', appConstants);
-        // // this.getSystem();
-        // this._modal.showModal('密码设置成功');
-        // if (this._timeout) {
-        //     this.clearTimeout(this._timeout);
-        // };
-        // this._timeout = this.setTimeout(()=>{
-        //     this._modal.hideModal();
-        // },2000);
     },
     onAuthTokenChange: function(){
         var result = authTokenStore.getState();
@@ -117,6 +107,23 @@ module.exports = React.createClass({
                 return this.doLogout(result);
             default: return;
         }
+    },
+    doReset: function(result){
+        this._modal.showModal('密码设置成功,请重新登录');
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            this._modal.hideModal();
+            appConstants = {};
+            asyncStorage.setItem('appConstants', appConstants);
+            _navigator.immediatelyResetRouteStack([{
+                title: 'welcome' ,
+                component: Welcome,
+                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+                topNavigator: _navigator
+            }])
+        },2000);
     },
     doLogin: function(result){
         appConstants.xAuthToken = result.data.token;
