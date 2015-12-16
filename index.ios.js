@@ -8,6 +8,8 @@ var {
   StyleSheet,
   TabBarIOS,
   Navigator,
+  AlertIOS,
+  PushNotificationIOS,
   Image,
   Text,
   View,
@@ -32,6 +34,20 @@ var awesomeMobile = React.createClass({
         Orientation.lockToPortrait();
         this.getAppState();
         this.getLocation();
+        PushNotificationIOS.addEventListener('notification', this._onNotification);
+    },
+    componentWillUnmount: function() {
+        PushNotificationIOS.removeEventListener('notification', this._onNotification);
+    },
+    _onNotification: function(notification) {
+        AlertIOS.alert(
+          'Notification Received',
+          'Alert message: ' + notification.getMessage(),
+          [{
+            text: 'Dismiss',
+            onPress: null,
+          }]
+        );
     },
     getLocation: function(){
         var location = {};

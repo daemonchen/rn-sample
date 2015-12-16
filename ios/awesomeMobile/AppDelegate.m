@@ -10,11 +10,17 @@
 #import "AppDelegate.h"
 
 #import "RCTRootView.h"
+#import "RCTPushNotificationManager.h"
+
+@interface AppDelegate ()
+
+@end
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
   NSURL *jsCodeLocation;
 
   /**
@@ -31,7 +37,7 @@
    * on the same Wi-Fi network.
    */
 
-  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=false"];
+  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.103:8081/index.ios.bundle?platform=ios&dev=false"];
 
   /**
    * OPTION 2
@@ -51,7 +57,103 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  
+  // 通过 appId、 appKey 、appSecret 启动SDK，注：该方法需要在主线程中调用
+  [GeTuiSdk startSdkWithAppId:kGtAppId appKey:kGtAppKey appSecret:kGtAppSecret delegate:self];
+  
+  // 注册APNS
+  [self registerUserNotification];
+  
+  // 处理远程通知启动APP
+  [self receiveNotificationByLaunchingOptions:launchOptions];
+  
   return YES;
+}
+
+
+#pragma mark - 用户通知(推送) _自定义方法
+
+/** 注册用户通知 */
+- (void)registerUserNotification {
+  
+  /*
+   注册通知(推送)
+   申请App需要接受来自服务商提供推送消息
+   */
+  
+  // 判读系统版本是否是“iOS 8.0”以上
+  if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ||
+      [UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+    
+    // 定义用户通知类型(Remote.远程 - Badge.标记 Alert.提示 Sound.声音)
+    UIUserNotificationType types = UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+    
+    // 定义用户通知设置
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    
+    // 注册用户通知 - 根据用户通知设置
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+  }
+  else {      // iOS8.0 以前远程推送设置方式
+    // 定义远程通知类型(Remote.远程 - Badge.标记 Alert.提示 Sound.声音)
+    UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+    
+    // 注册远程通知 -根据远程通知类型
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+  }
+}
+
+/** 自定义：APP被“推送”启动时处理推送消息处理（APP 未启动--》启动）*/
+- (void)receiveNotificationByLaunchingOptions:(NSDictionary *)launchOptions {
+  if (!launchOptions) return;
+  
+  /*
+   通过“远程推送”启动APP
+   UIApplicationLaunchOptionsRemoteNotificationKey 远程推送Key
+   */
+  NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+  if (userInfo) {
+    NSLog(@"\n>>>[Launching RemoteNotification]:%@",userInfo);
+  }
+}
+
+#pragma mark - 远程通知(推送)回调
+
+/** 远程通知注册成功委托 */
+// Required for the register event.
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+  NSLog(@"---------device token:%@\n\n",deviceToken);
+
+  NSString *myToken = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+  myToken = [myToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+  NSLog(@"\n>>>[DeviceToken ]:%@\n\n",deviceToken);
+  
+  [GeTuiSdk registerDeviceToken:myToken];
+  
+  [RCTPushNotificationManager application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+/** 远程通知注册失败委托 */
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+  
+  [GeTuiSdk registerDeviceToken:@""];
+  
+  NSLog(@"\n>>>[DeviceToken Error]:%@\n\n",error.description);
+}
+
+#pragma mark - APP运行中接收到通知(推送)处理
+
+// Required for the notification event.
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
+{
+  [RCTPushNotificationManager application:application didReceiveRemoteNotification:notification];
+}
+
+/** SDK启动成功返回cid */
+- (void)GeTuiSdkDidRegisterClient:(NSString *)clientId {
+  // [4-EXT-1]: 个推SDK已注册，返回clientId
+  NSLog(@"\n>>>[GeTuiSdk RegisterClient]:%@\n\n", clientId);
 }
 
 @end

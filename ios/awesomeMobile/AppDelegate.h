@@ -8,8 +8,13 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "GeTuiSdk.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+#define kGtAppId           @"e65WBcwZKT7LKmTzQ5Sqz6"
+#define kGtAppKey          @"jzDHFzDyP27wPp4kPnXKW9"
+#define kGtAppSecret       @"Cx7t311IsT9nYZceGFDsY9"
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate, GeTuiSdkDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
 

@@ -198,6 +198,30 @@ module.exports = React.createClass({
             <CommentBar navigator={_navigator} data={this.state.taskData.id}/>
             )
     },
+    renderOverTime: function(){
+        if (!this.state.taskData.overTime) {
+            return(
+                <View />
+                );
+        };
+        var overTimeFormat = moment(this.state.taskData.overTime).format('YYYY年MM月DD日')
+        return(
+            <View
+            style={commonStyle.settingItemWrapper} >
+                <View
+                style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                    <Text
+                    style={commonStyle.settingTitle}>
+                        完成日期
+                    </Text>
+                    <Text
+                    style={commonStyle.settingDetail}>
+                        {overTimeFormat}
+                    </Text>
+                </View>
+            </View>
+            );
+    },
     renderNavigationBar: function(){
         var rights = appConstants.userRights.rights;
         var targetRights = 128;
@@ -265,6 +289,7 @@ module.exports = React.createClass({
                             </Text>
                         </View>
                     </View>
+                    {this.renderOverTime()}
                     <TouchableHighlight
                     underlayColor='#eee'
                     onPress={this._goOrderDetail} >

@@ -84,9 +84,7 @@ module.exports = React.createClass({
             total: result.total
         });
     },
-    handleUpdate: function(result){
-        return;
-    },
+
     handleDelete: function(result){
         if (result.status != 200 && !!result.message) {
             return;

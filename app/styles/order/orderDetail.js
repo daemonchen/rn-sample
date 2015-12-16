@@ -84,7 +84,7 @@ module.exports = React.StyleSheet.create({
     timelineWrapper:{
         width: 2 / React.PixelRatio.get(),
         position: 'absolute',
-        left: 29,
+        left: 32,
         top: 0,
         bottom: 0,
         flexDirection: 'column'

@@ -20,6 +20,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		4CD8E7718311449DAD48959A /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F462FB9DE04EC0834B0650 /* libRNVectorIcons.a */; };
+		7B3DA2B9DFA44A2492AEE6E9 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6900895165DA41BB84501851 /* libRCTActionSheet.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D22832EA1C0F3A3B00027EA3 /* libRCTCameraRoll.a */; };
 		D22832FF1C0FCAFA00027EA3 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */; };
@@ -27,6 +29,16 @@
 		D25AF01C1BF9AE8100009F01 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */; };
 		D2A51F8E1C100D0B00923C26 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = D2A51F8D1C100D0B00923C26 /* main.jsbundle */; };
 		D2BF469E1C1FFD00002C7185 /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF469D1C1FFD00002C7185 /* Orientation.m */; };
+		D2BF47231C21476C002C7185 /* libGeTuiSdk-1.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47221C21476C002C7185 /* libGeTuiSdk-1.3.1.a */; };
+		D2BF47261C214901002C7185 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47251C214901002C7185 /* libz.tbd */; };
+		D2BF47281C214912002C7185 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47271C214912002C7185 /* libsqlite3.tbd */; };
+		D2BF472A1C21491D002C7185 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47291C21491D002C7185 /* CFNetwork.framework */; };
+		D2BF472C1C214929002C7185 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF472B1C214929002C7185 /* SystemConfiguration.framework */; };
+		D2BF472E1C214937002C7185 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF472D1C214937002C7185 /* CoreTelephony.framework */; };
+		D2BF47301C214943002C7185 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF472F1C214943002C7185 /* AVFoundation.framework */; };
+		D2BF47321C21494E002C7185 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47311C21494E002C7185 /* CoreLocation.framework */; };
+		D2BF47341C21495A002C7185 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47331C21495A002C7185 /* CoreBluetooth.framework */; };
+		D2BF47F51C215158002C7185 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47F41C215134002C7185 /* libRCTPushNotification.a */; };
 		D2ED5D5C1C00788C008826C6 /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */; };
 		D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */; };
 		D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D771C06DFCA008826C6 /* libRNDeviceInfo.a */; };
@@ -124,6 +136,20 @@
 			remoteGlobalIDString = 409A073B1B9047BF00F6A547;
 			remoteInfo = RNPhonePicker;
 		};
+		D2BF46F91C2134CE002C7185 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A41307C31BEB4DB3B993E0F8 /* RNVectorIcons.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
+			remoteInfo = RNVectorIcons;
+		};
+		D2BF47F31C215134002C7185 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
 		D2ED5D4F1C007876008826C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */;
@@ -163,6 +189,7 @@
 		00E356EE1AD99517003FC87E /* awesomeMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = awesomeMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* awesomeMobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = awesomeMobileTests.m; sourceTree = "<group>"; };
+		08F462FB9DE04EC0834B0650 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* awesomeMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = awesomeMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,8 +199,10 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = awesomeMobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = awesomeMobile/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		6900895165DA41BB84501851 /* libRCTActionSheet.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTActionSheet.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A41307C31BEB4DB3B993E0F8 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		D22832FD1C0FCAFA00027EA3 /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImagePickerManager.h; sourceTree = "<group>"; };
 		D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerManager.m; sourceTree = "<group>"; };
@@ -182,6 +211,17 @@
 		D2A51F8D1C100D0B00923C26 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		D2BF469C1C1FFD00002C7185 /* Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orientation.h; sourceTree = "<group>"; };
 		D2BF469D1C1FFD00002C7185 /* Orientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orientation.m; sourceTree = "<group>"; };
+		D2BF47211C21476C002C7185 /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
+		D2BF47221C21476C002C7185 /* libGeTuiSdk-1.3.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.3.1.a"; sourceTree = "<group>"; };
+		D2BF47251C214901002C7185 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		D2BF47271C214912002C7185 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		D2BF47291C21491D002C7185 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		D2BF472B1C214929002C7185 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D2BF472D1C214937002C7185 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		D2BF472F1C214943002C7185 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D2BF47311C21494E002C7185 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		D2BF47331C21495A002C7185 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
@@ -199,6 +239,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2BF47F51C215158002C7185 /* libRCTPushNotification.a in Frameworks */,
+				D2BF47341C21495A002C7185 /* CoreBluetooth.framework in Frameworks */,
+				D2BF47321C21494E002C7185 /* CoreLocation.framework in Frameworks */,
+				D2BF47301C214943002C7185 /* AVFoundation.framework in Frameworks */,
+				D2BF472E1C214937002C7185 /* CoreTelephony.framework in Frameworks */,
+				D2BF472C1C214929002C7185 /* SystemConfiguration.framework in Frameworks */,
+				D2BF472A1C21491D002C7185 /* CFNetwork.framework in Frameworks */,
+				D2BF47281C214912002C7185 /* libsqlite3.tbd in Frameworks */,
+				D2BF47261C214901002C7185 /* libz.tbd in Frameworks */,
+				D2BF47231C21476C002C7185 /* libGeTuiSdk-1.3.1.a in Frameworks */,
 				D22833111C100AB400027EA3 /* libRNPhonePicker.a in Frameworks */,
 				D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */,
 				D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */,
@@ -214,6 +264,8 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				7B3DA2B9DFA44A2492AEE6E9 /* libRCTActionSheet.a in Frameworks */,
+				4CD8E7718311449DAD48959A /* libRNVectorIcons.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +376,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */,
+				D2BF47201C21476C002C7185 /* GtSdkLib */,
 				D2BF469B1C1FFD00002C7185 /* RCTOrientation */,
 				D228330B1C100A9B00027EA3 /* RNPhonePicker.xcodeproj */,
 				D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */,
@@ -340,6 +394,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				A41307C31BEB4DB3B993E0F8 /* RNVectorIcons.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -355,6 +410,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				D2BF47241C2148D5002C7185 /* Frameworks */,
 				D2A51F8D1C100D0B00923C26 /* main.jsbundle */,
 				D22832FC1C0FCAFA00027EA3 /* UIImagePickerManager */,
 				D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */,
@@ -410,6 +466,46 @@
 			);
 			name = RCTOrientation;
 			path = "../node_modules/react-native-orientation/RCTOrientation";
+			sourceTree = "<group>";
+		};
+		D2BF46F61C2134CE002C7185 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2BF46FA1C2134CE002C7185 /* libRNVectorIcons.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D2BF47201C21476C002C7185 /* GtSdkLib */ = {
+			isa = PBXGroup;
+			children = (
+				D2BF47211C21476C002C7185 /* GeTuiSdk.h */,
+				D2BF47221C21476C002C7185 /* libGeTuiSdk-1.3.1.a */,
+			);
+			path = GtSdkLib;
+			sourceTree = "<group>";
+		};
+		D2BF47241C2148D5002C7185 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D2BF47331C21495A002C7185 /* CoreBluetooth.framework */,
+				D2BF47311C21494E002C7185 /* CoreLocation.framework */,
+				D2BF472F1C214943002C7185 /* AVFoundation.framework */,
+				D2BF472D1C214937002C7185 /* CoreTelephony.framework */,
+				D2BF472B1C214929002C7185 /* SystemConfiguration.framework */,
+				D2BF47291C21491D002C7185 /* CFNetwork.framework */,
+				D2BF47271C214912002C7185 /* libsqlite3.tbd */,
+				D2BF47251C214901002C7185 /* libz.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D2BF47F01C215134002C7185 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2BF47F41C215134002C7185 /* libRCTPushNotification.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D2ED5D4A1C007876008826C6 /* Products */ = {
@@ -482,7 +578,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 710;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -493,7 +589,7 @@
 						DevelopmentTeam = U58JZD8Y2V;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -540,6 +636,10 @@
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
 				},
 				{
+					ProductGroup = D2BF47F01C215134002C7185 /* Products */;
+					ProjectRef = D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */;
+				},
+				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
 					ProjectRef = 139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */;
 				},
@@ -570,6 +670,10 @@
 				{
 					ProductGroup = D2ED5D6C1C069A2C008826C6 /* Products */;
 					ProjectRef = D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */;
+				},
+				{
+					ProductGroup = D2BF46F61C2134CE002C7185 /* Products */;
+					ProjectRef = A41307C31BEB4DB3B993E0F8 /* RNVectorIcons.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -663,6 +767,20 @@
 			fileType = archive.ar;
 			path = libRNPhonePicker.a;
 			remoteRef = D228330F1C100A9B00027EA3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D2BF46FA1C2134CE002C7185 /* libRNVectorIcons.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNVectorIcons.a;
+			remoteRef = D2BF46F91C2134CE002C7185 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D2BF47F41C215134002C7185 /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = D2BF47F31C215134002C7185 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */ = {
@@ -778,6 +896,11 @@
 				INFOPLIST_FILE = awesomeMobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/awesomeMobile.app/awesomeMobile";
@@ -796,6 +919,11 @@
 				INFOPLIST_FILE = awesomeMobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/awesomeMobile.app/awesomeMobile";
@@ -807,20 +935,28 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: daemon chen (H8J79K9MUM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: daemon chen (H8J79K9MUM)";
 				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/UIImagePickerManager/**",
+					"$(SRCROOT)/../node_modules/react-native-swipeout/ios/reactnativeswipeout",
+					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = awesomeMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GtSdkLib",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d80d4c36-764b-427f-b234-673722fa6591";
 			};
 			name = Debug;
 		};
@@ -829,19 +965,27 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: daemon chen (H8J79K9MUM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: daemon chen (H8J79K9MUM)";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/UIImagePickerManager/**",
+					"$(SRCROOT)/../node_modules/react-native-swipeout/ios/reactnativeswipeout",
+					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = awesomeMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/GtSdkLib",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "d80d4c36-764b-427f-b234-673722fa6591";
 			};
 			name = Release;
 		};
@@ -884,6 +1028,9 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/UIImagePickerManager/**",
+					"$(SRCROOT)/../node_modules/react-native-swipeout/ios/reactnativeswipeout",
+					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -924,6 +1071,9 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native-image-picker/UIImagePickerManager/**",
+					"$(SRCROOT)/../node_modules/react-native-swipeout/ios/reactnativeswipeout",
+					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

@@ -80,7 +80,7 @@ module.exports = React.createClass({
             orderId: defaultData.id || 0,
             ownerId: defaultData.ownerId || 0,
             userName: defaultData.userName || '',
-            description: defaultData.description || '',
+            description: '',
             jobName: defaultData.jobName || '',
             endTime: endTime,
             endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
@@ -294,25 +294,6 @@ module.exports = React.createClass({
         })
     },
     renderOptionalSettings: function(){
-        // <TouchableHighlight
-        // style={commonStyle.settingItemWrapper}
-        // underlayColor='#eee'
-        // onPress={this._goOrderDetail}>
-        //     <View
-        //     style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
-        //         <Text
-        //         style={commonStyle.settingTitle}>
-        //             所属订单
-        //         </Text>
-        //         <Text
-        //         style={commonStyle.settingDetail}>
-        //         {this.state.creatorName}
-        //         </Text>
-        //         <Image
-        //         style={commonStyle.settingArrow}
-        //         source={require('../../../images/common/arrow_right.png')} />
-        //     </View>
-        // </TouchableHighlight>
         if (this.state.taskStatus == 2) {//修改任务
             return(
                 <View>
