@@ -8,6 +8,7 @@ var {
     Image,
     View,
     ListView,
+    Navigator,
     TouchableOpacity,
     ActivityIndicatorIOS,
     StyleSheet
@@ -21,11 +22,12 @@ var styles = require('../../../styles/order/comment.js');
 var commonStyle = require('../../../styles/commonStyle');
 
 var CompanyMemberList = require('../../contact/companyMemberList');
-
+var _navigator = null;
 module.exports = React.createClass({
     mixins: [TimerMixin],
     displayName: 'commentBar',
     getInitialState: function() {
+        _navigator = this.props.navigator;
         return {
             targetId: this.props.data,//任务id
             atUserIds: [],
@@ -41,7 +43,6 @@ module.exports = React.createClass({
     },
     onChange: function(){
         var result = commentStore.getState();
-        console.log('---create comment');
         if (result.status != 200 && !!result.message) {
             return;
         }
@@ -52,10 +53,12 @@ module.exports = React.createClass({
         };
     },
     onPressContactRow: function(data){
-        console.log('---data', data);
+        var text = this.state.comment + data.userName + ' ';
+        var ids = this.state.atUserIds;
+        ids.push(data.userId);
         this.setState({
-            ownerId: data.userId,
-            userName: data.userName
+            comment: text,
+            atUserIds: ids
         });
     },
      _setRelatedPerson: function(){//增加@的人
@@ -65,11 +68,14 @@ module.exports = React.createClass({
             target: 1,
             onPressContactRow: this.onPressContactRow,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            topNavigator: _navigator
         });
     },
     onChangeComment: function(text){
-        console.log('----change text');
+        var reg = /@$/;
+        if (reg.test(text)) {
+            this._setRelatedPerson();
+        }
         this.setState({
             comment: text
         });

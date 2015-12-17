@@ -58,8 +58,8 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow);
-        DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
+        this.keyShowListener = DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow);
+        this.keyHideListener = DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
 
         this.unlisten = taskStore.listen(this.onChange);
         this.unlistenTaskList = taskListStore.listen(this.onTaskListChange)
@@ -71,6 +71,8 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenTaskList();
+        this.keyShowListener.remove();
+        this.keyHideListener.remove();
     },
     handleUpdate: function(result){
         if (parseInt(result.data) != this.state.taskData.id) {
