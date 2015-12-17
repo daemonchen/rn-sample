@@ -30,10 +30,9 @@ module.exports = React.StyleSheet.create({
         top: 16
     },
     checkIconWrapper: {
-        width: 54,
+        width: 60,
         height: 48,
-        paddingLeft: 16,
-        paddingRight: 10,
+        paddingHorizontal: 16,
         paddingTop: 20
     },
     checkIcon: {
