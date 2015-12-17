@@ -67,7 +67,7 @@ var setPassWord = React.createClass({
         };
         if (this.props.route.type == 1) {//注册用户
             verifyCodeAction.register({
-                verifyCode: this.state.token,
+                token: this.state.token,
                 mobile: this.state.mobile,
                 userName: this.state.username,
                 password: md5(this.state.password)
