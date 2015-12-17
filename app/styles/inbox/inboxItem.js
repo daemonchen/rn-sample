@@ -20,7 +20,7 @@ module.exports = React.StyleSheet.create({
     },
     inboxDetail:{
         fontSize: 14,
-        marginTop:5,
+        marginTop:10,
         marginLeft: 10
     },
     inboxSubDetail: {

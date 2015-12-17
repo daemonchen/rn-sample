@@ -104,7 +104,8 @@ var orderItem = React.createClass({
                               style={styles.circle}/>
                             {this.renderPercent(this.props.rowData.overPercent)}
                             <View style={styles.orderContentWrapper}>
-                                <Text style={[styles.orderTitle, commonStyle.textDark]}>
+                                <Text style={[styles.orderTitle, commonStyle.textDark]}
+                                numberOfLines={1}>
                                     {this.props.rowData.title}
                                 </Text>
                                 <View style={styles.orderContent}>
@@ -133,7 +134,8 @@ var orderItem = React.createClass({
                           style={styles.circle}/>
                         {this.renderPercent(this.props.rowData.overPercent)}
                         <View style={styles.orderContentWrapper}>
-                            <Text style={[styles.orderTitle, commonStyle.textDark]}>
+                            <Text style={[styles.orderTitle, commonStyle.textDark]}
+                            numberOfLines={1}>
                                 {this.props.rowData.title}
                             </Text>
                             <View style={styles.orderContent}>

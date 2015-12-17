@@ -34,22 +34,23 @@ module.exports = React.StyleSheet.create({
         height: 48,
         paddingLeft: 16,
         paddingRight: 10,
-        paddingVertical: 10
+        paddingTop: 20
     },
     checkIcon: {
     },
     contentWrapper: {
+        paddingVertical: 16,
         flex: 1
     },
     timeLabel: {
         width:80,
-        marginTop: 5,
+        marginTop: 20,
         textAlign: 'right'
     },
     taskItemCircle: {
         width: 36,
         height: 36,
-        marginTop: 5,
+        marginTop: 16,
         borderRadius: 18
     },
     taskItemTitle:{
@@ -98,10 +99,13 @@ module.exports = React.StyleSheet.create({
     timelineDone: {
         backgroundColor: '#34a853'
     },
+    rowTitle: {
+        fontSize: 16
+    },
     rowText: {
         color: '#212121',
         fontSize: 14,
-        paddingVertical: 5
+        paddingBottom: 10
     },
     attachImageWrapper: {
         alignItems: 'center'
@@ -144,7 +148,7 @@ module.exports = React.StyleSheet.create({
         // backgroundColor: 'red',
         // borderRadius: 5,
         position: 'absolute',
-        top: 20,
+        top: 25,
         left: 62
     },
     newsTagGray: {
@@ -163,7 +167,7 @@ module.exports = React.StyleSheet.create({
     newsItemAvatar: {
         width: 36,
         height: 36,
-        marginTop: 5,
+        marginTop: 16,
         marginLeft: 16,
         marginRight: 32,
         borderRadius: 18

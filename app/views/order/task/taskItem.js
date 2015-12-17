@@ -190,7 +190,10 @@ module.exports = React.createClass({
                             {this.renderTimeLine()}
                             {this.renderCheckIcon()}
                             <View style={styles.contentWrapper}>
-                                <Text style={styles.rowText}>{this.props.rowData.jobDO.jobName}</Text>
+                                <Text style={[styles.rowText,styles.rowTitle]}
+                                numberOfLines={1}>
+                                    {this.props.rowData.jobDO.jobName}
+                                </Text>
                                 {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
                             </View>
                             {this.renderAvatar(this.props.rowData.userVO)}
@@ -207,7 +210,10 @@ module.exports = React.createClass({
                         {this.renderTimeLine()}
                         {this.renderCheckIcon()}
                         <View style={styles.contentWrapper}>
-                            <Text style={styles.rowText}>{this.props.rowData.jobDO.jobName}</Text>
+                            <Text style={[styles.rowText,styles.rowTitle]}
+                            numberOfLines={1}>
+                                {this.props.rowData.jobDO.jobName}
+                            </Text>
                             {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
                         </View>
                         {this.renderAvatar(this.props.rowData.userVO)}

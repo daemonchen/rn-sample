@@ -131,7 +131,7 @@ module.exports = React.createClass({
                         <View style={styles.rowStyle}>
                             {this.renderCheckIcon()}
                             <View style={styles.contentWrapper}>
-                                <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
+                                <Text style={[styles.rowText,styles.rowTitle]}>{this.props.rowData.jobName}</Text>
                                 <Text style={[styles.rowText, commonStyle.textGray]}>
                                     订单：{this.props.rowData.orderTitle}
                                 </Text>
@@ -150,7 +150,8 @@ module.exports = React.createClass({
                         {this.renderCheckIcon()}
                         <View style={styles.contentWrapper}>
                             <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
-                            <Text style={[styles.rowText, commonStyle.textGray]}>
+                            <Text style={[styles.rowText, commonStyle.textGray]}
+                            numberOfLines={1}>
                                 订单：{this.props.rowData.orderTitle}
                             </Text>
                         </View>
