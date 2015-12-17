@@ -60,9 +60,9 @@ module.exports = React.createClass({
         this.props.onDelete(this.props.rowData, this.props.sectionID);
     },
     iconList:[
-        require('../../images/inbox/Order_icon.png'),
-        require('../../images/inbox/task_icon.png'),
-        require('../../images/inbox/sys_icon.png')
+        require('../../images/inbox/order_circle.png'),
+        require('../../images/inbox/task_circle.png'),
+        require('../../images/inbox/notifications-circle.png')
     ],
     renderUserAvatar: function(){
         var data = this.props.rowData;
@@ -87,7 +87,7 @@ module.exports = React.createClass({
     },
     renderAvatar: function(){
         var data = this.props.rowData;
-        var circleImage = this.iconList[data.msgType-1] || require('../../images/inbox/sys_icon.png');
+        var circleImage = this.iconList[data.msgType-1] || this.iconList[2];
         if (!data.fromUser) {
             return(
                 <Image source={circleImage} style={styles.inboxIcon}/>

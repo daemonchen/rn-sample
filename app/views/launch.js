@@ -90,16 +90,16 @@ var Launch = React.createClass({
                 translucent = {true} >
                 <TabBarIOS.Item
                     title="工作台"
-                    icon={require('../images/TabBar/Workspace.png')}
-                    selectedIcon={require('../images/TabBar/Workspace_selected.png')}
+                    icon={require('../images/TabBar/workspace_gray.png')}
+                    selectedIcon={require('../images/TabBar/workspace_selected.png')}
                     selected={this.state.selectedTab === 'Workspace'}
                     onPress={this._handlePress("Workspace")}>
                     <AppNavigator initialRoute={{title: 'Workspace', component:Home, topNavigator: this.props.navigator}} key='Workspace' />
                 </TabBarIOS.Item>
                 <TabBarIOS.Item
                     title="订单"
-                    icon={require('../images/TabBar/Order.png')}
-                    selectedIcon={require('../images/TabBar/Order_selected.png')}
+                    icon={require('../images/TabBar/order_gray.png')}
+                    selectedIcon={require('../images/TabBar/order_selected.png')}
                     selected={this.state.selectedTab === 'Order'}
                     onPress={this._handlePress("Order")}>
                     <AppNavigator initialRoute={{title: 'Order', component:Order, topNavigator: this.props.navigator}} key='Order' />

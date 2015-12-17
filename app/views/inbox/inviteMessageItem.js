@@ -51,7 +51,7 @@ module.exports = React.createClass({
             <TouchableHighlight
             underlayColor='#eee'>
                 <View style={styles.rowStyle}>
-                    <Image source={require('../../images/inbox/sys_icon.png')}
+                    <Image source={require('../../images/inbox/notifications-circle.png')}
                     style={styles.inboxIcon}/>
                     <View style={styles.rowTextWrapper}>
                         <Text style={styles.inboxTitle}>
