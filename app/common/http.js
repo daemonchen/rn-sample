@@ -132,11 +132,12 @@ module.exports = {
             .then((res)=>{
                 var result = null;
                 try{
-                    console.log('[NZAOM]http response:',res);
+                    // console.log('[NZAOM]http response:', res);
                     result = res.json();
                 }catch(error){
-                    console.log(error);
+                    console.log('[NZAOM]http response to json error:', error);
                 }
+                appConstants.netError = false;
                 return result;
             })
             // .then( res =>{
@@ -144,7 +145,7 @@ module.exports = {
             //     return res;
             // })
             .catch((error) => {
-                console.log(error);
+                console.log('[NZAOM]http error:', error);
                 if (!!appConstants.netError) {
                     return;
                 };

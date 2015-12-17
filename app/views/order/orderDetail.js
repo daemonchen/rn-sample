@@ -38,6 +38,7 @@ var util = require('../../common/util');
 var attachAction = require('../../actions/attach/attachAction');
 var orderStore = require('../../stores/order/orderStore');
 var orderAction = require('../../actions/order/orderAction');
+var taskListStore = require('../../stores/task/taskListStore');
 
 var _navigator, _topNavigator = null;
 
@@ -55,6 +56,7 @@ module.exports = React.createClass({
     },
     componentDidMount: function(){
         this.unlistenOrder = orderStore.listen(this.onOrderChange);
+        this.unlisten = taskListStore.listen(this.onTaskListChange);
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
@@ -62,20 +64,36 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
         this.unlistenOrder();
+        this.unlisten();
     },
     fetchData: function(){
         orderAction.get({
             orderId: this.state.orderId
         });
     },
-    onOrderChange: function(){
-        var result = orderStore.getState();
+    onTaskListChange: function(){
+        var result = taskListStore.getState();
+        var orderData = this.state.orderData;
+        console.log('-----task list result:', result);
         if (result.status != 200 && !!result.message) {
             return;
         };
         if (result.type == 'get') {
             this.setState({
-                orderData: result.data
+                orderData: Object.assign(orderData,result.data)
+            });
+        };
+    },
+    onOrderChange: function(){
+        var result = orderStore.getState();
+        var orderData = this.state.orderData;
+        console.log('---order detail:', result);
+        if (result.status != 200 && !!result.message) {
+            return;
+        };
+        if (result.type == 'get') {
+            this.setState({
+                orderData: Object.assign(orderData,result.data)
             });
         };
     },
@@ -193,11 +211,13 @@ module.exports = React.createClass({
     },
     renderSummary: function(){
         var time = moment(this.state.orderData.endTime).format('YYYY.MM.DD');
-        var undoNumber = this.state.orderData.jobNum - this.state.orderData.overNum;
+        var jobNum = !!this.state.orderData.jobNum ? this.state.orderData.jobNum : 0;
+        var overNum = !!this.state.orderData.overNum ? this.state.orderData.overNum : 0;
+        var undoNumber = !!this.state.orderData.overNum ? (jobNum - overNum) : 0;
         return(
             <View style={{flexDirection:'row', height: 68, backgroundColor: '#4285f4'}}>
                 <View style={{flex: 1}}>
-                    <Text style={styles.taskTotalText}>{this.state.orderData.overNum}</Text>
+                    <Text style={styles.taskTotalText}>{overNum}</Text>
                     <Text style={styles.taskTotalText}>已完成</Text>
                 </View>
                 <View style={{flex: 1}}>
