@@ -33,6 +33,7 @@ target: 表示从哪里打开任务列表 enum
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
+    displayName: 'taskList',
     getInitialState: function(){
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}

@@ -20,8 +20,11 @@ var util = require('../../../common/util');
 var styles = require('../../../styles/order/comment.js');
 var commonStyle = require('../../../styles/commonStyle');
 
+var CompanyMemberList = require('../../contact/companyMemberList');
+
 module.exports = React.createClass({
     mixins: [TimerMixin],
+    displayName: 'commentBar',
     getInitialState: function() {
         return {
             targetId: this.props.data,//任务id
@@ -38,6 +41,7 @@ module.exports = React.createClass({
     },
     onChange: function(){
         var result = commentStore.getState();
+        console.log('---create comment');
         if (result.status != 200 && !!result.message) {
             return;
         }
@@ -47,7 +51,25 @@ module.exports = React.createClass({
             });
         };
     },
+    onPressContactRow: function(data){
+        console.log('---data', data);
+        this.setState({
+            ownerId: data.userId,
+            userName: data.userName
+        });
+    },
+     _setRelatedPerson: function(){//增加@的人
+        _navigator.push({
+            title:'负责人',
+            component: CompanyMemberList,
+            target: 1,
+            onPressContactRow: this.onPressContactRow,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        });
+    },
     onChangeComment: function(text){
+        console.log('----change text');
         this.setState({
             comment: text
         });
@@ -68,7 +90,6 @@ module.exports = React.createClass({
                         clearButtonMode={'while-editing'}
                         onChangeText={this.onChangeComment}
                         returnKeyType={'send'}
-                        clearTextOnFocus={true}
                         value={this.state.comment}
                         onSubmitEditing={this.sendComment} />
                 <TouchableOpacity onPress={this.sendComment}

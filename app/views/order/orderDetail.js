@@ -44,6 +44,7 @@ var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
+    displayName: 'orderDetail',
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
@@ -74,7 +75,6 @@ module.exports = React.createClass({
     onTaskListChange: function(){
         var result = taskListStore.getState();
         var orderData = this.state.orderData;
-        console.log('-----task list result:', result);
         if (result.status != 200 && !!result.message) {
             return;
         };
@@ -87,7 +87,6 @@ module.exports = React.createClass({
     onOrderChange: function(){
         var result = orderStore.getState();
         var orderData = this.state.orderData;
-        console.log('---order detail:', result);
         if (result.status != 200 && !!result.message) {
             return;
         };

@@ -19,7 +19,7 @@ var commonStyle = require('../../../styles/commonStyle');
 var util = require('../../../common/util');
 
 var Calendar = require('../../calendar');
-var Contact = require('../../contact/contact');
+// var Contact = require('../../contact/contact');
 var SettingsWrapper = require('./settingsWrapper');
 var TaskList = require('./taskList');
 var TaskDetail = require('./taskDetail');
