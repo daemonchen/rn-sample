@@ -139,14 +139,14 @@ module.exports = React.StyleSheet.create({
         marginRight: 16
     },
     settingTitle: {
-        fontSize: 14,
+        fontSize: 16,
         color: '#212121',
         height: 59,
         paddingTop: 23,
         width: 80,
     },
     settingDetail: {
-        fontSize: 14,
+        fontSize: 16,
         flex: 1,
         height: 59,
         paddingTop: 23,
@@ -187,7 +187,7 @@ module.exports = React.StyleSheet.create({
     },
     articleDetail: {
         textAlign: 'center',
-        fontSize: 14,
+        fontSize: 16,
         paddingVertical: 10,
         paddingHorizontal: 16
     }

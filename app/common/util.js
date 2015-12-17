@@ -9,11 +9,17 @@ var {
 
 var UIImagePickerManager = NativeModules.UIImagePickerManager;
 var GeTuiManager = NativeModules.GeTuiManager;
+var QiniuManager = NativeModules.QiniuManager;
 
 module.exports = {
     getClientId: function(callback){
         return GeTuiManager.getClientId(function(id){
             !!id && callback(id);
+        });
+    },
+    uploadToQiniu: function(uri,key,token,params,callback){
+        QiniuManager.uploadToQiniu(function(result){
+            callback(result);
         });
     },
     getObjectKeysAlphabetical: function(obj) {

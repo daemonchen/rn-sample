@@ -190,14 +190,16 @@ module.exports = React.createClass({
     },
     showCameraRoll: function(){
         util.showPhotoPicker({
-            title: ''
+            title: '',
+            noData: true,
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
-            attachAction.create([{
+            attachAction.create({
+                count: 1,
                 hostId: this.state.orderData.id,
                 hostType: 1,
-                base64: response.data,
-                fileName: name}]);
+                fileOrgName: name,
+                uri: response.uri});
         });
     },
     onAttachEmptyButtonPress: function(){

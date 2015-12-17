@@ -43,6 +43,7 @@
 		D2ED5D5C1C00788C008826C6 /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */; };
 		D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */; };
 		D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D771C06DFCA008826C6 /* libRNDeviceInfo.a */; };
+		D2F072DB1C22FEA600A3BABE /* QiniuManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F072DA1C22FEA600A3BABE /* QiniuManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -228,6 +229,8 @@
 		D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
+		D2F072D91C22FE9E00A3BABE /* QiniuManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuManager.h; sourceTree = "<group>"; };
+		D2F072DA1C22FEA600A3BABE /* QiniuManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiniuManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,6 +382,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D2F072C61C22FE3C00A3BABE /* Qiniu */,
 				D2BF48321C219DBD002C7185 /* GeTui */,
 				D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */,
 				D2BF47201C21476C002C7185 /* GtSdkLib */,
@@ -544,6 +548,15 @@
 				D2ED5D771C06DFCA008826C6 /* libRNDeviceInfo.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D2F072C61C22FE3C00A3BABE /* Qiniu */ = {
+			isa = PBXGroup;
+			children = (
+				D2F072DA1C22FEA600A3BABE /* QiniuManager.m */,
+				D2F072D91C22FE9E00A3BABE /* QiniuManager.h */,
+			);
+			name = Qiniu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -878,6 +891,7 @@
 			files = (
 				D2BF469E1C1FFD00002C7185 /* Orientation.m in Sources */,
 				D2BF48341C219DFE002C7185 /* GeTuiManager.m in Sources */,
+				D2F072DB1C22FEA600A3BABE /* QiniuManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				D22832FF1C0FCAFA00027EA3 /* UIImagePickerManager.m in Sources */,
