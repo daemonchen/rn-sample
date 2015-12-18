@@ -11,24 +11,33 @@ class AttachStore {
         this.bindActions(attachAction);
         this.state = {};
     }
-    transformData(responseData, fileData){
-        var result = {};
+    transformData(originResponseData, fileData){
+        var responseData = Object.assign({}, originResponseData);
+        var result = {
+            uri: null,
+            key: null,
+            token: null,
+            params: {}
+        };
         var fileTokenMap = responseData.data.fileTokenMap;
-        for(var [k,v] of fileTokenMap){
-            result['key'] = k;
-            result['token'] = v;
+        for(var k in fileTokenMap){
+            if (fileTokenMap.hasOwnProperty(k)) {
+                result['key'] = k;
+                result['token'] = fileTokenMap[k];
+            };
         }
         result['uri'] = fileData.uri;
-        result['params']['x:hostType'] = fileData.hostType;
-        result['params']['x:hostId'] = fileData.hostId;
-        result['params']['x:fileOrgName'] = fileData.fileOrgName;
+
+        result.params['x:hostType'] = fileData.hostType;
+        result.params['x:hostId'] = fileData.hostId;
+        result.params['x:fileOrgName'] = fileData.fileOrgName;
         return result;
     }
     onCreate(data) {
-        var params = {
+        var paramsObj = {
             count: data.count
         }
-        attachService.qiniuToken(params)
+        attachService.qiniuToken(paramsObj)
         .then((responseData) => {
             var options = this.transformData(responseData, data)
             attachAction.uploadToQiniu(options)
@@ -37,10 +46,9 @@ class AttachStore {
         this.preventDefault();
     }
     onUploadToQiniu(data){
-        console.log('----before upload data', data);
         util.uploadToQiniu(data.uri, data.key, data.token, data.params, (result)=>{
-            console.log('----uploadToQiniu result', result);
             // attachAction.createSuccess(responseData)
+            console.log('------result from qiniu:', result);
             this.preventDefault();
         });
     }

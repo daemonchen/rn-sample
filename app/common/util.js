@@ -18,7 +18,7 @@ module.exports = {
         });
     },
     uploadToQiniu: function(uri,key,token,params,callback){
-        QiniuManager.uploadToQiniu(function(result){
+        QiniuManager.uploadToQiniu(uri,key,token,params,function(result){
             callback(result);
         });
     },

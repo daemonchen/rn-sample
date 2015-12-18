@@ -10,5 +10,5 @@
 #import "RCTBridgeModule.h"
 
 @interface QiniuManager : NSObject <RCTBridgeModule>
-
+@property (nonatomic, retain) QNUploadOption *opt;
 @end

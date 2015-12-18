@@ -194,12 +194,13 @@ module.exports = React.createClass({
             noData: true,
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
+            var uri = response.uri.replace('file://', '');
             attachAction.create({
                 count: 1,
-                hostId: this.state.orderData.id,
-                hostType: 1,
+                hostId: this.state.orderData.id + '',
+                hostType: '1',
                 fileOrgName: name,
-                uri: response.uri});
+                uri: uri});
         });
     },
     onAttachEmptyButtonPress: function(){

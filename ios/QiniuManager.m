@@ -11,6 +11,39 @@
 
 @implementation QiniuManager
 
+- (NSString *)mimeTypeForData:(NSData *)data {
+  uint8_t c;
+  [data getBytes:&c length:1];
+  
+  switch (c) {
+    case 0xFF:
+      return @"image/jpeg";
+      break;
+    case 0x89:
+      return @"image/png";
+      break;
+    case 0x47:
+      return @"image/gif";
+      break;
+    case 0x49:
+    case 0x4D:
+      return @"image/tiff";
+      break;
+    case 0x25:
+      return @"application/pdf";
+      break;
+    case 0xD0:
+      return @"application/vnd";
+      break;
+    case 0x46:
+      return @"text/plain";
+      break;
+    default:
+      return @"application/octet-stream";
+  }
+  return nil;
+}
+
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(uploadToQiniu:(NSString *)uri
@@ -19,18 +52,24 @@ RCT_EXPORT_METHOD(uploadToQiniu:(NSString *)uri
                   params:(NSDictionary*)params
                   callback:(RCTResponseSenderBlock)callback)
 {
-  QNUploadManager *upManager = [[QNUploadManager alloc] init];
-//  NSData *imageData = [NSData dataWithContentsOfFile: finalPath];
-  NSData *data = [NSData dataWithContentsOfFile: uri];
+//  QNUploadManager *upManager = [[QNUploadManager alloc] init];
   
-  QNUploadOption *opt = [[QNUploadOption alloc] initWithMime:@"text/plain" progressHandler:nil params:params checkCrc:YES cancellationSignal:nil];
+  QNUploadManager *upManager = [QNUploadManager sharedInstanceWithConfiguration:nil];
+  
+//  NSData *imageData = [NSData dataWithContentsOfFile: finalPath];
+  NSError *error = nil;
+  NSData *data = [NSData dataWithContentsOfFile: uri options:0 error:&error];
+  NSString *mimeString = [self mimeTypeForData:data];
+  NSLog(@"------mimeString%@", mimeString);
+  
+  self.opt = [[QNUploadOption alloc] initWithMime:mimeString progressHandler:nil params:params checkCrc:NO cancellationSignal:nil];
   
   [upManager putData:data key:key token:token
             complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
-              callback(@[info]);
-              NSLog(@"%@", info);
-              NSLog(@"%@", resp);
-            } option:opt];
+              callback(@[resp]);
+              NSLog(@"------nzaom info%@", info);
+              NSLog(@"---------nzaom resp%@", resp);
+            } option: self.opt];
   
 }
 

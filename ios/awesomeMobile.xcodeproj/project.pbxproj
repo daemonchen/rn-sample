@@ -245,13 +245,11 @@
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
 		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* awesomeMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = awesomeMobileTests.xctest; path = "/Users/scott/Documents/nzaom/ios/awesomeMobile/ios/build/Debug-iphoneos/awesomeMobileTests.xctest"; sourceTree = "<absolute>"; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* awesomeMobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = awesomeMobileTests.m; sourceTree = "<group>"; };
 		08F462FB9DE04EC0834B0650 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* awesomeMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = awesomeMobile.app; path = "/Users/scott/Documents/nzaom/ios/awesomeMobile/ios/build/Debug-iphoneos/awesomeMobile.app"; sourceTree = "<absolute>"; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = awesomeMobile/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = awesomeMobile/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = awesomeMobile/Images.xcassets; sourceTree = "<group>"; };
@@ -267,6 +265,8 @@
 		D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerManager.m; sourceTree = "<group>"; };
 		D228330B1C100A9B00027EA3 /* RNPhonePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNPhonePicker.xcodeproj; path = "../node_modules/react-native-phone-picker/RNPhonePicker.xcodeproj"; sourceTree = "<group>"; };
 		D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D26F5C9A1C23A8E4006D4BE7 /* awesomeMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = awesomeMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D26F5C9B1C23A8E4006D4BE7 /* awesomeMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = awesomeMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A51F8D1C100D0B00923C26 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		D2BF469C1C1FFD00002C7185 /* Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orientation.h; sourceTree = "<group>"; };
 		D2BF469D1C1FFD00002C7185 /* Orientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orientation.m; sourceTree = "<group>"; };
@@ -604,6 +604,8 @@
 				13B07FAE1A68108700A75B9A /* awesomeMobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* awesomeMobileTests */,
+				D26F5C9A1C23A8E4006D4BE7 /* awesomeMobile.app */,
+				D26F5C9B1C23A8E4006D4BE7 /* awesomeMobileTests.xctest */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -982,7 +984,7 @@
 			);
 			name = awesomeMobileTests;
 			productName = awesomeMobileTests;
-			productReference = 00E356EE1AD99517003FC87E /* awesomeMobileTests.xctest */;
+			productReference = D26F5C9B1C23A8E4006D4BE7 /* awesomeMobileTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		13B07F861A680F5B00A75B9A /* awesomeMobile */ = {
@@ -1000,7 +1002,7 @@
 			);
 			name = awesomeMobile;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* awesomeMobile.app */;
+			productReference = D26F5C9A1C23A8E4006D4BE7 /* awesomeMobile.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
