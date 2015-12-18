@@ -230,11 +230,13 @@ module.exports = React.createClass({
             title: ''
         }, (response)=>{
             var name = response.uri.substring(response.uri.lastIndexOf('/') + 1)
+            var uri = response.uri.replace('file://', '');
             var fileObj = Object.assign({
-                base64: response.data,
-                fileName: name
+                count:1,
+                fileOrgName: name,
+                uri: uri
             }, params);
-            attachAction.create([fileObj]);
+            attachAction.create(fileObj);
         });
     },
     onCalendarPressDone: function(date){
