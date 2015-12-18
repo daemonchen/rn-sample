@@ -49,7 +49,7 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(uploadToQiniu:(NSString *)uri
                   key:(NSString *)key
                   token:(NSString *)token
-                  params:(NSDictionary*)params
+                  params:(NSDictionary *)params
                   callback:(RCTResponseSenderBlock)callback)
 {
 //  QNUploadManager *upManager = [[QNUploadManager alloc] init];
@@ -58,17 +58,21 @@ RCT_EXPORT_METHOD(uploadToQiniu:(NSString *)uri
   
 //  NSData *imageData = [NSData dataWithContentsOfFile: finalPath];
   NSError *error = nil;
+  
   NSData *data = [NSData dataWithContentsOfFile: uri options:0 error:&error];
+  
   NSString *mimeString = [self mimeTypeForData:data];
-  NSLog(@"------mimeString%@", mimeString);
+  NSMutableDictionary *mutableDict = [params mutableCopy];
+  [mutableDict setObject:mimeString forKey:@"x:mimeType"];
+  params = [mutableDict mutableCopy];
+
   
   self.opt = [[QNUploadOption alloc] initWithMime:mimeString progressHandler:nil params:params checkCrc:NO cancellationSignal:nil];
   
   [upManager putData:data key:key token:token
             complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
               callback(@[resp]);
-              NSLog(@"------nzaom info%@", info);
-              NSLog(@"---------nzaom resp%@", resp);
+
             } option: self.opt];
   
 }

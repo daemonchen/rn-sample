@@ -17,7 +17,9 @@ class AttachStore {
             uri: null,
             key: null,
             token: null,
-            params: {}
+            params: {
+                'x:mimeType': ''
+            }
         };
         var fileTokenMap = responseData.data.fileTokenMap;
         for(var k in fileTokenMap){
@@ -47,8 +49,7 @@ class AttachStore {
     }
     onUploadToQiniu(data){
         util.uploadToQiniu(data.uri, data.key, data.token, data.params, (result)=>{
-            // attachAction.createSuccess(responseData)
-            console.log('------result from qiniu:', result);
+            attachAction.createSuccess(responseData)
             this.preventDefault();
         });
     }
