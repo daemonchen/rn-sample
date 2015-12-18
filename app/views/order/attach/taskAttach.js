@@ -45,12 +45,12 @@ module.exports = React.createClass({
         var params = {};
         if (this.state.orderStatus == 1) {
             params = {
-                hostType: 2
+                hostType: '2'
             }
         }else{
             params = {
-                hostId: this.state.taskId,
-                hostType: 2
+                hostId: this.state.taskId + '',
+                hostType: '2'
             }
         }
         util.showPhotoPicker({

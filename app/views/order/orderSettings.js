@@ -178,12 +178,12 @@ module.exports = React.createClass({
         var params = {};
         if (this.state.orderStatus == 1) {//如果是创建订单，则没有订单号字段
             params = {
-                hostType: 1
+                hostType: '1'
             }
         }else{
             params = {
-                hostId: this.state.orderId,
-                hostType: 1
+                hostId: this.state.orderId + '',
+                hostType: '1'
             }
         }
         util.showPhotoPicker({

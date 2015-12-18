@@ -218,12 +218,12 @@ module.exports = React.createClass({
         var params = {};
         if (this.state.taskStatus == 1) {//如果是创建任务，则没有订任务字段
             params = {
-                hostType: 2
+                hostType: '2'
             }
         }else{
             params = {
-                hostId: this.state.id,
-                hostType: 2
+                hostId: this.state.id + '',
+                hostType: '2'
             }
         }
         util.showPhotoPicker({
