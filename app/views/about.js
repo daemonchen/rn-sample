@@ -36,6 +36,10 @@ module.exports = React.createClass({
                       source={require('../images/logo/logo_welcom.png')} />
                     <Text>你造么 for iPhone {this.state.version}</Text>
                 </View>
+                <View style={commonStyle.copyright}>
+                    <Text style={[commonStyle.textLight, commonStyle.copyrightItem]}>©造么科技</Text>
+                    <Text style={[commonStyle.textLight, commonStyle.copyrightItem]}>www.nzaom.com</Text>
+                </View>
             </View>
             );
     }
@@ -43,6 +47,7 @@ module.exports = React.createClass({
 
 var styles = StyleSheet.create({
     main:{
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     }

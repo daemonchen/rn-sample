@@ -32,7 +32,7 @@ module.exports = React.createClass({
             data: null
         }
     },
-    componentDidMount: function(){
+    componentWillMount: function(){
         this.getInvite();
         this.unlisten = inboxStore.listen(this.onChange)
     },

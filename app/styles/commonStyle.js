@@ -190,5 +190,13 @@ module.exports = React.StyleSheet.create({
         fontSize: 16,
         paddingVertical: 10,
         paddingHorizontal: 16
+    },
+    copyright:{
+        alignItems: 'center',
+        width: width,
+        paddingBottom:16
+    },
+    copyrightItem:{
+        paddingVertical: 8
     }
 });

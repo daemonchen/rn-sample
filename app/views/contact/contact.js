@@ -50,7 +50,7 @@ module.exports = React.createClass({
             listData: [],
         }
     },
-    componentDidMount: function(){
+    componentWillMount: function(){
         this.unlisten = contactStore.listen(this.onChange);
         if (this._timeout) {
             this.clearTimeout(this._timeout)
