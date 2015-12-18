@@ -81,7 +81,6 @@
    注册通知(推送)
    申请App需要接受来自服务商提供推送消息
    */
-  
   // 判读系统版本是否是“iOS 8.0”以上
   if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0 ||
       [UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
@@ -94,6 +93,8 @@
     
     // 注册用户通知 - 根据用户通知设置
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    NSLog(@"----did registerUserNotificationSettings as ios version > 8.0");
+
   }
   else {      // iOS8.0 以前远程推送设置方式
     // 定义远程通知类型(Remote.远程 - Badge.标记 Alert.提示 Sound.声音)
@@ -101,6 +102,7 @@
     
     // 注册远程通知 -根据远程通知类型
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    NSLog(@"----did registerUserNotificationSettings as ios version < 8.0");
   }
 }
 

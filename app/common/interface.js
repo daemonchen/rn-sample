@@ -1,9 +1,9 @@
 'use strict';
 
-var NZAOM_API_DOMAIN = 'http://api.nzaom.com';
+var NZAOM_API_DOMAIN = 'http://www.nzaom.com';
 var NZAOM_DOMAIN = 'http://www.nzaom.com';
 var NZAO_MOBILE_DOMAIN = 'http://m.nzaom.com'
-var _debug = true; //上线的时候改成false
+var _debug = false; //上线的时候改成false
 if (!!_debug) {
     NZAOM_API_DOMAIN = "http://192.168.1.196";
     // NZAOM_API_DOMAIN = "http://192.168.1.109";
@@ -34,6 +34,8 @@ module.exports = {
     updateTaskStatus: NZAOM_API_DOMAIN + '/api/order_job/over',
 
     task: NZAOM_API_DOMAIN + '/api/order_job',
+
+    taskList: NZAOM_API_DOMAIN + '/api/order_index',
 
     news: NZAOM_API_DOMAIN + '/api/dynamic',
 

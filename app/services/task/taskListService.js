@@ -5,7 +5,7 @@ var NZAOM_INTERFACE = require('../../common/interface');
 module.exports = {
     getList: function(data){
         // var urlParams = '/{orderId}'.replace('{orderId}', data.orderId);
-        return http.get(NZAOM_INTERFACE.task, data)
+        return http.get(NZAOM_INTERFACE.taskList, data)
     },
     updateTaskStatus: function(data){
         return http.put(NZAOM_INTERFACE.updateTaskStatus, data)
