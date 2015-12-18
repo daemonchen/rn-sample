@@ -242,6 +242,7 @@ module.exports = React.createClass({
         }
     },
     render: function(){
+        console.log('-------taskdetail data:', this.state.taskData);
         return(
             <View style={{height: this.state.visibleHeight}} >
                 {this.renderNavigationBar()}

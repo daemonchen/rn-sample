@@ -35,12 +35,14 @@ module.exports = React.createClass({
         this.unlisten();
     },
     handleUpdate: function(result){
-        if (result.status != 200) {
-            return;
-        }
+        console.log('-----hometaskitem update', result, this.props.rowData);
         if (parseInt(result.data) != this.props.rowData.id) {
             return;
         };
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
         var status = (this.state.done == 1) ? 0 : 1
         this.setState({
             done: status
@@ -48,10 +50,6 @@ module.exports = React.createClass({
     },
     onChange: function() {
         var result = taskListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
         switch(result.type){
             case 'update':
                 return this.handleUpdate(result);

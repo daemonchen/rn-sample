@@ -95,6 +95,7 @@ module.exports = React.createClass({
     onChange: function() {
         var result = taskListStore.getState();
         if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
             return;
         }
         switch(result.type){
@@ -105,6 +106,7 @@ module.exports = React.createClass({
         }
     },
     fetchData: function() {
+        console.log('----tasklist', this.props.data);
         taskListAction.getList({
             orderId: this.props.data.id
         });

@@ -10,28 +10,7 @@ var {
     TouchableHighlight,
     StyleSheet
 } = React
-// { id: 10,
-//   title: '萨摩耶是什么',
-//   creatorName: '王磊',
-//   creatorId: 7,
-//   salesManId: 0,
-//   startTime: null,
-//   endTime: 1448949194000,
-//   overTime: null,
-//   customerName: '萨摩耶',
-//   description: '谁家的萨摩耶',
-//   lable: 0,
-//   accessoryNum: 0,
-//   status: 0,
-//   gmtCreate: 1448949364000,
-//   gmtModified: 1448949364000,
-//   jobList: [],
-//   acList: [],
-//   factoryId: 0,
-//   jobNum: 0,
-//   overNum: 0,
-//   accessoryIds: null,
-//   overPercent: '' }
+
 var Swipeout = require('react-native-swipeout');
 var util = require('../../../common/util');
 var CircleProgressView = require('../../../common/circleProgress')

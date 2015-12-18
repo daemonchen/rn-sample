@@ -10,6 +10,7 @@ var {
     Image,
     ScrollView,
     TouchableOpacity,
+    TouchableHighlight,
     ActionSheetIOS,
     StyleSheet
 } = React;
@@ -53,26 +54,32 @@ module.exports = React.createClass({
     renderFactoryItem: function(){
         if (!this.state.factoryName) {
             return(
-                <TouchableOpacity style={contactsStyle.contactsItem}
-                onPress={this.props.goCreateFactory}>
-                    <Image
-                        style={contactsStyle.contactsItemCircle}
-                        source={require('../../images/contact/organization.png')} />
-                    <Text style={contactsStyle.contactsItemDetail}>组织架构</Text>
-                    <Text style={[contactsStyle.contactRightText, commonStyle.blue]}>
-                        添加工厂
-                    </Text>
-                </TouchableOpacity>
+                <TouchableHighlight
+                onPress={this.props.goCreateFactory}
+                underlayColor='#eee'>
+                    <View style={contactsStyle.contactsItem}>
+                        <Image
+                            style={contactsStyle.contactsItemCircle}
+                            source={require('../../images/contact/organization.png')} />
+                        <Text style={contactsStyle.contactsItemDetail}>组织架构</Text>
+                        <Text style={[contactsStyle.contactRightText, commonStyle.blue]}>
+                            添加工厂
+                        </Text>
+                    </View>
+                </TouchableHighlight>
                 );
         }else{
             return(
-                <TouchableOpacity style={contactsStyle.contactsItem}
-                onPress={this.props.goCompanyMemberList}>
-                    <Image
-                        style={contactsStyle.contactsItemCircle}
-                        source={require('../../images/contact/organization.png')} />
-                    <Text style={contactsStyle.contactsItemDetail}>{this.state.factoryName}</Text>
-                </TouchableOpacity>
+                <TouchableHighlight
+                onPress={this.props.goCompanyMemberList}
+                underlayColor='#eee'>
+                    <View style={contactsStyle.contactsItem}>
+                        <Image
+                            style={contactsStyle.contactsItemCircle}
+                            source={require('../../images/contact/organization.png')} />
+                        <Text style={contactsStyle.contactsItemDetail}>{this.state.factoryName}</Text>
+                    </View>
+                </TouchableHighlight>
                 );
         }
     },
@@ -86,13 +93,16 @@ module.exports = React.createClass({
                   style={contactsStyle.scrollView}>
                     {this.renderFactoryItem()}
                     {this.renderCustomerItem()}
-                    <TouchableOpacity style={contactsStyle.contactsItem}
+                    <TouchableHighlight
+                    underlayColor='#eee'
                     onPress={this.openAddress} >
-                        <Image
-                        style={contactsStyle.contactsItemCircle}
-                        source={require('../../images/contact/Phone-contacts-circle.png')} />
-                        <Text style={contactsStyle.contactsItemDetail}>手机通讯录</Text>
-                    </TouchableOpacity>
+                        <View style={contactsStyle.contactsItem}>
+                            <Image
+                            style={contactsStyle.contactsItemCircle}
+                            source={require('../../images/contact/Phone-contacts-circle.png')} />
+                            <Text style={contactsStyle.contactsItemDetail}>手机通讯录</Text>
+                        </View>
+                    </TouchableHighlight>
                 </ScrollView>
             </View>
             );

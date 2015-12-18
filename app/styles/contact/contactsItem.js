@@ -31,7 +31,7 @@ module.exports = React.StyleSheet.create({
         fontSize: 12
     },
     contactsItemDetail: {
-        color: '#727272',
+        color: '#212121',
         fontWeight: 'bold',
         flex: 1,
         paddingLeft: 10,

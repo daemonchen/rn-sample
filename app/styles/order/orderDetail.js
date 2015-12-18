@@ -89,7 +89,7 @@ module.exports = React.StyleSheet.create({
         backgroundColor: 'transparent'
     },
     timelineWrapper:{
-        width: 2 / React.PixelRatio.get(),
+        width: 4 / React.PixelRatio.get(),
         position: 'absolute',
         left: 32,
         top: 0,
@@ -98,7 +98,7 @@ module.exports = React.StyleSheet.create({
     },
     timeline: {
         flex: 1,
-        width: 2 / React.PixelRatio.get(),
+        width: 4 / React.PixelRatio.get(),
         height: 100,
         backgroundColor: '#bdbdbd'
     },

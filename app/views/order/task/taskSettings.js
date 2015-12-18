@@ -54,7 +54,6 @@ module.exports = React.createClass({
         return this.initTaskState(defaultData);
     },
     initTaskState: function(defaultData){
-        console.log('---task setting data:', defaultData);
         if (defaultData.taskStatus == 2) {
             var endTime = defaultData.endTime || new Date().valueOf();
             var lastIds = defaultData.lastIds || [];
@@ -74,15 +73,15 @@ module.exports = React.createClass({
                 accessoryIds: defaultData.accessoryIds || []
             }
         };
-        var endTime = defaultData.endTime || new Date().valueOf();
-        var lastIds = defaultData.lastIds || [];
+        var endTime = new Date().valueOf();
+        var lastIds = [];
         return {
             taskStatus: defaultData.taskStatus || 3,
             orderId: defaultData.id || 0,
-            ownerId: defaultData.ownerId || 0,
+            ownerId: 0,
             userName: defaultData.userName || '',
             description: '',
-            jobName: defaultData.jobName || '',
+            jobName: '',
             endTime: endTime,
             endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
             lastIds: lastIds,

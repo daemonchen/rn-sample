@@ -40,8 +40,8 @@ module.exports = React.StyleSheet.create({
         textAlign: 'left'
     },
     circle: {
-        width: 40,
-        height: 40
+        width: 42,
+        height: 42
     },
     percent: {
         width: 40,
