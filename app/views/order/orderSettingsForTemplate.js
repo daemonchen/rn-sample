@@ -106,8 +106,9 @@ module.exports = React.createClass({
     },
     setAccessoryIds: function(data){
         this.accessoryIds = this.state.accessoryIds;
-        if (!underscore.contains(this.accessoryIds, data[0].id)) {
-            this.accessoryIds.push(data[0].id);
+        if (!data || !data.id) { return; };
+        if (!underscore.contains(this.accessoryIds, data.id)) {
+            this.accessoryIds.push(data.id);
         }
         this.setState({
             accessoryIds: this.accessoryIds,

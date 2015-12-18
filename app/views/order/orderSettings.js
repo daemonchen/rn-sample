@@ -105,8 +105,9 @@ module.exports = React.createClass({
     },
     setAccessoryIds: function(data){
         this.accessoryIds = this.state.accessoryIds;
-        if (!underscore.contains(this.accessoryIds, data[0].id)) {
-            this.accessoryIds.push(data[0].id);
+        if (!data || !data.id) { return; };
+        if (!underscore.contains(this.accessoryIds, data.id)) {
+            this.accessoryIds.push(data.id);
         }
         this.setState({
             accessoryIds: this.accessoryIds,
@@ -381,7 +382,6 @@ module.exports = React.createClass({
                     <View style={commonStyle.textAreaWrapper}>
                         <TextInput placeholder='订单描述'
                         style={commonStyle.textArea}
-                        clearButtonMode={'while-editing'}
                         multiline={true}
                         value={this.state.description}
                         onChangeText={this.onChangeDescribeText} />

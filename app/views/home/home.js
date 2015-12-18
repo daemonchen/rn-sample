@@ -100,20 +100,20 @@ var Home =  React.createClass({
         }
     },
     renderNavigationBar: function(){
-        var rights = appConstants.userRights.rights;
-        var targetRights = 2;
-        if ((rights & targetRights) == targetRights) {
-            return(
-                <NavigationBar
-                    title={{ title: '工作台' }}
-                    rightButton={<RightAddButton onPress={this.showActionSheet} />} />
-                );
-        }else{
-            return(
-                <NavigationBar
-                    title={{ title: '工作台' }} />
-                );
-        }
+        // var rights = appConstants.userRights.rights;
+        // var targetRights = 2;
+        // if ((rights & targetRights) == targetRights) {
+        //     return(
+        //         <NavigationBar
+        //             title={{ title: '工作台' }}
+        //             rightButton={<RightAddButton onPress={this.showActionSheet} />} />
+        //         );
+        // }else{
+        // }
+        return(
+            <NavigationBar
+                title={{ title: '工作台' }} />
+            );
     },
     render:function(){
         return (

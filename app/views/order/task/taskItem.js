@@ -161,10 +161,9 @@ module.exports = React.createClass({
             var circleImage = (this.state.done == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
         }
         return(
-            <TouchableWithoutFeedback onPress={this.onPressCircle}
-            style={styles.checkIcon} >
+            <TouchableWithoutFeedback onPress={this.onPressCircle}>
                 <View style={styles.checkIconWrapper}>
-                    <Image source={circleImage} />
+                    <Image source={circleImage} style={styles.checkIcon}/>
                 </View>
             </TouchableWithoutFeedback>
             )

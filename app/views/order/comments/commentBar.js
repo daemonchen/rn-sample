@@ -100,8 +100,9 @@ module.exports = React.createClass({
                         onSubmitEditing={this.sendComment} />
                 <TouchableOpacity onPress={this.sendComment}
                 style={styles.commentSendButtonWrapper}>
-                    <Image source={require('../../../images/task/add_comment.png')}
-                    style={styles.commentSendButton} />
+                    <Text style={[styles.commentSendButton, commonStyle.blue]}>
+                        发送
+                    </Text>
                 </TouchableOpacity>
             </View>
             );

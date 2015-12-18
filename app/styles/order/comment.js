@@ -67,12 +67,14 @@ module.exports = React.StyleSheet.create({
         borderTopColor: '#bdbdbd'
     },
     commentSendButtonWrapper: {
-        width: 40,
+        width: 56,
         height: 44
     },
     commentSendButton: {
-        width: 24,
-        height: 24,
+        flex: 1,
+        textAlign:'center',
+        justifyContent: 'center',
+        paddingTop: 5,
         marginTop: 10,
         marginRight: 16
     },
