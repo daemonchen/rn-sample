@@ -341,7 +341,8 @@ module.exports = React.createClass({
                         style={commonStyle.textArea}
                         clearButtonMode={'while-editing'}
                         value={this.state.description}
-                        onChangeText={this.onChangeDescribeText} />
+                        onChangeText={this.onChangeDescribeText}
+                        multiline={true} />
                     </View>
                     <TouchableHighlight
                     style={commonStyle.settingItemWrapper}
