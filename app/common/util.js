@@ -18,7 +18,13 @@ module.exports = {
         });
     },
     uploadToQiniu: function(uri,key,token,params,callback){
+        var self = this;
         QiniuManager.uploadToQiniu(uri,key,token,params,function(result){
+            if (!result) {
+                self.alert('上传图片失败，请稍后再试');
+                return;
+            };
+            // self.alert('上传图片成功');
             callback(result);
         });
     },

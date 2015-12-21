@@ -67,10 +67,11 @@ RCT_EXPORT_METHOD(uploadToQiniu:(NSString *)uri
   params = [mutableDict mutableCopy];
 
   
-  self.opt = [[QNUploadOption alloc] initWithMime:mimeString progressHandler:nil params:params checkCrc:NO cancellationSignal:nil];
-  
+  self.opt = [[QNUploadOption alloc] initWithMime:mimeString progressHandler:nil params:params checkCrc:YES cancellationSignal:nil];
+  NSLog(@"--upManager opt params%@", params);
   [upManager putData:data key:key token:token
             complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+              NSLog(@"--upManager resp:%@", resp);
               callback(@[resp]);
 
             } option: self.opt];
