@@ -32,6 +32,16 @@ var orderItem = React.createClass({
     onDelete: function(){
         this.props.onDelete(this.props.rowData, this.props.sectionID);
     },
+    renderCustomerLabel: function(){
+        if (!this.props.rowData.customerName) {
+            return(<View />);
+        };
+        return(
+            <Text style={[styles.orderTextRight, commonStyle.textLight]}>
+                客户:{this.props.rowData.customerName}
+            </Text>
+            )
+    },
     renderTimeLabel: function(timestamp){
         var time = moment(timestamp).format('YYYY-MM-DD');
         if (moment().valueOf() > timestamp) {//任务过期
@@ -89,9 +99,7 @@ var orderItem = React.createClass({
                                 </Text>
                                 <View style={styles.orderContent}>
                                     {this.renderTimeLabel(this.props.rowData.endTime)}
-                                    <Text style={[styles.orderTextRight, commonStyle.textLight]}>
-                                        客户:{this.props.rowData.customerName}
-                                    </Text>
+                                    {this.renderCustomerLabel()}
                                 </View>
                             </View>
                         </View>
@@ -119,9 +127,6 @@ var orderItem = React.createClass({
                             </Text>
                             <View style={styles.orderContent}>
                                 {this.renderTimeLabel(this.props.rowData.endTime)}
-                                <Text style={[styles.orderTextRight, commonStyle.textLight]}>
-                                    客户:{this.props.rowData.customerName}
-                                </Text>
                             </View>
                         </View>
                     </View>
