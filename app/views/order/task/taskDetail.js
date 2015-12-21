@@ -44,6 +44,8 @@ var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
 
 var TaskSettings = require('./taskSettings');
+var SettingsWrapper = require('./settingsWrapper');
+var TaskList = require('./taskList');
 var TaskAttach = require('../attach/taskAttach');
 
 module.exports = React.createClass({
@@ -102,7 +104,6 @@ module.exports = React.createClass({
     onChange: function(){
         var result = taskStore.getState();
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
             return;
         };
         if (result.type == 'get') {
@@ -199,6 +200,45 @@ module.exports = React.createClass({
             <CommentBar navigator={_navigator} data={this.state.taskData.id}/>
             )
     },
+    _setTaskDependence: function(){
+        var data = Object.assign({taskStatus: 2}, this.state.taskData);
+        _navigator.push({
+            title:'前置任务',
+            component: SettingsWrapper,
+            children: TaskList,
+            target: 2,//用来区分任务列表标题前面的check icon
+            data: data,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        });
+    },
+    renderDependences: function(){
+        if (!this.state.taskData.lastIdList || this.state.taskData.lastIdList.length == 0) {
+            return(<View />)
+        }else{
+            return(
+                <TouchableHighlight
+                style={commonStyle.settingItemWrapper}
+                underlayColor='#eee'
+                onPress={this._setTaskDependence} >
+                    <View
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                        <Text
+                        style={commonStyle.settingTitle}>
+                            前置任务
+                        </Text>
+                        <Text
+                        style={commonStyle.settingDetail}>
+                            {this.state.taskData.lastIdList.length}
+                        </Text>
+                        <Image
+                        style={commonStyle.settingArrow}
+                        source={require('../../../images/common/arrow_right.png')} />
+                    </View>
+                </TouchableHighlight>
+                );
+        }
+    },
     renderOverTime: function(){
         if (!this.state.taskData.overTime) {
             return(
@@ -242,18 +282,17 @@ module.exports = React.createClass({
         }
     },
     render: function(){
-        console.log('-------taskdetail data:', this.state.taskData);
         return(
             <View style={{height: this.state.visibleHeight}} >
                 {this.renderNavigationBar()}
                 <ScrollView style={styles.main}
                 keyboardDismissMode={'interactive'} >
                     <View style={styles.taskDetailTop}>
+                        {this.renderCheckIcon()}
                         <Text placeholder='任务名称'
                         style={[styles.taskTitle]}>
                             {this.state.taskData.jobName}
                         </Text>
-                        {this.renderCheckIcon()}
                     </View>
                     <View style={styles.taskDetailDescribe}>
                         <View style={commonStyle.textAreaWrapper}>
@@ -292,6 +331,7 @@ module.exports = React.createClass({
                         </View>
                     </View>
                     {this.renderOverTime()}
+                    {this.renderDependences()}
                     <TouchableHighlight
                     underlayColor='#eee'
                     onPress={this._goOrderDetail} >

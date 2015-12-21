@@ -56,16 +56,16 @@ module.exports = React.createClass({
     initTaskState: function(defaultData){
         if (defaultData.taskStatus == 2) {
             var endTime = defaultData.endTime || new Date().valueOf();
-            var lastIds = defaultData.lastIds || [];
+            var lastIds = defaultData.lastIdList || [];
             return {
-                taskStatus: defaultData.taskStatus || 3,
+                taskStatus: defaultData.taskStatus,
                 done: defaultData.status,
                 jobName: defaultData.jobName || '',
                 description: defaultData.description || '',
                 endTime: endTime,
                 endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
                 id: defaultData.id || 0,
-                ownerId: defaultData.userId || 0,
+                ownerId: defaultData.ownerId || 0,
                 userName: defaultData.userName || '',
                 lastIds: lastIds,
                 lastIdsNumber: lastIds.length,
@@ -279,7 +279,7 @@ module.exports = React.createClass({
             title:'前置任务',
             component: SettingsWrapper,
             children: TaskList,
-            target: 1,
+            target: 1,//用来区分任务列表标题前面的check icon是用来选择任务依赖[1]，还是用来更改任务完成与否的状态[2],如果不传，默认都是2
             data: this.props.route.data,
             onPressRow: this.onPressTaskRow,
             onPressDone: this.onTaskPressDone,

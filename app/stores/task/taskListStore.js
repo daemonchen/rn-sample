@@ -19,6 +19,14 @@ class TaskListStore {
 
         this.preventDefault();
     }
+    onGetDependencesList(data) {
+        taskListService.getDependencesList(data)
+        .then((responseData) => {
+            taskListAction.getListSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
     onGetListSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'get'

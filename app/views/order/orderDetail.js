@@ -176,9 +176,6 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         })
     },
-    onPressCircle: function(rowData, sectionID){
-        console.log('todo: update task list stuff');
-    },
     onPressAttachRow: function(rowData,sectionID){
         _topNavigator.push({
             title: '附件详情',

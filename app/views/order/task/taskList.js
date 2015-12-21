@@ -25,8 +25,8 @@ var TaskItem = require('./taskItem');
 /*
 target: 表示从哪里打开任务列表 enum
 {
-    0: 'createOrder',
-    1: 'createTask',
+
+    1: 'createOrder',
     2: 'normal'
 }
 */
@@ -38,6 +38,8 @@ module.exports = React.createClass({
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
         return {
+            taskStatus: this.props.data.taskStatus || 1,
+            lastIdList: this.props.data.lastIdList || [],
             loaded : false,
             list: [],
             dataSource: ds
@@ -78,14 +80,26 @@ module.exports = React.createClass({
             })
             return;
         }
+        var list = this.transfromDataList(result.data.jobVOList);
         this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(result.data.jobVOList || []),
-            list: result.data.jobVOList || [],
+            dataSource : this.state.dataSource.cloneWithRows(list),
+            list: list,
             loaded     : true,
             total: result.total
         });
     },
+    transfromDataList: function(list){
+        if (!list) { return []};
+        for (var i = 0; i < this.state.lastIdList.length; i++) {
+            for (var j = 0; j < list.length; j++) {
+                if(this.state.lastIdList[i] == list[j].jobDO.id){
+                    list[j].isCheck = true;
+                }
+            };
 
+        };
+        return list;
+    },
     handleDelete: function(result){
         if (result.status != 200 && !!result.message) {
             return;
@@ -106,10 +120,16 @@ module.exports = React.createClass({
         }
     },
     fetchData: function() {
-        console.log('----tasklist', this.props.data);
-        taskListAction.getList({
-            orderId: this.props.data.id
-        });
+        if (this.state.taskStatus == 2) {
+            taskListAction.getDependencesList({
+                orderId: this.props.data.orderId
+            });
+
+        }else{
+            taskListAction.getList({
+                orderId: this.props.data.id
+            });
+        }
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (

@@ -25,9 +25,9 @@ module.exports = React.StyleSheet.create({
         flexDirection: 'row'
     },
     taskDetailCheckIcon:{
-        position: 'absolute',
-        left: 16,
-        top: 16
+        // position: 'absolute',
+        // left: 16,
+        // top: 16
     },
     checkIconWrapper: {
         width: 36,
@@ -69,15 +69,15 @@ module.exports = React.StyleSheet.create({
         fontSize: 12
     },
     taskDetailTop: {
-        height: 60,
+        // height: 60,
         width: width,
         flexDirection: 'row'
     },
     taskTitle: {
-        paddingVertical: 16,
+        paddingRight: 16,
         marginTop: 16,
-        textAlign: 'center',
-        fontSize: 18,
+        textAlign: 'left',
+        fontSize: 16,
         flex: 1
     },
     taskDetailDescribe: {

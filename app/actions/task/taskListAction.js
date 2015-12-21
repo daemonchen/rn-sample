@@ -3,6 +3,7 @@
 var alt = require('../../common/alt');
 module.exports = alt.generateActions(
     'getList',
+    'getDependencesList',
     'getListSuccess',
     'loadMore',
     'loadMoreSuccess',

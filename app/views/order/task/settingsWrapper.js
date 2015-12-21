@@ -32,13 +32,26 @@ module.exports = React.createClass({
         this.props.route.onPressDone();
         _topNavigator.pop();
     },
-    render: function(){
-        return(
-            <View style={commonStyle.container}>
+    renderNavigator: function(){
+        if (!!this.props.route.onPressDone) {
+            return(
                 <NavigationBar
                     title={{title: this.props.route.title}}
                     leftButton={<BlueBackButton navigator={_topNavigator} />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
+                );
+        }else{
+            return(
+                <NavigationBar
+                    title={{title: this.props.route.title}}
+                    leftButton={<BlueBackButton navigator={_topNavigator} />} />
+                );
+        }
+    },
+    render: function(){
+        return(
+            <View style={commonStyle.container}>
+                {this.renderNavigator()}
                 <View style={styles.main}>
                     <this.props.route.children
                     data={this.props.route.data}

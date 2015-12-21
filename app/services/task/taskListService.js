@@ -7,6 +7,10 @@ module.exports = {
         // var urlParams = '/{orderId}'.replace('{orderId}', data.orderId);
         return http.get(NZAOM_INTERFACE.taskList, data)
     },
+    getDependencesList: function(data){
+        // var urlParams = '/{orderId}'.replace('{orderId}', data.orderId);
+        return http.get(NZAOM_INTERFACE.task, data)
+    },
     updateTaskStatus: function(data){
         return http.put(NZAOM_INTERFACE.updateTaskStatus, data)
     },

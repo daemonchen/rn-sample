@@ -101,7 +101,6 @@ module.exports = React.createClass({
     onChange: function(){
         var result = taskStore.getState();
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
             return;
         };
         if (result.type == 'get') {
@@ -259,11 +258,11 @@ module.exports = React.createClass({
                 <ScrollView style={styles.main}
                 keyboardDismissMode={'interactive'} >
                     <View style={styles.taskDetailTop}>
+                        {this.renderCheckIcon()}
                         <Text placeholder='任务名称'
                         style={[styles.taskTitle]}>
                             {this.state.taskData.jobName}
                         </Text>
-                        {this.renderCheckIcon()}
                     </View>
                     <View style={styles.taskDetailDescribe}>
                         <View style={commonStyle.textAreaWrapper}>

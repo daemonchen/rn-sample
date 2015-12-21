@@ -25,9 +25,9 @@ var appConstants = require('../../../constants/appConstants');
 /*
 target: 表示从哪里打开任务列表 enum
 {
-    0: 'createOrder',
     1: 'createTask',
-    2: 'normal'
+    2: 'taskdetail',从任务详情的前置任务进入
+    3: 'normal'订单详情里展示任务列表
 }
 */
 module.exports = React.createClass({
@@ -35,7 +35,7 @@ module.exports = React.createClass({
         return{
             done: this.props.rowData.jobDO.status,
             isCheck: this.props.rowData.isCheck,
-            target: this.props.target || 2
+            target: this.props.target || 3
         }
     },
     componentDidMount: function(){
@@ -69,7 +69,7 @@ module.exports = React.createClass({
     onPressCircle: function(){
         var status = (this.state.done == 1) ? 0 : 1
         var isCheck = (this.state.isCheck == 1) ? 0 : 1;
-        if (this.props.target == 1) {//新建任务的时候，选择任务依赖
+        if (this.state.target == 1) {//新建任务的时候，选择任务依赖
             taskListAction.addDependinces({
                 type: 'addDependinces',
                 id: this.props.rowData.jobDO.id,
@@ -95,7 +95,7 @@ module.exports = React.createClass({
         }
     },
     onPressRow: function(){
-        this.props.onPressRow(this.props.rowData, this.props.sectionID);
+        !!this.props.onPressRow && this.props.onPressRow(this.props.rowData, this.props.sectionID);
     },
     onDelete: function(){
         taskListAction.delete({
@@ -134,9 +134,13 @@ module.exports = React.createClass({
             );
     },
     renderTimeLine: function(){
-        if (this.props.target == 1) {
+        if (this.state.target == 1) {
             return(<View />);
             //如果是新建任务的时候，不需要timeline
+        };
+        if (this.state.target == 2) {
+            return(<View />);
+            //如果是查看任务依赖列表，不需要timeline
         };
         if(this.state.done == 0){
             return(
@@ -155,9 +159,18 @@ module.exports = React.createClass({
         }
     },
     renderCheckIcon: function(){
-        if (this.props.target == 1) {
+        if (this.state.target == 2) {
             var circleImage = (this.state.isCheck == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
-        }else{
+            return(
+                <View style={styles.checkIconWrapper}>
+                    <Image source={circleImage} style={styles.checkIcon}/>
+                </View>
+                );
+        };
+        if (this.state.target == 1) {
+            var circleImage = (this.state.isCheck == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
+        }
+        if (this.state.target == 3) {
             var circleImage = (this.state.done == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
         }
         return(
@@ -179,6 +192,26 @@ module.exports = React.createClass({
         ]
         var rights = appConstants.userRights.rights;
         var targetRights = 1024;
+        if (this.state.target == 2) {//如果是察看前置任务，不需要有删除操作
+            return(
+                <TouchableHighlight
+                underlayColor='#eee'
+                onPress={this.onPressRow}>
+                    <View style={styles.rowStyle}>
+                        {this.renderTimeLine()}
+                        {this.renderCheckIcon()}
+                        <View style={styles.contentWrapper}>
+                            <Text style={[styles.rowText,styles.rowTitle]}
+                            numberOfLines={1}>
+                                {this.props.rowData.jobDO.jobName}
+                            </Text>
+                            {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                        </View>
+                        {this.renderAvatar(this.props.rowData.userVO)}
+                    </View>
+                </TouchableHighlight>
+                )
+        }
         if ((rights & targetRights) == targetRights){
             return(
                 <Swipeout autoClose={true} right={swipeoutBtns} backgroundColor='transparent' style={styles.swipeWrapper}>

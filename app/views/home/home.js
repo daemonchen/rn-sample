@@ -19,6 +19,7 @@ var TaskDetail = require('../order/task/taskDetailForWorkbench');
 var RightAddButton = require('../../common/rightAddButton');
 
 var appConstants = require('../../constants/appConstants');
+var commonStyle = require('../../styles/commonStyle');
 
 var _navigator, _topNavigator = null;
 
@@ -117,9 +118,9 @@ var Home =  React.createClass({
     },
     render:function(){
         return (
-            <View style={styles.container}>
+            <View style={commonStyle.container}>
+                {this.renderNavigationBar()}
                 <View style={styles.main}>
-                    {this.renderNavigationBar()}
                     <HomeSegmentControl
                     onSegmentChange={this.onSegmentChange} />
                     {this.renderTabContent()}
@@ -130,10 +131,6 @@ var Home =  React.createClass({
 })
 
 var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    },
     main:{
         flex:1
     }
