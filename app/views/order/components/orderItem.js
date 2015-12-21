@@ -17,9 +17,8 @@ var CircleProgressView = require('../../../common/circleProgress')
 var styles = require('../../../styles/order/orderItem.js');
 var commonStyle = require('../../../styles/commonStyle');
 var appConstants = require('../../../constants/appConstants');
-var orderItem = React.createClass({
+module.exports = React.createClass({
     getInitialState: function(){
-        console.log('-----orderitem', this.props.rowData);
         return{
             progress: parseInt(this.props.rowData.overPercent)/100 || 0
         }
@@ -77,6 +76,8 @@ var orderItem = React.createClass({
         ]
         var rights = appConstants.userRights.rights;
         var targetRights = 4;
+        var progress = parseInt(this.props.rowData.overPercent)/100 || 0;
+        console.log('----progress',progress);
         if ((rights & targetRights) == targetRights){
             return(
                 <Swipeout autoClose={true} right={swipeoutBtns}
@@ -85,10 +86,10 @@ var orderItem = React.createClass({
                     onPress={this.onPress}>
                         <View style={styles.rowStyle}>
                             <CircleProgressView
-                              progress={this.state.progress}
+                              progress={progress}
                               lineWidth={2}
                               lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
-                              circleRadius={25}
+                              circleRadius={26}
                               circleColor='#34a853'
                               circleUnderlayColor='#e6e6e6'
                               style={styles.circle}/>
@@ -113,10 +114,10 @@ var orderItem = React.createClass({
                 onPress={this.onPress}>
                     <View style={styles.rowStyle}>
                         <CircleProgressView
-                          progress={this.state.progress}
+                          progress={progress}
                           lineWidth={2}
                           lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
-                          circleRadius={25}
+                          circleRadius={26}
                           circleColor='#34a853'
                           circleUnderlayColor='#e6e6e6'
                           style={styles.circle}/>
@@ -136,5 +137,3 @@ var orderItem = React.createClass({
         }
     }
 });
-
-module.exports = orderItem

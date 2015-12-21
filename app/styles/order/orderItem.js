@@ -17,12 +17,12 @@ module.exports = React.StyleSheet.create({
         flexDirection: 'column'
     },
     orderTitle: {
+        fontSize: 16,
         flex:1,
-        paddingVertical: 5
+        paddingBottom: 10
     },
     orderContent: {
         flex: 1,
-        paddingVertical: 5,
         flexDirection: 'row'
     },
     orderLabel: {
@@ -30,12 +30,12 @@ module.exports = React.StyleSheet.create({
         flex: 1
     },
     orderTextRight:{
-        fontSize: 12,
+        fontSize: 14,
         flex: 1,
         textAlign: 'right'
     },
     orderTextLeft:{
-        fontSize: 12,
+        fontSize: 14,
         flex: 1,
         textAlign: 'left'
     },

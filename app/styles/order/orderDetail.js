@@ -110,8 +110,11 @@ module.exports = React.StyleSheet.create({
     },
     rowText: {
         color: '#212121',
-        fontSize: 14,
+        fontSize: 16,
         paddingBottom: 10
+    },
+    rowTextDetail: {
+        fontSize: 14
     },
     attachImageWrapper: {
         alignItems: 'center'

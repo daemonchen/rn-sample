@@ -16,11 +16,11 @@ module.exports = React.StyleSheet.create({
         color: '#212121',
         fontSize: 16,
         marginTop: 5,
-        marginLeft: 10
+        marginLeft: 10,
+        paddingBottom: 10
     },
     inboxDetail:{
         fontSize: 14,
-        marginTop:10,
         marginLeft: 10
     },
     inboxSubDetail: {
