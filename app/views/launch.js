@@ -9,6 +9,7 @@ var {
   Navigator,
   Image,
   Text,
+  PushNotificationIOS,
   NativeAppEventEmitter,
   View
 } = React;
@@ -76,6 +77,7 @@ var Launch = React.createClass({
         this.setState({
             notifCount: appConstants.unreadMsg
         });
+        PushNotificationIOS.setApplicationIconBadgeNumber(appConstants.unreadMsg);
     },
     handleUpdate: function(result){
         if (result.readStatus == 1) {
