@@ -95,7 +95,7 @@ module.exports = React.createClass({
                 );
         };
         return(
-            <Text style={[styles.timeLabel, commonStyle.textLight]}>
+            <Text style={[styles.timeLabel, commonStyle.textGray]}>
                 {time}
             </Text>
             );

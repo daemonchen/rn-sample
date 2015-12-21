@@ -19,6 +19,7 @@ var commonStyle = require('../../../styles/commonStyle');
 var appConstants = require('../../../constants/appConstants');
 var orderItem = React.createClass({
     getInitialState: function(){
+        console.log('-----orderitem', this.props.rowData);
         return{
             progress: parseInt(this.props.rowData.overPercent)/100 || 0
         }
@@ -37,7 +38,7 @@ var orderItem = React.createClass({
             return(<View />);
         };
         return(
-            <Text style={[styles.orderTextRight, commonStyle.textLight]}>
+            <Text style={[styles.orderTextRight, commonStyle.textGray]}>
                 客户:{this.props.rowData.customerName}
             </Text>
             )
@@ -52,7 +53,7 @@ var orderItem = React.createClass({
                 );
         };
         return(
-            <Text style={[styles.orderTextLeft, commonStyle.textLight]}>
+            <Text style={[styles.orderTextLeft, commonStyle.textGray]}>
                 {time}
             </Text>
             );
