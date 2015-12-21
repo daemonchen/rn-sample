@@ -35,14 +35,9 @@ module.exports = React.createClass({
         this.unlisten();
     },
     handleUpdate: function(result){
-        console.log('-----hometaskitem update', result, this.props.rowData);
         if (parseInt(result.data) != this.props.rowData.id) {
             return;
         };
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
         var status = (this.state.done == 1) ? 0 : 1
         this.setState({
             done: status
@@ -92,7 +87,7 @@ module.exports = React.createClass({
     },
     renderTimeLabel: function(timestamp){
         var time = moment(timestamp).format('YYYY-MM-DD');
-        if (moment().valueOf() > timestamp) {//任务过期
+        if (moment().valueOf() > (timestamp + 24 *60 * 60 * 1000)) {//任务过期
             return(
                 <Text style={[styles.timeLabel, commonStyle.red]}>
                     {time}

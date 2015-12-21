@@ -38,7 +38,7 @@
    * on the same Wi-Fi network.
    */
 
-  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.103:8081/index.ios.bundle?platform=ios&dev=true"];
+  jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.103:8081/index.ios.bundle?platform=ios&dev=false"];
 
   /**
    * OPTION 2
@@ -52,7 +52,7 @@
                                                       moduleName:@"awesomeMobile"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
-
+  self.rootView = rootView;
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [[UIViewController alloc] init];
   rootViewController.view = rootView;
@@ -177,9 +177,10 @@
     payloadMsg = [[NSString alloc] initWithBytes:payload.bytes length:payload.length encoding:NSUTF8StringEncoding];
   }
   
-  NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
-  NSLog(@"\n>>>[GexinSdk ReceivePayload]:%@\n\n", msg);
-  
+//  NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
+    NSLog(@"\n>>>[GexinSdk ReceivePayload]:%@\n\n", payloadMsg);
+    GeTuiManager *geTuiManager = [GeTuiManager sharedInstance];
+  [geTuiManager handleRemoteNotificationReceived:payloadMsg withRoot:self.rootView];
   /**
    *汇报个推自定义事件
    *actionId：用户自定义的actionid，int类型，取值90001-90999。

@@ -44,7 +44,7 @@ var orderItem = React.createClass({
     },
     renderTimeLabel: function(timestamp){
         var time = moment(timestamp).format('YYYY-MM-DD');
-        if (moment().valueOf() > timestamp) {//任务过期
+        if (moment().valueOf() > (timestamp + 24 *60 * 60 * 1000)) {//任务过期
             return(
                 <Text style={[styles.orderTextLeft, commonStyle.red]}>
                     {time}

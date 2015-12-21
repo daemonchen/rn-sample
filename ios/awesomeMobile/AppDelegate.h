@@ -9,6 +9,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GeTuiSdk.h"
+#import "RCTRootView.h"
 
 #define kGtAppId           @"e65WBcwZKT7LKmTzQ5Sqz6"
 #define kGtAppKey          @"jzDHFzDyP27wPp4kPnXKW9"
@@ -17,5 +18,6 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate, GeTuiSdkDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
+@property (nonatomic) RCTRootView *rootView;
 
 @end

@@ -40,15 +40,15 @@ module.exports = React.StyleSheet.create({
         textAlign: 'left'
     },
     circle: {
-        width: 42,
-        height: 42
+        width: 52,
+        height: 52
     },
     percent: {
-        width: 40,
-        height:40,
+        width: 50,
+        height:50,
         textAlign: 'center',
         position: 'absolute',
-        left: 16,
-        top: 28
+        left: 18,
+        top: 34
     }
 });

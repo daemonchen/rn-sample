@@ -20,6 +20,9 @@ var RightAddButton = require('../../common/rightAddButton');
 
 var appConstants = require('../../constants/appConstants');
 var commonStyle = require('../../styles/commonStyle');
+var util = require('../../common/util');
+
+var taskListStore = require('../../stores/task/taskListStore');
 
 var _navigator, _topNavigator = null;
 
@@ -30,6 +33,25 @@ var Home =  React.createClass({
         _topNavigator = this.props.route.topNavigator;
         return {
             tabIndex: 0
+        }
+    },
+    componentDidMount: function(){
+        this.unlisten = taskListStore.listen(this.onChange)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    handleUpdate: function(result){
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+    },
+    onChange: function() {
+        var result = taskListStore.getState();
+        switch(result.type){
+            case 'update':
+                return this.handleUpdate(result);
         }
     },
     showActionSheet: function(){

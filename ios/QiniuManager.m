@@ -46,6 +46,7 @@
 
 RCT_EXPORT_MODULE();
 
+
 RCT_EXPORT_METHOD(uploadToQiniu:(NSString *)uri
                   key:(NSString *)key
                   token:(NSString *)token

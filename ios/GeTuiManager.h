@@ -7,8 +7,11 @@
 //
 #import <Foundation/Foundation.h>
 #import "RCTBridgeModule.h"
+#import "RCTRootView.h"
 
 @interface GeTuiManager : NSObject <RCTBridgeModule>
 
 +(void) setClientId:(NSString *)newClientId;
++(instancetype)sharedInstance;
+-(void)handleRemoteNotificationReceived:(NSString *)payloadMsg withRoot:(RCTRootView *) rootView;
 @end

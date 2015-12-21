@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+// var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 var {
   AppRegistry,
   StyleSheet,
@@ -8,6 +9,7 @@ var {
   Navigator,
   Image,
   Text,
+  NativeAppEventEmitter,
   View
 } = React;
 
@@ -23,6 +25,7 @@ var appConstants = require('../constants/appConstants');
 var asyncStorage = require('../common/storage');
 
 var inboxStore = require('../stores/inbox/inboxStore');
+var authTokenAction = require('../actions/user/authTokenAction');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -39,10 +42,40 @@ var Launch = React.createClass({
         };
     },
     componentDidMount: function(){
-        this.unlisten = inboxStore.listen(this.onChange)
+        this.unlisten = inboxStore.listen(this.onChange);
+        console.log('----nzaomNotify');
+        this.unlistenNotification =  NativeAppEventEmitter.addListener(
+            'nzaomNotify',
+            (notifData) => {
+                this.factoryNotify(notifData);
+            }
+        );
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenNotification();
+    },
+    factoryNotify: function(response){
+        var jsonData = null;
+        try{
+            jsonData = JSON.parse(response);
+        }catch(err){
+            console.log(err);
+        }
+        console.log('---notify:', jsonData);
+        if (!jsonData) { return; };
+        if (jsonData.type == 1) {
+            this.setBadge(jsonData.data.unreadMsgCount);
+        };
+        if (jsonData.type == 2) {
+            authTokenAction.updateToken()
+        };
+    },
+    setBadge: function(count){
+        appConstants.unreadMsg = count;
+        this.setState({
+            notifCount: appConstants.unreadMsg
+        });
     },
     handleUpdate: function(result){
         if (result.readStatus == 1) {
