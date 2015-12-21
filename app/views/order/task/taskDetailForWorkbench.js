@@ -42,6 +42,7 @@ var taskListAction = require('../../../actions/task/taskListAction');
 var taskListStore = require('../../../stores/task/taskListStore');
 var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
+var attachStore = require('../../../stores/attach/attachStore');
 
 var TaskSettings = require('./taskSettings');
 var TaskAttach = require('../attach/taskAttach');
@@ -60,7 +61,7 @@ module.exports = React.createClass({
     componentDidMount: function(){
         this.keyShowListener = DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow);
         this.keyHideListener = DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
-
+        this.unlistenAttach = attachStore.listen(this.onAttachChange);
         this.unlisten = taskStore.listen(this.onChange);
         this.unlistenTaskList = taskListStore.listen(this.onTaskListChange)
         if (this._timeout) {
@@ -69,10 +70,23 @@ module.exports = React.createClass({
         this._timeout = this.setTimeout(this.fetchData, 550)
     },
     componentWillUnmount: function() {
+        this.unlistenAttach();
         this.unlisten();
         this.unlistenTaskList();
         this.keyShowListener.remove();
         this.keyHideListener.remove();
+    },
+    onAttachChange: function(){
+        var result = attachStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        if (result.type == 'create') {
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this._timeout = this.setTimeout(this.fetchData, 550)
+        };
     },
     handleUpdate: function(result){
         if (parseInt(result.data) != this.state.taskData.id) {
@@ -209,6 +223,45 @@ module.exports = React.createClass({
             <CommentBar navigator={_navigator} data={this.state.taskData.id}/>
             )
     },
+    _setTaskDependence: function(){
+        var data = Object.assign({taskStatus: 2}, this.state.taskData);
+        _navigator.push({
+            title:'前置任务',
+            component: SettingsWrapper,
+            children: TaskList,
+            target: 2,//用来区分任务列表标题前面的check icon
+            data: data,
+            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
+            topNavigator: _topNavigator
+        });
+    },
+    renderDependences: function(){
+        if (!this.state.taskData.lastIdList || this.state.taskData.lastIdList.length == 0) {
+            return(<View />)
+        }else{
+            return(
+                <TouchableHighlight
+                style={commonStyle.settingItemWrapper}
+                underlayColor='#eee'
+                onPress={this._setTaskDependence} >
+                    <View
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                        <Text
+                        style={commonStyle.settingTitle}>
+                            前置任务
+                        </Text>
+                        <Text
+                        style={commonStyle.settingDetail}>
+                            {this.state.taskData.lastIdList.length}
+                        </Text>
+                        <Image
+                        style={commonStyle.settingArrow}
+                        source={require('../../../images/common/arrow_right.png')} />
+                    </View>
+                </TouchableHighlight>
+                );
+        }
+    },
     renderOverTime: function(){
         if (!this.state.taskData.overTime) {
             return(
@@ -301,6 +354,7 @@ module.exports = React.createClass({
                         </View>
                     </View>
                     {this.renderOverTime()}
+                    {this.renderDependences()}
                     <TouchableHighlight
                     underlayColor='#eee'
                     onPress={this._goOrderDetail} >

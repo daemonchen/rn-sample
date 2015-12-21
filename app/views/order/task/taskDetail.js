@@ -42,6 +42,7 @@ var taskListAction = require('../../../actions/task/taskListAction');
 var taskListStore = require('../../../stores/task/taskListStore');
 var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
+var attachStore = require('../../../stores/attach/attachStore');
 
 var TaskSettings = require('./taskSettings');
 var SettingsWrapper = require('./settingsWrapper');
@@ -63,7 +64,7 @@ module.exports = React.createClass({
     componentDidMount: function(){
         this.keyShowListener = DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow);
         this.keyHideListener = DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
-
+        this.unlistenAttach = attachStore.listen(this.onAttachChange);
         this.unlisten = taskStore.listen(this.onChange);
         this.unlistenTaskList = taskListStore.listen(this.onTaskListChange)
         if (this._timeout) {
@@ -72,10 +73,23 @@ module.exports = React.createClass({
         this._timeout = this.setTimeout(this.fetchData, 550)
     },
     componentWillUnmount: function() {
+        this.unlistenAttach();
         this.unlisten();
         this.unlistenTaskList();
         this.keyShowListener.remove();
         this.keyHideListener.remove();
+    },
+    onAttachChange: function(){
+        var result = attachStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        if (result.type == 'create') {
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this._timeout = this.setTimeout(this.fetchData, 550)
+        };
     },
     handleUpdate: function(result){
         if (parseInt(result.data) != this.state.taskData.id) {
@@ -113,6 +127,7 @@ module.exports = React.createClass({
         };
     },
     transformatData: function(data){
+        console.log('-----data', data);
         var endTime = data.endTime || new Date().valueOf();
         return Object.assign(data, {
             id: data.id || 0,
