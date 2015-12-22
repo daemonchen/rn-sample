@@ -8,12 +8,11 @@ var {
 
 module.exports = React.StyleSheet.create({
     scrollView:{
-        paddingHorizontal: 16,
         flex: 1
     },
     contactsItem: {
-        width: width - 32,
-        paddingVertical: 16,
+        width: width,
+        padding: 16,
         flexDirection: 'row'
     },
     contactsItemCircle: {
@@ -32,14 +31,15 @@ module.exports = React.StyleSheet.create({
     },
     contactsItemDetail: {
         color: '#212121',
-        fontWeight: 'bold',
         flex: 1,
+        fontSize: 16,
         paddingLeft: 10,
-        paddingTop: 10
+        paddingTop: 8
     },
     contactRightText: {
         width: 64,
         paddingTop: 10,
+        fontSize: 16,
         textAlign: 'right'
     }
 });

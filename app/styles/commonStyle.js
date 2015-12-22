@@ -117,7 +117,7 @@ module.exports = React.StyleSheet.create({
     },
     settingGroups: {
         flex: 1,
-        paddingTop: 16,
+        paddingTop: 8,
         backgroundColor: '#fff'
     },
     settingItemWrapper:{

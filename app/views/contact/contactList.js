@@ -11,6 +11,7 @@ var {
     ListView,
     ScrollView,
     TouchableOpacity,
+    TouchableHighlight,
     ActionSheetIOS,
     StyleSheet
 } = React;
@@ -60,18 +61,21 @@ module.exports = React.createClass({
     },
     renderRow: function(data){
         return(
-            <TouchableOpacity style={contactsStyle.contactsItem}
-            onPress={()=>{this.props.onPressRow(data)}}>
-                {this.renderAvatar(data)}
-                <Text style={contactsStyle.contactsItemDetail}
-                numberOfLines={1}>
-                    {data.userName}
-                </Text>
-                <Text style={contactsStyle.contactRightText}
-                numberOfLines={1}>
-                    {data.position}
-                </Text>
-            </TouchableOpacity>
+            <TouchableHighlight
+                onPress={()=>{this.props.onPressRow(data)}}
+                underlayColor='#eee'>
+                <View style={contactsStyle.contactsItem}>
+                    {this.renderAvatar(data)}
+                    <Text style={contactsStyle.contactsItemDetail}
+                    numberOfLines={1}>
+                        {data.userName}
+                    </Text>
+                    <Text style={contactsStyle.contactRightText}
+                    numberOfLines={1}>
+                        {data.position}
+                    </Text>
+                </View>
+            </TouchableHighlight>
             );
     },
     render: function(){
