@@ -188,11 +188,12 @@ module.exports = React.createClass({
         }
     },
     render: function(){
+                // <Image
+
+                //   source={require('../images/default.png')} />
         return (
             <View style={commonStyle.container}>
-                <Image
-                  style={{width: width, height: height}}
-                  source={require('../images/default.png')} />
+                <View style={{width: width, height: height, backgroundColor: '#fff'}}/>
                   <Modal ref={(ref)=>{this._modal = ref}}/>
             </View>
         );

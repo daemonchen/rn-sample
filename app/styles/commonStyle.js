@@ -49,11 +49,11 @@ module.exports = React.StyleSheet.create({
     },
     topBorder: {
         borderTopWidth: 1 / React.PixelRatio.get(),
-        borderTopColor: '#bdbdbd'
+        borderTopColor: '#eee'
     },
     bottomBorder: {
         borderBottomWidth: 1 / React.PixelRatio.get(),
-        borderBottomColor: '#bdbdbd'
+        borderBottomColor: '#eee'
     },
     blueButton: {
         width: width - 32,
@@ -92,7 +92,7 @@ module.exports = React.StyleSheet.create({
         flexDirection: 'row',
         borderStyle: 'solid',
         borderBottomWidth: 1 / React.PixelRatio.get(),
-        borderBottomColor: '#bdbdbd'
+        borderBottomColor: '#eee'
     },
     textArea: {
         fontSize: 16,
@@ -113,7 +113,7 @@ module.exports = React.StyleSheet.create({
         alignItems: 'center',
         height: 48,
         borderTopWidth: 1 / React.PixelRatio.get(),
-        borderTopColor: '#bdbdbd'
+        borderTopColor: '#eee'
     },
     settingGroups: {
         flex: 1,

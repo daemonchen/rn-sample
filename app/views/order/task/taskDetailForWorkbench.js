@@ -326,20 +326,6 @@ module.exports = React.createClass({
                         </View>
                     </View>
                     <View
-                    style={commonStyle.settingItemWrapper} >
-                        <View
-                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
-                            <Text
-                            style={commonStyle.settingTitle}>
-                                截止日期
-                            </Text>
-                            <Text
-                            style={commonStyle.settingDetail}>
-                                {this.state.taskData.endTimeFormat}
-                            </Text>
-                        </View>
-                    </View>
-                    <View
                     style={commonStyle.settingItemWrapper}>
                         <View
                         style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
@@ -353,28 +339,23 @@ module.exports = React.createClass({
                             </Text>
                         </View>
                     </View>
+                    <View
+                    style={commonStyle.settingItemWrapper} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                截止日期
+                            </Text>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                                {this.state.taskData.endTimeFormat}
+                            </Text>
+                        </View>
+                    </View>
+
                     {this.renderOverTime()}
                     {this.renderDependences()}
-                    <TouchableHighlight
-                    underlayColor='#eee'
-                    onPress={this._goOrderDetail} >
-                        <View style={commonStyle.settingItemWrapper}>
-                            <View
-                            style={commonStyle.settingItem} >
-                                <Text
-                                style={commonStyle.settingTitle}>
-                                    所属订单
-                                </Text>
-                                <Text
-                                style={commonStyle.settingDetail}>
-                                {this.state.taskData.orderTitle}
-                                </Text>
-                                <Image
-                            style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
-                            </View>
-                        </View>
-                    </TouchableHighlight>
                     <TouchableHighlight
                     underlayColor='#eee'
                     onPress={this._goTaskAttachList} >
@@ -395,6 +376,27 @@ module.exports = React.createClass({
                             </View>
                         </View>
                     </TouchableHighlight>
+                    <TouchableHighlight
+                    underlayColor='#eee'
+                    onPress={this._goOrderDetail} >
+                        <View style={commonStyle.settingItemWrapper}>
+                            <View
+                            style={commonStyle.settingItem} >
+                                <Text
+                                style={commonStyle.settingTitle}>
+                                    所属订单
+                                </Text>
+                                <Text
+                                style={commonStyle.settingDetail}>
+                                {this.state.taskData.orderTitle}
+                                </Text>
+                                <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../../images/common/arrow_right.png')} />
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+
                     {this.renderCommentList()}
                 </ScrollView>
                 {this.renderCommentBar()}

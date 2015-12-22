@@ -9,6 +9,7 @@ var {
 module.exports = React.StyleSheet.create({
     main: {
         flex: 1,
+        backgroundColor: '#f7f7f7',
         paddingBottom: 44
     },
     commentTitle:{
