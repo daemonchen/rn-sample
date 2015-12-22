@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
 var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
+var TimerMixin = require('react-timer-mixin');
 import NavigationBar from 'react-native-navbar'
 var {
     Text,
@@ -46,6 +47,7 @@ var InviteMessage = require('./inviteMessage');
 var util = require('../../common/util');
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
@@ -86,6 +88,12 @@ module.exports = React.createClass({
         this.list.hideHeader();
         this.list.hideFooter();
     },
+    handleDelete: function(result){
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(this.onRefresh, 15)
+    },
     onChange: function() {
         var result = inboxStore.getState();
         if (result.status != 200 && !!result.message) {
@@ -94,6 +102,8 @@ module.exports = React.createClass({
         switch(result.type){
             case 'get':
                 return this.handleGet(result);
+            case 'delete':
+                return this.handleDelete(result);
         }
     },
     onRefresh: function() {

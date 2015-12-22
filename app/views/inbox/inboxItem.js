@@ -54,9 +54,9 @@ module.exports = React.createClass({
         this.props.onUpdate(rowData);
     },
     onDelete: function(){
-        this.setState({
-            isDelete: true
-        });
+        // this.setState({
+        //     isDelete: true
+        // });
         this.props.onDelete(this.props.rowData, this.props.sectionID);
     },
     iconList:[

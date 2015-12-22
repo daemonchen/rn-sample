@@ -61,13 +61,13 @@ module.exports = React.createClass({
     doCommit: function(){
         var phone = this.state.targetMobile;
         phone = phone.replace(/[^\d]/g, '');
-        if (/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
-            employeeAction.create({
-                targetMobile: phone
-            });
-        }else{
-            util.alert('手机号码格式错误');
-        }
+        employeeAction.create({
+            targetMobile: phone
+        });
+        // if (/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
+        // }else{
+        //     util.alert('手机号码格式错误');
+        // }
     },
     onPressDone: function(){
         this.doCommit();

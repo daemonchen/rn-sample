@@ -11,6 +11,19 @@ class AttachStore {
         this.bindActions(attachAction);
         this.state = {};
     }
+    onGet(data) {
+        attachService.get(data)
+        .then((responseData) => {
+            attachAction.getSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'get'
+        this.setState(responseData);
+    }
     transformData(originResponseData, fileData){
         var responseData = Object.assign({}, originResponseData);
         var result = {
@@ -62,18 +75,18 @@ class AttachStore {
         // this.mergeList(responseData)
         this.setState(responseData);
     }
-    mergeList(responseData){
-        asyncStorage.getItem('appConstants')
-        .then((result)=>{
-            if (!!result.attachList) {
-                responseData.data = result.attachList.concat(responseData.data)
-                this.setState(responseData);
-            }else{
-                this.setState(responseData);
-            }
-            appConstants.attachList = responseData.data
-            asyncStorage.setItem('appConstants', appConstants);
+    onUpdate(data) {
+        attachService.update(data)
+        .then((responseData) => {
+            attachAction.updateSuccess(responseData)
         }).done();
+
+        this.preventDefault();
+    }
+    onUpdateSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'update'
+        this.setState(responseData);
     }
 }
 

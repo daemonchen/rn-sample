@@ -58,13 +58,10 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            // this.fetchData();
             this.setTimeout(this.fetchData, 350);
-            // this.setState({
-            //     dataSource : this.state.dataSource.cloneWithRows(result.data || []),
-            //     list: result.data || [],
-            //     loaded     : true,
-            // });
+        };
+        if (result.type == 'get') {
+            this.setTimeout(this.fetchData, 350);
         };
     },
     handleGet: function(result){

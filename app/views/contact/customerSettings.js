@@ -117,11 +117,11 @@ module.exports = React.createClass({
             return;
         };
         var phone = this.state.mobiles[0];
-        if (!/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
-            util.alert('手机号码格式错误');
-            return;
+        // if (!/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
+        //     util.alert('手机号码格式错误');
+        //     return;
 
-        }
+        // }
         customerAction.create({
             userName: this.state.userName,
             mobiles: this.state.mobiles,

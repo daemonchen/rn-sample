@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var TimerMixin = require('react-timer-mixin');
 import NavigationBar from 'react-native-navbar'
 var SearchBar = require('react-native-search-bar');
 var moment = require('moment');
@@ -26,16 +27,68 @@ var BlueBackButton = require('../../../common/blueBackButton');
 var RightSettingButton = require('../../../common/rightSettingButton');
 var AttachSetting = require('./attachSetting');
 
+var attachAction = require('../../../actions/attach/attachAction');
+var attachStore = require('../../../stores/attach/attachStore');
+
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
-        return {}
+        return {
+            gmtCreate: this.props.route.data.gmtCreate,
+            fileAddress: this.props.route.data.fileAddress,
+            fileName: this.props.route.data.fileName,
+            operatorName: this.props.route.data.operatorName,
+            accessoryId: this.props.route.data.id
+        }
+    },
+    componentDidMount: function(){
+        this.unlisten = attachStore.listen(this.onChange);
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function(){
+        var result = attachStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        switch(result.type){
+            case 'get':
+                return this.doGet(result);
+            case 'update':
+                return this.doUpdate(result);
+            default: return;
+        }
+    },
+    doGet: function(result){
+        this.setState({
+            gmtCreate: result.data.gmtCreate,
+            fileAddress: result.data.absoluteUrl,
+            fileName: result.data.fileName,
+            operatorName: result.data.userName,
+            accessoryId: result.data.id
+        });
+    },
+    doUpdate: function(result){
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            this.fetchData();
+            // _navigator.pop();
+        },2000);
+    },
+    fetchData: function(){
+        attachAction.get({
+            accessoryId: this.state.accessoryId
+        });
     },
     _pressSettingButton: function(){
         _topNavigator.push({
             title: '附件设置',
-            data: this.props.route.data,
+            data: this.state,
             component: AttachSetting,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
             topNavigator: _topNavigator
@@ -60,11 +113,11 @@ module.exports = React.createClass({
                 <View style={styles.main}>
                     <View style={styles.attachImageWrapper}>
                         <Image
-                          source={{uri: this.props.route.data.fileAddress}}
+                          source={{uri: this.state.fileAddress}}
                           style={styles.attachImageMiddle} />
                     </View>
                     <Text style={styles.attachTitle}>
-                        {this.props.route.data.fileName}
+                        {this.state.fileName}
                     </Text>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
@@ -78,7 +131,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={commonStyle.settingDetail}>
-                                {this.props.route.data.operatorName}
+                                {this.state.operatorName}
                             </Text>
                         </View>
                     </TouchableHighlight>
@@ -91,7 +144,7 @@ module.exports = React.createClass({
                             style={[commonStyle.settingTitle, commonStyle.textLight]}>
                                 时间
                             </Text>
-                            {this.renderTime(this.props.route.data.gmtCreate)}
+                            {this.renderTime(this.state.gmtCreate)}
                         </View>
                     </TouchableHighlight>
                 </View>

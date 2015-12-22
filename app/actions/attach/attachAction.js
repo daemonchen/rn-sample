@@ -4,4 +4,8 @@ var alt = require('../../common/alt');
 module.exports = alt.generateActions(
     'create',
     'uploadToQiniu',
-    'createSuccess');
+    'createSuccess',
+    'update',
+    'updateSuccess',
+    'get',
+    'getSuccess');

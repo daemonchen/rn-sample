@@ -43,7 +43,7 @@ module.exports = React.createClass({
     },
     onEmptyButtonPress: function(){
         var params = {};
-        if (this.state.orderStatus == 1) {
+        if (this.state.taskStatus == 1) {
             params = {
                 hostType: '2'
             }
@@ -68,7 +68,7 @@ module.exports = React.createClass({
     },
     _onPressRow: function(rowData, sectionID){
         _topNavigator.push({
-            title: rowData.name,
+            title: '附件详情',
             data: rowData,
             component: AttachDetail,
             sceneConfig: Navigator.SceneConfigs.FloatFromRight,
