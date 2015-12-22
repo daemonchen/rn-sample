@@ -125,8 +125,7 @@ module.exports = React.createClass({
     },
     transformatData: function(data){
         var endTime = data.endTime || new Date().valueOf();
-        return {
-
+        return Object.assign(data, {
             orderId: data.orderId,
             done: data.status,
             jobName: data.jobName || '',
@@ -137,7 +136,8 @@ module.exports = React.createClass({
             id: data.id || 0,
             ownerId: data.ownerId || 0,
             userName: data.owner || ''
-        }
+
+        })
     },
     keyboardWillShow: function(e) {
         var newSize = Dimensions.get('window').height - e.endCoordinates.height

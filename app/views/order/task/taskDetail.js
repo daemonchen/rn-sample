@@ -127,7 +127,6 @@ module.exports = React.createClass({
         };
     },
     transformatData: function(data){
-        console.log('-----data', data);
         var endTime = data.endTime || new Date().valueOf();
         return Object.assign(data, {
             id: data.id || 0,

@@ -77,7 +77,6 @@ module.exports = React.createClass({
         var rights = appConstants.userRights.rights;
         var targetRights = 4;
         var progress = parseInt(this.props.rowData.overPercent)/100 || 0;
-        console.log('----progress',progress);
         if ((rights & targetRights) == targetRights){
             return(
                 <Swipeout autoClose={true} right={swipeoutBtns}

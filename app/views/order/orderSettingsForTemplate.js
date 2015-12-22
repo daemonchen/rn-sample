@@ -15,12 +15,7 @@ var {
     TouchableHighlight,
     StyleSheet
 } = React
-/*
-orderStatus:enum
-1: create
-2: update
-3: normal
-*/
+
 var commonStyle = require('../../styles/commonStyle');
 
 var DatePicker = require('../datePicker');
@@ -55,8 +50,8 @@ module.exports = React.createClass({
         var endTime = defaultData.endTime || new Date().valueOf();
 
         return {
+            templateId: defaultData.id || null,
             orderId: defaultData.id || 0,
-            orderStatus: defaultData.orderStatus || 3,
             accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
             creatorId: defaultData.creatorId || 0,
@@ -179,15 +174,8 @@ module.exports = React.createClass({
     },
     _addAttachs: function(){
         var params = {};
-        if (this.state.orderStatus == 1) {
-            params = {
-                hostType: '1'
-            }
-        }else{
-            params = {
-                hostId: this.state.orderId + '',
-                hostType: '1'
-            }
+        params = {
+            hostType: '1'
         }
         util.showPhotoPicker({
             title: ''
@@ -206,43 +194,23 @@ module.exports = React.createClass({
         _navigator.pop();
     },
     onPressDone: function(){
-        if (this.state.orderStatus == 2) {//修改订单
-            orderAction.update({
-                id: this.state.orderId,
-                accessoryIds: this.state.accessoryIds || [],
-                accessoryNum: this.state.accessoryNum || '',
-                creatorId: this.state.creatorId || 0,
-                creatorName: this.state.creatorName || '',
-                customerId: this.state.customerId || '',
-                customerName: this.state.customerName || '',
-                description: this.state.description || '',
-                endTime: this.state.endTime || new Date().valueOf(),
-                factoryId: this.state.factoryId || 0,
-                lable: this.state.lable || '',
-                salesManId: this.state.salesManId || '',
-                salesManName: this.state.salesManName || '',
-                startTime: this.state.startTime || '',
-                title: this.state.title || ''
-            });
-        }
-        if (this.state.orderStatus == 1) {//新增订单
-            orderAction.create({
-                accessoryIds: this.state.accessoryIds || [],
-                accessoryNum: this.state.accessoryNum || '',
-                creatorId: this.state.creatorId || 0,
-                creatorName: this.state.creatorName || '',
-                customerId: this.state.customerId || '',
-                customerName: this.state.customerName || '',
-                description: this.state.description || '',
-                endTime: this.state.endTime || new Date().valueOf(),
-                factoryId: this.state.factoryId || 0,
-                lable: this.state.lable || '',
-                salesManId: this.state.salesManId || '',
-                salesManName: this.state.salesManName || '',
-                startTime: this.state.startTime || '',
-                title: this.state.title || ''
-            });
-        };
+        orderAction.create({
+            templateId: this.state.templateId,
+            accessoryIds: this.state.accessoryIds || [],
+            accessoryNum: this.state.accessoryNum || '',
+            creatorId: this.state.creatorId || 0,
+            creatorName: this.state.creatorName || '',
+            customerId: this.state.customerId || '',
+            customerName: this.state.customerName || '',
+            description: this.state.description || '',
+            endTime: this.state.endTime || new Date().valueOf(),
+            factoryId: this.state.factoryId || 0,
+            lable: this.state.lable || '',
+            salesManId: this.state.salesManId || '',
+            salesManName: this.state.salesManName || '',
+            startTime: this.state.startTime || '',
+            title: this.state.title || ''
+        });
     },
     onChangeNameText: function(text){
         this.setState({
@@ -255,14 +223,6 @@ module.exports = React.createClass({
         });
     },
     renderNavigationBar: function(){
-        if (this.state.orderStatus == 2) {//修改订单
-            return(
-                <NavigationBar
-                    title={{title: this.props.route.title}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
-                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
-                );
-        };
         return(
             <NavigationBar
                 title={{title: this.props.route.title}}
@@ -285,68 +245,7 @@ module.exports = React.createClass({
             orderId: this.state.orderId
         })
     },
-    renderOptionalSettings: function(){
-        if (this.state.orderStatus == 2) {//修改订单
-            return(
-                <View>
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee' >
-                        <View
-                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
-                            <Text
-                            style={commonStyle.settingTitle}>
-                                创建者
-                            </Text>
-                            <Text
-                            style={commonStyle.settingDetail}>
-                            {this.state.creatorName}
-                            </Text>
-                            <Image
-                            style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee'
-                        onPress={this._saveTemplate} >
-                        <View
-                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
-                            <Text
-                            style={commonStyle.settingTitle}>
-                                保存为模版
-                            </Text>
-                            <Text
-                            style={commonStyle.settingDetail}>
-                            </Text>
-                            <Image
-                            style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee'
-                        onPress={this._deleteOrder} >
-                        <View
-                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
-                            <Text
-                            style={[commonStyle.settingTitle, commonStyle.red]}>
-                                删除
-                            </Text>
-                            <Text
-                            style={commonStyle.settingDetail}>
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                </View>
-                );
-        };
-        return(
-            <View />
-            )
-    },
+
     render: function(){
         return(
             <ScrollView keyboardShouldPersistTaps={false}
@@ -445,7 +344,6 @@ module.exports = React.createClass({
                             source={require('../../images/common/arrow_right.png')} />
                         </View>
                     </TouchableHighlight>
-                    {this.renderOptionalSettings()}
                 </View>
             </ScrollView>
             );

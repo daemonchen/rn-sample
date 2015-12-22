@@ -17,7 +17,7 @@ target: 表示从哪里打开模版 enum
 var commonStyle = require('../../styles/commonStyle');
 var _navigator, _topNavigator = null;
 
-var OrderSettings = require('./orderSettingsForTemplate');
+var OrderSettingsForTemplate = require('./orderSettingsForTemplate');
 var OrderTemplateList = require('./components/orderTemplateList');
 var OrderTemplateDetail = require('./templates/orderTemplateDetail');
 var OrderTemplateSetting = require('./templates/orderTemplateSetting');
@@ -61,7 +61,7 @@ module.exports = React.createClass({
             _topNavigator.push({
                 title: '设置订单',
                 data: data,
-                component: OrderSettings,
+                component: OrderSettingsForTemplate,
                 sceneConfig: Navigator.SceneConfigs.FloatFromRight,
                 topNavigator: _topNavigator
             });
