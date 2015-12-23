@@ -258,7 +258,7 @@ module.exports = React.createClass({
                                 手机号码
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.blue]}>
                             {this.state.data.mobiles[0]}
                             </Text>
                         </View>
