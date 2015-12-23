@@ -11,6 +11,10 @@ module.exports = React.StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff'
     },
+    centerWrapper: {
+        width: width,
+        alignItems: 'center'
+    },
     alignCenter:{
         textAlign: 'center'
     },

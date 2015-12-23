@@ -253,20 +253,22 @@ module.exports = React.createClass({
                 <ScrollView style={styles.main}
                 keyboardShouldPersistTaps={false}
                 keyboardDismissMode={'interactive'}>
-                    <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='订单名称'
-                        style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}
-                        value={this.state.title}
-                        onChangeText={this.onChangeNameText}/>
-                    </View>
-                    <View style={commonStyle.textAreaWrapper}>
-                        <TextInput placeholder='订单描述'
-                        style={commonStyle.textArea}
-                        clearButtonMode={'while-editing'}
-                        multiline={true}
-                        value={this.state.description}
-                        onChangeText={this.onChangeDescribeText} />
+                    <View style={commonStyle.centerWrapper}>
+                        <View style={commonStyle.textInputWrapper}>
+                            <TextInput placeholder='订单名称'
+                            style={commonStyle.textInput}
+                            clearButtonMode={'while-editing'}
+                            value={this.state.title}
+                            onChangeText={this.onChangeNameText}/>
+                        </View>
+                        <View style={commonStyle.textAreaWrapper}>
+                            <TextInput placeholder='订单描述'
+                            style={commonStyle.textArea}
+                            clearButtonMode={'while-editing'}
+                            multiline={true}
+                            value={this.state.description}
+                            onChangeText={this.onChangeDescribeText} />
+                        </View>
                     </View>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
