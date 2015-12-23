@@ -28,7 +28,8 @@ module.exports = React.createClass({
         var ds = new ListView.DataSource({
             getSectionData: this.getSectionData,
             getRowData: this.getRowData,
-            rowHasChanged: (r1, r2) => r1 !== r2,
+            // rowHasChanged: (r1, r2) => r1 !== r2,
+            rowHasChanged: (r1, r2) => true,//为了在swipe的时候刷新列表
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2}) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
         return {

@@ -53,7 +53,8 @@ module.exports = React.createClass({
         _topNavigator = this.props.route.topNavigator;
 
         var ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
+            // rowHasChanged: (r1, r2) => r1 !== r2
+            rowHasChanged: (r1, r2) => true////为了在swipe的时候刷新列表
         });
 
         return {
@@ -61,7 +62,8 @@ module.exports = React.createClass({
             pageSize: 20,
             loaded : false,
             list: [],
-            dataSource: ds
+            dataSource: ds,
+            scrollEnabled: true
         }
     },
     componentDidMount: function(){
@@ -70,6 +72,23 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
         this.unlisten();
+    },
+    _allowScroll: function(scrollEnabled) {
+       this.setState({ scrollEnabled: scrollEnabled })
+    },
+    _handleSwipeout: function(rowData, sectionID, rowID){
+        var rawData = this.state.list;
+        for (var i = 0; i < rawData.length; i++) {
+            if (rowData.msgId != rawData[i].msgId) {
+                rawData[i].active = false
+            }else{
+                rawData[i].active = true
+            }
+        }
+
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRows(rawData || [])
+        });
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {
@@ -164,10 +183,13 @@ module.exports = React.createClass({
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <InboxItem rowData={rowData} sectionID={sectionID}
+            <InboxItem rowData={rowData}
+            sectionID={sectionID}
             rowID={rowID}
             onPress={this.onPressRow}
             onDelete={this.onDelete}
+            _allowScroll={this._allowScroll}
+            _handleSwipeout={this._handleSwipeout}
             onUpdate={this.onUpdate} />
             )
     },
@@ -188,6 +210,7 @@ module.exports = React.createClass({
                 onRefresh = {this.onRefresh}
                 onInfinite = {this.onInfinite}
                 loadedAllData={this.loadedAllData}
+                scrollEnabled={this.state.scrollEnabled}
                 contentContainerStyle={{paddingBottom: 40}} >
             </RefreshInfiniteListView>
             )

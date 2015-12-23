@@ -117,6 +117,9 @@ module.exports = React.createClass({
             </Text>
             )
     },
+    _handleSwipeout: function(){
+        this.props._handleSwipeout(this.props.rowData, this.props.sectionID, this.props.rowID);
+    },
     render: function(){
         var readText = (this.state.readStatus == 1) ? '已读' : '未读'
         var swipeoutBtns = [
@@ -139,6 +142,9 @@ module.exports = React.createClass({
         return(
             <Swipeout autoClose={true} right={swipeoutBtns}
             backgroundColor='transparent'
+            scroll={event => this.props._allowScroll(event)}
+            close={!this.props.rowData.active}
+            onOpen={this._handleSwipeout}
             style={styles.swipeWrapper}>
                 <TouchableHighlight
                 underlayColor='#eee'

@@ -23,7 +23,8 @@ var orderList = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function() {
         var ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
+            // rowHasChanged: (r1, r2) => r1 !== r2
+            rowHasChanged: (r1, r2) => true////为了在swipe的时候刷新列表
         });
         return {
             status: this.props.status,//-1删除，0正常，1结束
@@ -31,7 +32,8 @@ var orderList = React.createClass({
             pageSize: 20,
             loaded : false,
             list: [],
-            dataSource: ds
+            dataSource: ds,
+            scrollEnabled: true
         }
     },
     componentWillReceiveProps: function(nextProps){
@@ -53,6 +55,23 @@ var orderList = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenOrderChange();
+    },
+    _allowScroll: function(scrollEnabled) {
+       this.setState({ scrollEnabled: scrollEnabled })
+    },
+    _handleSwipeout: function(rowData, sectionID, rowID){
+        var rawData = this.state.list;
+        for (var i = 0; i < rawData.length; i++) {
+            if (rowData.id != rawData[i].id) {
+                rawData[i].active = false
+            }else{
+                rawData[i].active = true
+            }
+        }
+
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRows(rawData || [])
+        });
     },
     onOrderChange: function(){
         var result = orderStore.getState();
@@ -145,6 +164,8 @@ var orderList = React.createClass({
             sectionID={sectionID}
             rowID={rowID}
             onPress={this.props.onPressRow}
+            _allowScroll={this._allowScroll}
+            _handleSwipeout={this._handleSwipeout}
             onDelete={this.onDelete} />
             )
     },
@@ -165,6 +186,7 @@ var orderList = React.createClass({
                 onRefresh = {this.onRefresh}
                 onInfinite = {this.onInfinite}
                 loadedAllData={this.loadedAllData}
+                scrollEnabled={this.state.scrollEnabled}
                 >
             </RefreshInfiniteListView>
             )

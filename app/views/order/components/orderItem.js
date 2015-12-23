@@ -65,6 +65,9 @@ module.exports = React.createClass({
             <Text style={[styles.percent]}>{percentString}%</Text>
             );
     },
+    _handleSwipeout: function(){
+        this.props._handleSwipeout(this.props.rowData, this.props.sectionID, this.props.rowID);
+    },
     render: function(){
         var swipeoutBtns = [
           {
@@ -80,7 +83,11 @@ module.exports = React.createClass({
         if ((rights & targetRights) == targetRights){
             return(
                 <Swipeout autoClose={true} right={swipeoutBtns}
-                backgroundColor='transparent' style={styles.swipeWrapper}>
+                backgroundColor='transparent'
+                scroll={event => this.props._allowScroll(event)}
+                close={!this.props.rowData.active}
+                onOpen={this._handleSwipeout}
+                style={styles.swipeWrapper}>
                     <TouchableHighlight underlayColor='#eee'
                     onPress={this.onPress}>
                         <View style={styles.rowStyle}>

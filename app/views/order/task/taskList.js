@@ -36,14 +36,18 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     displayName: 'taskList',
     getInitialState: function(){
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}) // assumes immutable objects
+        var ds = new ListView.DataSource({
+            // rowHasChanged: (r1, r2) => r1 !== r2
+            rowHasChanged: (r1, r2) => true////为了在swipe的时候刷新列表
+        }) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
         return {
             taskStatus: this.props.data.taskStatus || 1,
             lastIdList: this.props.data.lastIdList || [],
             loaded : false,
             list: [],
-            dataSource: ds
+            dataSource: ds,
+            scrollEnabled: true
         }
     },
     componentDidMount: function(){
@@ -57,6 +61,23 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenTaskChange();
+    },
+    _allowScroll: function(scrollEnabled) {
+       this.setState({ scrollEnabled: scrollEnabled })
+    },
+    _handleSwipeout: function(rowData, sectionID, rowID){
+        var rawData = this.state.list;
+        for (var i = 0; i < rawData.length; i++) {
+            if (rowData.msgId != rawData[i].msgId) {
+                rawData[i].active = false
+            }else{
+                rawData[i].active = true
+            }
+        }
+
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRows(rawData || [])
+        });
     },
     onTaskChange: function(){
         var result = taskStore.getState();
@@ -144,7 +165,9 @@ module.exports = React.createClass({
             sectionID={sectionID}
             rowID={rowID}
             target={this.props.target}
-            onPressRow={this.props.onPressRow} />
+            onPressRow={this.props.onPressRow}
+            _allowScroll={this._allowScroll}
+            _handleSwipeout={this._handleSwipeout} />
             )
     },
     render: function() {
@@ -158,6 +181,7 @@ module.exports = React.createClass({
             <ListView
               style={commonStyle.container}
               dataSource={this.state.dataSource}
+              scrollEnabled={this.state.scrollEnabled}
               renderRow={this.renderRow} />
             )
     },
