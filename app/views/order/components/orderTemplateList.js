@@ -31,11 +31,15 @@ var templateStore = require('../../../stores/template/templateStore');
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        var ds = new ListView.DataSource({
+            // rowHasChanged: (r1, r2) => r1 !== r2
+            rowHasChanged: (r1, r2) => true////为了在swipe的时候刷新列表
+        });
         return {
             loaded : false,
             list: [],
-            dataSource: ds
+            dataSource: ds,
+            scrollEnabled: true
         }
     },
     componentDidMount: function(){
@@ -49,6 +53,23 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenTemplate();
+    },
+    _allowScroll: function(scrollEnabled) {
+       this.setState({ scrollEnabled: scrollEnabled })
+    },
+    _handleSwipeout: function(rowData){
+        var rawData = this.state.list;
+        for (var i = 0; i < rawData.length; i++) {
+            if (rowData.id != rawData[i].id) {
+                rawData[i].active = false
+            }else{
+                rawData[i].active = true
+            }
+        }
+
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRows(rawData || [])
+        });
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {
@@ -127,6 +148,9 @@ module.exports = React.createClass({
         return(
             <Swipeout autoClose={true}
             right={swipeoutBtns}
+            scroll={event => this._allowScroll(event)}
+            close={!rowData.active}
+            onOpen={()=>{this._handleSwipeout(rowData)}}
             backgroundColor='transparent' >
                 <TouchableHighlight underlayColor='#eee'
                 onPress={() => this.props.onPressRow(rowData)} >
@@ -141,12 +165,11 @@ module.exports = React.createClass({
     },
     render: function(){
         return(
-            <ScrollView style={commonStyle.container}
-            automaticallyAdjustContentInsets={false} >
-                <ListView
-                  dataSource={this.state.dataSource}
-                  renderRow={this.renderRow} />
-            </ScrollView>
+            <ListView
+                style={commonStyle.container}
+                dataSource={this.state.dataSource}
+                scrollEnabled={this.state.scrollEnabled}
+                renderRow={this.renderRow} />
             );
     }
 });

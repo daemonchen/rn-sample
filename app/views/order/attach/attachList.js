@@ -25,6 +25,7 @@ var attachListAction = require('../../../actions/attach/attachListAction');
 var attachStore = require('../../../stores/attach/attachStore');
 
 var commonStyle = require('../../../styles/commonStyle');
+var appConstants = require('../../../constants/appConstants');
 
 var AttachItem = require('./attachItem');
 var Button = require('../../../common/button.js');
@@ -138,16 +139,26 @@ module.exports = React.createClass({
             )
     },
     renderEmptyView: function(){
-        return(
-            <View style={styles.empty}>
-                <Text style={[commonStyle.textLight, commonStyle.textInput, commonStyle.alignCenter]}>目前没有附件</Text>
-                <Button
-                style={commonStyle.blueButton}
-                onPress={this.props.onEmptyButtonPress} >
-                    添加附件
-                </Button>
-            </View>
-            );
+        var self = this;
+        var rights = appConstants.userRights.rights;
+        var targetRights = 8;
+        if ((rights & targetRights) == targetRights){
+            return (
+                <View style={styles.empty}>
+                    <Text style={[commonStyle.textLight, commonStyle.textInput, commonStyle.alignCenter]}>目前没有附件</Text>
+                    <Button
+                    style={commonStyle.blueButton}
+                    onPress={this.props.onEmptyButtonPress} >
+                        添加附件
+                    </Button>
+                </View>
+                );
+        }else{
+            return(
+                <View style={styles.empty}>
+                </View>
+                )
+        }
     },
     renderLoadingView: function(){
         return (
