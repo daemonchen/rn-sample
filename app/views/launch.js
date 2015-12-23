@@ -54,7 +54,7 @@ var Launch = React.createClass({
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.unlistenNotification();
+        this.unlistenNotification.remove();
     },
     factoryNotify: function(response){
         var jsonData = null;
@@ -97,6 +97,7 @@ var Launch = React.createClass({
     },
     onChange: function() {
         var result = inboxStore.getState();
+        console.log('---result', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;

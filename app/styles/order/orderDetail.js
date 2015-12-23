@@ -32,11 +32,9 @@ module.exports = React.StyleSheet.create({
     checkIconWrapper: {
         width: 36,
         height: 36,
-        borderRadius: 18,
         marginLeft: 15,
         marginTop: 20,
-        marginRight: 16,
-        backgroundColor: '#fff'
+        marginRight: 16
     },
     checkIcon: {
         width: 32,
@@ -44,13 +42,24 @@ module.exports = React.StyleSheet.create({
         marginTop: 2,
         marginLeft: 2
     },
+    checkIcon24: {
+        width: 24,
+        height: 24,
+        marginTop: 6,
+        marginLeft: 6
+    },
+    checkIcon36: {
+        width: 36,
+        height: 36,
+        marginTop: 2,
+        marginLeft: 2
+    },
     contentWrapper: {
         paddingVertical: 16,
-        flex: 1
+        flex: 1,
+        flexDirection: 'column'
     },
     timeLabel: {
-        width:80,
-        marginTop: 20,
         textAlign: 'right'
     },
     taskItemCircle: {
@@ -71,6 +80,13 @@ module.exports = React.StyleSheet.create({
     taskDetailTop: {
         // height: 60,
         width: width,
+        flexDirection: 'row'
+    },
+    contentTop:{
+        flex: 1
+    },
+    contentBottom:{
+        flex: 1,
         flexDirection: 'row'
     },
     taskTitle: {
@@ -116,6 +132,12 @@ module.exports = React.StyleSheet.create({
     rowTextDetail: {
         fontSize: 14
     },
+    rowTextDetailLeft: {
+        flex: 1
+    },
+    rowTextDetailRight: {
+        flex: 1
+    },
     attachImageWrapper: {
         alignItems: 'center'
         // paddingHorizontal: 64
@@ -144,7 +166,7 @@ module.exports = React.StyleSheet.create({
         justifyContent: 'center'
     },
     newsTimeline: {
-        width: 2 / React.PixelRatio.get(),
+        width: 2,
         position: 'absolute',
         left: 68,
         top: 0,

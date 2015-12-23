@@ -161,27 +161,34 @@ module.exports = React.createClass({
         }
     },
     renderCheckIcon: function(){
-        if (this.state.target == 2) {
-            var circleImage = (this.state.isCheck == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
+        if (this.state.target == 2) {//察看前置任务
+            var circleImage = (this.state.done == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
             return(
                 <View style={styles.checkIconWrapper}>
                     <Image source={circleImage} style={styles.checkIcon}/>
                 </View>
                 );
         };
-        if (this.state.target == 1) {
-            var circleImage = (this.state.isCheck == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
-        }
-        if (this.state.target == 3) {
-            var circleImage = (this.state.done == 1) ? require('../../../images/task/task_status_done.png') : require('../../../images/task/task_status.png')
-        }
-        return(
+        if (this.state.target == 1) {//新建修改任务时候设置任务依赖
+            var circleImage = (this.state.isCheck == 1) ? require('../../../images/task/Check_box_selected.png') : require('../../../images/task/Check_box.png');
+            return(
             <TouchableWithoutFeedback onPress={this.onPressCircle}>
                 <View style={styles.checkIconWrapper}>
-                    <Image source={circleImage} style={styles.checkIcon}/>
+                    <Image source={circleImage} style={styles.checkIcon24}/>
                 </View>
             </TouchableWithoutFeedback>
             )
+        }
+        if (this.state.target == 3) {//查看任务列表
+            var circleImage = (this.state.done == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
+            return(
+                <TouchableWithoutFeedback onPress={this.onPressCircle}>
+                    <View style={styles.checkIconWrapper}>
+                        <Image source={circleImage} style={styles.checkIcon}/>
+                    </View>
+                </TouchableWithoutFeedback>
+                )
+        }
     },
     _handleSwipeout: function(){
         this.props._handleSwipeout(this.props.rowData, this.props.sectionID, this.props.rowID);

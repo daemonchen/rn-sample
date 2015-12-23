@@ -80,10 +80,9 @@ module.exports = React.createClass({
     renderCheckIcon: function(){
         var circleImage = (this.state.done == 1) ? require('../../images/task/task_status_done.png') : require('../../images/task/task_status.png')
         return(
-            <TouchableWithoutFeedback onPress={this.onPressCircle}
-            style={styles.checkIcon} >
+            <TouchableWithoutFeedback onPress={this.onPressCircle}>
                 <View style={styles.checkIconWrapper}>
-                    <Image source={circleImage} />
+                    <Image source={circleImage} style={styles.checkIcon36}/>
                 </View>
             </TouchableWithoutFeedback>
             )
@@ -92,13 +91,13 @@ module.exports = React.createClass({
         var time = moment(timestamp).format('YYYY-MM-DD');
         if (moment().valueOf() > (timestamp + 24 *60 * 60 * 1000)) {//任务过期
             return(
-                <Text style={[styles.timeLabel, commonStyle.red]}>
+                <Text style={[styles.timeLabel, styles.rowTextDetailRight, commonStyle.red]}>
                     {time}
                 </Text>
                 );
         };
         return(
-            <Text style={[styles.timeLabel, commonStyle.textGray]}>
+            <Text style={[styles.timeLabel, styles.rowTextDetailRight, commonStyle.textGray]}>
                 {time}
             </Text>
             );
@@ -129,12 +128,17 @@ module.exports = React.createClass({
                         <View style={styles.rowStyle}>
                             {this.renderCheckIcon()}
                             <View style={styles.contentWrapper}>
-                                <Text style={[styles.rowText,styles.rowTitle]}>{this.props.rowData.jobName}</Text>
-                                <Text style={[styles.rowTextDetail, commonStyle.textGray]}>
-                                    订单：{this.props.rowData.orderTitle}
-                                </Text>
+                                <View style={styles.contentTop}>
+                                    <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
+                                </View>
+                                <View style={styles.contentBottom}>
+                                    <Text style={[styles.rowTextDetail, styles.rowTextDetailLeft, commonStyle.textGray]}
+                                    numberOfLines={1}>
+                                        订单：{this.props.rowData.orderTitle}
+                                    </Text>
+                                    {this.renderTimeLabel(this.props.rowData.endTime)}
+                                </View>
                             </View>
-                            {this.renderTimeLabel(this.props.rowData.endTime)}
                         </View>
                     </TouchableHighlight>
                 </Swipeout>
@@ -147,13 +151,17 @@ module.exports = React.createClass({
                     <View style={styles.rowStyle}>
                         {this.renderCheckIcon()}
                         <View style={styles.contentWrapper}>
-                            <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
-                            <Text style={[styles.rowTextDetail, commonStyle.textGray]}
-                            numberOfLines={1}>
-                                订单：{this.props.rowData.orderTitle}
-                            </Text>
+                            <View style={styles.contentTop}>
+                                <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
+                            </View>
+                            <View style={styles.contentBottom}>
+                                <Text style={[styles.rowTextDetail, styles.rowTextDetailLeft, commonStyle.textGray]}
+                                numberOfLines={1}>
+                                    订单：{this.props.rowData.orderTitle}
+                                </Text>
+                                {this.renderTimeLabel(this.props.rowData.endTime)}
+                            </View>
                         </View>
-                        {this.renderTimeLabel(this.props.rowData.endTime)}
                     </View>
                 </TouchableHighlight>
                 );

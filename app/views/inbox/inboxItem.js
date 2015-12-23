@@ -112,7 +112,7 @@ module.exports = React.createClass({
     renderTimeLabel: function(timestamp){
         var time = util.formatTimestamp(timestamp);
         return(
-            <Text style={[styles.timeLabel, commonStyle.textLight]}>
+            <Text style={[styles.timeLabel, commonStyle.textGray]}>
                 {time}
             </Text>
             )
@@ -157,7 +157,7 @@ module.exports = React.createClass({
                             numberOfLines={1}>
                                 {this.props.rowData.msgTitle}
                             </Text>
-                            <Text style={[styles.inboxDetail,commonStyle.textLight]}
+                            <Text style={[styles.inboxDetail,commonStyle.textGray]}
                             numberOfLines={1} >
                                 {this.props.rowData.msgContent}
                             </Text>
