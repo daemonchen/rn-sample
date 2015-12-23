@@ -37,7 +37,8 @@ module.exports = React.createClass({
             return(<View />);
         };
         return(
-            <Text style={[styles.orderTextRight, commonStyle.textGray]}>
+            <Text style={[styles.orderTextRight, commonStyle.textGray]}
+            numberOfLines={1}>
                 客户:{this.props.rowData.customerName}
             </Text>
             )
