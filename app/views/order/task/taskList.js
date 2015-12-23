@@ -68,7 +68,7 @@ module.exports = React.createClass({
     _handleSwipeout: function(rowData, sectionID, rowID){
         var rawData = this.state.list;
         for (var i = 0; i < rawData.length; i++) {
-            if (rowData.msgId != rawData[i].msgId) {
+            if (rowData.jobDO.id != rawData[i].jobDO.id) {
                 rawData[i].active = false
             }else{
                 rawData[i].active = true
