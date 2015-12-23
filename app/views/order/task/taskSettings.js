@@ -327,11 +327,11 @@ module.exports = React.createClass({
     },
     render: function(){
         return(
-            <ScrollView keyboardShouldPersistTaps={false}
-            keyboardDismissMode={'interactive'}
-            style={commonStyle.container}>
+            <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
-                <View style={styles.main}>
+                <ScrollView style={styles.main}
+                keyboardShouldPersistTaps={false}
+                keyboardDismissMode={'interactive'}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='任务名称'
                         style={commonStyle.textInput}
@@ -424,8 +424,8 @@ module.exports = React.createClass({
                         </View>
                     </TouchableHighlight>
                     {this.renderOptionalSettings()}
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
             );
     }
 });

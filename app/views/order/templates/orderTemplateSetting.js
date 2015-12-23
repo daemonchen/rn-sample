@@ -80,13 +80,13 @@ module.exports = React.createClass({
     },
     render: function(){
         return(
-            <ScrollView keyboardShouldPersistTaps={false}
-            style={commonStyle.container}>
+            <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title: this.props.route.title}}
                     leftButton={<BlueBackButton navigator={_topNavigator} />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
-                <View style={styles.main}>
+                <ScrollView style={styles.main}
+                keyboardShouldPersistTaps={false}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='模版名称'
                         style={commonStyle.textInput}
@@ -98,12 +98,13 @@ module.exports = React.createClass({
                         <TextInput placeholder='模版描述'
                         style={commonStyle.textArea}
                         clearButtonMode={'while-editing'}
-                        multiline={true}
+                        returnKeyType={'done'}
+                        onSubmitEditing={this.onPressDone}
                         value={this.state.description}
                         onChangeText={this.onChangeDescribeText} />
                     </View>
-                </View>
-            </ScrollView>
+                </ScrollView>
+            </View>
             );
     }
 });
