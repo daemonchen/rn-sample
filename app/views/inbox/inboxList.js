@@ -34,6 +34,7 @@ var {
 */
 var inboxAction = require('../../actions/inbox/inboxAction');
 var inboxStore = require('../../stores/inbox/inboxStore');
+var notificationStore = require('../../stores/notification/notificationStore');
 
 var commonStyle = require('../../styles/commonStyle');
 var InboxItem = require('./inboxItem');
@@ -69,9 +70,11 @@ module.exports = React.createClass({
     componentDidMount: function(){
         this.onRefresh();
         this.unlisten = inboxStore.listen(this.onChange)
+        this.unlistenNotification = notificationStore.listen(this.onNotificationChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenNotification();
     },
     _allowScroll: function(scrollEnabled) {
        this.setState({ scrollEnabled: scrollEnabled })
@@ -124,6 +127,15 @@ module.exports = React.createClass({
             case 'delete':
                 return this.handleDelete(result);
         }
+    },
+    onNotificationChange: function(){
+        var result = notificationStore.getState();
+        if (result.type == 1) {
+            if (this._timeout) {
+                this.clearTimeout(this._timeout);
+            };
+            this._timeout = this.setTimeout(this.onRefresh, 15)
+        };
     },
     onRefresh: function() {
         this.setState({

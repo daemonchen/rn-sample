@@ -27,6 +27,7 @@ var asyncStorage = require('../common/storage');
 
 var inboxStore = require('../stores/inbox/inboxStore');
 var authTokenAction = require('../actions/user/authTokenAction');
+var notificationAction = require('../actions/notification/notificationAction');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -65,6 +66,7 @@ var Launch = React.createClass({
         if (!jsonData) { return; };
         if (jsonData.type == 1) {
             this.setBadge(jsonData.data.unreadMsgCount);
+            notificationAction.notify(jsonData);
         };
         if (jsonData.type == 2) {
             authTokenAction.updateToken()

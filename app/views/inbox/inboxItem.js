@@ -23,13 +23,13 @@ var util = require('../../common/util');
 module.exports = React.createClass({
     getInitialState: function(){
         return{
-            isDelete: false,
-            readStatus: this.props.rowData.readStatus//1:未读，2:已读
+            isDelete: false
         }
     },
     componentWillReceiveProps: function(nextProps){
         this.setState({
-            isDelete: false
+            isDelete: false,
+            readStatus: nextProps.rowData.readStatus//1:未读，2:已读
         });
     },
     onPress: function(){
