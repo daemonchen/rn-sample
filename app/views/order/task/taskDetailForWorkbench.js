@@ -395,7 +395,8 @@ module.exports = React.createClass({
                                     所属订单
                                 </Text>
                                 <Text
-                                style={commonStyle.settingDetail}>
+                                style={commonStyle.settingDetail}
+                                numberOfLines={1}>
                                 {this.state.taskData.orderTitle}
                                 </Text>
                                 <Image
