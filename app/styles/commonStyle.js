@@ -88,7 +88,7 @@ module.exports = React.StyleSheet.create({
     },
     textAreaWrapper: {
         width: width - 32,
-        height: 100,
+        height: 76,
         flexDirection: 'row',
         borderStyle: 'solid',
         borderBottomWidth: 1 / React.PixelRatio.get(),
@@ -98,7 +98,7 @@ module.exports = React.StyleSheet.create({
         fontSize: 16,
         width: width - 32,
         alignSelf: 'center',
-        height: 100
+        height: 76
     },
     logoutWrapper: {
         width: width,
@@ -142,14 +142,14 @@ module.exports = React.StyleSheet.create({
         fontSize: 16,
         color: '#212121',
         height: 59,
-        paddingTop: 23,
+        paddingTop: 20,
         width: 80,
     },
     settingDetail: {
         fontSize: 16,
         flex: 1,
         height: 59,
-        paddingTop: 23,
+        paddingTop: 20,
         textAlign: 'right'
     },
     settingArrow: {

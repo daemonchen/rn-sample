@@ -91,7 +91,6 @@ module.exports = React.createClass({
         };
     },
     handleUpdate: function(result){
-        console.log('---after update 2', result);
         if (parseInt(result.data) != this.state.taskData.id) {
             return;
         };
@@ -370,7 +369,7 @@ module.exports = React.createClass({
                     onPress={this._goTaskAttachList} >
                         <View style={commonStyle.settingItemWrapper}>
                             <View
-                            style={commonStyle.settingItem} >
+                            style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
                                 <Text
                                 style={commonStyle.settingTitle}>
                                     附件

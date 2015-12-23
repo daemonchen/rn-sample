@@ -40,15 +40,19 @@ module.exports = React.createClass({
         var rights = appConstants.userRights.rights;
         var targetRights = 65536;
         if ((rights & targetRights) == targetRights){
-            <TouchableOpacity style={contactsStyle.contactsItem}
+            return(
+                <TouchableOpacity style={contactsStyle.contactsItem}
             onPress={this.props.goCustomerList}>
                 <Image
                 style={contactsStyle.contactsItemCircle}
                 source={require('../../images/contact/Client.png')} />
                 <Text style={contactsStyle.contactsItemDetail}>客户</Text>
             </TouchableOpacity>
+            )
         }else{
-            <View />
+            return(
+                <View />
+                )
         }
     },
     renderFactoryItem: function(){

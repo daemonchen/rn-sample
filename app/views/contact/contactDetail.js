@@ -140,6 +140,29 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
+    onActionSheetSelect: function(index){
+        switch(index){
+            case 0:
+                return this.doCall();
+            case 1:
+                return this.doSendMsg();
+            default:
+                return;
+        }
+    },
+    showActionSheet: function(){
+        var self = this;
+        ActionSheetIOS.showActionSheetWithOptions({
+            options: this.actionList,
+            cancelButtonIndex: 2,
+            // destructiveButtonIndex: 1,
+            },
+            (buttonIndex) => {
+                self.onActionSheetSelect(buttonIndex)
+              // self.setState({ clicked: self.actionList[buttonIndex] });
+            });
+    },
+    actionList: ['拨打电话','发送短信','取消'],
     doCall: function(){
         var url = '';
         if (this.state.data.mobiles && this.state.data.mobiles.length > 0) {
@@ -148,7 +171,17 @@ module.exports = React.createClass({
         if (!!this.state.data.mobile) {
             url = 'tel:' + this.state.data.mobile;
         };
-            util.link(url);
+        util.link(url);
+    },
+    doSendMsg: function(){
+        var url = '';
+        if (this.state.data.mobiles && this.state.data.mobiles.length > 0) {
+            url = 'sms:' + this.state.data.mobiles[0];
+        };
+        if (!!this.state.data.mobile) {
+            url = 'sms:' + this.state.data.mobile;
+        };
+        util.link(url);
     },
     renderContent: function(){
         if (this.state.group == 1) {//工厂
@@ -157,7 +190,7 @@ module.exports = React.createClass({
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
-                        onPress={this.doCall}>
+                        onPress={this.showActionSheet}>
                         <View
                         style={commonStyle.settingItem}>
                             <Text
@@ -165,7 +198,7 @@ module.exports = React.createClass({
                                 手机号码
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.blue]}>
                                 {this.state.data.mobile}
                             </Text>
                         </View>
@@ -217,7 +250,7 @@ module.exports = React.createClass({
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
-                        onPress={this.doCall}>
+                        onPress={this.showActionSheet}>
                         <View
                         style={commonStyle.settingItem}>
                             <Text

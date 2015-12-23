@@ -7,6 +7,7 @@ var {
     TextInput,
     View,
     ListView,
+    ScrollView,
     Image,
     Navigator,
     ActionSheetIOS,
@@ -179,7 +180,8 @@ module.exports = React.createClass({
     },
     render: function(){
         return(
-            <View style={commonStyle.container}>
+            <ScrollView style={commonStyle.container}
+                automaticallyAdjustContentInsets={false} >
                 <View style={styles.topInfo}>
                     {this.renderAvatar(this.state.user)}
                     <View style={styles.nameWrapper}>
@@ -250,7 +252,7 @@ module.exports = React.createClass({
                         </View>
                     </TouchableHighlight>
                 </View>
-            </View>
+            </ScrollView>
             );
     }
 });

@@ -358,7 +358,7 @@ module.exports = React.createClass({
                     onPress={this._goTaskAttachList} >
                         <View style={commonStyle.settingItemWrapper}>
                             <View
-                            style={commonStyle.settingItem} >
+                            style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
                                 <Text
                                 style={commonStyle.settingTitle}>
                                     附件
