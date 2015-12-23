@@ -44,7 +44,6 @@ var Launch = React.createClass({
     },
     componentDidMount: function(){
         this.unlisten = inboxStore.listen(this.onChange);
-        console.log('----nzaomNotify');
         this.unlistenNotification =  NativeAppEventEmitter.addListener(
             'nzaomNotify',
             (notifData) => {
@@ -63,7 +62,6 @@ var Launch = React.createClass({
         }catch(err){
             console.log(err);
         }
-        console.log('---notify:', jsonData);
         if (!jsonData) { return; };
         if (jsonData.type == 1) {
             this.setBadge(jsonData.data.unreadMsgCount);

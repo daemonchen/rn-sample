@@ -37,8 +37,39 @@ module.exports = React.createClass({
             pageSize: 20,
             loaded : false,
             list: [],
-            dataSource: ds
+            dataSource: ds,
+            scrollEnabled: true
         }
+    },
+    _allowScroll: function(scrollEnabled) {
+       this.setState({ scrollEnabled: scrollEnabled })
+    },
+    _handleSwipeout: function(rowData, sectionID, rowID){
+        var rawData = this.state.list;
+        if (!rawData) { rawData = [];};
+        var dataBlob = {};
+        var sectionIDs = [];
+        var rowIDs = [];
+        for (var i = 0; i <= rawData.length-1; i++) {
+            sectionIDs.push(i);
+            dataBlob[i] = rawData[i];
+            rowIDs[i] = [];
+            var subChildren = rawData[i].data;
+            for (var j = 0; j <= subChildren.length - 1; j++) {
+                var sub = subChildren[j];
+                rowIDs[i].push(sub.id);
+
+                if (rowData.id != sub.id) {
+                    sub.active = false
+                }else{
+                    sub.active = true
+                }
+                dataBlob[i + ':' + sub.id] = sub;
+            };
+        };
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs)
+        });
     },
     componentWillReceiveProps: function(nextProps){
         this.setState({
@@ -96,6 +127,8 @@ module.exports = React.createClass({
         return (
             <HomeTaskItem rowData={rowData} sectionID={sectionID}
             rowID={rowID}
+            _allowScroll={this._allowScroll}
+            _handleSwipeout={this._handleSwipeout}
             onPressRow={this.props.onPressRow} />
             )
     },
@@ -197,6 +230,7 @@ module.exports = React.createClass({
                 onRefresh = {this.onRefresh}
                 onInfinite = {this.onInfinite}
                 loadedAllData={this.loadedAllData}
+                scrollEnabled={this.state.scrollEnabled}
                 >
             </RefreshInfiniteListView>
             )

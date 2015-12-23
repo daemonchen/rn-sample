@@ -1,5 +1,8 @@
 'use strict';
-
+var React = require('react-native');
+var {
+    AlertIOS
+} = React
 var alt = require('../../common/alt');
 var attachAction = require('../../actions/attach/attachAction');
 var attachService = require('../../services/attach/attachService')
@@ -48,17 +51,31 @@ class AttachStore {
         result.params['x:fileOrgName'] = fileData.fileOrgName;
         return result;
     }
+    doConfirm(callback){
+        AlertIOS.alert(
+            '',
+            '您确定要上传附件吗',
+            [
+                {text: '确定', onPress: () => {
+                    callback();
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
+    }
     onCreate(data) {
         var paramsObj = {
             count: data.count
         }
-        attachService.qiniuToken(paramsObj)
-        .then((responseData) => {
-            var options = this.transformData(responseData, data)
-            attachAction.uploadToQiniu(options)
-        }).done();
+        this.doConfirm(()=>{
+            attachService.qiniuToken(paramsObj)
+            .then((responseData) => {
+                var options = this.transformData(responseData, data)
+                attachAction.uploadToQiniu(options)
+            }).done();
 
-        this.preventDefault();
+            this.preventDefault();
+        });
     }
 
     onUploadToQiniu(data){
@@ -74,6 +91,7 @@ class AttachStore {
         // appConstants.memberList = responseData.data
         // asyncStorage.setItem('appConstants', appConstants);
         // this.mergeList(responseData)
+        util.alert('上传成功');
         this.setState(responseData);
     }
     onUpdate(data) {

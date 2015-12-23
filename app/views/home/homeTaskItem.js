@@ -66,6 +66,9 @@ module.exports = React.createClass({
             ]
         )
     },
+    _handleSwipeout: function(){
+        this.props._handleSwipeout(this.props.rowData, this.props.sectionID, this.props.rowID);
+    },
     onPressRow: function(){
         this.props.onPressRow(this.props.rowData, this.props.sectionID, this.props.rowID);
     },
@@ -116,7 +119,9 @@ module.exports = React.createClass({
             return(
                 <Swipeout autoClose={true} right={swipeoutBtns}
                 backgroundColor='transparent'
-                scroll={()=>{return false;}}
+                scroll={event => this.props._allowScroll(event)}
+                close={!this.props.rowData.active}
+                onOpen={this._handleSwipeout}
                 style={styles.swipeWrapper}>
                     <TouchableHighlight
                     underlayColor='#eee'
