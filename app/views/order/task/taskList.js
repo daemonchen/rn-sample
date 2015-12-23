@@ -26,8 +26,9 @@ var TaskItem = require('./taskItem');
 target: 表示从哪里打开任务列表 enum
 {
 
-    1: 'createOrder',
-    2: 'normal'
+    1: 'createTask',
+    2: 'taskdetail',从任务详情的前置任务进入
+    3: 'normal'订单详情里展示任务列表
 }
 */
 
@@ -90,15 +91,21 @@ module.exports = React.createClass({
     },
     transfromDataList: function(list){
         if (!list) { return []};
+        var result = [];
         for (var i = 0; i < this.state.lastIdList.length; i++) {
             for (var j = 0; j < list.length; j++) {
                 if(this.state.lastIdList[i] == list[j].jobDO.id){
                     list[j].isCheck = true;
+                    result.push(list[j]);
                 }
             };
 
         };
-        return list;
+        if (this.props.target == 2) {
+            return result;
+        }else{
+            return list;
+        }
     },
     handleDelete: function(result){
         if (result.status != 200 && !!result.message) {

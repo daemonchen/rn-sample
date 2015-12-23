@@ -45,7 +45,9 @@ var taskStore = require('../../../stores/task/taskStore');
 var attachStore = require('../../../stores/attach/attachStore');
 
 var TaskSettings = require('./taskSettings');
+var SettingsWrapper = require('./settingsWrapper');
 var TaskAttach = require('../attach/taskAttach');
+var TaskList = require('./taskList');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -89,6 +91,7 @@ module.exports = React.createClass({
         };
     },
     handleUpdate: function(result){
+        console.log('---after update 2', result);
         if (parseInt(result.data) != this.state.taskData.id) {
             return;
         };
@@ -121,6 +124,12 @@ module.exports = React.createClass({
             this.setState({
                 taskData: this.transformatData(result.data)
             });
+        };
+        if (result.type == 'update') {
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this._timeout = this.setTimeout(this.fetchData, 550)
         };
     },
     transformatData: function(data){

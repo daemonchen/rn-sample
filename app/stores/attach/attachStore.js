@@ -60,6 +60,7 @@ class AttachStore {
 
         this.preventDefault();
     }
+
     onUploadToQiniu(data){
         util.uploadToQiniu(data.uri, data.key, data.token, data.params, (result)=>{
             attachAction.createSuccess(result)

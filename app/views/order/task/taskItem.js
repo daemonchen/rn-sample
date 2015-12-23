@@ -95,7 +95,9 @@ module.exports = React.createClass({
         }
     },
     onPressRow: function(){
-        !!this.props.onPressRow && this.props.onPressRow(this.props.rowData, this.props.sectionID);
+        if (this.state.target == 3) {
+            !!this.props.onPressRow && this.props.onPressRow(this.props.rowData, this.props.sectionID);
+        };
     },
     onDelete: function(){
         taskListAction.delete({

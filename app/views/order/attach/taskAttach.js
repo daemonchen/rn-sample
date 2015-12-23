@@ -5,7 +5,6 @@
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
 var SearchBar = require('react-native-search-bar');
-var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var {
     View,
     Text,

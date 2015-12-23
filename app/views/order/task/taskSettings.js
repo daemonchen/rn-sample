@@ -267,6 +267,9 @@ module.exports = React.createClass({
         }else{
             this.lastIds = underscore.without(this.lastIds, data.id);
         }
+        this.setState({
+            lastIds: this.lastIds
+        });
     },
     onTaskPressDone: function(){
         this.setState({

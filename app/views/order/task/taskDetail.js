@@ -125,6 +125,12 @@ module.exports = React.createClass({
                 taskData: this.transformatData(result.data)
             });
         };
+        if (result.type == 'update') {
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this._timeout = this.setTimeout(this.fetchData, 550)
+        };
     },
     transformatData: function(data){
         var endTime = data.endTime || new Date().valueOf();
