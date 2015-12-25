@@ -40,6 +40,8 @@
 		D2BF47341C21495A002C7185 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47331C21495A002C7185 /* CoreBluetooth.framework */; };
 		D2BF47F51C215158002C7185 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47F41C215134002C7185 /* libRCTPushNotification.a */; };
 		D2BF48341C219DFE002C7185 /* GeTuiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF48331C219DFE002C7185 /* GeTuiManager.m */; };
+		D2D974B81C2D122300A22F98 /* DVEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D974B51C2D122300A22F98 /* DVEffectsView.m */; };
+		D2D974B91C2D122300A22F98 /* DVEffectsViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D974B71C2D122300A22F98 /* DVEffectsViewManager.m */; };
 		D2ED5D5C1C00788C008826C6 /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */; };
 		D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */; };
 		D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D771C06DFCA008826C6 /* libRNDeviceInfo.a */; };
@@ -283,6 +285,10 @@
 		D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		D2BF48331C219DFE002C7185 /* GeTuiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeTuiManager.m; sourceTree = "<group>"; };
 		D2BF48351C219E1C002C7185 /* GeTuiManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeTuiManager.h; sourceTree = "<group>"; };
+		D2D974B41C2D122300A22F98 /* DVEffectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVEffectsView.h; sourceTree = "<group>"; };
+		D2D974B51C2D122300A22F98 /* DVEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVEffectsView.m; sourceTree = "<group>"; };
+		D2D974B61C2D122300A22F98 /* DVEffectsViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVEffectsViewManager.h; sourceTree = "<group>"; };
+		D2D974B71C2D122300A22F98 /* DVEffectsViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DVEffectsViewManager.m; sourceTree = "<group>"; };
 		D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
@@ -559,6 +565,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D2D974B31C2D122300A22F98 /* DVEffects */,
 				D2F073A61C2304B800A3BABE /* AFNetworking */,
 				D2F073551C23049F00A3BABE /* QiniuSDK */,
 				D2F072C61C22FE3C00A3BABE /* Qiniu */,
@@ -696,6 +703,18 @@
 				D2BF48351C219E1C002C7185 /* GeTuiManager.h */,
 			);
 			name = GeTui;
+			sourceTree = "<group>";
+		};
+		D2D974B31C2D122300A22F98 /* DVEffects */ = {
+			isa = PBXGroup;
+			children = (
+				D2D974B41C2D122300A22F98 /* DVEffectsView.h */,
+				D2D974B51C2D122300A22F98 /* DVEffectsView.m */,
+				D2D974B61C2D122300A22F98 /* DVEffectsViewManager.h */,
+				D2D974B71C2D122300A22F98 /* DVEffectsViewManager.m */,
+			);
+			name = DVEffects;
+			path = "../node_modules/react-native-effects-view/DVEffects";
 			sourceTree = "<group>";
 		};
 		D2ED5D4A1C007876008826C6 /* Products */ = {
@@ -1315,6 +1334,7 @@
 				D2F073931C23049F00A3BABE /* QNEtag.m in Sources */,
 				D2F073D61C2304B800A3BABE /* AFURLResponseSerialization.m in Sources */,
 				D2F072DB1C22FEA600A3BABE /* QiniuManager.m in Sources */,
+				D2D974B91C2D122300A22F98 /* DVEffectsViewManager.m in Sources */,
 				D2F073981C23049F00A3BABE /* QNDns.m in Sources */,
 				D2F073DD1C2304B800A3BABE /* UIButton+AFNetworking.m in Sources */,
 				D2F073961C23049F00A3BABE /* QNSystem.m in Sources */,
@@ -1349,6 +1369,7 @@
 				D2F0738F1C23049F00A3BABE /* GTM_Base64.m in Sources */,
 				D2F074081C2304CA00A3BABE /* QNHijackingDetectWrapper.m in Sources */,
 				D2F074021C2304CA00A3BABE /* QNDnsManager.m in Sources */,
+				D2D974B81C2D122300A22F98 /* DVEffectsView.m in Sources */,
 				D2F073901C23049F00A3BABE /* QNALAssetFile.m in Sources */,
 				D2F0739E1C23049F00A3BABE /* QNReachability.m in Sources */,
 				D2F074071C2304CA00A3BABE /* QNDnspodFree.m in Sources */,

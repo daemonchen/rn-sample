@@ -120,9 +120,7 @@ var Launch = React.createClass({
     render: function() {
         return (
             <TabBarIOS
-                style={styles.tabbarView}
                 tintColor = "#4285f4"
-                barTintColor = "#fff"
                 translucent = {true} >
                 <TabBarIOS.Item
                     title="工作台"
