@@ -24,12 +24,14 @@ module.exports = React.StyleSheet.create({
         color: 'white'
     },
     sectionText: {
-        fontSize: 16,
+        fontSize: 14,
+        fontWeight: '400',
         paddingHorizontal: 16
     },
     sectionHeder:{
         backgroundColor: '#fff',
-        paddingVertical: 16
+        paddingTop: 16,
+        paddingBottom: 8
     },
 
     subText: {

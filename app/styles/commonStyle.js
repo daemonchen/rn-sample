@@ -43,9 +43,11 @@ module.exports = React.StyleSheet.create({
         color: '#eee'
     },
     title: {
-        fontSize: 16,
-        padding: 16,
-        fontWeight: 'bold'
+        fontSize: 14,
+        paddingTop: 16,
+        paddingBottom: 8,
+        paddingHorizontal: 16,
+        fontWeight: '400'
     },
     paddingHorizontal: {
         paddingLeft: 16,
