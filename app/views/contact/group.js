@@ -26,6 +26,11 @@ module.exports = React.createClass({
             factoryName: !!appConstants.user ? appConstants.user.factoryName : ''
         }
     },
+    componentWillReceiveProps: function(){
+        this.setState({
+            factoryName: !!appConstants.user ? appConstants.user.factoryName : ''
+        });
+    },
     openAddress: function(){
         PhonePicker.select(function(phone) {
             if (phone) {

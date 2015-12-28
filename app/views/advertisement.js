@@ -144,6 +144,12 @@ module.exports = React.createClass({
     doLogout: function(){
         appConstants = {};
         asyncStorage.setItem('appConstants', appConstants);
+        // _navigator.push({
+        //     title: 'welcome' ,
+        //     component: Welcome,
+        //     sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
+        //     topNavigator: _navigator
+        // })
         _navigator.immediatelyResetRouteStack([{
             title: 'welcome' ,
             component: Welcome,

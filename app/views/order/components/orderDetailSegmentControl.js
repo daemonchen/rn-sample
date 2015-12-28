@@ -16,7 +16,7 @@ module.exports =  React.createClass({
     },
     render:function(){
         return (
-            <View style={{padding:16}}>
+            <View style={{paddingHorizontal:16, paddingVertical: 8}}>
                 <SegmentedControlIOS values={['任务', '动态', '成员', '附件']}
                 tintColor={'#4285f4'}
                 selectedIndex={this.state.selectedIndex}

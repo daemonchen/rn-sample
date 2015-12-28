@@ -63,6 +63,7 @@ var Launch = React.createClass({
         }catch(err){
             console.log(err);
         }
+        console.log('-------factoryNotify', jsonData);
         if (!jsonData) { return; };
         if (jsonData.type == 1) {
             this.setBadge(jsonData.data.unreadMsgCount);

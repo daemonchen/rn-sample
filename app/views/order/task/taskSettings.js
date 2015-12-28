@@ -332,20 +332,22 @@ module.exports = React.createClass({
                 <ScrollView style={styles.main}
                 keyboardShouldPersistTaps={false}
                 keyboardDismissMode={'interactive'}>
-                    <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='任务名称'
-                        style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}
-                        value={this.state.jobName}
-                        onChangeText={this.onChangeNameText} />
-                    </View>
-                    <View style={commonStyle.textAreaWrapper}>
-                        <TextInput placeholder='任务描述'
-                        style={commonStyle.textArea}
-                        clearButtonMode={'while-editing'}
-                        value={this.state.description}
-                        onChangeText={this.onChangeDescribeText}
-                        multiline={true} />
+                    <View style={commonStyle.centerWrapper}>
+                        <View style={commonStyle.textInputWrapper}>
+                            <TextInput placeholder='任务名称'
+                            style={commonStyle.textInput}
+                            clearButtonMode={'while-editing'}
+                            value={this.state.jobName}
+                            onChangeText={this.onChangeNameText} />
+                        </View>
+                        <View style={commonStyle.textAreaWrapper}>
+                            <TextInput placeholder='任务描述'
+                            style={commonStyle.textArea}
+                            clearButtonMode={'while-editing'}
+                            value={this.state.description}
+                            onChangeText={this.onChangeDescribeText}
+                            multiline={true} />
+                        </View>
                     </View>
                     <TouchableHighlight
                     style={commonStyle.settingItemWrapper}
