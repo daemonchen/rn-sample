@@ -116,7 +116,7 @@ module.exports = React.StyleSheet.create({
         flex: 1,
         width: 4 / React.PixelRatio.get(),
         height: 100,
-        backgroundColor: '#bdbdbd'
+        backgroundColor: '#d5d5d5'
     },
     timelineDone: {
         backgroundColor: '#34a853'
@@ -168,10 +168,10 @@ module.exports = React.StyleSheet.create({
     newsTimeline: {
         width: 2,
         position: 'absolute',
-        left: 68,
+        left: 67,
         top: 0,
         bottom: 0,
-        backgroundColor: '#bdbdbd'
+        backgroundColor: '#d5d5d5'
     },
     newsTag: {
         // width: 10,

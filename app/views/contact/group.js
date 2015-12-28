@@ -41,13 +41,16 @@ module.exports = React.createClass({
         var targetRights = 65536;
         if ((rights & targetRights) == targetRights){
             return(
-                <TouchableOpacity style={contactsStyle.contactsItem}
-            onPress={this.props.goCustomerList}>
-                <Image
-                style={contactsStyle.contactsItemCircle}
-                source={require('../../images/contact/Client.png')} />
-                <Text style={contactsStyle.contactsItemDetail}>客户</Text>
-            </TouchableOpacity>
+                <TouchableHighlight
+                onPress={this.props.goCustomerList}
+                underlayColor='#eee'>
+                <View style={contactsStyle.contactsItem}>
+                    <Image
+                    style={contactsStyle.contactsItemCircle}
+                    source={require('../../images/contact/Client.png')} />
+                    <Text style={contactsStyle.contactsItemDetail}>客户</Text>
+                </View>
+            </TouchableHighlight>
             )
         }else{
             return(

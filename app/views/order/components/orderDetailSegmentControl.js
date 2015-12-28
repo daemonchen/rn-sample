@@ -18,6 +18,7 @@ module.exports =  React.createClass({
         return (
             <View style={{padding:16}}>
                 <SegmentedControlIOS values={['任务', '动态', '成员', '附件']}
+                tintColor={'#4285f4'}
                 selectedIndex={this.state.selectedIndex}
                 onChange={this.props.onSegmentChange} />
             </View>

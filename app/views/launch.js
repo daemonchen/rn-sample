@@ -97,7 +97,7 @@ var Launch = React.createClass({
     },
     onChange: function() {
         var result = inboxStore.getState();
-        console.log('---result', result);
+        console.log('---inboxStore result', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;

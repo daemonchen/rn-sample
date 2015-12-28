@@ -95,7 +95,7 @@ module.exports = React.createClass({
     },
     onAttachChange: function(){
         var result = attachStore.getState();
-        console.log('-----result:', result);
+        console.log('-----attachStore result:', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;

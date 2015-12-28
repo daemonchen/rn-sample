@@ -96,6 +96,7 @@ module.exports = React.createClass({
     },
     onLoginChange: function(){
         var result = loginStore.getState();
+        console.log('----loginStore result', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
