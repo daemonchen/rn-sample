@@ -111,8 +111,20 @@ module.exports = React.createClass({
             topNavigator: _topNavigator
         });
     },
-    openPhoto: function(){
-        util.showPhotoPicker({
+    launchImageLibrary: function(){
+        util.launchImageLibrary({
+            title: '',
+            allowsEditing: true,
+            noData: true
+        }, (response)=>{
+            avatarAction.update({
+                uri: response.uri,
+                params:{}
+            });
+        });
+    },
+    launchCamera: function(){
+        util.launchCamera({
             title: '',
             noData: true
         }, (response)=>{
@@ -128,8 +140,10 @@ module.exports = React.createClass({
     onSelectActionSheet: function(index){
         switch(index){
             case 0:
-                return this.openPhoto();
+                return this.launchCamera();
             case 1:
+                return this.launchImageLibrary();
+            case 2:
                 return this.doDeleteAvatar();
             default :
                 return;
@@ -139,14 +153,14 @@ module.exports = React.createClass({
         var self = this;
         ActionSheetIOS.showActionSheetWithOptions({
             options: this.actionList,
-            destructiveButtonIndex: 1,
-            cancelButtonIndex: 2,
+            destructiveButtonIndex: 2,
+            cancelButtonIndex: 3,
             },
             (buttonIndex) => {
               self.onSelectActionSheet(buttonIndex);
             });
     },
-    actionList: ['修改头像', '删除头像', '取消'],
+    actionList: ['拍照', '选择图片', '删除头像', '取消'],
     renderAvatar: function(data){
         if (!data) {
             return(<View style={styles.avatarWrapper}/>);

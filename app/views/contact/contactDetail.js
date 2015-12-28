@@ -85,14 +85,14 @@ module.exports = React.createClass({
         if (this.state.group == 1) {//1: 工厂员工
             return(
                 <NavigationBar
-                    title={{ title: this.props.route.title }}
+                    title={{ title: '详细资料' }}
                     leftButton={<BlueBackButton navigator={_navigator}/>} />
                 );
 
         }else{//1: 客户
             return(
                 <NavigationBar
-                    title={{ title: this.props.route.title }}
+                    title={{ title: '详细资料' }}
                     leftButton={<BlueBackButton navigator={_navigator}/>}
                     rightButton={<RightSettingButton onPress={this.goSetting} />} />
                 );

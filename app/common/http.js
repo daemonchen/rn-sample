@@ -132,8 +132,9 @@ module.exports = {
             .then((res)=>{
                 var result = null;
                 try{
+                    console.log('[NZAOM]http response:', res);
+                    // result = JSON.parse(res);
                     result = res.json();
-                    console.log('[NZAOM]http response:', result);
                 }catch(error){
                     console.log('[NZAOM]http response to json error:', error);
                 }

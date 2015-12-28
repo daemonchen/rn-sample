@@ -87,6 +87,70 @@ module.exports = {
             return moment(timestamp).format('MM月DD日');
         }
     },
+    launchImageLibrary: function(customerOptions, callback){
+        var defaultOptions = {
+          title: '添加附件', // specify null or empty string to remove the title
+          cancelButtonTitle: '取消',
+          takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
+          chooseFromLibraryButtonTitle: '选择图片', // specify null or empty string to remove this button
+          maxWidth: 20000,
+          maxHeight: 20000,
+          quality: 1,
+          allowsEditing: false, // Built in iOS functionality to resize/reposition the image
+          noData: true, // Disables the base64 `data` field from being generated (greatly improves performance on large photos)
+          storageOptions: { // if this key is provided, the image will get saved in the documents directory (rather than a temporary directory)
+            skipBackup: true, // image will NOT be backed up to icloud
+            path: 'images' // will save image at /Documents/images rather than the root
+          }
+        };
+        var options = Object.assign(defaultOptions, customerOptions);
+
+        UIImagePickerManager.launchImageLibrary(options, (didCancel, response) => {
+            // console.log('Response = ', response);
+
+            if (didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else {
+                callback(response)
+                // You can display the image using either:
+                // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+                // const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+            }
+        });
+    },
+    launchCamera: function(customerOptions, callback){
+        var defaultOptions = {
+          title: '添加附件', // specify null or empty string to remove the title
+          cancelButtonTitle: '取消',
+          takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
+          chooseFromLibraryButtonTitle: '选择图片', // specify null or empty string to remove this button
+          maxWidth: 20000,
+          maxHeight: 20000,
+          quality: 1,
+          allowsEditing: false, // Built in iOS functionality to resize/reposition the image
+          noData: true, // Disables the base64 `data` field from being generated (greatly improves performance on large photos)
+          storageOptions: { // if this key is provided, the image will get saved in the documents directory (rather than a temporary directory)
+            skipBackup: true, // image will NOT be backed up to icloud
+            path: 'images' // will save image at /Documents/images rather than the root
+          }
+        };
+        var options = Object.assign(defaultOptions, customerOptions);
+
+        UIImagePickerManager.launchCamera(options, (didCancel, response) => {
+            // console.log('Response = ', response);
+
+            if (didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else {
+                callback(response)
+                // You can display the image using either:
+                // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+                // const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+            }
+        });
+    },
     showPhotoPicker: function(customerOptions, callback){
         var defaultOptions = {
           title: '添加附件', // specify null or empty string to remove the title
