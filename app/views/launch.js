@@ -63,7 +63,6 @@ var Launch = React.createClass({
         }catch(err){
             console.log(err);
         }
-        console.log('-------factoryNotify', jsonData);
         if (!jsonData) { return; };
         if (jsonData.type == 1) {
             this.setBadge(jsonData.data.unreadMsgCount);
@@ -98,7 +97,6 @@ var Launch = React.createClass({
     },
     onChange: function() {
         var result = inboxStore.getState();
-        console.log('---inboxStore result', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;

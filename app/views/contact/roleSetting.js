@@ -117,7 +117,7 @@ module.exports = React.createClass({
     renderItem: function(item){
         return(
             <Radio.Option color="gray" selectedColor="#008BEF" key={item.name}>
-                <View style={{ paddingTop: 7, paddingLeft: 10, paddingRight: 16 }}>
+                <View style={{ paddingTop: 7, paddingLeft: 16, paddingRight: 16 }}>
                     <Text style={{fontSize: 18}}>
                         { item.name }
                     </Text>

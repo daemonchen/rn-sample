@@ -11,6 +11,7 @@ var {
     Image,
     Navigator,
     ActionSheetIOS,
+    TouchableOpacity,
     TouchableHighlight,
     StyleSheet
 } = React
@@ -167,28 +168,26 @@ module.exports = React.createClass({
         };
         if (data.avatar) {
             return(
-                <TouchableHighlight
-                    underlayColor='#eee'
+                <TouchableOpacity
                     onPress={this.showActionSheet}>
                     <Image
                       style={styles.avatar}
                       source={{uri: data.avatar}} />
-                </TouchableHighlight>
+                </TouchableOpacity>
                 );
         }else{
             var circleBackground = {
                 backgroundColor: data.bgColor
             }
             return(
-                <TouchableHighlight
-                    underlayColor='#eee'
+                <TouchableOpacity
                     onPress={this.showActionSheet}>
                     <View style={[styles.avatarWrapper, circleBackground]}>
                         <Text style={styles.avatarTitle}>
                             {data.simpleUserName}
                         </Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
                 )
         }
     },

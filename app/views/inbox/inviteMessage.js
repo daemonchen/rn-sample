@@ -2,6 +2,7 @@
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
 import NavigationBar from 'react-native-navbar'
+var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     TextInput,
@@ -16,6 +17,7 @@ var {
 
 var inboxAction = require('../../actions/inbox/inboxAction');
 var inboxStore = require('../../stores/inbox/inboxStore');
+var authTokenAction = require('../../actions/user/authTokenAction');
 
 var commonStyle = require('../../styles/commonStyle');
 var InviteMessageItem = require('./inviteMessageItem');
@@ -25,6 +27,7 @@ var util = require('../../common/util');
 var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
         _topNavigator = this.props.route.topNavigator;
@@ -54,6 +57,12 @@ module.exports = React.createClass({
         this.setState({
             data: this.state.data
         });
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            authTokenAction.updateToken();
+        },350);
     },
     onChange: function(){
         var result = inboxStore.getState();

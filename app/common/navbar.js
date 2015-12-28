@@ -37,9 +37,9 @@ var AppNavigator = React.createClass({
 var styles = StyleSheet.create({
     container: {
         width: width,
-        height: height - 49,
-        borderBottomWidth:1 / React.PixelRatio.get(),
-        borderBottomColor:'#dfe0df'
+        height: height - 49
+        // borderBottomWidth:1 / React.PixelRatio.get(),
+        // borderBottomColor:'#dfe0df'
     },
 });
 

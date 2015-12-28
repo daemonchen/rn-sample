@@ -22,6 +22,7 @@ class SystemStore {
 
             this.preventDefault();
         });
+        this.preventDefault();
     }
     onInitSuccess(data){
         if (!data) {return false};

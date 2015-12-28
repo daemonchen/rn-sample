@@ -160,7 +160,7 @@ module.exports = React.createClass({
 
 var styles = StyleSheet.create({
     contactGroup: {
-        borderBottomWidth: 1 / React.PixelRatio.get(),
-        borderBottomColor: '#bdbdbd'
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee'
     }
 });
