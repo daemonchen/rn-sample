@@ -15,8 +15,9 @@ var {
   View,
 } = React;
 
-var AppNavigator = require('./app/common/navbar');
-var Advertisement = require('./app/views/advertisement');
+// var AppNavigator = require('./app/common/navbar');
+// var Advertisement = require('./app/views/advertisement');
+var Router = require('./app/views/router');
 
 var appConstants = require('./app/constants/appConstants');
 var asyncStorage = require('./app/common/storage');
@@ -76,7 +77,7 @@ var awesomeMobile = React.createClass({
     },
     render: function(){
         return(
-            <AppNavigator initialRoute={{title: 'advertisement', component:Advertisement}} />
+            <Router />
             );
     }
 });

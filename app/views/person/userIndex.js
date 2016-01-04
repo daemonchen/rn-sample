@@ -2,6 +2,7 @@
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
 var TimerMixin = require('react-timer-mixin');
+var Actions = require('react-native-router-flux').Actions;
 var {
     Text,
     TextInput,
@@ -31,14 +32,9 @@ var Suggest = require('./suggest');
 var avatarAction = require('../../actions/avatar/avatarAction');
 var avatarStore = require('../../stores/avatar/avatarStore');
 
-var _navigator, _topNavigator = null;
-
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
-
         return {
             user: !!appConstants.user ? appConstants.user : {}
         }
@@ -79,38 +75,16 @@ module.exports = React.createClass({
         };
     },
     goAccount: function(){
-        _topNavigator.push({
-            title:'我的账号',
-            component: UserAccount,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
+        Actions.userAccount();
     },
     goTemplate: function(){
-
-        _topNavigator.push({
-            title: '我的模版',
-            target: 2,
-            component: OrderTemplates,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
+        Actions.orderTemplates();
     },
     goSettings: function(){
-        _topNavigator.push({
-            title:'设置',
-            component: MySettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
+        Actions.mySettings();
     },
     goSuggest: function(){
-        _topNavigator.push({
-            title:'意见反馈',
-            component: Suggest,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
+        Actions.suggest();
     },
     launchImageLibrary: function(){
         util.launchImageLibrary({

@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var TimerMixin = require('react-timer-mixin');
+var Actions = require('react-native-router-flux').Actions;
 var {
   AppRegistry,
   StyleSheet,
@@ -25,9 +26,6 @@ var verifyCodeStore = require('../stores/user/verifyCodeStore');
 var authTokenStore = require('../stores/user/authTokenStore');
 var authStore = require('../stores/user/authStore');
 
-
-var Welcome = require('./welcome');
-var Launch = require('./launch');
 var Modal = require('../common/modal');
 
 //获取可视窗口的宽高
@@ -36,11 +34,9 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var _navigator, _topNavigator = null;
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
         return {}
     },
     _modal: {},
@@ -117,12 +113,7 @@ module.exports = React.createClass({
             this._modal.hideModal();
             appConstants = {};
             asyncStorage.setItem('appConstants', appConstants);
-            _navigator.immediatelyResetRouteStack([{
-                title: 'welcome' ,
-                component: Welcome,
-                sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-                topNavigator: _navigator
-            }])
+            Actions.welcome();
         },2000);
     },
     doLogin: function(result){
@@ -143,18 +134,7 @@ module.exports = React.createClass({
     doLogout: function(){
         appConstants = {};
         asyncStorage.setItem('appConstants', appConstants);
-        // _navigator.push({
-        //     title: 'welcome' ,
-        //     component: Welcome,
-        //     sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-        //     topNavigator: _navigator
-        // })
-        _navigator.immediatelyResetRouteStack([{
-            title: 'welcome' ,
-            component: Welcome,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _navigator
-        }])
+        Actions.welcome();
     },
     onChange: function(){
         var result = systemStore.getState();
@@ -171,32 +151,19 @@ module.exports = React.createClass({
 
     },
     goWelcome: function(){
-        _navigator.push({
-            title: 'welcome',
-            component: Welcome,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        })
+        Actions.welcome();
     },
-    goMain: function(){
-        _navigator.push({
-            title: 'Launch',
-            component: Launch,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        })
+    goLaunch: function(){
+        Actions.launch();
     },
     doLaunch: function(){
         if (!appConstants.user) {
             this.goWelcome();
         }else{
-            this.goMain();
+            this.goLaunch();
         }
     },
     render: function(){
-                // <Image
-
-                //   source={require('../images/default.png')} />
         return (
             <View style={commonStyle.container}>
                 <View style={{width: width, height: height, backgroundColor: '#fff'}}/>

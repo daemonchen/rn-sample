@@ -12,7 +12,7 @@ var {
     width, height
 } = util.getDimensions();
 
-var AppNavigator = React.createClass({
+module.exports = React.createClass({
     getDefaultProps: function () {
         return {
             title: '',
@@ -42,5 +42,3 @@ var styles = StyleSheet.create({
         // borderBottomColor:'#dfe0df'
     },
 });
-
-module.exports = AppNavigator;

@@ -35,7 +35,7 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var Launch = React.createClass({
+module.exports = React.createClass({
     getInitialState: function () {
         return {
             selectedTab: 'Workspace',
@@ -166,7 +166,3 @@ var Launch = React.createClass({
         );
     }
 });
-var styles = StyleSheet.create({
-
-});
-module.exports = Launch;

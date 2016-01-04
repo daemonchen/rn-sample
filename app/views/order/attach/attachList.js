@@ -18,7 +18,6 @@ var {
     StyleSheet
 } = React;
 
-var _navigator, _topNavigator = null;
 
 var attachListStore = require('../../../stores/attach/attachListStore');
 var attachListAction = require('../../../actions/attach/attachListAction');
