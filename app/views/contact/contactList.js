@@ -25,6 +25,7 @@ var {
         //   group: 1,
         //   mobiles: [ '15071414335' ] }
 var contactsStyle = require('../../styles/contact/contactsItem');
+var commonStyle = require('../../styles/commonStyle');
 
 module.exports = React.createClass({
     getInitialState: function(){
@@ -70,7 +71,7 @@ module.exports = React.createClass({
                     numberOfLines={1}>
                         {data.userName}
                     </Text>
-                    <Text style={contactsStyle.contactRightText}
+                    <Text style={[contactsStyle.contactRightText, commonStyle.textGray]}
                     numberOfLines={1}>
                         {data.position}
                     </Text>

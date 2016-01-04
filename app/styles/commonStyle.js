@@ -42,6 +42,9 @@ module.exports = React.StyleSheet.create({
     sepLine: {
         color: '#eee'
     },
+    commonTitle: {
+        fontSize: 16
+    },
     title: {
         fontSize: 14,
         paddingTop: 16,

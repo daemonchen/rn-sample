@@ -317,7 +317,7 @@ module.exports = React.createClass({
                     <View style={styles.taskDetailDescribe}>
                         <View style={commonStyle.textAreaWrapper}>
                             <Text placeholder='任务描述'
-                            style={commonStyle.textArea}>
+                            style={[commonStyle.textArea, commonStyle.textGray]}>
                                 {this.state.taskData.description}
                              </Text>
                         </View>

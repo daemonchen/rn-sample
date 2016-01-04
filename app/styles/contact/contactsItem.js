@@ -39,7 +39,7 @@ module.exports = React.StyleSheet.create({
     contactRightText: {
         width: 64,
         paddingTop: 10,
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'right'
     }
 });

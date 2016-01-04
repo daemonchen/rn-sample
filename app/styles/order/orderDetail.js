@@ -93,7 +93,7 @@ module.exports = React.StyleSheet.create({
         paddingRight: 16,
         marginTop: 16,
         textAlign: 'left',
-        fontSize: 16,
+        fontSize: 18,
         flex: 1
     },
     taskDetailDescribe: {

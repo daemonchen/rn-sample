@@ -155,7 +155,7 @@ module.exports = React.createClass({
                 <TouchableHighlight underlayColor='#eee'
                 onPress={() => this.props.onPressRow(rowData)} >
                     <View style={styles.templateItem}>
-                        <Text style={commonStyle.paddingHorizontal}>
+                        <Text style={[commonStyle.paddingHorizontal, commonStyle.commonTitle]}>
                             {rowData.templateName}
                         </Text>
                     </View>
