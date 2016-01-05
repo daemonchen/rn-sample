@@ -3,10 +3,10 @@
 var React = require('react-native');
 var moment = require('moment');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {View, Text, Navigator, DatePickerIOS, StyleSheet} = React;
 var Button = require('../common/button.js');
 
-var _navigator, _topNavigator = null;
 var commonStyle = require('../styles/commonStyle');
 var MyDatePicker =  React.createClass({
     getDefaultProps: function () {
@@ -16,8 +16,6 @@ var MyDatePicker =  React.createClass({
         };
     },
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             date: this.props.date,
             timeZoneOffsetInHours: this.props.timeZoneOffsetInHours
@@ -38,7 +36,7 @@ var MyDatePicker =  React.createClass({
         return{
             title: '<',
             handler:() =>
-                _navigator.pop()
+                Actions.pop()
         }
     },
     rightButtonConfig: function(){
@@ -46,7 +44,7 @@ var MyDatePicker =  React.createClass({
         return{
             title: 'Done',
             handler:() =>
-                _navigator.pop()
+                Actions.pop()
         }
     },
     render:function(){

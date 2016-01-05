@@ -2,12 +2,12 @@
 
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 var {View,
     Text,
     Image,
     TextInput,
-    Navigator,
     TouchableHighlight,
     StyleSheet
 } = React;
@@ -30,15 +30,12 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var _navigator, _topNavigator = null;
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
-        var defaultData = this.props.route.data;
+        var defaultData = this.props.data;
         return {
-            target: this.props.route.target || 1,//1: create 2: update
+            target: this.props.target || 1,//1: create 2: update
             id: defaultData ? defaultData.id : 0,//客户id
             userName: defaultData ? defaultData.userName :'',
             mobiles: defaultData ? defaultData.mobiles :[],
@@ -64,7 +61,7 @@ module.exports = React.createClass({
         };
         this._timeout = this.setTimeout(()=>{
             this._modal.hideModal();
-            _navigator.pop();
+            Actions.pop();
         },2000);
     },
     handleDelete: function(result){
@@ -78,8 +75,7 @@ module.exports = React.createClass({
         };
         this._timeout = this.setTimeout(()=>{
             this._modal.hideModal();
-            _navigator.pop();
-            // _navigator.popToTop();
+            Actions.pop();
         },2000);
     },
     onChange: function() {
@@ -164,8 +160,8 @@ module.exports = React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title: this.props.route.title}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    title={{title: this.props.title}}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>

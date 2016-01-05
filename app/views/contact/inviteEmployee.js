@@ -2,11 +2,11 @@
 
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 var {View,
     Text,
     TextInput,
-    Navigator,
     StyleSheet
 } = React;
 
@@ -28,12 +28,9 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var _navigator, _topNavigator = null;
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             targetMobile: ''
         }
@@ -51,7 +48,7 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         }
-        _navigator.pop();
+        Actions.pop();
     },
     onChangeMobileText: function(text){
         this.setState({
@@ -80,7 +77,7 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title: '邀请'}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>

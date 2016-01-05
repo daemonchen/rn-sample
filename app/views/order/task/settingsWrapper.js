@@ -4,11 +4,11 @@
 */
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {
     View,
     Text,
     Image,
-    Navigator,
     ListView,
     ScrollView,
     TouchableOpacity,
@@ -20,31 +20,28 @@ var BlueBackButton = require('../../../common/blueBackButton');
 var RightDoneButton = require('../../../common/rightDoneButton');
 
 var commonStyle = require('../../../styles/commonStyle');
-var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {}
     },
     onPressDone: function(){
-        this.props.route.onPressDone();
-        _topNavigator.pop();
+        this.props.onPressDone();
+        Actions.pop();
     },
     renderNavigator: function(){
-        if (!!this.props.route.onPressDone) {
+        if (!!this.props.onPressDone) {
             return(
                 <NavigationBar
-                    title={{title: this.props.route.title}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    title={{title: this.props.title}}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 );
         }else{
             return(
                 <NavigationBar
-                    title={{title: this.props.route.title}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />} />
+                    title={{title: this.props.title}}
+                    leftButton={<BlueBackButton />} />
                 );
         }
     },
@@ -53,10 +50,10 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 {this.renderNavigator()}
                 <View style={styles.main}>
-                    <this.props.route.children
-                    data={this.props.route.data}
-                    target={this.props.route.target}
-                    onPressRow={this.props.route.onPressRow} />
+                    <this.props.children
+                    data={this.props.data}
+                    target={this.props.target}
+                    onPressRow={this.props.onPressRow} />
                 </View>
             </View>
             );

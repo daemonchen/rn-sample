@@ -32,11 +32,11 @@ var validationCode = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
+        _topNavigator = this.props.topNavigator;
         return {
             mobile: '',
             code: '',
-            type: this.props.route.type,
+            type: this.props.type,
             canReGetCode: false,
             timer: 60
         }

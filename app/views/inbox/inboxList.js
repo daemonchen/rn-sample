@@ -3,13 +3,13 @@ var React = require('react-native')
 var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var TimerMixin = require('react-timer-mixin');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {
     Text,
     TextInput,
     View,
     ListView,
     Image,
-    Navigator,
     TouchableOpacity,
     ActivityIndicatorIOS,
     StyleSheet
@@ -38,10 +38,8 @@ var notificationStore = require('../../stores/notification/notificationStore');
 
 var commonStyle = require('../../styles/commonStyle');
 var InboxItem = require('./inboxItem');
-var _navigator, _topNavigator = null;
 
-var OrderDetail = require('../order/orderDetail');
-var TaskDetail = require('../order/task/taskDetailForWorkbench');
+
 var SysMessage = require('./sysMessage');
 var InviteMessage = require('./inviteMessage');
 
@@ -50,8 +48,6 @@ var util = require('../../common/util');
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
 
         var ds = new ListView.DataSource({
             // rowHasChanged: (r1, r2) => r1 !== r2
@@ -158,26 +154,30 @@ module.exports = React.createClass({
     loadedAllData: function() {
         return this.state.list.length >= this.state.total||this.state.list.length===0;
     },
-    doPush: function(component, data){
-        _topNavigator.push({
-            component: component,
-            data: data,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
-    },
     onPressRow: function(rowData, sectionID){
         switch(rowData.msgType){
             case 1:
-                return this.doPush(OrderDetail, rowData.extra.orderId)
+                Actions.orderDetail({
+                    data: rowData.extra.orderId
+                });
+                return;
             case 2:
-                return this.doPush(TaskDetail, rowData.extra.jobId)
+                Actions.taskDetailForWorkbench({
+                    data: rowData.extra.jobId
+                });
+                return;
             case 3:
                 return;
             case 4:
-                return this.doPush(SysMessage, rowData)
+                Actions.sysMessage({
+                    data: rowData
+                });
+                return;
             case 5:
-                return this.doPush(InviteMessage, rowData)
+                Actions.inviteMessage({
+                    data: rowData
+                });
+                return;
             default:
                 return
         }

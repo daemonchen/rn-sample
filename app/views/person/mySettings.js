@@ -8,7 +8,6 @@ var {
     ListView,
     Image,
     Text,
-    Navigator,
     AlertIOS,
     LinkingIOS,
     TouchableHighlight,

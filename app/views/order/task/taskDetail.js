@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 var moment = require('moment');
 var underscore = require('underscore');
@@ -10,7 +11,6 @@ var {
     View,
     Text,
     Image,
-    Navigator,
     ListView,
     ScrollView,
     TouchableHighlight,
@@ -23,7 +23,6 @@ var {
     StyleSheet
 } = React;
 
-var _navigator, _topNavigator = null;
 
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
@@ -53,11 +52,9 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     displayName: 'taskDetail',
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             visibleHeight: Dimensions.get('window').height,
-            jobId: this.props.route.data || 0,//任务id
+            jobId: this.props.data || 0,//任务id
             taskData: {}
         }
     },
@@ -152,26 +149,20 @@ module.exports = React.createClass({
     },
     _pressSettingButton: function(){
         var data = Object.assign({taskStatus: 2}, this.state.taskData);
-        _navigator.push({
+        Actions.taskSettings({
             title: '任务设置',
-            data: data,
-            component: TaskSettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            data: data
         });
     },
     _goTaskAttachList: function(){
         var data = Object.assign({taskStatus: 2}, this.state.taskData);
-        _navigator.push({
+        Actions.taskAttach({
             title: '任务设置',
-            data: data,
-            component: TaskAttach,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            data: data
         });
     },
     _goOrderDetail: function(){
-        _navigator.pop();
+        Actions.pop();
     },
     onPressCircle: function(){//更新任务状态
         var status = (this.state.taskData.done == 1) ? 0 : 1
@@ -217,19 +208,16 @@ module.exports = React.createClass({
                 );
         }
         return(
-            <CommentBar navigator={_navigator} data={this.state.taskData.id}/>
+            <CommentBar data={this.state.taskData.id}/>
             )
     },
     _setTaskDependence: function(){
         var data = Object.assign({taskStatus: 2}, this.state.taskData);
-        _navigator.push({
+        Actions.settingsWrapper({
             title:'前置任务',
-            component: SettingsWrapper,
             children: TaskList,
             target: 2,//用来区分任务列表标题前面的check icon
-            data: data,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            data: data
         });
     },
     renderDependences: function(){
@@ -290,14 +278,14 @@ module.exports = React.createClass({
             return(
                 <NavigationBar
                     title={{ title: '任务详情'}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightSettingButton onPress={this._pressSettingButton} />} />
                 );
         }else{
             return(
                 <NavigationBar
                     title={{ title: '任务详情'}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />} />
+                    leftButton={<BlueBackButton />} />
                 );
         }
     },

@@ -7,7 +7,6 @@ var {
     View,
     ListView,
     Image,
-    Navigator,
     TouchableOpacity,
     ActivityIndicatorIOS,
     StyleSheet

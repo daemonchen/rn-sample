@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var moment = require('moment');
 var underscore = require('underscore');
 var {
@@ -10,7 +11,6 @@ var {
     ListView,
     ScrollView,
     Image,
-    Navigator,
     TouchableHighlight,
     StyleSheet
 } = React
@@ -37,8 +37,6 @@ var taskListStore = require('../../../stores/task/taskListStore');
 var attachAction = require('../../../actions/attach/attachAction');
 var attachStore = require('../../../stores/attach/attachStore');
 
-var _navigator, _topNavigator = null;
-
 /*
 taskStatus:enum
 1: create
@@ -48,9 +46,7 @@ taskStatus:enum
 
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
-        var defaultData = this.props.route.data || {};
+        var defaultData = this.props.data || {};
         return this.initTaskState(defaultData);
     },
     initTaskState: function(defaultData){
@@ -128,10 +124,10 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            _navigator.pop();
+            Actions.pop();
         };
         if (result.type == 'update') {
-            _navigator.pop();
+            Actions.pop();
         };
     },
     onTaskListChange: function(){
@@ -140,7 +136,7 @@ module.exports = React.createClass({
             this.setLastIds(result)
         };
         if (result.type == 'delete') {
-            _navigator.pop();
+            Actions.pop();
         };
     },
     onPressDone: function(){
@@ -183,35 +179,29 @@ module.exports = React.createClass({
         if (this.state.taskStatus == 2) {//修改任务
             return(
                 <NavigationBar
-                    title={{title: this.props.route.title}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    title={{title: this.props.title}}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 );
         };
         return(
             <NavigationBar
-                title={{title: this.props.route.title}}
-                leftButton={<LeftCloseButton navigator={_topNavigator} />}
+                title={{title: this.props.title}}
+                leftButton={<LeftCloseButton />}
                 rightButton={<RightDoneButton onPress={this.onPressDone} />} />
             );
     },
     _setEndTime: function(){
-        _navigator.push({
-            component: Calendar,
+        Actions.calendar({
             target: 1,
-            onCalendarPressDone: this.onCalendarPressDone,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            onCalendarPressDone: this.onCalendarPressDone
         });
     },
     _setResponsibility: function(){
-        _navigator.push({
+        Actions.companyMemberList({
             title:'负责人',
-            component: CompanyMemberList,
             target: 1,
-            onPressContactRow: this.onPressContactRow,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            onPressContactRow: this.onPressContactRow
         });
     },
     _addAttachs: function(){
@@ -252,13 +242,10 @@ module.exports = React.createClass({
         });
     },
     onPressTaskRow: function(rowData){
-        _topNavigator.push({
+        Actions.taskDetail({
             title: rowData.name,
-            data: rowData.id,
-            component: TaskDetail,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
+            data: rowData.id
+        });
     },
     setLastIds: function(data){
         this.lastIds = this.state.lastIds;
@@ -279,20 +266,17 @@ module.exports = React.createClass({
     },
     _setTaskDependence: function(){
         //todo: 把settingwrapper修改为presettings
-        _navigator.push({
+        Actions.settingsWrapper({
             title:'前置任务',
-            component: SettingsWrapper,
             children: TaskList,
             target: 1,//用来区分任务列表标题前面的check icon是用来选择任务依赖[1]，还是用来更改任务完成与否的状态[2],如果不传，默认都是2
-            data: this.props.route.data,
+            data: this.props.data,
             onPressRow: this.onPressTaskRow,
-            onPressDone: this.onTaskPressDone,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            onPressDone: this.onTaskPressDone
         });
     },
     _goOrderDetail: function(){
-        _navigator.pop();
+        Actions.pop();
     },
     _deleteTask: function(){
         taskListAction.delete({

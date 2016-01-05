@@ -7,7 +7,6 @@ var {
     View,
     Text,
     Image,
-    Navigator,
     ListView,
     ScrollView,
     TouchableOpacity,
@@ -15,15 +14,7 @@ var {
     ActionSheetIOS,
     StyleSheet
 } = React;
-// rowdata: { bgColor: '#b2cee6',
-        //   bgColorId: 9,
-        //   avatar: null,
-        //   userId: 4,
-        //   userName: '大白二货',
-        //   simpleUserName: '二货',
-        //   pinyin: 'DABAIERHUO',
-        //   group: 1,
-        //   mobiles: [ '15071414335' ] }
+
 var contactsStyle = require('../../styles/contact/contactsItem');
 var commonStyle = require('../../styles/commonStyle');
 

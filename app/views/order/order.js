@@ -2,10 +2,10 @@
 
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {
     View,
     Text,
-    Navigator,
     ActionSheetIOS,
     StyleSheet
 } = React;
@@ -22,32 +22,21 @@ var RightAddButton = require('../../common/rightAddButton');
 var util = require('../../common/util');
 var appConstants = require('../../constants/appConstants');
 
-var _navigator, _topNavigator = null;
 
 var order =  React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             tabIndex: 0
         }
     },
     doPushOrderSetting: function(){
-        _topNavigator.push({
-            title: '新建订单',
-            data: {orderStatus: 1},
-            component: OrderSettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _topNavigator
+        Actions.orderSettings({
+            data: {orderStatus: 1}
         });
     },
     doPushOrderTemplates: function(){
-        _topNavigator.push({
-            title: '选择模版',
-            target: 1,
-            component: OrderTemplates,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+        Actions.orderTemplates({
+            target: 1
         });
     },
     doCreate: function(index){
@@ -74,13 +63,9 @@ var order =  React.createClass({
     },
     actionList: ['新建订单','从模版创建','取消'],
     onPressOrderRow: function(rowData){
-        _topNavigator.push({
-            title: rowData.title,
-            data: rowData.id,
-            component: OrderDetail,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
+        Actions.orderDetail({
+            data: rowData.id
+        });
     },
     onSegmentChange: function(event){
         this.setState({

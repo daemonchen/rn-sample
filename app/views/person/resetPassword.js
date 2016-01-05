@@ -2,10 +2,10 @@
 
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {View,
     Text,
     TextInput,
-    Navigator,
     StyleSheet
 } = React;
 var Button = require('../../common/button.js');
@@ -24,11 +24,8 @@ var BlueBackButton = require('../../common/blueBackButton');
 var verifyCodeAction = require('../../actions/user/verifyCodeAction');
 var verifyCodeStore = require('../../stores/user/verifyCodeStore');
 
-var _navigator, _topNavigator = null;
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             mobile: '',
             type: 2
@@ -46,13 +43,10 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         }
-        _navigator.push({
+        Actions.validationCode({
             title: 'ValidationCode',
-            component: ValidationCode,
-            type: 2,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        })
+            type: 2
+        });
     },
     getCode: function(){
         if (!this.state.mobile || !/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(this.state.mobile)) {
@@ -63,12 +57,6 @@ module.exports = React.createClass({
             mobile: this.state.mobile,
             type: this.state.type
         });
-        // _navigator.replace({
-        //     title: 'from home',
-        //     component: ValidationCode,
-        //     sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-        //     topNavigator: _navigator
-        // })
     },
     onChangeText: function(text){
         this.setState({
@@ -80,7 +68,7 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'重置密码'}}
-                    leftButton={<BlueBackButton navigator={_navigator} />} />
+                    leftButton={<BlueBackButton />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='手机号码'

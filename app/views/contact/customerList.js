@@ -2,20 +2,18 @@
 
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 var TimerMixin = require('react-timer-mixin');
 var {
     View,
     Text,
     Image,
-    Navigator,
     ScrollView,
     TouchableOpacity,
     ActionSheetIOS,
     StyleSheet
 } = React;
-
-var _navigator, _topNavigator = null;
 
 var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');
@@ -42,10 +40,8 @@ target: 表示从哪里打开通讯录 enum
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
-            target: this.props.route.target || 3,
+            target: this.props.target || 3,
             listData: [],
         }
     },
@@ -79,33 +75,27 @@ module.exports = React.createClass({
     },
     onPressRow: function(data){
         if (this.state.target == 3) {
-            _topNavigator.push({
+            Actions.contactDetail({
                 title: data.userName,
-                data: data,
-                component: ContactDetail,
-                sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-                topNavigator: _topNavigator
-            })
+                data: data
+            });
             return;
         }else{
-            this.props.route.onPressContactRow(data);
-            _topNavigator.pop();
+            this.props.onPressContactRow(data);
+            Actions.pop();
         }
     },
     goSetting: function(){
-        _navigator.push({
+        Actions.customerSettings({
             title: '新建客户',
-            target: 1,
-            component: CustomerSettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            target: 1
         });
     },
     renderNavigationBar: function(){
         return(
             <NavigationBar
-                title={{ title: this.props.route.title }}
-                leftButton={<BlueBackButton navigator={_navigator}/>}
+                title={{ title: this.props.title }}
+                leftButton={<BlueBackButton />}
                 rightButton={<RightAddButton onPress={this.goSetting} />} />
             );
     },

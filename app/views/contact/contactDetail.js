@@ -1,13 +1,13 @@
 'use strict';
 
 var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from 'react-native-navbar';
+var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 var {
     View,
     Text,
     Image,
-    Navigator,
     ListView,
     ScrollView,
     TouchableOpacity,
@@ -16,7 +16,6 @@ var {
     StyleSheet
 } = React;
 
-var _navigator, _topNavigator = null;
 
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/person/style');
@@ -37,11 +36,9 @@ var PositionSetting = require('./positionSetting');
 
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
-            group: this.props.route.data.group,//1: 工厂员工 2: 客户,
-            data: this.props.route.data
+            group: this.props.data.group,//1: 工厂员工 2: 客户,
+            data: this.props.data
         }
     },
     componentDidMount: function(){
@@ -58,22 +55,19 @@ module.exports = React.createClass({
                 return;
             }
             if (result.data.userId == this.state.data.userId) {
-                this.props.route.data.roleName = result.data.roleName;
-                this.props.route.data.position = result.data.position;
+                this.props.data.roleName = result.data.roleName;
+                this.props.data.position = result.data.position;
                 this.setState({
-                    data: this.props.route.data
+                    data: this.props.data
                 });
             };
         };
     },
     goSetting: function(){
-        _navigator.push({
+        Actions.customerSettings({
             title: '编辑客户',
             target: 2,
-            data: this.props.route.data,
-            component: CustomerSettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            data: this.props.data
         });
     },
     doDeleteEmployee: function(){
@@ -86,14 +80,14 @@ module.exports = React.createClass({
             return(
                 <NavigationBar
                     title={{ title: '详细资料' }}
-                    leftButton={<BlueBackButton navigator={_navigator}/>} />
+                    leftButton={<BlueBackButton />} />
                 );
 
         }else{//1: 客户
             return(
                 <NavigationBar
                     title={{ title: '详细资料' }}
-                    leftButton={<BlueBackButton navigator={_navigator}/>}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightSettingButton onPress={this.goSetting} />} />
                 );
         }
@@ -123,21 +117,15 @@ module.exports = React.createClass({
         }
     },
     goRoleSetting: function(){
-        _navigator.push({
+        Actions.roleSetting({
             title: '编辑角色',
-            data: this.props.route.data,
-            component: RoleSetting,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            data: this.props.data
         });
     },
     goPositionSetting: function(){
-        _navigator.push({
+        Actions.positionSetting({
             title: '编辑职位',
-            data: this.props.route.data,
-            component: PositionSetting,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            data: this.props.data
         });
     },
     onActionSheetSelect: function(index){

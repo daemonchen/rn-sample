@@ -1,12 +1,12 @@
 'use strict';
 
 var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from 'react-native-navbar';
+var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 var {
     View,
     Text,
-    Navigator,
     ActionSheetIOS,
     StyleSheet
 } = React;
@@ -24,13 +24,9 @@ var util = require('../../common/util');
 
 var taskListStore = require('../../stores/task/taskListStore');
 
-var _navigator, _topNavigator = null;
-
 var Home =  React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             tabIndex: 0
         }
@@ -67,12 +63,9 @@ var Home =  React.createClass({
     },
     actionList: ['新建订单','取消'],
     doPushOrderSetting: function(){
-        _topNavigator.push({
+        Actions.orderSettings({
             title: '新建订单',
-            data: {orderStatus: 1},
-            component: OrderSettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _topNavigator
+            data: {orderStatus: 1}
         });
     },
     onSelectActionSheet: function(index){
@@ -84,22 +77,10 @@ var Home =  React.createClass({
         }
     },
     onPressTaskRow: function(rowData, sectionID){
-        //TODO: judge if this is task row or header row
-        // _topNavigator.push({
-        //     title: rowData.title,
-        //     data: rowData.orderId,
-        //     component: OrderDetail,
-        //     sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-        //     topNavigator: _topNavigator
-        // })
-        _topNavigator.push({
+        Actions.taskDetailForWorkbench({
             title: rowData.title,
-            data: rowData.id,
-            component: TaskDetail,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
-
+            data: rowData.id
+        });
     },
     onSegmentChange: function(event){
         this.setState({

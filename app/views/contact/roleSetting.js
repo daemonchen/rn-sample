@@ -2,11 +2,11 @@
 
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 var {View,
     Text,
     TextInput,
-    Navigator,
     StyleSheet
 } = React;
 
@@ -32,17 +32,14 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var _navigator, _topNavigator = null;
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             optionSelected: 0,
             roleList: [],
-            roleId: this.props.route.data.roleId || 0,
-            targetUserId: this.props.route.data.userId || 0
+            roleId: this.props.data.roleId || 0,
+            targetUserId: this.props.data.userId || 0
         }
     },
     _modal: {},
@@ -95,7 +92,7 @@ module.exports = React.createClass({
             };
             this._timeout = this.setTimeout(()=>{
                 this._modal.hideModal();
-                _navigator.pop();
+                Actions.pop();
             },2000);
 
         };
@@ -145,7 +142,7 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title: '设置角色'}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     {this.renderItems(this.state.roleList)}

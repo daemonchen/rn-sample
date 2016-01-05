@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var moment = require('moment');
 var TimerMixin = require('react-timer-mixin');
 var {
@@ -9,7 +10,6 @@ var {
     View,
     ListView,
     Image,
-    Navigator,
     ActionSheetIOS,
     TouchableOpacity,
     StyleSheet
@@ -40,16 +40,13 @@ var orderStore = require('../../stores/order/orderStore');
 var orderAction = require('../../actions/order/orderAction');
 var taskListStore = require('../../stores/task/taskListStore');
 
-var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
     displayName: 'orderDetail',
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
-            orderId: this.props.route.data || 0,//订单id
+            orderId: this.props.data || 0,//订单id
             orderData: {},
             tabIndex: 0,
             images: []
@@ -98,22 +95,16 @@ module.exports = React.createClass({
     },
     _pressSettingButton: function(){
         var data = Object.assign({orderStatus: 2}, this.state.orderData);
-        _topNavigator.push({
+        Actions.orderSettings({
             title: '设置订单',
-            data: data,
-            component: OrderSettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            data: data
         });
     },
     createTask: function(){
         var data = Object.assign({taskStatus: 1}, this.state.orderData);
-        _topNavigator.push({
+        Actions.taskSettings({
             title: '新建任务',
-            data: data,
-            component: TaskSettings,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _topNavigator
+            data: data
         });
     },
     onActionSelect: function(index){
@@ -159,31 +150,22 @@ module.exports = React.createClass({
 
     },
     onPressMemberRow: function(rowData, sectionID){
-        _topNavigator.push({
+        Actions.contactDetail({
             title: rowData.userName,
-            data: rowData,
-            component: ContactDetail,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
+            data: rowData
+        });
     },
     onPressTaskRow: function(rowData, sectionID){
-        _topNavigator.push({
+        Actions.taskDetail({
             title: rowData.jobDO.jobName,
-            data: rowData.jobDO.id,
-            component: TaskDetail,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
+            data: rowData.jobDO.id
+        });
     },
     onPressAttachRow: function(rowData,sectionID){
-        _topNavigator.push({
+        Actions.attachDetail({
             title: '附件详情',
-            data: rowData,
-            component: AttachDetail,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
+            data: rowData
+        });
     },
     showCameraRoll: function(){
         util.showPhotoPicker({
@@ -276,7 +258,7 @@ module.exports = React.createClass({
                     statusBar={{style: 'light-content', hidden: false}}
                     tintColor={'#4285f4'}
                     title={{ title: title, tintColor: '#fff' }}
-                    leftButton={<WhiteBackButton navigator={_topNavigator} />}
+                    leftButton={<WhiteBackButton />}
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>
                     {this.renderSummary()}

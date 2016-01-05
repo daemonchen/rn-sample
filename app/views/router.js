@@ -29,7 +29,6 @@ var TaskDetail = require('./order/task/taskDetail');
 var TaskDetailForWorkbench = require('./order/task/taskDetailForWorkbench');
 var TaskSettings = require('./order/task/taskSettings');
 
-var OrderTemplateDetail = require('./order/templates/orderTemplateDetail');
 var OrderTemplateSetting = require('./order/templates/orderTemplateSetting');
 
 var InviteMessage = require('./inbox/inviteMessage');
@@ -193,9 +192,9 @@ module.exports = React.createClass({
                 <Route name="validationCode" component={ValidationCode} title="意见反馈"/>
 
                 <Route name="orderDetail" component={OrderDetail} title="我的模版"/>
-                <Route name="orderSettings" component={OrderSettings} title="我的模版"/>
+                <Route name="orderSettings" component={OrderSettings} title="新建订单"/>
                 <Route name="orderSettingsForTemplate" component={OrderSettingsForTemplate} title="我的模版"/>
-                <Route name="orderTemplates" component={OrderTemplates} title="我的模版"/>
+                <Route name="orderTemplates" component={OrderTemplates} title="选择模版"/>
 
                 <Route name="attachDetail" component={AttachDetail} title="我的模版"/>
                 <Route name="attachSetting" component={AttachSetting} title="我的模版"/>
@@ -206,7 +205,6 @@ module.exports = React.createClass({
                 <Route name="taskDetailForWorkbench" component={TaskDetailForWorkbench} title="我的模版"/>
                 <Route name="taskSettings" component={TaskSettings} title="我的模版"/>
 
-                <Route name="orderTemplateDetail" component={OrderTemplateDetail} title="我的模版"/>
                 <Route name="orderTemplateSetting" component={OrderTemplateSetting} title="我的模版"/>
 
                 <Route name="inviteMessage" component={InviteMessage} title="我的模版"/>

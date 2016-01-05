@@ -1,12 +1,12 @@
 'use strict';
 var React = require('react-native')
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {
     View,
     Text,
     TextInput,
     ListView,
-    Navigator,
     ScrollView,
     StyleSheet
 } = React
@@ -21,16 +21,12 @@ var templateStore = require('../../../stores/template/templateStore');
 
 var util = require('../../../common/util');
 
-var _navigator, _topNavigator = null;
-
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
-            templateStatus: this.props.route.target,//1新建 2 修改
-            title: this.props.route.data.title || this.props.route.data.templateName,
-            description: this.props.route.data.description
+            templateStatus: this.props.target,//1新建 2 修改
+            title: this.props.data.title || this.props.data.templateName,
+            description: this.props.data.description
         }
     },
     componentDidMount: function(){
@@ -46,10 +42,10 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            _navigator.pop();
+            Actions.pop();
         };
         if (result.type == 'update') {
-            _navigator.pop();
+            Actions.pop();
         };
     },
     onChangeNameText: function(text){
@@ -67,14 +63,14 @@ module.exports = React.createClass({
             templateAction.create({
                 templateName: this.state.title || '',
                 description: this.state.description || '',
-                orderId: this.props.route.data.id
+                orderId: this.props.data.id
             });
         }
         if (this.state.templateStatus == 2) {//update
             templateAction.update({
                 templateName: this.state.title || '',
                 description: this.state.description || '',
-                id: this.props.route.data.id
+                id: this.props.data.id
             });
         }
     },
@@ -82,8 +78,8 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title: this.props.route.title}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    title={{title: this.props.title}}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <ScrollView style={styles.main}
                 keyboardShouldPersistTaps={false}>

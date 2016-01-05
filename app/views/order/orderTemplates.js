@@ -1,10 +1,10 @@
 'use strict';
 var React = require('react-native')
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {
     View,
     ListView,
-    Navigator,
     StyleSheet
 } = React
 /*
@@ -15,55 +15,45 @@ target: 表示从哪里打开模版 enum
 }
 */
 var commonStyle = require('../../styles/commonStyle');
-var _navigator, _topNavigator = null;
 
 var OrderSettingsForTemplate = require('./orderSettingsForTemplate');
 var OrderTemplateList = require('./components/orderTemplateList');
-var OrderTemplateDetail = require('./templates/orderTemplateDetail');
 var OrderTemplateSetting = require('./templates/orderTemplateSetting');
 
 var BlueBackButton = require('../../common/blueBackButton');
 
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
-            target: this.props.route.target || 2
+            target: this.props.target || 2
         }
     },
     renderNavigationBar: function(){
         if (this.state.orderStatus == 2) {//从个人中心进入模版列表
             return(
                 <NavigationBar
-                    title={{title: this.props.route.title}} />
+                    title={{title: this.props.title}} />
                 );
         };
         return(
             <NavigationBar
-                title={{title: this.props.route.title}}
-                leftButton={<BlueBackButton navigator={_topNavigator} />} />
+                title={{title: this.props.title}}
+                leftButton={<BlueBackButton />} />
             );
     },
     _pressRow: function(rowData){
         if (this.state.target == 2) {//从个人中心进入模版列表
-            _topNavigator.push({
+            Actions.orderTemplateSetting({
                 title: '模版详情',
                 target: 2,
-                data: rowData,
-                component: OrderTemplateSetting,
-                sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-                topNavigator: _topNavigator
-            })
+                data: rowData
+            });
             return;
         }else{
             var data = Object.assign({orderStatus: 1}, rowData);
-            _topNavigator.push({
+            Actions.orderSettingsForTemplate({
                 title: '设置订单',
-                data: data,
-                component: OrderSettingsForTemplate,
-                sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-                topNavigator: _topNavigator
+                data: data
             });
         }
     },

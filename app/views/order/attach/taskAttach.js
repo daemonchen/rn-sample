@@ -4,19 +4,18 @@
 */
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 var {
     View,
     Text,
     Image,
-    Navigator,
     ListView,
     ScrollView,
     TouchableOpacity,
     StyleSheet
 } = React;
 
-var _navigator, _topNavigator = null;
 
 var attachAction = require('../../../actions/attach/attachAction');
 var commonStyle = require('../../../styles/commonStyle');
@@ -27,14 +26,11 @@ var BlueBackButton = require('../../../common/blueBackButton');
 var RightAddButton = require('../../../common/rightAddButton');
 
 var AttachList = require('./attachList');
-var AttachDetail = require('./attachDetail');
 
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
-            taskId: this.props.route.data.id
+            taskId: this.props.data.id
         }
     },
     doAddPhoto: function(){
@@ -66,13 +62,10 @@ module.exports = React.createClass({
         });
     },
     _onPressRow: function(rowData, sectionID){
-        _topNavigator.push({
+        Actions.attachDetail({
             title: '附件详情',
-            data: rowData,
-            component: AttachDetail,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
+            data: rowData
+        });
     },
     renderNavigationBar: function(){
         var rights = appConstants.userRights.rights;
@@ -81,14 +74,14 @@ module.exports = React.createClass({
             return(
                 <NavigationBar
                     title={{ title: '附件' }}
-                    leftButton={<BlueBackButton navigator={_navigator}/>}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightAddButton onPress={this.doAddPhoto} />} />
                 );
         }else{
             return(
                 <NavigationBar
                     title={{ title: '附件' }}
-                    leftButton={<BlueBackButton navigator={_navigator}/>} />
+                    leftButton={<BlueBackButton />} />
                 );
         }
     },
@@ -98,7 +91,7 @@ module.exports = React.createClass({
                 {this.renderNavigationBar()}
                 <View style={styles.main}>
                     <AttachList
-                    data={this.props.route.data}
+                    data={this.props.data}
                     hostType={2}
                     onPressRow={this._onPressRow}
                     onEmptyButtonPress={this.onEmptyButtonPress}/>

@@ -1,5 +1,6 @@
 'use strict';
 var React = require('react-native')
+var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var {
@@ -8,7 +9,6 @@ var {
     Image,
     View,
     ListView,
-    Navigator,
     TouchableOpacity,
     ActivityIndicatorIOS,
     StyleSheet
@@ -22,12 +22,10 @@ var styles = require('../../../styles/order/comment.js');
 var commonStyle = require('../../../styles/commonStyle');
 
 var CompanyMemberList = require('../../contact/companyMemberList');
-var _navigator = null;
 module.exports = React.createClass({
     mixins: [TimerMixin],
     displayName: 'commentBar',
     getInitialState: function() {
-        _navigator = this.props.navigator;
         return {
             targetId: this.props.data,//任务id
             atUserIds: [],
@@ -62,13 +60,10 @@ module.exports = React.createClass({
         });
     },
      _setRelatedPerson: function(){//增加@的人
-        _navigator.push({
+        Actions.companyMemberList({
             title:'负责人',
-            component: CompanyMemberList,
             target: 1,
-            onPressContactRow: this.onPressContactRow,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
+            onPressContactRow: this.onPressContactRow
         });
     },
     onChangeComment: function(text){

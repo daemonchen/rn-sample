@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var moment = require('moment');
 var underscore = require('underscore');
 var {
@@ -10,7 +11,6 @@ var {
     ListView,
     ScrollView,
     Image,
-    Navigator,
     TouchableOpacity,
     TouchableHighlight,
     StyleSheet
@@ -23,7 +23,6 @@ orderStatus:enum
 */
 var commonStyle = require('../../styles/commonStyle');
 
-var DatePicker = require('../datePicker');
 var Calendar = require('../calendar');
 var Contact = require('../contact/contact');
 var CustomerList = require('../contact/customerList');
@@ -44,14 +43,10 @@ var attachStore = require('../../stores/attach/attachStore');
 
 var util = require('../../common/util');
 
-var _navigator, _topNavigator = null;
-
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
 
-        var defaultData = this.props.route.data || {};
+        var defaultData = this.props.data || {};
         var endTime = defaultData.endTime || new Date().valueOf();
         return {
             orderId: defaultData.id || 0,
@@ -90,7 +85,7 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'delete') {
-            _navigator.pop();
+            Actions.pop();
         };
     },
     onAttachChange: function(){
@@ -122,10 +117,10 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            _navigator.pop();
+            Actions.pop();
         };
         if (result.type == 'update') {
-            _navigator.pop();
+            Actions.pop();
         };
     },
     onCalendarPressDone: function(date){
@@ -135,12 +130,9 @@ module.exports = React.createClass({
         });
     },
     _setEndTime: function(){
-        _navigator.push({
-            component: Calendar,
+        Actions.calendar({
             target: 2,
-            onCalendarPressDone: this.onCalendarPressDone,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            onCalendarPressDone: this.onCalendarPressDone
         });
     },
     onGetCustomer: function(data){
@@ -158,23 +150,17 @@ module.exports = React.createClass({
         });
     },
     _setCustomer: function(){
-        _navigator.push({
+        Actions.customerList({
             title:'选择客户',
-            component: CustomerList,
             target: 2,
-            onPressContactRow: this.onGetCustomer,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            onPressContactRow: this.onGetCustomer
         });
     },
     _setSales: function(){
-        _navigator.push({
+        Actions.companyMemberList({
             title:'业务员',
-            component: CompanyMemberList,
             target: 2,
-            onPressContactRow: this.onGetSales,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            onPressContactRow: this.onGetSales
         });
     },
     _addAttachs: function(){
@@ -203,11 +189,8 @@ module.exports = React.createClass({
         });
     },
     _selectTemplate: function(){
-        _navigator.push({
-            target: 1,
-            component: OrderTemplates,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _topNavigator
+        Actions.orderTemplates({
+            target: 1
         });
     },
     onPressDone: function(){
@@ -263,28 +246,24 @@ module.exports = React.createClass({
         if (this.state.orderStatus == 2) {//修改订单
             return(
                 <NavigationBar
-                    title={{title: this.props.route.title}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    title={{title: this.props.title}}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 );
         };
         return(
             <NavigationBar
-                title={{title: this.props.route.title}}
-                leftButton={<LeftCloseButton navigator={_topNavigator} />}
+                title={{title: this.props.title}}
+                leftButton={<LeftCloseButton />}
                 rightButton={<RightDoneButton onPress={this.onPressDone} />} />
             );
     },
     _saveTemplate: function(){
-        _navigator.push({
+        Actions.orderTemplateSetting({
             title: '保存为模版',
             target: 1,
-            component: OrderTemplateSetting,
-            data: this.props.route.data,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+            data: this.props.data
         });
-        // orderAction.save()
     },
     _deleteOrder: function(){
         orderListAction.delete({

@@ -3,13 +3,13 @@
 var React = require('react-native');
 var TimerMixin = require('react-timer-mixin');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 var {
     View,
     Text,
     TextInput,
     Image,
-    Navigator,
     ListView,
     ScrollView,
     TouchableOpacity,
@@ -17,7 +17,6 @@ var {
     StyleSheet
 } = React;
 
-var _navigator, _topNavigator = null;
 
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
@@ -34,11 +33,9 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     _modal: {},
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
-            fileName: this.props.route.data.fileName,
-            id: this.props.route.data.accessoryId
+            fileName: this.props.data.fileName,
+            id: this.props.data.accessoryId
         }
     },
     componentDidMount: function(){
@@ -66,7 +63,7 @@ module.exports = React.createClass({
         };
         this._timeout = this.setTimeout(()=>{
             this._modal.hideModal();
-            _navigator.pop();
+            Actions.pop();
         },2000);
     },
     onPressDone: function(){
@@ -84,8 +81,8 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{ title: this.props.route.title}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    title={{ title: this.props.title}}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={[styles.main,{alignItems: 'center'}]}>
                     <View style={commonStyle.textInputWrapper}>

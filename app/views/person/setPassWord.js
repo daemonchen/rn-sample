@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var md5 = require('md5');
 var TimerMixin = require('react-timer-mixin');
 var Actions = require('react-native-router-flux').Actions;
@@ -9,7 +10,6 @@ var {View,
     Text,
     Image,
     TextInput,
-    Navigator,
     StyleSheet
 } = React;
 var Button = require('../../common/button.js');
@@ -87,7 +87,7 @@ var setPassWord = React.createClass({
             util.alert('密码长度不能小于6位');
             return false;
         };
-        if (this.props.route.type == 1) {//注册用户
+        if (this.props.type == 1) {//注册用户
             verifyCodeAction.register({
                 token: this.state.token,
                 mobile: this.state.mobile,
@@ -95,7 +95,7 @@ var setPassWord = React.createClass({
                 password: md5(this.state.password)
             });
         };
-        if (this.props.route.type == 2) {//重置密码
+        if (this.props.type == 2) {//重置密码
             authAction.reset({
                 token: this.state.token,
                 mobile: this.state.mobile,
@@ -117,7 +117,7 @@ var setPassWord = React.createClass({
         });
     },
     renderContent: function(){
-        if (this.props.route.type == 1) {//注册用户
+        if (this.props.type == 1) {//注册用户
             return(
                 <View>
                     <View style={commonStyle.textInputWrapper}>

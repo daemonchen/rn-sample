@@ -3,13 +3,13 @@
 var React = require('react-native');
 var TimerMixin = require('react-timer-mixin');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 var moment = require('moment');
 var {
     View,
     Text,
     Image,
-    Navigator,
     ListView,
     ScrollView,
     TouchableOpacity,
@@ -18,7 +18,6 @@ var {
     StyleSheet
 } = React;
 
-var _navigator, _topNavigator = null;
 
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
@@ -33,14 +32,12 @@ var attachStore = require('../../../stores/attach/attachStore');
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
-            gmtCreate: this.props.route.data.gmtCreate,
-            fileAddress: this.props.route.data.fileAddress,
-            fileName: this.props.route.data.fileName,
-            operatorName: this.props.route.data.operatorName,
-            accessoryId: this.props.route.data.id
+            gmtCreate: this.props.data.gmtCreate,
+            fileAddress: this.props.data.fileAddress,
+            fileName: this.props.data.fileName,
+            operatorName: this.props.data.operatorName,
+            accessoryId: this.props.data.id
         }
     },
     componentDidMount: function(){
@@ -77,7 +74,6 @@ module.exports = React.createClass({
         };
         this._timeout = this.setTimeout(()=>{
             this.fetchData();
-            // _navigator.pop();
         },2000);
     },
     fetchData: function(){
@@ -86,13 +82,10 @@ module.exports = React.createClass({
         });
     },
     _pressSettingButton: function(){
-        _topNavigator.push({
+        Actions.attachSetting({
             title: '附件设置',
-            data: this.state,
-            component: AttachSetting,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        })
+            data: this.state
+        });
     },
     renderTime: function(timestamp){
         var time = moment(timestamp).format('YYYY年MM月DD日');
@@ -107,8 +100,8 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{ title: this.props.route.title}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    title={{ title: this.props.title}}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightSettingButton onPress={this._pressSettingButton} />} />
                 <View style={styles.main}>
                     <View style={styles.attachImageWrapper}>

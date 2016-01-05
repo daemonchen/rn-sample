@@ -7,7 +7,6 @@ var {
     ListView,
     Image,
     Text,
-    Navigator,
     TouchableHighlight,
     StyleSheet
 } = React
@@ -15,12 +14,9 @@ var {
 var commonStyle = require('../styles/commonStyle');
 var BlueBackButton = require('../common/blueBackButton');
 
-var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             version: DeviceInfo.getVersion()
         }
@@ -30,7 +26,7 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title: '关于我们'}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />} />
+                    leftButton={<BlueBackButton />} />
                 <View style={styles.main}>
                     <Image
                       source={require('../images/logo/logo_welcom.png')} />

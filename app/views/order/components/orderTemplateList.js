@@ -8,7 +8,6 @@ var {
     View,
     ListView,
     Image,
-    Navigator,
     ScrollView,
     TouchableHighlight,
     StyleSheet

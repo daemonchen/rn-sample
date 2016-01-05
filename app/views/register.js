@@ -2,10 +2,10 @@
 
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {View,
     Text,
     TextInput,
-    Navigator,
     StyleSheet
 } = React;
 var Button = require('../common/button.js');
@@ -18,10 +18,8 @@ var verifyCodeStore = require('../stores/user/verifyCodeStore');
 var ValidationCode = require('./person/validationCode');
 var NavTitleWithLogo = require('../common/navTitleWithLogo');
 var util = require('../common/util');
-var _navigator = null;
 var register = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
         return {
             mobile: '',
             type: 1
@@ -39,13 +37,7 @@ var register = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         }
-        _navigator.push({
-            title: 'ValidationCode',
-            type: 1,
-            component: ValidationCode,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        })
+        Actions.validationCode({type: 1});
     },
     getCode: function(){
         if (!this.state.mobile || !/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(this.state.mobile)) {
@@ -70,7 +62,7 @@ var register = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={<NavTitleWithLogo />}
-                    leftButton={<LeftCloseButton navigator={_navigator} />} />
+                    leftButton={<LeftCloseButton />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='手机号码'

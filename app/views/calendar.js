@@ -3,6 +3,7 @@
 var React = require('react-native');
 var CalendarPicker = require('../common/calendarPicker/CalendarPicker');
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {
     View,
     Text,
@@ -14,12 +15,9 @@ var BlueBackButton = require('../common/blueBackButton');
 var RightDoneButton = require('../common/rightDoneButton');
 
 var commonStyle = require('../styles/commonStyle');
-var _navigator, _topNavigator = null;
 
 module.exports =  React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
               date: new Date(),
             };
@@ -28,15 +26,15 @@ module.exports =  React.createClass({
         this.setState({ date: date });
     },
     onPressDone: function(){
-        this.props.route.onCalendarPressDone(this.state.date);
-        _topNavigator.pop();
+        this.props.onCalendarPressDone(this.state.date);
+        Actions.pop();
     },
     render: function() {
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'日历'}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />}
+                    leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <CalendarPicker
                   selectedDate={this.state.date}

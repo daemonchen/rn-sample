@@ -6,7 +6,6 @@ var PhonePicker = require('react-native-phone-picker');
 var {
     View,
     Text,
-    Navigator,
     Image,
     ScrollView,
     TouchableOpacity,

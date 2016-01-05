@@ -10,7 +10,6 @@ var {
     ListView,
     ScrollView,
     Image,
-    Navigator,
     ActionSheetIOS,
     TouchableOpacity,
     TouchableHighlight,

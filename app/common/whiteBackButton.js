@@ -6,7 +6,6 @@ var {
     View,
     Text,
     Image,
-    Navigator,
     TouchableOpacity,
     StyleSheet
 } = React;

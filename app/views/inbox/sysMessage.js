@@ -2,13 +2,13 @@
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {
     Text,
     TextInput,
     View,
     ListView,
     Image,
-    Navigator,
     TouchableOpacity,
     ActivityIndicatorIOS,
     StyleSheet
@@ -17,16 +17,11 @@ var {
 var BlueBackButton = require('../../common/blueBackButton');
 var commonStyle = require('../../styles/commonStyle');
 var util = require('../../common/util');
-var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
-
-
         return {
-            data: this.props.route.data
+            data: this.props.data
         }
     },
     renderTimeLabel: function(timestamp){
@@ -40,7 +35,7 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{ title: '系统消息' }}
-                    leftButton={<BlueBackButton navigator={_navigator}/>} />
+                    leftButton={<BlueBackButton />} />
                 <View style={styles.main}>
                     <Text style={commonStyle.articleTitle}>{this.state.data.msgTitle}</Text>
                     {this.renderTimeLabel(this.state.data.gmtCreate)}

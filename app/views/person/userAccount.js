@@ -2,13 +2,13 @@
 var React = require('react-native')
 var RefreshableListView = require('react-native-refreshable-listview')
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var {
     Text,
     TextInput,
     View,
     ListView,
     Image,
-    Navigator,
     TouchableHighlight,
     ActivityIndicatorIOS,
     StyleSheet
@@ -26,12 +26,9 @@ var BlueBackButton = require('../../common/blueBackButton');
 
 var ChangeName = require('./changeName');
 
-var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             user: !!appConstants.user ? appConstants.user : {}
         }
@@ -42,11 +39,8 @@ module.exports = React.createClass({
         });
     },
     goAccount: function(){
-        _topNavigator.push({
-            title: '修改姓名',
-            component: ChangeName,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
+        Actions.changeName({
+            title: '修改姓名'
         });
     },
     render: function(){
@@ -54,7 +48,7 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'我的账号'}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />} />
+                    leftButton={<BlueBackButton />} />
                 <View style={commonStyle.settingGroups}>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
