@@ -48,7 +48,6 @@ module.exports = React.createClass({
                 target: 2,
                 data: rowData
             });
-            return;
         }else{
             var data = Object.assign({orderStatus: 1}, rowData);
             Actions.orderSettingsForTemplate({

@@ -103,13 +103,13 @@ module.exports = React.createClass({
         if (this.state.target == 3) {
             return(
                 <NavigationBar
-                    title={{ title: this.props.title }} />
+                    title={{ title: this.props.route.title }} />
                 );
 
         }else{
             return(
                 <NavigationBar
-                    title={{ title: this.props.title }}
+                    title={{ title: this.props.route.title }}
                     leftButton={<BlueBackButton />} />
                 );
         }

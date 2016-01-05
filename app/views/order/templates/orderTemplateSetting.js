@@ -82,7 +82,8 @@ module.exports = React.createClass({
                     leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <ScrollView style={styles.main}
-                keyboardShouldPersistTaps={false}>
+                keyboardShouldPersistTaps={false}
+                contentContainerStyle={{paddingBottom: 40, alignItems: 'center'}}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='模版名称'
                         style={commonStyle.textInput}
@@ -108,7 +109,7 @@ var styles = StyleSheet.create({
     main: {
         flex: 1,
         // justifyContent: 'center',
-        alignItems: 'center',
+        // alignItems: 'center',
         backgroundColor: 'transparent',
     }
 });
