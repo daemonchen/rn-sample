@@ -4,17 +4,16 @@ var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
 var TimerMixin = require('react-timer-mixin');
 var md5 = require('md5');
+var Actions = require('react-native-router-flux').Actions;
 var {View,
     Text,
     TextInput,
-    Navigator,
     StyleSheet
 } = React;
 var Button = require('../common/button.js');
 var commonStyle = require('../styles/commonStyle');
 
 var loginAction = require('../actions/user/loginAction');
-
 
 var LeftCloseButton = require('../common/leftCloseButton');
 
@@ -24,22 +23,14 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var ResetPassword = require('../views/person/resetPassword');
 var NavTitleWithLogo = require('../common/navTitleWithLogo');
-var _navigator = null;
 var Login = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
         return {}
     },
     goResetPassword: function(){
-        _navigator.push({
-            title: 'from home' + Math.random(),
-            component: ResetPassword,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _navigator
-        })
+        Actions.resetPassword();
     },
     doLogin: function(){
         if (!this.state.mobile || !/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(this.state.mobile)) {
@@ -73,7 +64,7 @@ var Login = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={<NavTitleWithLogo />}
-                    leftButton={<LeftCloseButton navigator={_navigator} />} />
+                    leftButton={<LeftCloseButton />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='手机号码'

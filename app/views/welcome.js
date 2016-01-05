@@ -1,23 +1,19 @@
 'use strict';
 
 var React = require('react-native');
+var Actions = require('react-native-router-flux').Actions;
 var {
   AppRegistry,
   StyleSheet,
   TabBarIOS,
-  Navigator,
   Image,
   Text,
   View
 } = React;
 
-var Login = require('../views/login');
-var Register = require('../views/register');
 var Button = require('../common/button.js');
 var commonStyle = require('../styles/commonStyle');
-var asyncStorage = require('../common/storage');
 
-var authTokenAction = require('../actions/user/authTokenAction');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -25,27 +21,15 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var _navigator, _topNavigator = null;
 module.exports = React.createClass({
     getInitialState: function(){
-        _navigator = this.props.navigator;
         return {}
     },
     goRegister: function(){
-        _navigator.push({
-            title: 'from home' + Math.random(),
-            component: Register,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _navigator
-        })
+        Actions.register();
     },
     goLogin: function(){
-        _navigator.push({
-            title: 'from home' + Math.random(),
-            component: Login,
-            sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-            topNavigator: _navigator
-        })
+        Actions.login();
     },
     render: function(){
         return (

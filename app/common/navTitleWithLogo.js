@@ -24,7 +24,8 @@ module.exports = React.createClass({
 
 var styles = React.StyleSheet.create({
     navTitleImage: {
-        width: 44,
-        height: 44
+        width: 32,
+        height: 32,
+        marginTop: 10
     }
 });

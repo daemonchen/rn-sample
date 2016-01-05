@@ -2,6 +2,7 @@
 var React = require('react-native')
 import NavigationBar from 'react-native-navbar'
 var TimerMixin = require('react-timer-mixin');
+var Actions = require('react-native-router-flux').Actions;
 var {
     View,
     ListView,
@@ -29,13 +30,10 @@ var BlueBackButton = require('../../common/blueBackButton');
 var About = require('../about');
 var ChangePassword = require('./changePassword');
 var Welcome = require('../welcome');
-var _navigator, _topNavigator = null;
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {}
     },
     componentDidMount: function(){
@@ -48,12 +46,7 @@ module.exports = React.createClass({
         LinkingIOS.openURL(url)
     },
     goAbout: function(){
-        _navigator.push({
-            title:'关于我们',
-            component: About,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
+        Actions.about();
     },
     cleanCache: function(){
         appConstants.orderList = null;
@@ -78,12 +71,7 @@ module.exports = React.createClass({
         });
     },
     goChangePassword: function(){
-        _navigator.push({
-            title:'修改密码',
-            component: ChangePassword,
-            sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-            topNavigator: _topNavigator
-        });
+        Actions.changePassword();
     },
     doLogout: function(){
         AlertIOS.alert(
@@ -95,14 +83,13 @@ module.exports = React.createClass({
             ]
         )
 
-        // _navigator.replace();
     },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title: '设置'}}
-                    leftButton={<BlueBackButton navigator={_topNavigator} />} />
+                    leftButton={<BlueBackButton />} />
                 <View style={commonStyle.settingGroups}>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}

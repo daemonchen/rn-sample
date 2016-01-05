@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Actions = require('react-native-router-flux').Actions;
 var {
     View,
     Text,
@@ -17,7 +18,7 @@ module.exports = React.createClass({
         }
     },
     onPress: function(){
-        this.props.navigator.pop()
+        Actions.pop()
     },
     render: function(){
         return(

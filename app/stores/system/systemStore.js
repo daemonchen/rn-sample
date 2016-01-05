@@ -17,6 +17,7 @@ class SystemStore {
             obj.clientId = id;
             systemService.system(obj)
             .then((responseData) => {
+                console.log('---systemstore result:', responseData);
                 systemAction.initSuccess(responseData)
             }).done();
 

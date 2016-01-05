@@ -190,6 +190,7 @@ var validationCode = React.createClass({
                         <TextInput placeholder='请输入验证码'
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
+                        keyboardType={'number-pad'}
                         onChangeText={this.onChangeText}
                         returnKeyType={'next'}
                         onSubmitEditing={this.onSubmitEditing} />

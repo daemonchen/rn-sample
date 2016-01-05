@@ -1,8 +1,9 @@
 'use strict';
 
 var React = require('react-native');
+var TimerMixin = require('react-timer-mixin');
 var {AppRegistry, Navigator, StyleSheet,Text,View} = React;
-var {Router, Route, Schema, Animations, TabBar} = require('react-native-router-flux');
+var {Router, Route, Schema, Animations, TabBar, Actions} = require('react-native-router-flux');
 
 var Advertisement = require('./advertisement');
 var Welcome = require('./welcome');
@@ -52,13 +53,118 @@ var ResetPassword = require('./person/resetPassword');
 var SetPassword = require('./person/setPassWord');
 var ValidationCode = require('./person/validationCode');
 
+var systemAction = require('../actions/system/systemAction');
+
+var systemStore = require('../stores/system/systemStore');
+var loginStore = require('../stores/user/loginStore');
+var authTokenStore = require('../stores/user/authTokenStore');
+var verifyCodeStore = require('../stores/user/verifyCodeStore');
+
+var appConstants = require('../constants/appConstants');
+var asyncStorage = require('../common/storage');
+var util = require('../common/util.js');
+
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function () {
         return {};
     },
     componentDidMount: function(){
+        this.unlisten = systemStore.listen(this.onChange);
+        this.unlistenLogin = loginStore.listen(this.onLoginChange);
+        this.unAuthTokenlisten = authTokenStore.listen(this.onAuthTokenChange);
+        this.unlistenVerifyCode = verifyCodeStore.listen(this.onVerifyCodeChange)
     },
     componentWillUnmount: function() {
+        this.unlisten();
+        this.unlistenLogin();
+        this.unAuthTokenlisten();
+        this.unlistenVerifyCode();
+    },
+    onVerifyCodeChange: function(){
+        var result = verifyCodeStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'register':
+                return this.doLogin(result);
+            default: return;
+        }
+    },
+    onAuthTokenChange: function(){
+        var result = authTokenStore.getState();
+        if (result.status != 200 && !!result.message) {
+            this.goWelcome();
+            return;
+        }
+        switch(result.type){
+            case 'updateToken':
+                return this.doLogin(result);
+            default: return;
+        }
+    },
+    onLoginChange: function(){
+        var result = loginStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'login':
+                return this.doLogin(result);
+            case 'logout':
+                return this.doLogout(result);
+            default: return;
+        }
+    },
+    doLogin: function(result){
+        appConstants.xAuthToken = result.data.token;
+        appConstants.user = result.data.user;
+        appConstants.userRights = result.data.userRights;
+        this.getAppState();
+        asyncStorage.setItem('appConstants', appConstants);
+    },
+    doLogout: function(){
+        appConstants = {};
+        asyncStorage.setItem('appConstants', appConstants);
+        this.goWelcome();
+    },
+    getAppState: function(){
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            systemAction.init();
+        }, 350);
+    },
+    onChange: function(){
+        var result = systemStore.getState();
+        if (result.type != 'init') { return; };
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        appConstants.unreadMsg = result.data.unreadMsg;
+        asyncStorage.setItem('appConstants', appConstants)
+        .then(()=>{
+            this.doLaunch();
+        });;
+
+    },
+    goWelcome: function(){
+        Actions.welcome();
+    },
+    goLaunch: function(){
+        Actions.launch();
+    },
+    doLaunch: function(){
+        if (!appConstants.user) {
+            this.goWelcome();
+        }else{
+            this.goLaunch();
+        }
     },
     render: function() {
         return (
@@ -68,20 +174,20 @@ module.exports = React.createClass({
                 <Schema name="withoutAnimation"/>
 
                 <Route name="advertisement" component={Advertisement} wrapRouter={true} title="Advertisement" hideNavBar={true}/>
-                <Route name="welcome" component={Welcome} title="welcome" type="replace" schema="modal"/>
-                <Route name="launch" component={Launch} title="launch" type="replace"/>
-                <Route name="about" component={About} title="设置"/>
+                <Route name="welcome" component={Welcome} title="welcome" type="reset" schema="modal"/>
+                <Route name="launch" component={Launch} title="launch" type="reset"/>
+                <Route name="about" component={About} title="关于我们"/>
                 <Route name="calendar" component={Calendar} title="设置"/>
                 <Route name="datePicker" component={DatePicker} title="设置"/>
                 <Route name="error" component={Error} title="设置"/>
-                <Route name="login" component={Login} title="设置"/>
+                <Route name="login" component={Login} title="设置" />
                 <Route name="register" component={Register} title="设置"/>
 
                 <Route name="userAccount" component={UserAccount} title="我的账号"/>
                 <Route name="mySettings" component={MySettings} title="设置"/>
                 <Route name="suggest" component={Suggest} title="意见反馈"/>
                 <Route name="changeName" component={ChangeName} title="意见反馈"/>
-                <Route name="changePassword" component={ChangePassword} title="意见反馈"/>
+                <Route name="changePassword" component={ChangePassword} title="修改密码"/>
                 <Route name="resetPassword" component={ResetPassword} title="意见反馈"/>
                 <Route name="setPassword" component={SetPassword} title="意见反馈"/>
                 <Route name="validationCode" component={ValidationCode} title="意见反馈"/>

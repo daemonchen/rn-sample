@@ -4,6 +4,7 @@ var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
 var md5 = require('md5');
 var TimerMixin = require('react-timer-mixin');
+var Actions = require('react-native-router-flux').Actions;
 var {View,
     Text,
     Image,
@@ -32,12 +33,9 @@ var {
     width, height, scale
 } = util.getDimensions();
 
-var _navigator, _topNavigator = null;
 var setPassWord = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.route.topNavigator;
         return {
             verifyCode: '',
             mobile: '',
@@ -47,6 +45,7 @@ var setPassWord = React.createClass({
     },
     _modal: {},
     componentDidMount: function(){
+        this.unlistenAuth = authStore.listen(this.onAuthChange)
         asyncStorage.getItem('verifyData')
         .then((value) => {
             this.setState({
@@ -55,10 +54,33 @@ var setPassWord = React.createClass({
                 token: value.token
             });
         }).done();
-
-
     },
     componentWillUnmount: function() {
+        this.unlistenAuth();
+    },
+    onAuthChange: function(){
+        var result = authStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'reset':
+                return this.doReset(result);
+            default: return;
+        }
+    },
+    doReset: function(result){
+        this._modal.showModal('密码设置成功,请重新登录');
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            this._modal.hideModal();
+            appConstants = {};
+            asyncStorage.setItem('appConstants', appConstants);
+            Actions.welcome();
+        },2000);
     },
     doRegister: function(){
         if (this.state.password.length < 6) {
@@ -133,7 +155,7 @@ var setPassWord = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'设置登录密码'}}
-                    leftButton={<BlueBackButton navigator={_navigator} />} />
+                    leftButton={<BlueBackButton />} />
                 <View style={styles.main}>
                     {this.renderContent()}
                     <Button
