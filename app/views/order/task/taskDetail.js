@@ -42,6 +42,7 @@ var taskStore = require('../../../stores/task/taskStore');
 var attachStore = require('../../../stores/attach/attachStore');
 
 var TaskList = require('./taskList');
+var SubTaskList = require('./subTaskList');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -292,6 +293,27 @@ module.exports = React.createClass({
                 );
         }
     },
+    onPressTaskRow: function(rowData){
+        this.unlistenAttach();
+        this.unlisten();
+        this.unlistenTaskList();
+        this.keyShowListener.remove();
+        this.keyHideListener.remove();
+        Actions.taskDetail({
+            title: rowData.title,
+            data: rowData.id
+        });
+    },
+    renderSubTask: function(){
+        if (!this.state.taskData.subOrderJobs) {
+            return(<View />);
+        };
+        return(
+            <SubTaskList
+            data={this.state.taskData.subOrderJobs}
+            onPressRow={this.onPressTaskRow}/>
+            );
+    },
     render: function(){
         // <View style={styles.taskDetailDescribe}>
         //     <View style={commonStyle.textAreaWrapper}>
@@ -362,7 +384,7 @@ module.exports = React.createClass({
                             </Text>
                         </View>
                     </View>
-
+                    {this.renderSubTask()}
                     {this.renderOverTime()}
                     {this.renderDependences()}
                     <TouchableHighlight

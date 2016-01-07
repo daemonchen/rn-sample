@@ -130,7 +130,7 @@ module.exports = React.createClass({
     renderTimeLabel: function(timestamp){
         var time = moment(timestamp).format('YYYY-MM-DD');
         return(
-            <Text style={[styles.rowText, commonStyle.textGray]}>
+            <Text style={[styles.timeLabel, commonStyle.textGray]}>
                 {time}
             </Text>
             );
@@ -213,11 +213,15 @@ module.exports = React.createClass({
                         {this.renderTimeLine()}
                         {this.renderCheckIcon()}
                         <View style={styles.contentWrapper}>
-                            <Text style={[styles.rowText,styles.rowTitle]}
-                            numberOfLines={1}>
-                                {this.props.rowData.jobDO.jobName}
-                            </Text>
-                            {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                            <View style={styles.contentTop}>
+                                <Text style={[styles.rowText]}
+                                numberOfLines={1}>
+                                    {this.props.rowData.jobDO.jobName}
+                                </Text>
+                            </View>
+                            <View style={styles.contentBottom}>
+                                {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                            </View>
                         </View>
                         {this.renderAvatar(this.props.rowData.userVO)}
                     </View>
@@ -239,11 +243,15 @@ module.exports = React.createClass({
                             {this.renderTimeLine()}
                             {this.renderCheckIcon()}
                             <View style={styles.contentWrapper}>
-                                <Text style={[styles.rowText,styles.rowTitle]}
-                                numberOfLines={1}>
-                                    {this.props.rowData.jobDO.jobName}
-                                </Text>
-                                {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                                <View style={styles.contentTop}>
+                                    <Text style={[styles.rowText]}
+                                    numberOfLines={1}>
+                                        {this.props.rowData.jobDO.jobName}
+                                    </Text>
+                                </View>
+                                <View style={styles.contentBottom}>
+                                    {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                                </View>
                             </View>
                             {this.renderAvatar(this.props.rowData.userVO)}
                         </View>
@@ -259,11 +267,15 @@ module.exports = React.createClass({
                         {this.renderTimeLine()}
                         {this.renderCheckIcon()}
                         <View style={styles.contentWrapper}>
-                            <Text style={[styles.rowText,styles.rowTitle]}
-                            numberOfLines={1}>
-                                {this.props.rowData.jobDO.jobName}
-                            </Text>
-                            {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                            <View style={styles.contentTop}>
+                                <Text style={[styles.rowText]}
+                                numberOfLines={1}>
+                                    {this.props.rowData.jobDO.jobName}
+                                </Text>
+                            </View>
+                            <View style={styles.contentBottom}>
+                                {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                            </View>
                         </View>
                         {this.renderAvatar(this.props.rowData.userVO)}
                     </View>

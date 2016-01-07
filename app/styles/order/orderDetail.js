@@ -18,7 +18,7 @@ module.exports = React.StyleSheet.create({
     },
     rowStyle: {
         paddingRight: 16,
-        paddingVertical: 5,
+        paddingVertical: 0,
         // borderBottomColor: '#E0E0E0',
         // borderBottomWidth: 1 / React.PixelRatio.get(),
         flex: 1,
@@ -115,7 +115,7 @@ module.exports = React.StyleSheet.create({
     timeline: {
         flex: 1,
         width: 4 / React.PixelRatio.get(),
-        height: 100,
+        height: 50,
         backgroundColor: '#d5d5d5'
     },
     timelineDone: {
@@ -211,6 +211,7 @@ module.exports = React.StyleSheet.create({
     },
     webView:{
         width: width - 32,
-        height: height
+        height: height,
+        alignItems: 'center'
     }
 });

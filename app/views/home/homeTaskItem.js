@@ -129,7 +129,10 @@ module.exports = React.createClass({
                             {this.renderCheckIcon()}
                             <View style={styles.contentWrapper}>
                                 <View style={styles.contentTop}>
-                                    <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
+                                    <Text style={styles.rowText}
+                                    numberOfLines={1}>
+                                        {this.props.rowData.jobName}
+                                    </Text>
                                 </View>
                                 <View style={styles.contentBottom}>
                                     <Text style={[styles.rowTextDetail, styles.rowTextDetailLeft, commonStyle.textGray]}

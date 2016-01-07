@@ -21,7 +21,6 @@ var appConstants = require('../../constants/appConstants');
 
 var TaskList = require('./task/taskList');
 var NewsList = require('./news/newsList');
-var TaskDetail = require('./task/taskDetail');
 var MemberList = require('./member/memberList')
 var ContactDetail = require('../contact/contactDetail');
 var TaskSettings = require('./task/taskSettings');

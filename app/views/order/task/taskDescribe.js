@@ -4,11 +4,11 @@ var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
+var WebViewBridge = require('react-native-webview-bridge');
 var {
     View,
     Text,
     Image,
-    WebView,
     ScrollView,
     Dimensions,
     TouchableHighlight,
@@ -50,7 +50,45 @@ module.exports = React.createClass({
             );
     },
     injectedJavaScript: function(){
-        return 'var NzmJavascriptHandler = {imageZoom: function(imageSrc, imageSrcList){alert(imageSrc);}}'.trim();
+        return `
+        var NzmJavascriptHandler = {
+            imageZoom: function(imageSrc, imageSrcList){
+                var obj = {
+                    imageSrc: imageSrc,
+                    imageSrcList: imageSrcList
+                }
+                WebViewBridge.send(JSON.stringify(obj));
+            }
+        };
+        function webViewBridgeReady(cb) {
+            //checks whether WebViewBirdge exists in global scope.
+            if (window.WebViewBridge) {
+              cb(window.WebViewBridge);
+              return;
+            }
+
+            function handler() {
+              //remove the handler from listener since we don't need it anymore
+              document.removeEventListener('WebViewBridge', handler, false);
+              //pass the WebViewBridge object to the callback
+              cb(window.WebViewBridge);
+            }
+
+            //if WebViewBridge doesn't exist in global scope attach itself to document
+            //event system. Once the code is being injected by extension, the handler will
+            //be called.
+            document.addEventListener('WebViewBridge', handler, false);
+          }
+
+          webViewBridgeReady(function (webViewBridge) {
+            WebViewBridge.onMessage = function (message) {
+              alert('got a message from Native: ' + message);
+            };
+          });
+        `;
+    },
+    onBridgeMessage: function (obj) {
+        console.log('message from webview', obj);
     },
     render: function(){
         return(
@@ -59,13 +97,14 @@ module.exports = React.createClass({
                 <ScrollView style={styles.main}
                 contentContainerStyle={{alignItems: 'center'}}
                 keyboardDismissMode={'interactive'} >
-                    <WebView
+                    <WebViewBridge
                         automaticallyAdjustContentInsets={false}
                         style={styles.webView}
                         url={this.state.url}
                         javaScriptEnabled={true}
                         domStorageEnabled={true}
                         startInLoadingState={true}
+                        onBridgeMessage={this.onBridgeMessage}
                         injectedJavaScript={this.injectedJavaScript()}
                         scalesPageToFit={this.state.scalesPageToFit} />
                 </ScrollView>
