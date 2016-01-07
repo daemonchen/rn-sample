@@ -1047,7 +1047,7 @@
 						DevelopmentTeam = U58JZD8Y2V;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1472,6 +1472,7 @@
 					"$(SRCROOT)/../node_modules/react-native-swipeout/ios/reactnativeswipeout",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/**",
 				);
 				INFOPLIST_FILE = awesomeMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1482,7 +1483,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "46a05ee5-0e8e-4457-851f-bea5c917a891";
+				PROVISIONING_PROFILE = "e8b5141b-5d12-4b3d-9888-c9837a99fe03";
 			};
 			name = Debug;
 		};
@@ -1502,6 +1503,7 @@
 					"$(SRCROOT)/../node_modules/react-native-swipeout/ios/reactnativeswipeout",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/**",
 				);
 				INFOPLIST_FILE = awesomeMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1512,7 +1514,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "46a05ee5-0e8e-4457-851f-bea5c917a891";
+				PROVISIONING_PROFILE = "e8b5141b-5d12-4b3d-9888-c9837a99fe03";
 			};
 			name = Release;
 		};

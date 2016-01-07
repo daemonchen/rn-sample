@@ -41,14 +41,15 @@ var awesomeMobile = React.createClass({
         PushNotificationIOS.removeEventListener('notification', this._onNotification);
     },
     _onNotification: function(notification) {
-        AlertIOS.alert(
-          'Notification Received',
-          'Alert message: ' + notification.getMessage(),
-          [{
-            text: 'Dismiss',
-            onPress: null,
-          }]
-        );
+      //TODO: 处理apns推送消息
+        // AlertIOS.alert(
+        //   'Notification Received',
+        //   'Alert message: ' + notification.getMessage(),
+        //   [{
+        //     text: 'Dismiss',
+        //     onPress: null,
+        //   }]
+        // );
     },
     getLocation: function(){
         var location = {};

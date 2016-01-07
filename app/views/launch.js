@@ -56,7 +56,7 @@ module.exports = React.createClass({
         this.unlisten();
         this.unlistenNotification.remove();
     },
-    factoryNotify: function(response){
+    factoryNotify: function(response){//处理个推透传消息
         var jsonData = null;
         try{
             jsonData = JSON.parse(response);

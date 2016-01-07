@@ -41,7 +41,7 @@ module.exports = React.createClass({
     render: function(){
         return (
             <View style={commonStyle.container}>
-                <View style={{width: width, height: height, backgroundColor: '#fff'}}>
+                <View style={{width: width, height: height, backgroundColor: '#fff', justifyContent: 'center'}}>
                     <ActivityIndicatorIOS
                         animating={true}
                         style={[commonStyle.activityIndicator, {height: 80}]}

@@ -93,7 +93,9 @@
     
     // 注册用户通知 - 根据用户通知设置
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    NSLog(@"----did registerUserNotificationSettings as ios version > 8.0");
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
+//    NSLog(@"----did registerUserNotificationSettings as ios version > 8.0");
 
   }
   else {      // iOS8.0 以前远程推送设置方式
@@ -102,7 +104,8 @@
     
     // 注册远程通知 -根据远程通知类型
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-    NSLog(@"----did registerUserNotificationSettings as ios version < 8.0");
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+//    NSLog(@"----did registerUserNotificationSettings as ios version < 8.0");
   }
 }
 
@@ -126,8 +129,7 @@
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-  NSLog(@"---------device token:%@\n\n",deviceToken);
-
+  
   NSString *myToken = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
   myToken = [myToken stringByReplacingOccurrencesOfString:@" " withString:@""];
   NSLog(@"\n>>>[DeviceToken ]:%@\n\n",deviceToken);
@@ -156,7 +158,6 @@
 /** SDK启动成功返回cid */
 - (void)GeTuiSdkDidRegisterClient:(NSString *)clientId {
   // [4-EXT-1]: 个推SDK已注册，返回clientId
-  NSLog(@"------GeTuiSdk RegisterClient------%@", clientId);
   [GeTuiManager setClientId:clientId];
 }
 

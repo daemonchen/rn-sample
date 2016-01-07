@@ -20,4 +20,6 @@
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic) RCTRootView *rootView;
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
+
 @end

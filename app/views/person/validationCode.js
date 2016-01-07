@@ -1,13 +1,13 @@
 'use strict';
 
 var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from 'react-native-navbar';
+var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 var {View,
     Text,
     Image,
     TextInput,
-    Navigator,
     StyleSheet
 } = React;
 var Button = require('../../common/button.js');
@@ -27,12 +27,9 @@ var {
 
 var SetPassword = require('./setPassWord');
 
-var _navigator, _topNavigator = null;
 var validationCode = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        _navigator = this.props.navigator;
-        _topNavigator = this.props.topNavigator;
         return {
             mobile: '',
             code: '',
@@ -95,14 +92,10 @@ var validationCode = React.createClass({
                 code: this.state.code,
                 token: result.data
             }).then(()=>{
-                _navigator.push({
-                    title: 'ValidationCode',
+                Actions.setPassword({
                     type: this.state.type,
-                    data: result.data,
-                    component: SetPassword,
-                    sceneConfig: Navigator.SceneConfigs.FloatFromRight,
-                    topNavigator: _navigator
-                })
+                    data: result.data
+                });
             });
          };
     },
@@ -180,7 +173,7 @@ var validationCode = React.createClass({
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{title:'验证'}}
-                    leftButton={<BlueBackButton navigator={_navigator} />} />
+                    leftButton={<BlueBackButton />} />
                 <View style={styles.main}>
                     <View style={styles.phoneWrapper}>
                         <Image source={require('../../images/Send.png')}/>
