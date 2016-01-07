@@ -5,7 +5,6 @@ var TimerMixin = require('react-timer-mixin');
 import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
-var RefreshableListView = require('react-native-refreshable-listview')
 var {
     View,
     Text,

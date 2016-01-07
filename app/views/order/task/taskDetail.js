@@ -40,6 +40,8 @@ var taskListStore = require('../../../stores/task/taskListStore');
 var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
 var attachStore = require('../../../stores/attach/attachStore');
+var employeeAction = require('../../../actions/employee/employeeAction');
+var employeeStore = require('../../../stores/employee/employeeStore');
 
 var TaskList = require('./taskList');
 var SubTaskList = require('./subTaskList');
@@ -57,20 +59,36 @@ module.exports = React.createClass({
     componentDidMount: function(){
         this.keyShowListener = DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow);
         this.keyHideListener = DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
-        this.unlistenAttach = attachStore.listen(this.onAttachChange);
         this.unlisten = taskStore.listen(this.onChange);
-        this.unlistenTaskList = taskListStore.listen(this.onTaskListChange)
+        this.unlistenAttach = attachStore.listen(this.onAttachChange);
+        this.unlistenTaskList = taskListStore.listen(this.onTaskListChange);
+        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange)
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
         this._timeout = this.setTimeout(this.fetchData, 550)
     },
     componentWillUnmount: function() {
-        this.unlistenAttach();
         this.unlisten();
+        this.unlistenAttach();
         this.unlistenTaskList();
+        this.unlistenEmployee();
         this.keyShowListener.remove();
         this.keyHideListener.remove();
+    },
+    handleEmployeeGet: function(result){
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        this.ownerData = result.data;
+    },
+    onEmployeeChange: function(){
+        var result = employeeStore.getState();
+        switch(result.type){
+            case 'get':
+                return this.handleEmployeeGet(result);
+        }
     },
     onAttachChange: function(){
         var result = attachStore.getState();
@@ -108,6 +126,11 @@ module.exports = React.createClass({
             jobId: this.state.jobId
         });
     },
+    fetchOwnerData: function(){
+        employeeAction.get({
+            userId: this.state.taskData.ownerId
+        });
+    },
     onChange: function(){
         var result = taskStore.getState();
         if (result.status != 200 && !!result.message) {
@@ -117,6 +140,10 @@ module.exports = React.createClass({
             this.setState({
                 taskData: this.transformatData(result.data)
             });
+            if (this._timeout) {
+                this.clearTimeout(this._timeout);
+            };
+            this._timeout = this.setTimeout(this.fetchOwnerData, 550);
         };
         if (result.type == 'update') {
             if (this._timeout) {
@@ -169,9 +196,13 @@ module.exports = React.createClass({
         });
     },
     _goContactDetail: function(){
+        console.log('---this.ownerData', this.ownerData);
+        if (!this.ownerData) {
+            return;
+        };
         Actions.contactDetail({
-            title: this.state.taskData.owner,
-            data: this.state.taskData
+            title: this.ownerData.userName,
+            data: this.ownerData
         });
     },
     onPressCircle: function(){//更新任务状态
@@ -300,9 +331,10 @@ module.exports = React.createClass({
         }
     },
     onPressTaskRow: function(rowData){
-        this.unlistenAttach();
         this.unlisten();
+        this.unlistenAttach();
         this.unlistenTaskList();
+        this.unlistenEmployee();
         this.keyShowListener.remove();
         this.keyHideListener.remove();
         Actions.taskDetail({
@@ -354,7 +386,6 @@ module.exports = React.createClass({
         //          </Text>
         //     </View>
         // </View>
-        console.log('---this.state.taskData', this.state.taskData);
         return(
             <View style={{height: this.state.visibleHeight}} >
                 {this.renderNavigationBar()}

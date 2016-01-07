@@ -6,6 +6,10 @@ module.exports = {
     create: function(data){
         return http.post(NZAOM_INTERFACE.invite, data)
     },
+    get: function(data){
+        var urlParams = '/{userId}'.replace('{userId}', data.userId);
+        return http.get(NZAOM_INTERFACE.user + urlParams)
+    },
     delete: function(data){
         var urlParams = '/{userId}'.replace('{userId}', data.userId);
         return http.delete(NZAOM_INTERFACE.user + urlParams)

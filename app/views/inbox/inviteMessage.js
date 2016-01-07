@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react-native')
-var RefreshableListView = require('react-native-refreshable-listview')
 import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');

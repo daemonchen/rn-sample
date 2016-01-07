@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react-native')
-var RefreshableListView = require('react-native-refreshable-listview')
 var TimerMixin = require('react-timer-mixin');
 var Actions = require('react-native-router-flux').Actions;
 var {

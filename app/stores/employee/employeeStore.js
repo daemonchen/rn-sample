@@ -11,6 +11,21 @@ class EmployeeStore {
         this.state = {};
     }
 
+    onGet(data) {
+        employeeService.get(data)
+        .then((responseData) => {
+            employeeAction.getSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'get'
+
+        this.setState(responseData);
+    }
+
     onCreate(data) {
         employeeService.create(data)
         .then((responseData) => {
