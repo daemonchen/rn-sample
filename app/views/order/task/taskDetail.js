@@ -168,6 +168,12 @@ module.exports = React.createClass({
             descriptionUrl: this.state.taskData.descriptionUrl
         });
     },
+    _goContactDetail: function(){
+        Actions.contactDetail({
+            title: this.state.taskData.owner,
+            data: this.state.taskData
+        });
+    },
     onPressCircle: function(){//更新任务状态
         var status = (this.state.taskData.done == 1) ? 0 : 1
         AlertIOS.alert(
@@ -314,6 +320,31 @@ module.exports = React.createClass({
             onPressRow={this.onPressTaskRow}/>
             );
     },
+    renderContactItem: function(){
+        return(
+            <TouchableHighlight
+            underlayColor='#eee'
+            onPress={this._goContactDetail} >
+                <View
+                style={commonStyle.settingItemWrapper}>
+                    <View
+                    style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                        <Text
+                        style={commonStyle.settingTitle}>
+                            负责人
+                        </Text>
+                        <Text
+                        style={commonStyle.settingDetail}>
+                            {this.state.taskData.userName}
+                        </Text>
+                        <Image
+                        style={commonStyle.settingArrow}
+                        source={require('../../../images/common/arrow_right.png')} />
+                    </View>
+                </View>
+            </TouchableHighlight>
+            );
+    },
     render: function(){
         // <View style={styles.taskDetailDescribe}>
         //     <View style={commonStyle.textAreaWrapper}>
@@ -323,6 +354,7 @@ module.exports = React.createClass({
         //          </Text>
         //     </View>
         // </View>
+        console.log('---this.state.taskData', this.state.taskData);
         return(
             <View style={{height: this.state.visibleHeight}} >
                 {this.renderNavigationBar()}
@@ -351,25 +383,12 @@ module.exports = React.createClass({
                                 {this.state.taskData.description}
                                 </Text>
                                 <Image
-                            style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
+                                style={commonStyle.settingArrow}
+                                source={require('../../../images/common/arrow_right.png')} />
                             </View>
                         </View>
                     </TouchableHighlight>
-                    <View
-                    style={commonStyle.settingItemWrapper}>
-                        <View
-                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
-                            <Text
-                            style={commonStyle.settingTitle}>
-                                负责人
-                            </Text>
-                            <Text
-                            style={commonStyle.settingDetail}>
-                                {this.state.taskData.userName}
-                            </Text>
-                        </View>
-                    </View>
+                    {this.renderContactItem()}
                     <View
                     style={commonStyle.settingItemWrapper} >
                         <View
