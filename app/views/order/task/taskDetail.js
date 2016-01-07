@@ -35,18 +35,13 @@ var RightSettingButton = require('../../../common/rightSettingButton');
 var CommentList = require('../comments/commentList');
 var CommentBar = require('../comments/commentBar');
 
-// var OrderDetail = require('../orderDetail');
-
 var taskListAction = require('../../../actions/task/taskListAction');
 var taskListStore = require('../../../stores/task/taskListStore');
 var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
 var attachStore = require('../../../stores/attach/attachStore');
 
-var TaskSettings = require('./taskSettings');
-var SettingsWrapper = require('./settingsWrapper');
 var TaskList = require('./taskList');
-var TaskAttach = require('../attach/taskAttach');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -162,7 +157,10 @@ module.exports = React.createClass({
         });
     },
     _goOrderDetail: function(){
-        Actions.pop();
+        Actions.orderDetail({
+            title:'',
+            data: this.state.taskData.orderId
+        });
     },
     onPressCircle: function(){//更新任务状态
         var status = (this.state.taskData.done == 1) ? 0 : 1

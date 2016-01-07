@@ -12,9 +12,6 @@ var {
 } = React;
 var HomeSegmentControl = require('./homeSegmentControl');
 var HomeList = require('./homeList');
-var OrderSettings = require('../order/orderSettings');
-// var OrderDetail = require('../order/orderDetail');
-var TaskDetail = require('../order/task/taskDetailForWorkbench');
 
 var RightAddButton = require('../../common/rightAddButton');
 
@@ -77,7 +74,7 @@ var Home =  React.createClass({
         }
     },
     onPressTaskRow: function(rowData, sectionID){
-        Actions.taskDetailForWorkbench({
+        Actions.taskDetail({
             title: rowData.title,
             data: rowData.id
         });

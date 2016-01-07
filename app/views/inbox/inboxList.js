@@ -162,7 +162,7 @@ module.exports = React.createClass({
                 });
                 return;
             case 2:
-                Actions.taskDetailForWorkbench({
+                Actions.taskDetail({
                     data: rowData.extra.jobId
                 });
                 return;
