@@ -208,5 +208,9 @@ module.exports = React.StyleSheet.create({
     },
     newsSectionText: {
         marginLeft: 68
+    },
+    webView:{
+        width: width - 32,
+        height: height
     }
 });

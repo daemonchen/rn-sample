@@ -26,6 +26,7 @@ var TaskAttach = require('./order/attach/taskAttach');
 
 var SettingsWrapper = require('./order/task/settingsWrapper');
 var TaskDetail = require('./order/task/taskDetail');
+var TaskDescribe = require('./order/task/taskDescribe');
 var TaskSettings = require('./order/task/taskSettings');
 
 var OrderTemplateSetting = require('./order/templates/orderTemplateSetting');
@@ -200,8 +201,9 @@ module.exports = React.createClass({
                 <Route name="taskAttach" component={TaskAttach} title="我的模版"/>
 
                 <Route name="settingsWrapper" component={SettingsWrapper} title="我的模版"/>
-                <Route name="taskDetail" component={TaskDetail} title="我的模版"/>
+                <Route name="taskDetail" component={TaskDetail} title="任务详情"/>
                 <Route name="taskSettings" component={TaskSettings} title="我的模版"/>
+                <Route name="taskDescribe" component={TaskDescribe} title="任务描述"/>
 
                 <Route name="orderTemplateSetting" component={OrderTemplateSetting} title="我的模版"/>
 

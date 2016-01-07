@@ -162,6 +162,11 @@ module.exports = React.createClass({
             data: this.state.taskData.orderId
         });
     },
+    _goTaskDescribe: function(){
+        Actions.taskDescribe({
+            descriptionUrl: this.state.taskData.descriptionUrl
+        });
+    },
     onPressCircle: function(){//更新任务状态
         var status = (this.state.taskData.done == 1) ? 0 : 1
         AlertIOS.alert(
@@ -288,6 +293,14 @@ module.exports = React.createClass({
         }
     },
     render: function(){
+        // <View style={styles.taskDetailDescribe}>
+        //     <View style={commonStyle.textAreaWrapper}>
+        //         <Text placeholder='任务描述'
+        //         style={[commonStyle.textArea, commonStyle.textGray]}>
+        //             {this.state.taskData.description}
+        //          </Text>
+        //     </View>
+        // </View>
         return(
             <View style={{height: this.state.visibleHeight}} >
                 {this.renderNavigationBar()}
@@ -300,14 +313,27 @@ module.exports = React.createClass({
                             {this.state.taskData.jobName}
                         </Text>
                     </View>
-                    <View style={styles.taskDetailDescribe}>
-                        <View style={commonStyle.textAreaWrapper}>
-                            <Text placeholder='任务描述'
-                            style={[commonStyle.textArea, commonStyle.textGray]}>
+                    <TouchableHighlight
+                    underlayColor='#eee'
+                    onPress={this._goTaskDescribe} >
+                        <View style={commonStyle.settingItemWrapper}>
+                            <View
+                            style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                                <Text
+                                style={commonStyle.settingTitle}>
+                                    任务描述
+                                </Text>
+                                <Text
+                                style={commonStyle.settingDetail}
+                                numberOfLines={1}>
                                 {this.state.taskData.description}
-                             </Text>
+                                </Text>
+                                <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../../images/common/arrow_right.png')} />
+                            </View>
                         </View>
-                    </View>
+                    </TouchableHighlight>
                     <View
                     style={commonStyle.settingItemWrapper}>
                         <View
