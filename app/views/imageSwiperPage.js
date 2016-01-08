@@ -15,24 +15,19 @@ var {
 } = React;
 
 
-var commonStyle = require('../../../styles/commonStyle');
-var styles = require('../../../styles/order/orderDetail');
-var util = require('../../../common/util');
-var http = require('../../../common/http');
-var appConstants = require('../../../constants/appConstants');
-
-var BlueBackButton = require('../../../common/blueBackButton');
-var RightSettingButton = require('../../../common/rightSettingButton');
+var commonStyle = require('../styles/commonStyle');
+var styles = require('../styles/order/orderDetail');
+var util = require('../common/util');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        var url = this.props.descriptionUrl + '?' + http.getWebViewUrlParams();
+        console.log('--------->this.props.slides',this.props.slides);
         return {
             index: this.props.index || 0,
             autoplay: this.props.autoplay || false,
             loop: this.props.loop || true,
-            slides: this.props.slides || []
+            slides: JSON.parse(this.props.slides)
         }
     },
     componentDidMount: function(){
@@ -47,9 +42,10 @@ module.exports = React.createClass({
     },
     renderItems: function(){
         var that = this;
-        var items = this.slides.map(function (item, index) {
+        var items = this.state.slides.map(function (item, index) {
             return that.renderItem(item, index);
         });
+        return items;
     },
     render: function(){
         return(

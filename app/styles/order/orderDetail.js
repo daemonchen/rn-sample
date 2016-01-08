@@ -212,6 +212,7 @@ module.exports = React.StyleSheet.create({
     webView:{
         width: width - 32,
         height: height,
+        justifyContent: 'center',
         alignItems: 'center'
     }
 });

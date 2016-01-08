@@ -14,6 +14,7 @@ var DatePicker = require('./datePicker');
 var Error = require('./error');
 var Login = require('./login');
 var Register = require('./register');
+var ImageSwiperPage = require('./imageSwiperPage');
 
 var OrderDetail = require('./order/orderDetail');
 var OrderSettings = require('./order/orderSettings');
@@ -176,11 +177,13 @@ module.exports = React.createClass({
                 <Route name="welcome" component={Welcome} title="welcome" type="reset" schema="modal"/>
                 <Route name="launch" component={Launch} title="launch" type="reset"/>
                 <Route name="about" component={About} title="关于我们"/>
-                <Route name="calendar" component={Calendar} title="设置"/>
-                <Route name="datePicker" component={DatePicker} title="设置"/>
+                <Route name="calendar" component={Calendar} title="设置日期"/>
+                <Route name="datePicker" component={DatePicker} title="设置时间"/>
                 <Route name="error" component={Error} title="设置"/>
-                <Route name="login" component={Login} title="设置" />
-                <Route name="register" component={Register} title="设置"/>
+                <Route name="login" component={Login} title="登录" />
+                <Route name="register" component={Register} title="注册"/>
+                <Route name="imageSwiperPage" component={ImageSwiperPage} title="图片详情" schema="withoutAnimation"/>
+
 
                 <Route name="userAccount" component={UserAccount} title="我的账号"/>
                 <Route name="mySettings" component={MySettings} title="设置"/>

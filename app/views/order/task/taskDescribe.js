@@ -88,7 +88,18 @@ module.exports = React.createClass({
         `;
     },
     onBridgeMessage: function (obj) {
-        console.log('message from webview', obj);
+        console.log('-----onBridgeMessage', obj);
+        var result = JSON.parse(obj);
+        console.log('-----onBridgeMessage result', result);
+        var index = 0;
+        for (var i = 0; i < result.imageSrcList.length; i++) {
+            (result.imageSrc == result.imageSrcList[i]) && (index = i);
+        };
+        console.log(index);
+        // Actions.imageSwiperPage({
+        //     index: index,
+        //     slides: result.imageSrcList || []
+        // });
     },
     render: function(){
         return(

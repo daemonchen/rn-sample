@@ -43,7 +43,6 @@
 		D2BF47F51C215158002C7185 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47F41C215134002C7185 /* libRCTPushNotification.a */; };
 		D2BF48341C219DFE002C7185 /* GeTuiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF48331C219DFE002C7185 /* GeTuiManager.m */; };
 		D2D974CA1C2D28EB00A22F98 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D974C91C2D28DC00A22F98 /* libRNBlur.a */; };
-		D2ED5D5C1C00788C008826C6 /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */; };
 		D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */; };
 		D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D771C06DFCA008826C6 /* libRNDeviceInfo.a */; };
 		D2F072DB1C22FEA600A3BABE /* QiniuManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F072DA1C22FEA600A3BABE /* QiniuManager.m */; };
@@ -198,6 +197,20 @@
 			remoteGlobalIDString = 409A073B1B9047BF00F6A547;
 			remoteInfo = RNPhonePicker;
 		};
+		D26B27FB1C3FA98B00272E80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D26B27F61C3FA98B00272E80 /* RCTCircleProgress.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8BD55BA1B6A6B6200E49ED0;
+			remoteInfo = RCTCircleProgress;
+		};
+		D26B27FD1C3FA98B00272E80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D26B27F61C3FA98B00272E80 /* RCTCircleProgress.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8BD55C51B6A6B6200E49ED0;
+			remoteInfo = RCTCircleProgressTests;
+		};
 		D2A95C601C3E660E0065EDE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */;
@@ -225,20 +238,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = A68BD7BC1BC31318005F02DF;
 			remoteInfo = RNBlur;
-		};
-		D2ED5D4F1C007876008826C6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8BD55BA1B6A6B6200E49ED0;
-			remoteInfo = RCTCircleProgress;
-		};
-		D2ED5D511C007876008826C6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8BD55C51B6A6B6200E49ED0;
-			remoteInfo = RCTCircleProgressTests;
 		};
 		D2ED5D6F1C069A2C008826C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -282,6 +281,7 @@
 		D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerManager.m; sourceTree = "<group>"; };
 		D228330B1C100A9B00027EA3 /* RNPhonePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNPhonePicker.xcodeproj; path = "../node_modules/react-native-phone-picker/RNPhonePicker.xcodeproj"; sourceTree = "<group>"; };
 		D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D26B27F61C3FA98B00272E80 /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D26F5C9A1C23A8E4006D4BE7 /* awesomeMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = awesomeMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D26F5C9B1C23A8E4006D4BE7 /* awesomeMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = awesomeMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A51F8D1C100D0B00923C26 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
@@ -304,7 +304,6 @@
 		D2BF48331C219DFE002C7185 /* GeTuiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeTuiManager.m; sourceTree = "<group>"; };
 		D2BF48351C219E1C002C7185 /* GeTuiManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeTuiManager.h; sourceTree = "<group>"; };
 		D2D974C41C2D28DC00A22F98 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
-		D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		D2F072D91C22FE9E00A3BABE /* QiniuManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuManager.h; sourceTree = "<group>"; };
@@ -460,7 +459,6 @@
 				D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */,
 				D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */,
 				D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */,
-				D2ED5D5C1C00788C008826C6 /* libRCTCircleProgress.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -583,6 +581,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D26B27F61C3FA98B00272E80 /* RCTCircleProgress.xcodeproj */,
 				D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */,
 				D2D974C41C2D28DC00A22F98 /* RNBlur.xcodeproj */,
 				D2F073A61C2304B800A3BABE /* AFNetworking */,
@@ -596,7 +595,6 @@
 				D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */,
 				D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */,
 				D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */,
-				D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -659,6 +657,15 @@
 			isa = PBXGroup;
 			children = (
 				D22833101C100A9B00027EA3 /* libRNPhonePicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D26B27F71C3FA98B00272E80 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D26B27FC1C3FA98B00272E80 /* libRCTCircleProgress.a */,
+				D26B27FE1C3FA98B00272E80 /* RCTCircleProgressTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -738,15 +745,6 @@
 			isa = PBXGroup;
 			children = (
 				D2D974C91C2D28DC00A22F98 /* libRNBlur.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		D2ED5D4A1C007876008826C6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */,
-				D2ED5D521C007876008826C6 /* RCTCircleProgressTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1093,8 +1091,8 @@
 					ProjectRef = D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */;
 				},
 				{
-					ProductGroup = D2ED5D4A1C007876008826C6 /* Products */;
-					ProjectRef = D2ED5D491C007876008826C6 /* RCTCircleProgress.xcodeproj */;
+					ProductGroup = D26B27F71C3FA98B00272E80 /* Products */;
+					ProjectRef = D26B27F61C3FA98B00272E80 /* RCTCircleProgress.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -1254,6 +1252,20 @@
 			remoteRef = D228330F1C100A9B00027EA3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D26B27FC1C3FA98B00272E80 /* libRCTCircleProgress.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCircleProgress.a;
+			remoteRef = D26B27FB1C3FA98B00272E80 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D26B27FE1C3FA98B00272E80 /* RCTCircleProgressTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RCTCircleProgressTests.xctest;
+			remoteRef = D26B27FD1C3FA98B00272E80 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D2A95C611C3E660E0065EDE0 /* libReact-Native-Webview-Bridge.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1280,20 +1292,6 @@
 			fileType = archive.ar;
 			path = libRNBlur.a;
 			remoteRef = D2D974C81C2D28DC00A22F98 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2ED5D501C007876008826C6 /* libRCTCircleProgress.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTCircleProgress.a;
-			remoteRef = D2ED5D4F1C007876008826C6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2ED5D521C007876008826C6 /* RCTCircleProgressTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RCTCircleProgressTests.xctest;
-			remoteRef = D2ED5D511C007876008826C6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */ = {
