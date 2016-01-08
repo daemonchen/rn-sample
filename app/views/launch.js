@@ -28,6 +28,7 @@ var asyncStorage = require('../common/storage');
 var inboxStore = require('../stores/inbox/inboxStore');
 var authTokenAction = require('../actions/user/authTokenAction');
 var notificationAction = require('../actions/notification/notificationAction');
+var loginAction = require('../actions/user/loginAction');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -71,6 +72,14 @@ module.exports = React.createClass({
         if (jsonData.type == 2) {
             authTokenAction.updateToken()
         };
+        if (jsonData.type == 3) {
+            this.doLogout()
+        };
+    },
+    doLogout: function(){
+        util.alert('系统检测到您的帐号在其他设备上登录');
+        loginAction.logout();
+
     },
     setBadge: function(count){
         appConstants.unreadMsg = count;

@@ -1513,7 +1513,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "46a05ee5-0e8e-4457-851f-bea5c917a891";
+				PROVISIONING_PROFILE = "102d8ff7-d683-4e7d-88f7-e7f702d3fad6";
 			};
 			name = Debug;
 		};
@@ -1544,7 +1544,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "46a05ee5-0e8e-4457-851f-bea5c917a891";
+				PROVISIONING_PROFILE = "102d8ff7-d683-4e7d-88f7-e7f702d3fad6";
 			};
 			name = Release;
 		};
