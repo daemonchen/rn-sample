@@ -11,6 +11,7 @@ var {
     Image,
     ScrollView,
     Dimensions,
+    TouchableOpacity,
     StyleSheet
 } = React;
 
@@ -19,15 +20,16 @@ var commonStyle = require('../styles/commonStyle');
 var styles = require('../styles/order/orderDetail');
 var util = require('../common/util');
 
+var BlueBackButton = require('../common/blueBackButton');
+
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        console.log('--------->this.props.slides',this.props.slides);
         return {
             index: this.props.index || 0,
             autoplay: this.props.autoplay || false,
             loop: this.props.loop || true,
-            slides: JSON.parse(this.props.slides)
+            slides: this.props.slides || []
         }
     },
     componentDidMount: function(){
@@ -37,7 +39,9 @@ module.exports = React.createClass({
     renderItem: function(item){
         return(
             <Image
-              source={{uri: item}} />
+                style={styles.imageGallery}
+                resizeMode={Image.resizeMode.contain}
+                source={{uri: item}} />
             );
     },
     renderItems: function(){
@@ -47,14 +51,24 @@ module.exports = React.createClass({
         });
         return items;
     },
+    _onPressButton: function(){
+        Actions.pop();
+    },
     render: function(){
+        console.log(this.state.index);
         return(
-            <Swiper style={styles.wrapper} showsButtons={true}
-            index={this.state.index}
-            autoplay={this.state.autoplay}
-            loop={this.state.loop}>
-                {this.renderItems()}
-            </Swiper>
+            <View>
+                <NavigationBar
+                    title={{ title: '图片预览'}}
+                    leftButton={<BlueBackButton />} />
+                <Swiper style={styles.imageGalleryWrapper}
+                showsButtons={true}
+                index={this.state.index}
+                autoplay={this.state.autoplay}
+                loop={this.state.loop}>
+                    {this.renderItems()}
+                </Swiper>
+            </View>
             );
     }
 })

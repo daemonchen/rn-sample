@@ -214,5 +214,12 @@ module.exports = React.StyleSheet.create({
         height: height,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    imageGalleryWrapper: {
+        height: height - 64
+    },
+    imageGallery:{
+        width: width,
+        height: height - 64
     }
 });

@@ -88,18 +88,16 @@ module.exports = React.createClass({
         `;
     },
     onBridgeMessage: function (obj) {
-        console.log('-----onBridgeMessage', obj);
         var result = JSON.parse(obj);
-        console.log('-----onBridgeMessage result', result);
+        result.imageSrcList = util.parseStringToJson(result.imageSrcList);
         var index = 0;
         for (var i = 0; i < result.imageSrcList.length; i++) {
             (result.imageSrc == result.imageSrcList[i]) && (index = i);
         };
-        console.log(index);
-        // Actions.imageSwiperPage({
-        //     index: index,
-        //     slides: result.imageSrcList || []
-        // });
+        Actions.imageSwiperPage({
+            index: index,
+            slides: result.imageSrcList || []
+        });
     },
     render: function(){
         return(

@@ -182,5 +182,10 @@ module.exports = {
                 // const source = {uri: response.uri.replace('file://', ''), isStatic: true};
             }
         });
+    },
+    parseStringToJson: function(stringArray){
+        var str = unescape(stringArray);
+        var jsonStr = str.replace(/'/g, '"');
+        return JSON.parse(jsonStr);
     }
 };
