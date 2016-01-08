@@ -1491,8 +1491,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: daemon chen (H8J79K9MUM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: daemon chen (H8J79K9MUM)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hehuyou Information & Technology Co., LTD (U58JZD8Y2V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hehuyou Information & Technology Co., LTD (U58JZD8Y2V)";
 				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1513,7 +1513,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "102d8ff7-d683-4e7d-88f7-e7f702d3fad6";
+				PROVISIONING_PROFILE = "56246620-5be1-4768-8e9d-ee2403e82b5c";
 			};
 			name = Debug;
 		};
@@ -1522,8 +1522,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: daemon chen (H8J79K9MUM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: daemon chen (H8J79K9MUM)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hehuyou Information & Technology Co., LTD (U58JZD8Y2V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hehuyou Information & Technology Co., LTD (U58JZD8Y2V)";
 				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1544,7 +1544,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "102d8ff7-d683-4e7d-88f7-e7f702d3fad6";
+				PROVISIONING_PROFILE = "56246620-5be1-4768-8e9d-ee2403e82b5c";
 			};
 			name = Release;
 		};

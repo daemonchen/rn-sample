@@ -51,7 +51,7 @@ module.exports = React.createClass({
         };
     },
     onPressContactRow: function(data){
-        var text = this.state.comment + data.userName + ' ';
+        var text = this.state.comment.substring(0, this.state.comment.length - 1);
         var ids = this.state.atUserIds;
         ids.push(data.userId);
         this.setState({
