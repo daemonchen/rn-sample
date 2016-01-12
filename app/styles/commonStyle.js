@@ -207,5 +207,10 @@ module.exports = React.StyleSheet.create({
     },
     copyrightItem:{
         paddingVertical: 8
+    },
+    emptyView:{
+        height:height * 2/3,
+        justifyContent:'center',
+        alignItems:'center'
     }
 });

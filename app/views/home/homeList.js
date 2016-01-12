@@ -1,11 +1,13 @@
 'use strict';
 var React = require('react-native')
 var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
+var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     View,
     ListView,
+    Image,
     TouchableOpacity,
     ActivityIndicatorIOS,
     StyleSheet
@@ -19,8 +21,13 @@ var taskStore = require('../../stores/task/taskStore');
 
 var styles = require('../../styles/home/style.js');
 var commonStyle = require('../../styles/commonStyle');
+
 var util = require('../../common/util');
+
 var HomeTaskItem = require('./homeTaskItem');
+var Button = require('../../common/button.js');
+
+var appConstants = require('../../constants/appConstants');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -39,7 +46,8 @@ module.exports = React.createClass({
             loaded : false,
             list: [],
             dataSource: ds,
-            scrollEnabled: true
+            scrollEnabled: true,
+            factoryName: !!appConstants.user ? appConstants.user.factoryName : ''
         }
     },
     _allowScroll: function(scrollEnabled) {
@@ -219,6 +227,34 @@ module.exports = React.createClass({
         }
         return this.renderListView();
     },
+    goCreateFactory: function(){
+        Actions.createFactory({
+            title: '新建工厂'
+        });
+    },
+    renderEmptyRow: function(){
+         if (!this.state.factoryName) {
+            return (
+                <View style={commonStyle.emptyView}>
+                    <Image source={require('../../images/empty/no_task_gray.png')} />
+                    <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        您还没有加入工厂
+                    </Text>
+                    <Button
+                    style={[commonStyle.blueButton, {marginTop: 16}]}
+                    onPress={this.goCreateFactory} >
+                        新建工厂
+                    </Button>
+                </View>
+            )
+         }else{
+            return (
+                <View style={commonStyle.emptyView}>
+                    <Image source={require('../../images/empty/no_task_gray.png')} />
+                </View>
+            )
+         }
+    },
     renderListView: function(){
         return (
             <RefreshInfiniteListView
@@ -232,6 +268,7 @@ module.exports = React.createClass({
                 onInfinite = {this.onInfinite}
                 loadedAllData={this.loadedAllData}
                 scrollEnabled={this.state.scrollEnabled}
+                renderEmptyRow={this.renderEmptyRow}
                 >
             </RefreshInfiniteListView>
             )

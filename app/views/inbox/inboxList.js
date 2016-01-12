@@ -211,6 +211,13 @@ module.exports = React.createClass({
         }
         return this.renderListView();
     },
+    renderEmptyRow: function(){
+        return (
+            <View style={commonStyle.emptyView}>
+                <Image source={require('../../images/empty/no_message_gray.png')} />
+            </View>
+        )
+    },
     renderListView: function(){
         return (
             <RefreshInfiniteListView
@@ -223,7 +230,8 @@ module.exports = React.createClass({
                 onInfinite = {this.onInfinite}
                 loadedAllData={this.loadedAllData}
                 scrollEnabled={this.state.scrollEnabled}
-                contentContainerStyle={{paddingBottom: 40}} >
+                contentContainerStyle={{paddingBottom: 40}}
+                renderEmptyRow={this.renderEmptyRow}>
             </RefreshInfiniteListView>
             )
     },

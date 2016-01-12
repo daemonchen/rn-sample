@@ -5,6 +5,7 @@ var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var {
     Text,
     View,
+    Image,
     ListView,
     TouchableOpacity,
     ActivityIndicatorIOS,
@@ -175,6 +176,13 @@ var orderList = React.createClass({
         }
         return this.renderListView();
     },
+    renderEmptyRow: function(){
+        return (
+            <View style={commonStyle.emptyView}>
+                <Image source={require('../../../images/empty/no_order_gray.png')} />
+            </View>
+        )
+    },
     renderListView: function(){
         return (
             <RefreshInfiniteListView
@@ -187,6 +195,7 @@ var orderList = React.createClass({
                 onInfinite = {this.onInfinite}
                 loadedAllData={this.loadedAllData}
                 scrollEnabled={this.state.scrollEnabled}
+                renderEmptyRow={this.renderEmptyRow}
                 >
             </RefreshInfiniteListView>
             )

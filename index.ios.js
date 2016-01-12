@@ -23,6 +23,7 @@ var appConstants = require('./app/constants/appConstants');
 var asyncStorage = require('./app/common/storage');
 
 var authTokenAction = require('./app/actions/user/authTokenAction');
+var appAction = require('./app/actions/app/appAction');
 
 var util = require('./app/common/util');
 
@@ -67,6 +68,9 @@ var awesomeMobile = React.createClass({
         .then((data)=>{
             if(!!data && !!data.xAuthToken){
                 appConstants.xAuthToken = data.xAuthToken;
+                this.setTimeout(function(){
+                    appAction.init(appConstants);
+                }, 350)
             }
             this.getNewXAuthToken();
         }).done();
