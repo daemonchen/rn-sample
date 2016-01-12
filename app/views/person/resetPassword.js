@@ -41,6 +41,7 @@ module.exports = React.createClass({
         var result = verifyCodeStore.getState();
         if (result.type != 'get') { return; };
         if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
             return;
         }
         Actions.validationCode({

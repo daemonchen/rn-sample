@@ -8,6 +8,7 @@ var _ = require('underscore');
 var util = require('./util');
 var asyncStorage = require('./storage');
 var appConstants = require('../constants/appConstants');
+var appStore = require('../stores/app/appStore');
 
 
 module.exports = {
@@ -19,7 +20,14 @@ module.exports = {
             'x-platform': 'IOS'
         }
     },
-    getAuthToken: function(callback){
+    getAuthToken: function(){
+        appConstants = appStore.getState();
+        // .then((data)=>{
+        //     if(!!data && !!data.xAuthToken){
+        //         appConstants.xAuthToken = data.xAuthToken;
+        //     }
+        //     this.getNewXAuthToken();
+        // }).done();
         return appConstants.xAuthToken;
     },
     getWebViewUrlParams: function(data){

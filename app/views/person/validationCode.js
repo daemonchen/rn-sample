@@ -74,7 +74,11 @@ var validationCode = React.createClass({
     },
     onChange: function() {
         var result = verifyCodeStore.getState();
-        if(result.type == 'isReset' && result.status != 200){
+        if(result.type == 'isReset'){
+            if (result.status != 200 && !!result.message) {
+                util.alert(result.message);
+                return;
+            }
             this.clearInterval(this._timeInterval);
             this.setState({
                 canReGetCode: true,
@@ -84,6 +88,7 @@ var validationCode = React.createClass({
         }
         if (result.type == 'check') {
             if (result.status != 200 && !!result.message) {
+                util.alert(result.message);
                 return;
             }
             this.clearInterval(this._timeInterval);

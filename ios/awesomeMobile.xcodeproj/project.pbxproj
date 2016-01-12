@@ -23,6 +23,7 @@
 		4CD8E7718311449DAD48959A /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F462FB9DE04EC0834B0650 /* libRNVectorIcons.a */; };
 		7B3DA2B9DFA44A2492AEE6E9 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6900895165DA41BB84501851 /* libRCTActionSheet.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		D1877E901C43D99B00C9358D /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1877E8D1C43D99200C9358D /* libRCTCircleProgress.a */; };
 		D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D22832EA1C0F3A3B00027EA3 /* libRCTCameraRoll.a */; };
 		D22832FF1C0FCAFA00027EA3 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */; };
 		D22833111C100AB400027EA3 /* libRNPhonePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D22833101C100A9B00027EA3 /* libRNPhonePicker.a */; };
@@ -30,7 +31,6 @@
 		D2A51F8E1C100D0B00923C26 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = D2A51F8D1C100D0B00923C26 /* main.jsbundle */; };
 		D2A90CEC1C34F19B000464CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ADA4801C313A1A0078F08F /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D2A95C621C3E661D0065EDE0 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A95C611C3E660E0065EDE0 /* libReact-Native-Webview-Bridge.a */; };
-		D2BB27BE1C3FAEA4001F4836 /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BB27BB1C3FAE85001F4836 /* libRCTCircleProgress.a */; };
 		D2BF469E1C1FFD00002C7185 /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF469D1C1FFD00002C7185 /* Orientation.m */; };
 		D2BF47231C21476C002C7185 /* libGeTuiSdk-1.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47221C21476C002C7185 /* libGeTuiSdk-1.3.1.a */; };
 		D2BF47261C214901002C7185 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47251C214901002C7185 /* libz.tbd */; };
@@ -184,6 +184,20 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		D1877E8C1C43D99200C9358D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8BD55BA1B6A6B6200E49ED0;
+			remoteInfo = RCTCircleProgress;
+		};
+		D1877E8E1C43D99200C9358D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8BD55C51B6A6B6200E49ED0;
+			remoteInfo = RCTCircleProgressTests;
+		};
 		D22832E91C0F3A3B00027EA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */;
@@ -204,20 +218,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 4114DC4C1C187C3A003CD988;
 			remoteInfo = "React-Native-Webview-Bridge";
-		};
-		D2BB27BA1C3FAE85001F4836 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2BB27B51C3FAE85001F4836 /* RCTCircleProgress.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8BD55BA1B6A6B6200E49ED0;
-			remoteInfo = RCTCircleProgress;
-		};
-		D2BB27BC1C3FAE85001F4836 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2BB27B51C3FAE85001F4836 /* RCTCircleProgress.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8BD55C51B6A6B6200E49ED0;
-			remoteInfo = RCTCircleProgressTests;
 		};
 		D2BF46F91C2134CE002C7185 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -277,6 +277,7 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		A41307C31BEB4DB3B993E0F8 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		D22832FD1C0FCAFA00027EA3 /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImagePickerManager.h; sourceTree = "<group>"; };
 		D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerManager.m; sourceTree = "<group>"; };
@@ -288,7 +289,6 @@
 		D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		D2ADA47E1C31394C0078F08F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2ADA4801C313A1A0078F08F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		D2BB27B51C3FAE85001F4836 /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D2BF469C1C1FFD00002C7185 /* Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orientation.h; sourceTree = "<group>"; };
 		D2BF469D1C1FFD00002C7185 /* Orientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orientation.m; sourceTree = "<group>"; };
 		D2BF47211C21476C002C7185 /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
@@ -441,7 +441,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2BB27BE1C3FAEA4001F4836 /* libRCTCircleProgress.a in Frameworks */,
+				D1877E901C43D99B00C9358D /* libRCTCircleProgress.a in Frameworks */,
 				D2A95C621C3E661D0065EDE0 /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				D2A90CEC1C34F19B000464CD /* UIKit.framework in Frameworks */,
 				D2D974CA1C2D28EB00A22F98 /* libRNBlur.a in Frameworks */,
@@ -583,7 +583,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				D2BB27B51C3FAE85001F4836 /* RCTCircleProgress.xcodeproj */,
+				D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */,
 				D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */,
 				D2D974C41C2D28DC00A22F98 /* RNBlur.xcodeproj */,
 				D2F073A61C2304B800A3BABE /* AFNetworking */,
@@ -637,6 +637,15 @@
 			sourceTree = "<group>";
 			tabWidth = 2;
 		};
+		D1877E881C43D99100C9358D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1877E8D1C43D99200C9358D /* libRCTCircleProgress.a */,
+				D1877E8F1C43D99200C9358D /* RCTCircleProgressTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D22832E61C0F3A3B00027EA3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -667,15 +676,6 @@
 			isa = PBXGroup;
 			children = (
 				D2A95C611C3E660E0065EDE0 /* libReact-Native-Webview-Bridge.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		D2BB27B61C3FAE85001F4836 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D2BB27BB1C3FAE85001F4836 /* libRCTCircleProgress.a */,
-				D2BB27BD1C3FAE85001F4836 /* RCTCircleProgressTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1093,8 +1093,8 @@
 					ProjectRef = D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */;
 				},
 				{
-					ProductGroup = D2BB27B61C3FAE85001F4836 /* Products */;
-					ProjectRef = D2BB27B51C3FAE85001F4836 /* RCTCircleProgress.xcodeproj */;
+					ProductGroup = D1877E881C43D99100C9358D /* Products */;
+					ProjectRef = D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -1240,6 +1240,20 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D1877E8D1C43D99200C9358D /* libRCTCircleProgress.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCircleProgress.a;
+			remoteRef = D1877E8C1C43D99200C9358D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D1877E8F1C43D99200C9358D /* RCTCircleProgressTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RCTCircleProgressTests.xctest;
+			remoteRef = D1877E8E1C43D99200C9358D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D22832EA1C0F3A3B00027EA3 /* libRCTCameraRoll.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1259,20 +1273,6 @@
 			fileType = archive.ar;
 			path = "libReact-Native-Webview-Bridge.a";
 			remoteRef = D2A95C601C3E660E0065EDE0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2BB27BB1C3FAE85001F4836 /* libRCTCircleProgress.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTCircleProgress.a;
-			remoteRef = D2BB27BA1C3FAE85001F4836 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2BB27BD1C3FAE85001F4836 /* RCTCircleProgressTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RCTCircleProgressTests.xctest;
-			remoteRef = D2BB27BC1C3FAE85001F4836 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D2BF46FA1C2134CE002C7185 /* libRNVectorIcons.a */ = {
@@ -1513,7 +1513,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "56246620-5be1-4768-8e9d-ee2403e82b5c";
+				PROVISIONING_PROFILE = "96b020ce-ceeb-48e7-970d-14aebee0215f";
 			};
 			name = Debug;
 		};
@@ -1544,7 +1544,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "56246620-5be1-4768-8e9d-ee2403e82b5c";
+				PROVISIONING_PROFILE = "96b020ce-ceeb-48e7-970d-14aebee0215f";
 			};
 			name = Release;
 		};

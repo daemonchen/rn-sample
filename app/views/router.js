@@ -54,6 +54,7 @@ var SetPassword = require('./person/setPassWord');
 var ValidationCode = require('./person/validationCode');
 
 var systemAction = require('../actions/system/systemAction');
+var appAction = require('../actions/app/appAction');
 
 var systemStore = require('../stores/system/systemStore');
 var loginStore = require('../stores/user/loginStore');
@@ -83,15 +84,12 @@ module.exports = React.createClass({
     },
     onVerifyCodeChange: function(){
         var result = verifyCodeStore.getState();
+        if (result.type != 'register') {return};
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
         }
-        switch(result.type){
-            case 'register':
-                return this.doLogin(result);
-            default: return;
-        }
+        return this.doLogin(result);
     },
     onAuthTokenChange: function(){
         var result = authTokenStore.getState();
@@ -123,8 +121,11 @@ module.exports = React.createClass({
         appConstants.xAuthToken = result.data.token;
         appConstants.user = result.data.user;
         appConstants.userRights = result.data.userRights;
-        this.getAppState();
         asyncStorage.setItem('appConstants', appConstants);
+        this.setTimeout(function(){
+            appAction.init(appConstants);
+        }, 350)
+        this.getAppState();
     },
     doLogout: function(){
         appConstants = {};
@@ -147,6 +148,9 @@ module.exports = React.createClass({
             return;
         }
         appConstants.unreadMsg = result.data.unreadMsg;
+        this.setTimeout(function(){
+            appAction.init(appConstants);
+        }, 350)
         asyncStorage.setItem('appConstants', appConstants)
         .then(()=>{
             this.doLaunch();
