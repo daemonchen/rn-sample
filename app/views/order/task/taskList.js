@@ -83,7 +83,7 @@ module.exports = React.createClass({
     onTaskChange: function(){
         var result = taskStore.getState();
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
+            // util.alert(result.message);
             return;
         }
         if (result.type == 'create') {

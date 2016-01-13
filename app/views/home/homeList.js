@@ -95,7 +95,7 @@ module.exports = React.createClass({
         this.setTimeout(this.onRefresh, 350)
         this.unlisten = workbenchListStore.listen(this.onChange);
         this.unlistenTaskChange = taskStore.listen(this.onTaskChange)
-        this.unlistenTaskListChange = taskStore.listen(this.onTaskListChange)
+        this.unlistenTaskListChange = taskListStore.listen(this.onTaskListChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
@@ -152,7 +152,8 @@ module.exports = React.createClass({
             )
     },
     onTaskListChange: function(){
-        var result = taskStore.getState();
+        var result = taskListStore.getState();
+        console.log('----task delete', result);
         if (result.status != 200 && !!result.message) {
             return;
         }
