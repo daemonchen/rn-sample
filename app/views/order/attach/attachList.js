@@ -128,7 +128,20 @@ module.exports = React.createClass({
         }
         return this.renderListView();
     },
+    renderEmptyRow: function(){
+        return (
+            <View style={commonStyle.emptyView}>
+                <Image source={require('../../../images/empty/no_file_gray.png')} />
+                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        您还没有附件
+                </Text>
+            </View>
+        )
+    },
     renderListView: function(){
+        if (!this.state.list || this.state.list.length == 0) {
+            return this.renderEmptyRow();
+        };
         return (
             <ListView
               style={commonStyle.container}
@@ -142,8 +155,11 @@ module.exports = React.createClass({
         var targetRights = 8;
         if ((rights & targetRights) == targetRights){
             return (
-                <View style={styles.empty}>
-                    <Text style={[commonStyle.textLight, commonStyle.textInput, commonStyle.alignCenter]}>目前没有附件</Text>
+                <View style={commonStyle.emptyView}>
+                    <Image source={require('../../../images/empty/no_file_gray.png')} />
+                    <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                            您还没有附件
+                    </Text>
                     <Button
                     style={commonStyle.blueButton}
                     onPress={this.props.onEmptyButtonPress} >

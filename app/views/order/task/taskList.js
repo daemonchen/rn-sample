@@ -1,6 +1,7 @@
 'use strict';
 var React = require('react-native')
 var TimerMixin = require('react-timer-mixin');
+var Actions = require('react-native-router-flux').Actions;
 var {
     Text,
     TextInput,
@@ -20,6 +21,7 @@ var util = require('../../../common/util');
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
 var TaskItem = require('./taskItem');
+var Button = require('../../../common/button.js');
 
 /*
 target: 表示从哪里打开任务列表 enum
@@ -175,7 +177,32 @@ module.exports = React.createClass({
         }
         return this.renderListView();
     },
+    createTask: function(){
+        var data = Object.assign({taskStatus: 1}, this.props.data);
+        Actions.taskSettings({
+            title: '新建任务',
+            data: data
+        });
+    },
+    renderEmptyRow: function(){
+        return (
+            <View style={commonStyle.emptyView}>
+                <Image source={require('../../../images/empty/no_task_gray.png')} />
+                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        您还没有任务
+                </Text>
+                <Button
+                style={commonStyle.blueButton}
+                onPress={this.createTask} >
+                    新建任务
+                </Button>
+            </View>
+        )
+    },
     renderListView: function(){
+        if (!this.state.list || this.state.list.length == 0) {
+            return this.renderEmptyRow();
+        };
         return (
             <ListView
               style={commonStyle.container}

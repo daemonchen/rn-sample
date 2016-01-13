@@ -209,7 +209,7 @@ module.exports = React.StyleSheet.create({
         paddingVertical: 8
     },
     emptyView:{
-        height:height * 2/3,
+        height:height * 1/2,
         justifyContent:'center',
         alignItems:'center'
     }

@@ -70,7 +70,20 @@ module.exports = React.createClass({
             </TouchableHighlight>
             );
     },
+    renderEmptyRow: function(){
+        return (
+            <View style={commonStyle.emptyView}>
+                <Image source={require('../../images/empty/no_person_gray.png')} />
+                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        您还没有联系人
+                </Text>
+            </View>
+        )
+    },
     render: function(){
+        if (!this.props.data || this.props.data.length == 0) {
+            return this.renderEmptyRow();
+        };
         return(
             <ListView
               style={contactsStyle.scrollView}

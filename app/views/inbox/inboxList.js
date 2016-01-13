@@ -215,6 +215,9 @@ module.exports = React.createClass({
         return (
             <View style={commonStyle.emptyView}>
                 <Image source={require('../../images/empty/no_message_gray.png')} />
+                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        您还没有消息
+                </Text>
             </View>
         )
     },

@@ -162,7 +162,20 @@ module.exports = React.createClass({
             </Swipeout>
             );
     },
+    renderEmptyRow: function(){
+        return (
+            <View style={commonStyle.emptyView}>
+                <Image source={require('../../../images/empty/no_template_gray.png')} />
+                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        您还没有模版
+                </Text>
+            </View>
+        )
+    },
     render: function(){
+        if (!this.state.list || this.state.list.length == 0) {
+            return this.renderEmptyRow();
+        };
         return(
             <ListView
                 style={commonStyle.container}

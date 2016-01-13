@@ -192,39 +192,39 @@ module.exports = React.createClass({
                 <Route name="userAccount" component={UserAccount} title="我的账号"/>
                 <Route name="mySettings" component={MySettings} title="设置"/>
                 <Route name="suggest" component={Suggest} title="意见反馈"/>
-                <Route name="changeName" component={ChangeName} title="意见反馈"/>
+                <Route name="changeName" component={ChangeName} title="修改姓名"/>
                 <Route name="changePassword" component={ChangePassword} title="修改密码"/>
-                <Route name="resetPassword" component={ResetPassword} title="意见反馈"/>
-                <Route name="setPassword" component={SetPassword} title="意见反馈"/>
-                <Route name="validationCode" component={ValidationCode} title="意见反馈"/>
+                <Route name="resetPassword" component={ResetPassword} title="重置密码"/>
+                <Route name="setPassword" component={SetPassword} title="设置密码"/>
+                <Route name="validationCode" component={ValidationCode} title="验证码"/>
 
-                <Route name="orderDetail" component={OrderDetail} title="我的模版"/>
-                <Route name="orderSettings" component={OrderSettings} title="新建订单"/>
-                <Route name="orderSettingsForTemplate" component={OrderSettingsForTemplate} title="我的模版"/>
+                <Route name="orderDetail" component={OrderDetail} title="订单详情"/>
+                <Route name="orderSettings" component={OrderSettings} title="订单设置" schema="modal"/>
+                <Route name="orderSettingsForTemplate" component={OrderSettingsForTemplate} title="订单设置" schema="modal"/>
                 <Route name="orderTemplates" component={OrderTemplates} title="选择模版"/>
 
-                <Route name="attachDetail" component={AttachDetail} title="我的模版"/>
-                <Route name="attachSetting" component={AttachSetting} title="我的模版"/>
-                <Route name="taskAttach" component={TaskAttach} title="我的模版"/>
+                <Route name="attachDetail" component={AttachDetail} title="附件详情"/>
+                <Route name="attachSetting" component={AttachSetting} title="附件设置" schema="modal"/>
+                <Route name="taskAttach" component={TaskAttach} title="任务附件"/>
 
-                <Route name="settingsWrapper" component={SettingsWrapper} title="我的模版"/>
+                <Route name="settingsWrapper" component={SettingsWrapper} title="设置"/>
                 <Route name="taskDetail" component={TaskDetail} title="任务详情"/>
-                <Route name="taskSettings" component={TaskSettings} title="我的模版"/>
+                <Route name="taskSettings" component={TaskSettings} title="任务设置" schema="modal"/>
                 <Route name="taskDescribe" component={TaskDescribe} title="任务描述"/>
 
-                <Route name="orderTemplateSetting" component={OrderTemplateSetting} title="我的模版"/>
+                <Route name="orderTemplateSetting" component={OrderTemplateSetting} title="我的模版" schema="modal"/>
 
-                <Route name="inviteMessage" component={InviteMessage} title="我的模版"/>
-                <Route name="sysMessage" component={SysMessage} title="我的模版"/>
+                <Route name="inviteMessage" component={InviteMessage} title="邀请信息"/>
+                <Route name="sysMessage" component={SysMessage} title="系统信息"/>
 
-                <Route name="companyMemberList" component={CompanyMemberList} title="我的模版"/>
-                <Route name="contactDetail" component={ContactDetail} title="我的模版"/>
-                <Route name="createFactory" component={CreateFactory} title="我的模版"/>
-                <Route name="customerList" component={CustomerList} title="我的模版"/>
-                <Route name="customerSettings" component={CustomerSettings} title="我的模版"/>
-                <Route name="inviteEmployee" component={InviteEmployee} title="我的模版"/>
-                <Route name="positionSetting" component={PositionSetting} title="我的模版"/>
-                <Route name="roleSetting" component={RoleSetting} title="我的模版"/>
+                <Route name="companyMemberList" component={CompanyMemberList} title="员工列表"/>
+                <Route name="contactDetail" component={ContactDetail} title="联系人详情"/>
+                <Route name="createFactory" component={CreateFactory} title="新建工厂"/>
+                <Route name="customerList" component={CustomerList} title="客户列表"/>
+                <Route name="customerSettings" component={CustomerSettings} title="客户设置" schema="modal"/>
+                <Route name="inviteEmployee" component={InviteEmployee} title="邀请员工"/>
+                <Route name="positionSetting" component={PositionSetting} title="设置职位"/>
+                <Route name="roleSetting" component={RoleSetting} title="设置角色"/>
 
             </Router>
 

@@ -9,7 +9,7 @@ if (!!_debug) {
     // NZAOM_API_DOMAIN = "http://192.168.1.109";
     // NZAOM_API_DOMAIN = "http://192.168.1.147";
 
-    NZAO_MOBILE_DOMAIN = 'http://192.168.1.147'
+    // NZAO_MOBILE_DOMAIN = 'http://192.168.1.147'
         //NZAOM_API_DOMAIN=NZAOM_DOMAIN;
 }
 module.exports = {
