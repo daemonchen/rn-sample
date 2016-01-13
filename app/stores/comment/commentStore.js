@@ -27,6 +27,13 @@ class commentStore {
         // this.mergeList(responseData)
         this.setState(responseData);
     }
+    onAt(data){
+        var result = {
+            type: 'at',
+            atUserIds: data
+        }
+        this.setState(data);
+    }
 }
 
 module.exports = alt.createStore(commentStore, 'commentStore');

@@ -153,7 +153,6 @@ module.exports = React.createClass({
     },
     onTaskListChange: function(){
         var result = taskListStore.getState();
-        console.log('----task delete', result);
         if (result.status != 200 && !!result.message) {
             return;
         }

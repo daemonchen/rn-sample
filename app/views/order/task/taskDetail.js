@@ -26,6 +26,8 @@ var {
 
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
+var commentStyle = require('../../../styles/order/comment.js');
+
 var util = require('../../../common/util');
 var appConstants = require('../../../constants/appConstants');
 
@@ -33,7 +35,6 @@ var BlueBackButton = require('../../../common/blueBackButton');
 var RightSettingButton = require('../../../common/rightSettingButton');
 
 var CommentList = require('../comments/commentList');
-var CommentBar = require('../comments/commentBar');
 
 var taskListAction = require('../../../actions/task/taskListAction');
 var taskListStore = require('../../../stores/task/taskListStore');
@@ -57,8 +58,8 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        this.keyShowListener = DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow);
-        this.keyHideListener = DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
+        // this.keyShowListener = DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow);
+        // this.keyHideListener = DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide);
         this.unlisten = taskStore.listen(this.onChange);
         this.unlistenAttach = attachStore.listen(this.onAttachChange);
         this.unlistenTaskList = taskListStore.listen(this.onTaskListChange);
@@ -73,8 +74,8 @@ module.exports = React.createClass({
         this.unlistenAttach();
         this.unlistenTaskList();
         this.unlistenEmployee();
-        this.keyShowListener.remove();
-        this.keyHideListener.remove();
+        // this.keyShowListener.remove();
+        // this.keyHideListener.remove();
     },
     handleEmployeeGet: function(result){
         if (result.status != 200 && !!result.message) {
@@ -163,13 +164,13 @@ module.exports = React.createClass({
 
         })
     },
-    keyboardWillShow: function(e) {
-        var newSize = Dimensions.get('window').height - e.endCoordinates.height
-        this.setState({visibleHeight: newSize})
-    },
-    keyboardWillHide: function(e) {
-        this.setState({visibleHeight: Dimensions.get('window').height})
-    },
+    // keyboardWillShow: function(e) {
+    //     var newSize = Dimensions.get('window').height - e.endCoordinates.height
+    //     this.setState({visibleHeight: newSize})
+    // },
+    // keyboardWillHide: function(e) {
+    //     this.setState({visibleHeight: Dimensions.get('window').height})
+    // },
     _pressSettingButton: function(){
         var data = Object.assign({taskStatus: 2}, this.state.taskData);
         Actions.taskSettings({
@@ -196,7 +197,6 @@ module.exports = React.createClass({
         });
     },
     _goContactDetail: function(){
-        console.log('---this.ownerData', this.ownerData);
         if (!this.ownerData) {
             return;
         };
@@ -242,6 +242,11 @@ module.exports = React.createClass({
             <CommentList data={this.state.taskData.id}/>
             )
     },
+    sendComment: function(){
+        Actions.createComment({
+            data: this.state.taskData.id
+        });
+    },
     renderCommentBar: function(){
         if (!this.state.taskData.id) {
             return(
@@ -249,7 +254,14 @@ module.exports = React.createClass({
                 );
         }
         return(
-            <CommentBar data={this.state.taskData.id}/>
+            <View style={commentStyle.commentBarWrapper}>
+                <TouchableOpacity onPress={this.sendComment}
+                style={commentStyle.commentSendButtonWrapper}>
+                    <Text style={[commentStyle.commentSendButton, commonStyle.blue]}>
+                        发表评论
+                    </Text>
+                </TouchableOpacity>
+            </View>
             )
     },
     _setTaskDependence: function(){

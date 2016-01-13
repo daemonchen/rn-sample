@@ -32,6 +32,9 @@ var TaskSettings = require('./order/task/taskSettings');
 
 var OrderTemplateSetting = require('./order/templates/orderTemplateSetting');
 
+var CreateComment = require('./order/comments/createComment');
+var CommentAtPersonList = require('./order/comments/commentAtPersonList');
+
 var InviteMessage = require('./inbox/inviteMessage');
 var SysMessage = require('./inbox/sysMessage');
 
@@ -213,6 +216,9 @@ module.exports = React.createClass({
                 <Route name="taskDescribe" component={TaskDescribe} title="任务描述"/>
 
                 <Route name="orderTemplateSetting" component={OrderTemplateSetting} title="我的模版" schema="modal"/>
+
+                <Route name="createComment" component={CreateComment} title="发表评论"/>
+                <Route name="commentAtPersonList" component={CommentAtPersonList} title="@好友"/>
 
                 <Route name="inviteMessage" component={InviteMessage} title="邀请信息"/>
                 <Route name="sysMessage" component={SysMessage} title="系统信息"/>

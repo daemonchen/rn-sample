@@ -17,12 +17,19 @@ var {
 
 var contactsStyle = require('../../styles/contact/contactsItem');
 var commonStyle = require('../../styles/commonStyle');
-
+/*
+target: 表示从哪里打开联系人列表 enum
+{
+    1: 'normal',
+    2: '评论的时候@某人',
+}
+*/
 module.exports = React.createClass({
     getInitialState: function(){
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         return {
-            dataSource: ds.cloneWithRows(this.props.data)
+            dataSource: ds.cloneWithRows(this.props.data),
+            target: this.props.target || 1
         }
     },
     componentWillReceiveProps: function(nextProps){
@@ -51,12 +58,28 @@ module.exports = React.createClass({
                 )
         }
     },
+    renderCheckIcon: function(){
+        if (this.state.target == 1) {//察看联系人
+            return(
+                <View />
+                );
+        };
+        if (this.state.target == 2) {//@某人
+            var circleImage = (this.state.isCheck == 1) ? require('../../images/task/Check_box_selected.png') : require('../../images/task/Check_box.png');
+            return(
+            <View style={styles.checkIconWrapper}>
+                <Image source={circleImage} style={styles.checkIcon24}/>
+            </View>
+            )
+        }
+    },
     renderRow: function(data){
         return(
             <TouchableHighlight
                 onPress={()=>{this.props.onPressRow(data)}}
                 underlayColor='#eee'>
                 <View style={contactsStyle.contactsItem}>
+                    {this.renderCheckIcon(data)}
                     {this.renderAvatar(data)}
                     <Text style={contactsStyle.contactsItemDetail}
                     numberOfLines={1}>
