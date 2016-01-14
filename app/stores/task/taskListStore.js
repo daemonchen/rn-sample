@@ -90,11 +90,15 @@ class TaskListStore {
         this.setState(responseData);
     }
     removeItemFromCache(obj, id){
-        for (var i = 0; i < obj.jobVOList.length; i++) {
-            if(obj.jobVOList[i].jobDO.id == id){
-                obj.jobVOList.splice(i, 1)
-            }
-        };
+        try{
+            for (var i = 0; i < obj.jobVOList.length; i++) {
+                if(obj.jobVOList[i].jobDO.id == id){
+                    obj.jobVOList.splice(i, 1)
+                }
+            };
+        }catch(err){
+            console.log('[NZAOM:]', err)
+        }
         return obj;
     }
     onAddDependinces(data){
