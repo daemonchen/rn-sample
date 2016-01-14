@@ -6,6 +6,7 @@ var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 var PhonePicker = require('react-native-phone-picker');
 var TimerMixin = require('react-timer-mixin');
+var underscore = require('underscore');
 var {
     View,
     Text,
@@ -47,13 +48,15 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {
             target: this.props.target || 1,
+            atUsers: this.props.atUsers,
+            atUserIds: this.props.atUserIds || [],
             listData: [],
         }
     },
     _modal: {},
     componentDidMount: function(){
         contactAction.getList();
-        this.unlisten = contactStore.listen(this.onChange)
+        this.unlisten = contactStore.listen(this.onChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
@@ -65,18 +68,40 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         }
+        this.mergeListData(result.data);
+    },
+    mergeListData: function(list){
+        var users = this.state.atUsers;
+        for (var i = 0; i < users.length; i++) {
+            for (var j = 0; j < list.length; j++) {
+                (list[j].userId == users[i].userId) && (list[j].isCheck = true)
+            };
+        };
         this.setState({
-            listData: result.data
+            listData: list
         });
     },
-    onPressContactRow: function(data){
-        var text = this.state.comment.substring(0, this.state.comment.length - 1);
+    setAtUserIds: function(data){
+        // console.log('setAtUserIds', data);
         var ids = this.state.atUserIds;
-        ids.push(data.userId);
+        if (!!data.isCheck && underscore.contains(ids, data.userId)) {//从选中状态改为为选中状态
+            ids = underscore.without(ids, data.userId);
+        }else{
+            ids.push(data.userId);
+        }
         this.setState({
-            comment: text,
             atUserIds: ids
         });
+        console.log('-----setAtUserIds', ids);
+        this.mergeListData(this.state.listData);
+    },
+    onPressContactRow: function(data){
+        this.setAtUserIds(data);
+        // var ids = this.state.atUserIds;
+        // ids.push(data.userId);
+        // this.setState({
+        //     atUserIds: ids
+        // });
     },
     onPressRow: function(data){
         if (this.state.target == 1) {
@@ -90,7 +115,10 @@ module.exports = React.createClass({
         }
     },
     _pressDone: function(){
-        commentAction.at(this.state.atUserIds);
+        commentAction.at({
+            type: 'at',
+            atUsers: this.state.atUsers
+        });
         Actions.pop();
     },
     renderNavigationBar: function(){

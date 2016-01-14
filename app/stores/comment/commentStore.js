@@ -28,10 +28,6 @@ class commentStore {
         this.setState(responseData);
     }
     onAt(data){
-        var result = {
-            type: 'at',
-            atUserIds: data
-        }
         this.setState(data);
     }
 }

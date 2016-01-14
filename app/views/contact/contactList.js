@@ -17,6 +17,7 @@ var {
 
 var contactsStyle = require('../../styles/contact/contactsItem');
 var commonStyle = require('../../styles/commonStyle');
+var styles = require('../../styles/order/orderDetail');
 /*
 target: 表示从哪里打开联系人列表 enum
 {
@@ -26,7 +27,7 @@ target: 表示从哪里打开联系人列表 enum
 */
 module.exports = React.createClass({
     getInitialState: function(){
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
         return {
             dataSource: ds.cloneWithRows(this.props.data),
             target: this.props.target || 1
@@ -58,16 +59,16 @@ module.exports = React.createClass({
                 )
         }
     },
-    renderCheckIcon: function(){
+    renderCheckIcon: function(data){
         if (this.state.target == 1) {//察看联系人
             return(
                 <View />
                 );
         };
         if (this.state.target == 2) {//@某人
-            var circleImage = (this.state.isCheck == 1) ? require('../../images/task/Check_box_selected.png') : require('../../images/task/Check_box.png');
+            var circleImage = (!!data.isCheck) ? require('../../images/task/Check_box_selected.png') : require('../../images/task/Check_box.png');
             return(
-            <View style={styles.checkIconWrapper}>
+            <View style={[contactsStyle.contactsItemCircle, {marginRight: 10}]}>
                 <Image source={circleImage} style={styles.checkIcon24}/>
             </View>
             )

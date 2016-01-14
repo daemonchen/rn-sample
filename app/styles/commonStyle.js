@@ -152,7 +152,7 @@ module.exports = React.StyleSheet.create({
         color: '#212121',
         height: 59,
         paddingTop: 20,
-        width: 80,
+        width: 96,
     },
     settingDetail: {
         fontSize: 16,

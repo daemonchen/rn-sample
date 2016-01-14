@@ -34,6 +34,7 @@ module.exports = React.createClass({
         return {
             targetId: this.props.data,//任务id
             atUserIds: [],
+            atUsers: [],
             comment: '',
             type: 2
         }
@@ -44,6 +45,16 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
     },
+    cacheUserIds: function(users){
+        var ids = [];
+        for (var i = 0; i < users.length; i++) {
+            ids.push(users[i].userId);
+        };
+        this.setState({
+            atUserIds: ids,
+            atUsers: users
+        });
+    },
     onChange: function(){
         var result = commentStore.getState();
         if (result.status != 200 && !!result.message) {
@@ -53,17 +64,17 @@ module.exports = React.createClass({
             this.setState({
                 comment: ''
             });
+            Actions.pop();
         };
         if (result.type == 'at') {
-            this.setState({
-                atUserIds: result.atUserIds
-            });
+            this.cacheUserIds(result.atUsers);
         };
     },
 
      _setRelatedPerson: function(){//增加@的人
         Actions.commentAtPersonList({
             target: 2,
+            atUsers: this.state.atUsers
             // onPressContactRow: this.onPressContactRow
         });
     },
