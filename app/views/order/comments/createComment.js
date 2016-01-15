@@ -26,6 +26,7 @@ var RightDoneButton = require('../../../common/rightDoneButton');
 
 var styles = require('../../../styles/order/comment.js');
 var commonStyle = require('../../../styles/commonStyle');
+var contactsStyle = require('../../../styles/contact/contactsItem');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -74,7 +75,8 @@ module.exports = React.createClass({
      _setRelatedPerson: function(){//增加@的人
         Actions.commentAtPersonList({
             target: 2,
-            atUsers: this.state.atUsers
+            atUsers: this.state.atUsers,
+            atUserIds: this.state.atUserIds
             // onPressContactRow: this.onPressContactRow
         });
     },
@@ -103,9 +105,53 @@ module.exports = React.createClass({
                 rightButton={<RightDoneButton onPress={this.sendComment} />} />
             );
     },
+    renderAvatar: function(data){
+        if (!data) {
+            return(<View style={styles.commentAvatarCircle}/>);
+        };
+        if (data.avatar) {
+            return(
+                <Image
+                  style={styles.commentAvatarCircle}
+                  source={{uri: data.avatar}} />
+                );
+        }else{
+            var circleBackground = {
+                backgroundColor: data.bgColor
+            }
+            return(
+                <View style={[styles.commentAvatarCircle, circleBackground]}>
+                    <Text style={styles.commentAvatarCircleText}>{data.simpleUserName}</Text>
+                </View>
+                )
+        }
+    },
+    renderRelatedPersonItem: function(){
+        var self = this;
+        var usersArray = this.state.atUsers.slice(0,3);
+        var items = usersArray.map(function (item, index) {
+            return self.renderAvatar(item)
+        });
+        return items;
+    },
+    renderMore: function(){
+        if (this.state.atUsers.length > 3) {
+            return(<Text style={{paddingLeft: 10, paddingTop: 10}}>...</Text>);
+        };
+        return(<View />)
+    },
     renderRelatedPerson: function(){
+        if (!!this.state.atUsers && this.state.atUsers.length > 0) {
+            return(
+                <View
+                style={styles.commentAvatarCircleWrapper}>
+                    {this.renderRelatedPersonItem()}
+                    {this.renderMore()}
+                </View>
+                )
+        };
         return (
-            <View />
+            <View style={styles.commentAvatarCircleWrapper}/>
             );
     },
     render: function() {
@@ -135,10 +181,6 @@ module.exports = React.createClass({
                                 @ 提醒谁看
                             </Text>
                             {this.renderRelatedPerson()}
-                            <Text
-                            style={commonStyle.settingDetail}>
-                                {this.state.endTimeFormat}
-                            </Text>
                             <Image
                             style={commonStyle.settingArrow}
                             source={require('../../../images/common/arrow_right.png')} />

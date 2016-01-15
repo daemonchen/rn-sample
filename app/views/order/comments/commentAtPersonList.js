@@ -48,7 +48,7 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {
             target: this.props.target || 1,
-            atUsers: this.props.atUsers,
+            atUsers: this.props.atUsers || [],
             atUserIds: this.props.atUserIds || [],
             listData: [],
         }
@@ -71,14 +71,22 @@ module.exports = React.createClass({
         this.mergeListData(result.data);
     },
     mergeListData: function(list){
-        var users = this.state.atUsers;
-        for (var i = 0; i < users.length; i++) {
-            for (var j = 0; j < list.length; j++) {
-                (list[j].userId == users[i].userId) && (list[j].isCheck = true)
+        var users = [];
+        var ids = this.state.atUserIds;
+        for (var i = 0; i < list.length; i++) {
+            list[i].isCheck = false;
+            for (var j = 0; j < ids.length; j++) {
+                if (list[i].userId == ids[j]) {
+                    list[i].isCheck = true;
+                    users.push(list[i]);
+                };
+
             };
+
         };
         this.setState({
-            listData: list
+            listData: list,
+            atUsers: users
         });
     },
     setAtUserIds: function(data){
@@ -92,7 +100,6 @@ module.exports = React.createClass({
         this.setState({
             atUserIds: ids
         });
-        console.log('-----setAtUserIds', ids);
         this.mergeListData(this.state.listData);
     },
     onPressContactRow: function(data){

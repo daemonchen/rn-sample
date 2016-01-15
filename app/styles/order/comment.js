@@ -88,5 +88,27 @@ module.exports = React.StyleSheet.create({
         paddingLeft: 4,
         color: '#bdbdbd',
         marginHorizontal: 16
-    }
+    },
+    commentAvatarCircleWrapper:{
+        fontSize: 16,
+        flex: 1,
+        flexDirection: 'row',
+        height: 59,
+        paddingTop: 11
+    },
+    commentAvatarCircle:{
+        width: 36,
+        height: 36,
+        marginLeft: 10,
+        borderRadius: 18
+    },
+    commentAvatarCircleText:{
+        position: 'absolute',
+        width: 30,
+        textAlign: 'center',
+        left: 3,
+        top: 12,
+        color: '#fff',
+        fontSize: 12
+    },
 });

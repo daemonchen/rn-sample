@@ -157,6 +157,7 @@ module.exports = React.StyleSheet.create({
     settingDetail: {
         fontSize: 16,
         flex: 1,
+        flexDirection: 'row',
         height: 59,
         paddingTop: 20,
         textAlign: 'right'
