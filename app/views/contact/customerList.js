@@ -5,6 +5,7 @@ import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 var TimerMixin = require('react-timer-mixin');
+var PhonePicker = require('react-native-phone-picker');
 var {
     View,
     Text,
@@ -85,18 +86,56 @@ module.exports = React.createClass({
             Actions.pop();
         }
     },
-    goSetting: function(){
-        Actions.customerSettings({
+    goSetting: function(phone){
+        var options = {
             title: '新建客户',
             target: 1
-        });
+        };
+        if (!!phone) {
+            options = Object.assign(options, {
+                data: {
+                    id: 0,
+                    mobiles: [phone]
+                }
+            });
+        };
+        Actions.customerSettings(options);
     },
+    openAddress: function(){
+        var self = this;
+        PhonePicker.select(function(phone) {
+            if (phone) {
+                self.goSetting(phone);
+            }
+        })
+    },
+    onSelectActionSheet: function(index){
+        switch(index){
+            case 0:
+                return this.openAddress();
+            case 1:
+                return this.goSetting();
+            default :
+                return;
+        }
+    },
+    showActionSheet: function(){
+        var self = this;
+        ActionSheetIOS.showActionSheetWithOptions({
+            options: this.actionList,
+            cancelButtonIndex: 2,
+            },
+            (buttonIndex) => {
+              self.onSelectActionSheet(buttonIndex);
+            });
+    },
+    actionList: ['手机通讯录邀请','手机号码邀请','取消'],
     renderNavigationBar: function(){
         return(
             <NavigationBar
                 title={{ title: this.props.title }}
                 leftButton={<BlueBackButton />}
-                rightButton={<RightAddButton onPress={this.goSetting} />} />
+                rightButton={<RightAddButton onPress={this.showActionSheet} />} />
             );
     },
     render: function(){

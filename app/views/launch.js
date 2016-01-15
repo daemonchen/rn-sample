@@ -11,6 +11,7 @@ var {
   Text,
   PushNotificationIOS,
   NativeAppEventEmitter,
+  LinkingIOS,
   View
 } = React;
 
@@ -45,6 +46,8 @@ module.exports = React.createClass({
         };
     },
     componentDidMount: function(){
+        var url = LinkingIOS.popInitialURL();
+        this.factoryLinkingScheme(url);
         this.unlisten = inboxStore.listen(this.onChange);
         this.unlistenNotification =  NativeAppEventEmitter.addListener(
             'nzaomNotify',
@@ -52,6 +55,9 @@ module.exports = React.createClass({
                 this.factoryNotify(notifData);
             }
         );
+    },
+    factoryLinkingScheme: function(scheme){
+        console.log('----scheme', scheme);
     },
     componentWillUnmount: function() {
         this.unlisten();
