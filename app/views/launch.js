@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 // var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+var Actions = require('react-native-router-flux').Actions;
 var {
   AppRegistry,
   StyleSheet,
@@ -30,6 +31,8 @@ var inboxStore = require('../stores/inbox/inboxStore');
 var authTokenAction = require('../actions/user/authTokenAction');
 var notificationAction = require('../actions/notification/notificationAction');
 var loginAction = require('../actions/user/loginAction');
+var schemeAction = require('../actions/scheme/schemeAction');
+var schemeStore = require('../stores/scheme/schemeStore');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -46,22 +49,59 @@ module.exports = React.createClass({
         };
     },
     componentDidMount: function(){
-        var url = LinkingIOS.popInitialURL();
-        this.factoryLinkingScheme(url);
         this.unlisten = inboxStore.listen(this.onChange);
+        this.unlistenScheme = schemeStore.listen(this.onSchemeChange);
         this.unlistenNotification =  NativeAppEventEmitter.addListener(
             'nzaomNotify',
             (notifData) => {
                 this.factoryNotify(notifData);
             }
         );
-    },
-    factoryLinkingScheme: function(scheme){
-        console.log('----scheme', scheme);
+        LinkingIOS.addEventListener('url', this._handleOpenURL);
+
+        var url = LinkingIOS.popInitialURL();
+        this.factoryLinkingScheme(url);
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenScheme();
         this.unlistenNotification.remove();
+        LinkingIOS.removeEventListener('url', this._handleOpenURL);
+    },
+    onSchemeChange: function(){
+        var result = schemeStore.getState();
+        // console.log('---scheme change', result.scheme);
+        var params = util.getParams(result.scheme.split('?')[1]);
+        if (/nzaom:\/\/workbench/.test(result.scheme)) {
+            this._handlePress('Workspace');
+        };
+        if (/nzaom:\/\/order/.test(result.scheme)) {
+            this._handlePress('Order');
+        };
+        if (/nzaom:\/\/message/.test(result.scheme)) {
+            this._handlePress('Inbox');
+        };
+        if (/nzaom:\/\/setting/.test(result.scheme)) {
+            this._handlePress('Person');
+        };
+        if (/nzaom:\/\/order_detail/.test(result.scheme)) {
+            Actions.orderDetail({
+                data: params.orderId
+            });
+        };
+        if (/nzaom:\/\/task_detail/.test(result.scheme)) {
+            Actions.taskDetail({
+                data: params.taskId
+            });
+        };
+    },
+    factoryLinkingScheme: function(scheme){
+        schemeAction.change({
+            "scheme": scheme
+        });
+    },
+    _handleOpenURL: function(event){
+        this.factoryLinkingScheme(event.url);
     },
     factoryNotify: function(response){//处理个推透传消息
         var jsonData = null;

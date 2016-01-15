@@ -20,6 +20,7 @@ var commonStyle = require('../../styles/commonStyle');
 var util = require('../../common/util');
 
 var taskListStore = require('../../stores/task/taskListStore');
+var schemeStore = require('../../stores/scheme/schemeStore');
 
 var Home =  React.createClass({
     mixins: [TimerMixin],
@@ -29,10 +30,22 @@ var Home =  React.createClass({
         }
     },
     componentDidMount: function(){
-        this.unlisten = taskListStore.listen(this.onChange)
+        this.unlisten = taskListStore.listen(this.onChange);
+        this.unlistenScheme = schemeStore.listen(this.onSchemeChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenScheme();
+    },
+    onSchemeChange: function(){
+        var result = schemeStore.getState();
+        var params = util.getParams(result.scheme.split('?')[1]);
+        if (/nzaom:\/\/workbench/.test(result.scheme)) {
+            console.log('-----params.status', params.status);
+            this.setState({
+                tabIndex: parseInt(params.status)
+            })
+        };
     },
     handleUpdate: function(result){
         if (result.status != 200 && !!result.message) {
@@ -122,6 +135,7 @@ var Home =  React.createClass({
                 {this.renderNavigationBar()}
                 <View style={styles.main}>
                     <HomeSegmentControl
+                    selectedIndex={this.state.tabIndex}
                     onSegmentChange={this.onSegmentChange} />
                     {this.renderTabContent()}
                 </View>

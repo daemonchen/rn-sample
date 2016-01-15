@@ -22,12 +22,29 @@ var RightAddButton = require('../../common/rightAddButton');
 var util = require('../../common/util');
 var appConstants = require('../../constants/appConstants');
 
+var schemeStore = require('../../stores/scheme/schemeStore');
+
 
 var order =  React.createClass({
     getInitialState: function(){
         return {
             tabIndex: 0
         }
+    },
+    componentDidMount: function(){
+        this.unlistenScheme = schemeStore.listen(this.onSchemeChange);
+    },
+    componentWillUnmount: function() {
+        this.unlistenScheme();
+    },
+    onSchemeChange: function(){
+        var result = schemeStore.getState();
+        var params = util.getParams(result.scheme.split('?')[1]);
+        if (/nzaom:\/\/order/.test(result.scheme)) {
+            this.setState({
+                tabIndex: parseInt(params.status)
+            })
+        };
     },
     doPushOrderSetting: function(){
         Actions.orderSettings({
@@ -110,6 +127,7 @@ var order =  React.createClass({
                 {this.renderNavigationBar()}
                 <View style={styles.main}>
                     <OrderSegmentControl
+                    selectedIndex={this.state.tabIndex}
                     onSegmentChange={this.onSegmentChange} />
                     {this.renderTabContent()}
                 </View>

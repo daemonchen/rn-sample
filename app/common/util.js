@@ -12,6 +12,15 @@ var GeTuiManager = NativeModules.GeTuiManager;
 var QiniuManager = NativeModules.QiniuManager;
 
 module.exports = {
+    getParams: function(url){
+        var result = {};
+        var ret = url.split('&');
+        for (var i = 0; i < ret.length; i++) {
+            var s = ret[i].split('=');
+            result[s[0]] = s[1];
+        };
+        return result;
+    },
     getClientId: function(callback){
         return GeTuiManager.getClientId(function(id){
             !!id && callback(id);

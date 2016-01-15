@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 
 #import "RCTRootView.h"
+#import "RCTLinkingManager.h"
 #import "RCTPushNotificationManager.h"
 #import "GeTuiManager.h"
 
@@ -190,6 +191,13 @@
    *返回值：BOOL，YES表示该命令已经提交，NO表示该命令未提交成功。注：该结果不代表服务器收到该条命令
    **/
   [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:aMsgId];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  return [RCTLinkingManager application:application openURL:url
+                      sourceApplication:sourceApplication annotation:annotation];
 }
 
 @end

@@ -11,8 +11,13 @@ var {
 var HomeSegmentControl =  React.createClass({
     getInitialState: function(){
         return {
-            selectedIndex: 0
+            selectedIndex: this.props.selectedIndex || 0
         }
+    },
+    componentWillReceiveProps: function(nextProps){
+        this.setState({
+            selectedIndex: nextProps.selectedIndex
+        });
     },
     render:function(){
         return (
