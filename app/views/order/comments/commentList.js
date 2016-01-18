@@ -188,6 +188,15 @@ module.exports = React.createClass({
         }
         return this.renderListView();
     },
+    renderEmptyRow: function(){
+        return (
+            <View style={commonStyle.emptyView}>
+                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        暂无评论
+                </Text>
+            </View>
+        )
+    },
     renderListView: function(){
         return (
             <View style={styles.main}>
@@ -202,7 +211,8 @@ module.exports = React.createClass({
                     onRefresh = {this.onRefresh}
                     onInfinite = {this.onInfinite}
                     loadedAllData={this.loadedAllData}
-                    contentContainerStyle={{paddingBottom: 40}} >
+                    contentContainerStyle={{paddingBottom: 40}}
+                    renderEmptyRow={this.renderEmptyRow}>
                 </RefreshInfiniteListView>
             </View>
             )

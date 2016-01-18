@@ -1,2 +1,2 @@
 rm -rf $TMPDIR/react-*
-react-native bundle --dev false --minify --platform ios --entry-file /Users/chenguangyuan/Documents/nzaom/nzaom-ios-platform/index.ios.js --bundle-output /Users/chenguangyuan/Documents/nzaom/nzaom-ios-platform/ios/main.jsbundle
+react-native bundle --dev false --minify --platform ios --entry-file $HOME/Documents/nzaom/nzaom-ios-platform/index.ios.js --bundle-output $HOME/Documents/nzaom/nzaom-ios-platform/ios/main.jsbundle
