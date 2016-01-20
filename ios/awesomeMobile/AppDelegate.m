@@ -137,7 +137,7 @@
   
   [GeTuiSdk registerDeviceToken:myToken];
   
-  [RCTPushNotificationManager application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+  [RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 /** 远程通知注册失败委托 */
@@ -153,7 +153,7 @@
 // Required for the notification event.
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
-  [RCTPushNotificationManager application:application didReceiveRemoteNotification:notification];
+  [RCTPushNotificationManager didReceiveRemoteNotification:notification];
 }
 
 /** SDK启动成功返回cid */

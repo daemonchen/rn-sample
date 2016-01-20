@@ -21,6 +21,7 @@ var styles = require('../styles/order/orderDetail');
 var util = require('../common/util');
 
 var BlueBackButton = require('../common/blueBackButton');
+var Lightbox = require('react-native-lightbox');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],

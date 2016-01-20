@@ -25,6 +25,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D1131B661C4F4F1E00F22833 /* libRNPhonePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1131B651C4F4F0400F22833 /* libRNPhonePicker.a */; };
 		D1877E901C43D99B00C9358D /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1877E8D1C43D99200C9358D /* libRCTCircleProgress.a */; };
+		D1C84B961C4F8D020050EFEE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1C84B951C4F8CF50050EFEE /* libRCTPushNotification.a */; };
 		D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D22832EA1C0F3A3B00027EA3 /* libRCTCameraRoll.a */; };
 		D22832FF1C0FCAFA00027EA3 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */; };
 		D25AF01C1BF9AE8100009F01 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */; };
@@ -41,7 +42,6 @@
 		D2BF47301C214943002C7185 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF472F1C214943002C7185 /* AVFoundation.framework */; };
 		D2BF47321C21494E002C7185 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47311C21494E002C7185 /* CoreLocation.framework */; };
 		D2BF47341C21495A002C7185 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47331C21495A002C7185 /* CoreBluetooth.framework */; };
-		D2BF47F51C215158002C7185 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47F41C215134002C7185 /* libRCTPushNotification.a */; };
 		D2BF48341C219DFE002C7185 /* GeTuiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF48331C219DFE002C7185 /* GeTuiManager.m */; };
 		D2D974CA1C2D28EB00A22F98 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D974C91C2D28DC00A22F98 /* libRNBlur.a */; };
 		D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */; };
@@ -205,6 +205,13 @@
 			remoteGlobalIDString = F8BD55C51B6A6B6200E49ED0;
 			remoteInfo = RCTCircleProgressTests;
 		};
+		D1C84B941C4F8CF50050EFEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1C84B901C4F8CF50050EFEE /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
 		D22832E91C0F3A3B00027EA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */;
@@ -225,13 +232,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
-		};
-		D2BF47F31C215134002C7185 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RCTPushNotification;
 		};
 		D2D974C81C2D28DC00A22F98 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -279,6 +279,7 @@
 		A41307C31BEB4DB3B993E0F8 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		D1131B601C4F4F0300F22833 /* RNPhonePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNPhonePicker.xcodeproj; path = "../../../github/react-native-phone-picker/RNPhonePicker.xcodeproj"; sourceTree = "<group>"; };
 		D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
+		D1C84B901C4F8CF50050EFEE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		D22832FD1C0FCAFA00027EA3 /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImagePickerManager.h; sourceTree = "<group>"; };
 		D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerManager.m; sourceTree = "<group>"; };
@@ -301,7 +302,6 @@
 		D2BF472F1C214943002C7185 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D2BF47311C21494E002C7185 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D2BF47331C21495A002C7185 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		D2BF48331C219DFE002C7185 /* GeTuiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeTuiManager.m; sourceTree = "<group>"; };
 		D2BF48351C219E1C002C7185 /* GeTuiManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeTuiManager.h; sourceTree = "<group>"; };
 		D2D974C41C2D28DC00A22F98 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
@@ -441,6 +441,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1C84B961C4F8D020050EFEE /* libRCTPushNotification.a in Frameworks */,
 				D1131B661C4F4F1E00F22833 /* libRNPhonePicker.a in Frameworks */,
 				D1877E901C43D99B00C9358D /* libRCTCircleProgress.a in Frameworks */,
 				D2A95C621C3E661D0065EDE0 /* libReact-Native-Webview-Bridge.a in Frameworks */,
@@ -448,7 +449,6 @@
 				D2D974CA1C2D28EB00A22F98 /* libRNBlur.a in Frameworks */,
 				D2F074121C23057D00A3BABE /* libresolv.9.tbd in Frameworks */,
 				D2F074101C23057000A3BABE /* libresolv.tbd in Frameworks */,
-				D2BF47F51C215158002C7185 /* libRCTPushNotification.a in Frameworks */,
 				D2BF47341C21495A002C7185 /* CoreBluetooth.framework in Frameworks */,
 				D2BF47321C21494E002C7185 /* CoreLocation.framework in Frameworks */,
 				D2BF47301C214943002C7185 /* AVFoundation.framework in Frameworks */,
@@ -583,6 +583,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D1C84B901C4F8CF50050EFEE /* RCTPushNotification.xcodeproj */,
 				D1131B601C4F4F0300F22833 /* RNPhonePicker.xcodeproj */,
 				D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */,
 				D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */,
@@ -591,7 +592,6 @@
 				D2F073551C23049F00A3BABE /* QiniuSDK */,
 				D2F072C61C22FE3C00A3BABE /* Qiniu */,
 				D2BF48321C219DBD002C7185 /* GeTui */,
-				D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */,
 				D2BF47201C21476C002C7185 /* GtSdkLib */,
 				D2BF469B1C1FFD00002C7185 /* RCTOrientation */,
 				D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */,
@@ -650,6 +650,14 @@
 			children = (
 				D1877E8D1C43D99200C9358D /* libRCTCircleProgress.a */,
 				D1877E8F1C43D99200C9358D /* RCTCircleProgressTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D1C84B911C4F8CF50050EFEE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1C84B951C4F8CF50050EFEE /* libRCTPushNotification.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -724,14 +732,6 @@
 				D2BF47251C214901002C7185 /* libz.tbd */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D2BF47F01C215134002C7185 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D2BF47F41C215134002C7185 /* libRCTPushNotification.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		D2BF48321C219DBD002C7185 /* GeTui */ = {
@@ -1113,8 +1113,8 @@
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
 				},
 				{
-					ProductGroup = D2BF47F01C215134002C7185 /* Products */;
-					ProjectRef = D2BF47EF1C215134002C7185 /* RCTPushNotification.xcodeproj */;
+					ProductGroup = D1C84B911C4F8CF50050EFEE /* Products */;
+					ProjectRef = D1C84B901C4F8CF50050EFEE /* RCTPushNotification.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1261,6 +1261,13 @@
 			remoteRef = D1877E8E1C43D99200C9358D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D1C84B951C4F8CF50050EFEE /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = D1C84B941C4F8CF50050EFEE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D22832EA1C0F3A3B00027EA3 /* libRCTCameraRoll.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1280,13 +1287,6 @@
 			fileType = archive.ar;
 			path = libRNVectorIcons.a;
 			remoteRef = D2BF46F91C2134CE002C7185 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2BF47F41C215134002C7185 /* libRCTPushNotification.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTPushNotification.a;
-			remoteRef = D2BF47F31C215134002C7185 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D2D974C91C2D28DC00A22F98 /* libRNBlur.a */ = {
