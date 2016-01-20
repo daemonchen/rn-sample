@@ -18,6 +18,7 @@
     "react-native-navbar": "^1.1.1",
     "react-native-orientation": "^1.9.0",
     "react-native-phone-picker": "0.0.3",
+    "react-native-popover": "^0.2.0",
     "react-native-radio-button-classic": "0.0.5",
     "react-native-refresh-infinite-listview": "^1.0.2",
     "react-native-router-flux": "^2.0.4",

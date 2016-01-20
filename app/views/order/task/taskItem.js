@@ -95,6 +95,9 @@ module.exports = React.createClass({
         }
     },
     onPressRow: function(){
+        if (this.state.target == 1) {
+            this.onPressCircle();
+        };
         if (this.state.target == 3) {
             !!this.props.onPressRow && this.props.onPressRow(this.props.rowData, this.props.sectionID);
         };
@@ -161,14 +164,6 @@ module.exports = React.createClass({
         }
     },
     renderCheckIcon: function(){
-        if (this.state.target == 2) {//察看前置任务
-            var circleImage = (this.state.done == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
-            return(
-                <View style={styles.checkIconWrapper}>
-                    <Image source={circleImage} style={styles.checkIcon}/>
-                </View>
-                );
-        };
         if (this.state.target == 1) {//新建修改任务时候设置任务依赖
             var circleImage = (this.state.isCheck == 1) ? require('../../../images/task/Check_box_selected.png') : require('../../../images/task/Check_box.png');
             return(
@@ -179,6 +174,14 @@ module.exports = React.createClass({
             </TouchableWithoutFeedback>
             )
         }
+        if (this.state.target == 2) {//察看前置任务
+            var circleImage = (this.state.done == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
+            return(
+                <View style={styles.checkIconWrapper}>
+                    <Image source={circleImage} style={styles.checkIcon}/>
+                </View>
+                );
+        };
         if (this.state.target == 3) {//查看任务列表
             var circleImage = (this.state.done == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
             return(

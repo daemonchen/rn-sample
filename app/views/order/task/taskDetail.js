@@ -83,6 +83,7 @@ module.exports = React.createClass({
             return;
         }
         this.ownerData = result.data;
+        this._goContactDetail();
     },
     onEmployeeChange: function(){
         var result = employeeStore.getState();
@@ -141,10 +142,10 @@ module.exports = React.createClass({
             this.setState({
                 taskData: this.transformatData(result.data)
             });
-            if (this._timeout) {
-                this.clearTimeout(this._timeout);
-            };
-            this._timeout = this.setTimeout(this.fetchOwnerData, 550);
+            // if (this._timeout) {
+            //     this.clearTimeout(this._timeout);
+            // };
+            // this._timeout = this.setTimeout(this.fetchOwnerData, 550);
         };
         if (result.type == 'update') {
             if (this._timeout) {
@@ -368,7 +369,7 @@ module.exports = React.createClass({
         return(
             <TouchableHighlight
             underlayColor='#eee'
-            onPress={this._goContactDetail} >
+            onPress={this.fetchOwnerData} >
                 <View
                 style={commonStyle.settingItemWrapper}>
                     <View
