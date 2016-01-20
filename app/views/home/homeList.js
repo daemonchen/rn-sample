@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react-native')
-var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 var {
@@ -125,7 +124,8 @@ module.exports = React.createClass({
             dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
             loaded     : true,
             list: rawData || [],
-            total: response.total
+            total: response.total,
+            isRefreshing: false
         });
     },
     getSectionData: function(dataBlob, sectionID){
@@ -184,7 +184,7 @@ module.exports = React.createClass({
             return;
         }
         this.transfromDataBlob(result);
-        this.setState({isRefreshing: false});
+        // this.setState({isRefreshing: false});
         // !isLoadmore && this.list.hideHeader();
         // !!isLoadmore && this.list.hideFooter();
     },
@@ -291,8 +291,7 @@ module.exports = React.createClass({
                             tintColor="#727272"
                             title="Loading..."
                             colors={['#727272', '#727272', '#727272']}
-                            progressBackgroundColor="#727272"
-                          />
+                            progressBackgroundColor="#727272" />
                         }
                 >
             </ListView>
