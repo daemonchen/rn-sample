@@ -86,16 +86,20 @@ module.exports = React.createClass({
             Actions.pop();
         }
     },
-    goSetting: function(phone){
+    goSetting: function(person){
         var options = {
             title: '新建客户',
             target: 1
         };
+        var phone = person.phone;
+        var fullName = person.fullName;
+
         if (!!phone) {
             options = Object.assign(options, {
                 data: {
                     id: 0,
-                    mobiles: [phone]
+                    mobiles: [phone],
+                    userName: fullName
                 }
             });
         };
@@ -103,9 +107,9 @@ module.exports = React.createClass({
     },
     openAddress: function(){
         var self = this;
-        PhonePicker.select(function(phone) {
-            if (phone) {
-                self.goSetting(phone);
+        PhonePicker.select(function(person) {
+            if (person) {
+                self.goSetting(person);
             }
         })
     },
@@ -129,7 +133,7 @@ module.exports = React.createClass({
               self.onSelectActionSheet(buttonIndex);
             });
     },
-    actionList: ['手机通讯录邀请','手机号码邀请','取消'],
+    actionList: ['从手机通讯录添加客户','新建客户','取消'],
     renderNavigationBar: function(){
         return(
             <NavigationBar

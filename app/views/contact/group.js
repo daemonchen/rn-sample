@@ -31,9 +31,9 @@ module.exports = React.createClass({
         });
     },
     openAddress: function(){
-        PhonePicker.select(function(phone) {
-            if (phone) {
-                phone = phone.replace(/[^\d]/g, '');
+        PhonePicker.select(function(person) {
+            if (person) {
+                var phone = person.phone.replace(/[^\d]/g, '');
                 if (/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
                     console.log(phone);
                 }

@@ -113,8 +113,8 @@ module.exports = React.createClass({
             Actions.pop();
         }
     },
-    doInviteEmployee: function(phone){
-        phone = phone.replace(/[^\d]/g, '');
+    doInviteEmployee: function(person){
+        var phone = person.phone.replace(/[^\d]/g, '');
         // if (/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
         // }else{
         //     util.alert('手机号码格式错误');
@@ -125,9 +125,9 @@ module.exports = React.createClass({
     },
     openAddress: function(){
         var self = this;
-        PhonePicker.select(function(phone) {
-            if (phone) {
-                self.doInviteEmployee(phone);
+        PhonePicker.select(function(person) {
+            if (person) {
+                self.doInviteEmployee(person);
             }
         })
     },
