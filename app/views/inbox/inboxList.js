@@ -1,6 +1,5 @@
 'use strict';
 var React = require('react-native')
-var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var TimerMixin = require('react-timer-mixin');
 import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
@@ -9,6 +8,7 @@ var {
     TextInput,
     View,
     ListView,
+    RefreshControl,
     Image,
     TouchableOpacity,
     ActivityIndicatorIOS,
@@ -101,10 +101,9 @@ module.exports = React.createClass({
             dataSource : this.state.dataSource.cloneWithRows(result.data || []),
             list: result.data || [],
             loaded     : true,
-            total: result.total
+            total: result.total,
+            isRefreshing: false
         });
-        this.list.hideHeader();
-        this.list.hideFooter();
     },
     handleDelete: function(result){
         if (this._timeout) {
@@ -135,7 +134,8 @@ module.exports = React.createClass({
     },
     onRefresh: function() {
         this.setState({
-            pageNum: 1
+            pageNum: 1,
+            isRefreshing: true
         });
        inboxAction.getList({
             pageNum: this.state.pageNum,
@@ -143,6 +143,9 @@ module.exports = React.createClass({
         });
     },
     onInfinite: function() {
+        if (!this.loadedAllData()) {
+            return;
+        };
         this.setState({
             pageNum: this.state.pageNum + 1
         });
@@ -222,20 +225,34 @@ module.exports = React.createClass({
         )
     },
     renderListView: function(){
+        if (!this.state.dataSource || this.state.dataSource.length == 0) {
+            return this.renderEmptyRow();
+        };
+                // onRefresh = {this.onRefresh}
+                // onInfinite = {this.onInfinite}
+                // loadedAllData={this.loadedAllData}
         return (
-            <RefreshInfiniteListView
+            <ListView
                 ref = {(list) => {this.list= list}}
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
                 scrollEventThrottle={10}
                 style={commonStyle.container}
-                onRefresh = {this.onRefresh}
-                onInfinite = {this.onInfinite}
-                loadedAllData={this.loadedAllData}
-                scrollEnabled={this.state.scrollEnabled}
                 contentContainerStyle={{paddingBottom: 40}}
-                renderEmptyRow={this.renderEmptyRow}>
-            </RefreshInfiniteListView>
+                onEndReached={this.onInfinite}
+                onEndReachedThreshold={40}
+                scrollEnabled={this.state.scrollEnabled}
+                refreshControl={
+                          <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this.onRefresh}
+                            tintColor="#727272"
+                            title="Loading..."
+                            colors={['#727272', '#727272', '#727272']}
+                            progressBackgroundColor="#727272" />
+                        }
+                >
+            </ListView>
             )
     },
     renderLoadingView: function(){

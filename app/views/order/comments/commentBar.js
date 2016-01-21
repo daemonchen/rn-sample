@@ -2,7 +2,6 @@
 var React = require('react-native')
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
-var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var {
     Text,
     TextInput,

@@ -1,12 +1,12 @@
 'use strict';
 var React = require('react-native')
-var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     View,
     Image,
     ListView,
+    RefreshControl,
     TouchableOpacity,
     ActivityIndicatorIOS,
     StyleSheet
@@ -27,7 +27,7 @@ module.exports = React.createClass({
         var ds = new ListView.DataSource({
             getSectionData: this.getSectionData,
             getRowData: this.getRowData,
-            rowHasChanged: (r1, r2) => r1 !== r2,
+            rowHasChanged: (r1, r2) => true,
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2}) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
         return {
@@ -64,11 +64,14 @@ module.exports = React.createClass({
                 dataBlob[i + ':' + sub.dynamic.id] = sub;
             };
         };
+        // console.log('---sectionIDs', sectionIDs);
+        // console.log('---rowIDs', rowIDs);
         this.setState({
             dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
             loaded     : true,
             list: rawData || [],
-            total: response.total
+            total: response.total,
+            isRefreshing: false
         });
     },
     getSectionData: function(dataBlob, sectionID){
@@ -98,6 +101,7 @@ module.exports = React.createClass({
             )
     },
     handleGet: function(result, isLoadmore){
+        // console.log('-------result', result.status, result.message);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -106,8 +110,6 @@ module.exports = React.createClass({
             return;
         }
         this.transfromDataBlob(result);
-        !isLoadmore && this.list.hideHeader();
-        !!isLoadmore && this.list.hideFooter();
     },
     onChange: function() {
         var result = newsListStore.getState();
@@ -124,7 +126,8 @@ module.exports = React.createClass({
     },
     onRefresh: function() {
         this.setState({
-            pageNum: 1
+            pageNum: 1,
+            isRefreshing: true
         });
         newsListAction.getList({
             hostType: this.state.hostType,
@@ -134,6 +137,9 @@ module.exports = React.createClass({
         });
     },
     onInfinite: function() {
+        if (!this.loadedAllData()) {
+            return;
+        };
         this.setState({
             pageNum: this.state.pageNum + 1
         });
@@ -153,20 +159,45 @@ module.exports = React.createClass({
         }
         return this.renderListView();
     },
-    renderListView: function(){
+    renderEmptyRow: function(){
         return (
-            <RefreshInfiniteListView
+            <View style={commonStyle.emptyView}>
+                <Image source={require('../../../images/empty/no_message_gray.png')} />
+                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        您还没有动态
+                </Text>
+            </View>
+        )
+    },
+    renderListView: function(){
+        if (!this.state.dataSource || this.state.dataSource.length == 0) {
+            return this.renderEmptyRow();
+        };
+                // onRefresh = {this.onRefresh}
+                // onInfinite = {this.onInfinite}
+                // loadedAllData={this.loadedAllData}
+        // console.log('---this.state.dataSource', this.state.dataSource);
+        return (
+            <ListView
                 ref = {(list) => {this.list= list}}
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
                 renderSectionHeader={this.renderSectionHeader}
                 scrollEventThrottle={10}
                 contentContainerStyle={{paddingBottom: 40}}
-                onRefresh = {this.onRefresh}
-                onInfinite = {this.onInfinite}
-                loadedAllData={this.loadedAllData}
+                onEndReached={this.onInfinite}
+                onEndReachedThreshold={40}
+                refreshControl={
+                          <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this.onRefresh}
+                            tintColor="#727272"
+                            title="Loading..."
+                            colors={['#727272', '#727272', '#727272']}
+                            progressBackgroundColor="#727272" />
+                        }
                 >
-            </RefreshInfiniteListView>
+            </ListView>
             )
     },
     renderLoadingView: function(){

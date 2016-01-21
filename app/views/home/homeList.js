@@ -284,6 +284,7 @@ module.exports = React.createClass({
                 contentContainerStyle={{paddingBottom: 40}}
                 onEndReached={this.onInfinite}
                 onEndReachedThreshold={40}
+                scrollEnabled={this.state.scrollEnabled}
                 refreshControl={
                           <RefreshControl
                             refreshing={this.state.isRefreshing}

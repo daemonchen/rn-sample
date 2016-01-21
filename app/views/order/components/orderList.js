@@ -1,7 +1,6 @@
 'use strict';
 var React = require('react-native')
 var TimerMixin = require('react-timer-mixin');
-var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var {
     Text,
     View,
@@ -210,6 +209,7 @@ var orderList = React.createClass({
                 contentContainerStyle={{paddingBottom: 40}}
                 onEndReached={this.onInfinite}
                 onEndReachedThreshold={40}
+                scrollEnabled={this.state.scrollEnabled}
                 refreshControl={
                           <RefreshControl
                             refreshing={this.state.isRefreshing}
