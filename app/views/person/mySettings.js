@@ -100,7 +100,7 @@ module.exports = React.createClass({
                             style={commonStyle.settingIcon}
                             source={require('../../images/person/score.png')}/>
                             <Text
-                            style={commonStyle.settingTitle}>
+                            style={commonStyle.settingDetail}>
                                 给我评分
                             </Text>
                         </View>
@@ -115,7 +115,7 @@ module.exports = React.createClass({
                             style={commonStyle.settingIcon}
                             source={require('../../images/person/logo_gray.png')}/>
                             <Text
-                            style={commonStyle.settingTitle}>
+                            style={commonStyle.settingDetail}>
                                 关于我们
                             </Text>
                         </View>
@@ -130,7 +130,7 @@ module.exports = React.createClass({
                             style={commonStyle.settingIcon}
                             source={require('../../images/person/clear.png')}/>
                             <Text
-                            style={commonStyle.settingTitle}>
+                            style={commonStyle.settingDetail}>
                                 清除缓存
                             </Text>
                         </View>
@@ -145,7 +145,7 @@ module.exports = React.createClass({
                             style={commonStyle.settingIcon}
                             source={require('../../images/person/encryption.png')}/>
                             <Text
-                            style={commonStyle.settingTitle}>
+                            style={commonStyle.settingDetail}>
                                 修改密码
                             </Text>
                         </View>

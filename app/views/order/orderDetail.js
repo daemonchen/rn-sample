@@ -22,12 +22,8 @@ var appConstants = require('../../constants/appConstants');
 var TaskList = require('./task/taskList');
 var NewsList = require('./news/newsList');
 var MemberList = require('./member/memberList')
-var ContactDetail = require('../contact/contactDetail');
-var TaskSettings = require('./task/taskSettings');
-var AttachList = require('./attach/attachList');
-var AttachDetail = require('./attach/attachDetail');
+var OrderSummary = require('./detail/orderSummary');
 var OrderDetailSegmentControl = require('./components/orderDetailSegmentControl');
-var OrderSettings = require('./orderSettings');
 
 var WhiteBackButton = require('../../common/whiteBackButton');
 var RightWhiteAddButton = require('../../common/rightWhiteAddButton');
@@ -226,8 +222,11 @@ module.exports = React.createClass({
                 )
             case 1:
                 return(
-                    <NewsList
-                    data={this.state.orderData} />
+                    <OrderSummary
+                    onPressRow={this.onPressAttachRow}
+                    onEmptyButtonPress={this.onAttachEmptyButtonPress}
+                    data={this.state.orderData}
+                    hostType={1} />
                 )
             case 2:
                 return(
@@ -237,11 +236,8 @@ module.exports = React.createClass({
                 )
             case 3:
                 return(
-                    <AttachList
-                    onPressRow={this.onPressAttachRow}
-                    onEmptyButtonPress={this.onAttachEmptyButtonPress}
-                    data={this.state.orderData}
-                    hostType={1} />
+                    <NewsList
+                    data={this.state.orderData} />
                 )
             default:
                 return(

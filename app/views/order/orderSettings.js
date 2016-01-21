@@ -284,7 +284,7 @@ module.exports = React.createClass({
                                 创建者
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                             {this.state.creatorName}
                             </Text>
                         </View>
@@ -300,7 +300,7 @@ module.exports = React.createClass({
                                 保存为模版
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
@@ -314,11 +314,8 @@ module.exports = React.createClass({
                         <View
                         style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
                             <Text
-                            style={[commonStyle.settingTitle, commonStyle.red]}>
+                            style={[commonStyle.settingDetail, commonStyle.red, {textAlign: 'center'}]}>
                                 删除
-                            </Text>
-                            <Text
-                            style={commonStyle.settingDetail}>
                             </Text>
                         </View>
                     </TouchableHighlight>
@@ -381,7 +378,7 @@ module.exports = React.createClass({
                                 截止日期
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                                 {this.state.endTimeFormat}
                             </Text>
                             <Image
@@ -400,7 +397,7 @@ module.exports = React.createClass({
                                 客户
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                                 {this.state.customerName}
                             </Text>
                             <Image
@@ -419,7 +416,7 @@ module.exports = React.createClass({
                                 业务员
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                                 {this.state.salesManName}
                             </Text>
                             <Image
@@ -438,7 +435,7 @@ module.exports = React.createClass({
                                 添加附件
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                                 {this.state.accessoryNum}
                             </Text>
                             <Image

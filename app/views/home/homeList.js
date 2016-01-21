@@ -289,10 +289,10 @@ module.exports = React.createClass({
                           <RefreshControl
                             refreshing={this.state.isRefreshing}
                             onRefresh={this.onRefresh}
-                            tintColor="#727272"
-                            title="Loading..."
-                            colors={['#727272', '#727272', '#727272']}
-                            progressBackgroundColor="#727272" />
+                            tintColor="#969696"
+                            title=""
+                            colors={['#969696', '#969696', '#969696']}
+                            progressBackgroundColor="#969696" />
                         }
                 >
             </ListView>

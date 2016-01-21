@@ -316,7 +316,7 @@ module.exports = React.createClass({
                             前置任务
                         </Text>
                         <Text
-                        style={commonStyle.settingDetail}>
+                        style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                             {this.state.taskData.lastIdList.length}
                         </Text>
                         <Image
@@ -344,7 +344,7 @@ module.exports = React.createClass({
                         完成日期
                     </Text>
                     <Text
-                    style={commonStyle.settingDetail}>
+                    style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                         {overTimeFormat}
                     </Text>
                 </View>
@@ -405,7 +405,7 @@ module.exports = React.createClass({
                             负责人
                         </Text>
                         <Text
-                        style={commonStyle.settingDetail}>
+                        style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                             {this.state.taskData.userName}
                         </Text>
                         <Image
@@ -448,7 +448,7 @@ module.exports = React.createClass({
                                     任务描述
                                 </Text>
                                 <Text
-                                style={commonStyle.settingDetail}
+                                style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}
                                 numberOfLines={1}>
                                 {this.state.taskData.description}
                                 </Text>
@@ -470,7 +470,7 @@ module.exports = React.createClass({
                                 截止日期
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                                 {this.state.taskData.endTimeFormat}
                             </Text>
                             <Image
@@ -492,7 +492,7 @@ module.exports = React.createClass({
                                     附件
                                 </Text>
                                 <Text
-                                style={commonStyle.settingDetail}>
+                                style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                                 {this.state.taskData.accessoryNum}
                                 </Text>
                                 <Image
@@ -512,7 +512,7 @@ module.exports = React.createClass({
                                     所属订单
                                 </Text>
                                 <Text
-                                style={commonStyle.settingDetail}
+                                style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}
                                 numberOfLines={1}>
                                 {this.state.taskData.orderTitle}
                                 </Text>

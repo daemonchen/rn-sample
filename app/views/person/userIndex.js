@@ -186,7 +186,7 @@ module.exports = React.createClass({
                             style={commonStyle.settingIcon}
                             source={require('../../images/person/account_settings.png')}/>
                             <Text
-                            style={commonStyle.settingTitle}>
+                            style={commonStyle.settingDetail}>
                                 我的账号
                             </Text>
                         </View>
@@ -201,7 +201,7 @@ module.exports = React.createClass({
                             style={commonStyle.settingIcon}
                             source={require('../../images/person/template.png')}/>
                             <Text
-                            style={commonStyle.settingTitle}>
+                            style={commonStyle.settingDetail}>
                                 我的模版
                             </Text>
                         </View>
@@ -216,7 +216,7 @@ module.exports = React.createClass({
                             style={commonStyle.settingIcon}
                             source={require('../../images/person/setting_fill.png')}/>
                             <Text
-                            style={commonStyle.settingTitle}>
+                            style={commonStyle.settingDetail}>
                                 设置
                             </Text>
                         </View>
@@ -231,7 +231,7 @@ module.exports = React.createClass({
                             style={commonStyle.settingIcon}
                             source={require('../../images/person/feedback.png')}/>
                             <Text
-                            style={commonStyle.settingTitle}>
+                            style={commonStyle.settingDetail}>
                                 意见反馈
                             </Text>
                         </View>

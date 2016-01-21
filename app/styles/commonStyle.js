@@ -131,41 +131,42 @@ module.exports = React.StyleSheet.create({
     },
     settingItemWrapper:{
         width: width,
-        height: 60,
+        // height: 60,
         alignItems: 'center'
     },
     settingItem: {
         width: width - 32,
         flexDirection: 'row',
-        // alignItems: 'center',
-        // paddingVertical: 16,
-        height: 60
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 16
+        // height: 60
     },
     settingIcon: {
         width: 24,
         height: 24,
-        marginTop: 18,
         marginRight: 16
     },
     settingTitle: {
         fontSize: 16,
         color: '#212121',
-        height: 59,
-        paddingTop: 20,
+        // height: 59,
+        // paddingTop: 20,
         width: 96,
     },
     settingDetail: {
         fontSize: 16,
         flex: 1,
-        flexDirection: 'row',
-        height: 59,
-        paddingTop: 20,
+        flexDirection: 'row'
+        // height: 59,
+        // paddingTop: 20,
+    },
+    settingDetailTextRight: {
         textAlign: 'right'
     },
     settingArrow: {
         width: 24,
-        height: 24,
-        marginTop: 18
+        height: 24
     },
     activityIndicator: {
         alignItems: 'center',
