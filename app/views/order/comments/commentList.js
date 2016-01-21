@@ -1,11 +1,11 @@
 'use strict';
 var React = require('react-native')
 var TimerMixin = require('react-timer-mixin');
-var RefreshInfiniteListView = require('react-native-refresh-infinite-listview');
 var {
     Text,
     View,
     ListView,
+    RefreshControl,
     Image,
     TouchableOpacity,
     ActivityIndicatorIOS,
@@ -76,8 +76,6 @@ module.exports = React.createClass({
             loaded     : true,
             total: result.total
         });
-        this.list.hideHeader();
-        this.list.hideFooter();
     },
     handleUpdate: function(result){
         return;
@@ -198,22 +196,25 @@ module.exports = React.createClass({
         )
     },
     renderListView: function(){
+        if (!this.state.dataSource || this.state.dataSource.length == 0) {
+            return this.renderEmptyRow();
+        };
+                    // onRefresh = {this.onRefresh}
+                    // onInfinite = {this.onInfinite}
+                    // loadedAllData={this.loadedAllData}
         return (
             <View style={styles.main}>
                 <Text style={styles.commentTitle}>
                     评论({this.state.list.length})
                 </Text>
-                <RefreshInfiniteListView
+                <ListView
                     ref = {(list) => {this.list= list}}
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow}
                     scrollEventThrottle={10}
-                    onRefresh = {this.onRefresh}
-                    onInfinite = {this.onInfinite}
-                    loadedAllData={this.loadedAllData}
                     contentContainerStyle={{paddingBottom: 40}}
-                    renderEmptyRow={this.renderEmptyRow}>
-                </RefreshInfiniteListView>
+                >
+                </ListView>
             </View>
             )
     },
