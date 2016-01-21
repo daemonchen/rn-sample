@@ -179,6 +179,32 @@ module.exports = React.createClass({
             data: data
         });
     },
+    _setEndTime: function(){
+        Actions.calendar({
+            target: 1,
+            onCalendarPressDone: this.onCalendarPressDone
+        });
+    },
+    onCalendarPressDone: function(date){
+        // this.state.taskData.endTime =  moment(date).valueOf();
+        // this.setState({
+        //     taskData: this.transformatData(this.state.taskData)
+        // });
+        taskAction.update({
+            id: this.state.taskData.id || 0,
+            ownerId: this.state.taskData.ownerId || 0,
+            description: this.state.taskData.description || '',
+            jobName: this.state.taskData.jobName || '',
+            endTime: moment(date).valueOf(),
+            lastIds: this.state.taskData.lastIds || [],
+            accessoryIds: this.state.taskData.accessoryIds || [],
+            accessoryNum: this.state.taskData.accessoryNum || ''
+        });
+        // this.setState({
+        //     endTime: moment(date).valueOf(),
+        //     endTimeFormat: moment(date).format('YYYY年MM月DD日')
+        // });
+    },
     _goTaskAttachList: function(){
         var data = Object.assign({taskStatus: 2}, this.state.taskData);
         Actions.taskAttach({
@@ -433,8 +459,10 @@ module.exports = React.createClass({
                         </View>
                     </TouchableHighlight>
                     {this.renderContactItem()}
-                    <View
-                    style={commonStyle.settingItemWrapper} >
+                    <TouchableHighlight
+                    style={commonStyle.settingItemWrapper}
+                    underlayColor='#eee'
+                    onPress={this._setEndTime}>
                         <View
                         style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
                             <Text
@@ -445,8 +473,11 @@ module.exports = React.createClass({
                             style={commonStyle.settingDetail}>
                                 {this.state.taskData.endTimeFormat}
                             </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../../images/common/arrow_right.png')} />
                         </View>
-                    </View>
+                    </TouchableHighlight>
                     {this.renderSubTask()}
                     {this.renderOverTime()}
                     {this.renderDependences()}
