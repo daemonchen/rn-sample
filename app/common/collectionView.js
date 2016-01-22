@@ -26,7 +26,7 @@ var CollectionView = React.createClass({
         });
 
         if (group.length > 0) {
-            for (var i = group.length; i <= itemsPerRow; i++) {
+            for (var i = group.length; i < itemsPerRow; i++) {
                 group.push(null);
             };
             itemsGroups.push(group);
@@ -64,7 +64,8 @@ var CollectionView = React.createClass({
           renderRow={this.renderGroup}
           style={this.props.style}
           onEndReached={this.props.onEndReached}
-          scrollEnabled={this.props.scrollEnabled} />);
+          scrollEnabled={this.props.scrollEnabled}
+          pageSize={this.props.pageSize | 1} />);
     },
 });
 

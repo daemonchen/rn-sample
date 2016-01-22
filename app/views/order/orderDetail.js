@@ -156,12 +156,6 @@ module.exports = React.createClass({
             data: rowData.jobDO.id
         });
     },
-    onPressAttachRow: function(rowData,sectionID){
-        Actions.attachDetail({
-            title: '附件详情',
-            data: rowData
-        });
-    },
     showCameraRoll: function(){
         util.showPhotoPicker({
             title: '',
@@ -223,7 +217,6 @@ module.exports = React.createClass({
             case 1:
                 return(
                     <OrderSummary
-                    onPressRow={this.onPressAttachRow}
                     onEmptyButtonPress={this.onAttachEmptyButtonPress}
                     data={this.state.orderData}
                     hostType={1} />

@@ -12,6 +12,7 @@ var {
     ListView,
     ScrollView,
     TouchableOpacity,
+    TouchableHighlight,
     ActivityIndicatorIOS,
     ActionSheetIOS,
     StyleSheet
@@ -27,22 +28,20 @@ var appConstants = require('../../../constants/appConstants');
 
 // var AttachItem = require('./attachItem');
 var Button = require('../../../common/button.js');
+var CollectionView = require('../../../common/collectionView');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}) // assumes immutable objects
         return {
             loaded : false,
-            list: [],
-            dataSource: ds
+            list: []
         }
     },
     componentDidMount: function() {
         this.unlistenAttach = attachStore.listen(this.onAttachChange);
         this.unlisten = attachListStore.listen(this.onChange);
-        console.log('----this.props.data', this.props.data);
-        // this.fetchAttachData();
+        this.fetchAttachData();
     },
     componentWillUnmount: function(){
         this.unlisten();
@@ -65,6 +64,7 @@ module.exports = React.createClass({
         };
     },
     handleGet: function(result){
+        console.log('-----handleGet', result);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -73,7 +73,6 @@ module.exports = React.createClass({
             return;
         }
         this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(result.data || []),
             list: result.data || [],
             loaded     : true,
         });
@@ -87,7 +86,6 @@ module.exports = React.createClass({
             return;
         }
         this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(result.data || []),
             list: result.data || [],
             loaded: true
         });
@@ -105,29 +103,67 @@ module.exports = React.createClass({
                 return this.handleDelete(result)
         }
     },
+    _goOrderDescribe: function(){
+        Actions.taskDescribe({
+            descriptionUrl: this.state.taskData.descriptionUrl
+        });
+    },
     fetchAttachData: function(){
         attachListAction.getList({
             hostId: this.props.data.id,
             hostType: this.props.hostType
         });
     },
-    renderRow: function(rowData, sectionID, rowID) {
-        return (<View><Text>{rowData.fileName}{rowData.fileAddress}</Text></View>)
-        // return (
-        //     <AttachItem
-        //     rowData={rowData}
-        //     sectionID={sectionID}
-        //     rowID={rowID}
-        //     onPress={this.props.onPressRow} />
-        //     )
+    onPressAttachRow: function(rowData,sectionID){
+        Actions.attachDetail({
+            title: '附件详情',
+            data: rowData
+        });
+    },
+    renderRow: function(rowData, index) {
+        if (!rowData) {
+            return (
+                <View style={commonStyle.collectionItem} key={index}>
+                </View>
+                );
+        };
+        return(
+            <TouchableOpacity onPress={()=>{this.onPressAttachRow(rowData)}} key={index}>
+                <View style={[commonStyle.collectionItem, index%2==0 ? commonStyle.collectionItemPaddingRight : commonStyle.collectionItemPaddingLeft]}>
+                    <Image source={{uri: rowData.fileAddress}}
+                    style={commonStyle.collectionImage}>
+                        <Text style={commonStyle.collectionTitle}
+                        numberOfLines={1}>
+                            {rowData.fileName}
+                        </Text>
+                    </Image>
+                </View>
+            </TouchableOpacity>
+            );
     },
     render: function() {
         return(
             <ScrollView>
-                <View>
-                    <Text>订单描述</Text>
-                    <Text>{this.props.data.description}</Text>
+                <View style={commonStyle.section}>
+                    <Text style={commonStyle.settingGroupsTitle}>订单描述</Text>
+                    <TouchableHighlight
+                    style={commonStyle.settingItemWrapper}
+                    underlayColor='#eee'
+                    onPress={this._goOrderDescribe} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                            <Text
+                            numberOfLines={3}
+                            style={commonStyle.settingDetail}>
+                                {this.props.data.description}
+                            </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../../images/common/arrow_right.png')} />
+                        </View>
+                    </TouchableHighlight>
                 </View>
+                {this.renderListView()}
             </ScrollView>
             );
         // if (!this.state.loaded) {
@@ -136,7 +172,7 @@ module.exports = React.createClass({
         // if(this.state.list.length == 0){
         //     return this.renderEmptyView();
         // }
-        return this.renderListView();
+        // return this.renderListView();
     },
     renderEmptyRow: function(){
         return (
@@ -150,13 +186,17 @@ module.exports = React.createClass({
     },
     renderListView: function(){
         if (!this.state.list || this.state.list.length == 0) {
-            return this.renderEmptyRow();
+            // return this.renderEmptyRow();
+            return false;
         };
         return (
-            <ListView
-              style={commonStyle.container}
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow} />
+            <View style={commonStyle.section}>
+                <Text style={commonStyle.settingGroupsTitle}>附件</Text>
+                <CollectionView
+                    items={this.state.list}
+                    itemsPerRow={2}
+                    renderItem={this.renderRow} />
+            </View>
             )
     },
     renderEmptyView: function(){

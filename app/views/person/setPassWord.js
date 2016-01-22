@@ -129,6 +129,7 @@ var setPassWord = React.createClass({
                     </View>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='设置密码'
+                        secureTextEntry={true}
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
                         onChangeText={this.onChangePasswordText}
@@ -141,6 +142,7 @@ var setPassWord = React.createClass({
             return(
                 <View style={commonStyle.textInputWrapper}>
                     <TextInput placeholder='设置密码'
+                    secureTextEntry={true}
                     style={commonStyle.textInput}
                     clearButtonMode={'while-editing'}
                     onChangeText={this.onChangePasswordText}

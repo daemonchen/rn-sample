@@ -124,6 +124,15 @@ module.exports = React.StyleSheet.create({
         borderTopWidth: 1 / React.PixelRatio.get(),
         borderTopColor: '#eee'
     },
+    section: {
+        // borderBottomWidth: 1 / React.PixelRatio.get(),
+        // borderBottomColor: '#eee'
+    },
+    settingGroupsTitle: {
+        color: '#727272',
+        marginVertical: 10,
+        paddingHorizontal: 15
+    },
     settingGroups: {
         flex: 1,
         paddingTop: 8,
@@ -214,5 +223,27 @@ module.exports = React.StyleSheet.create({
         height:height * 2/3,
         justifyContent:'center',
         alignItems:'center'
+    },
+    collectionItem: {
+        flex: 1,
+        paddingBottom: 6
+    },
+    collectionItemPaddingRight: {
+        paddingRight: 3
+    },
+    collectionItemPaddingLeft: {
+        paddingLeft: 3
+    },
+    collectionImage: {
+        flex: 1,
+        height: width/2,
+        resizeMode: 'cover'
+    },
+    collectionTitle: {
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        padding: 5,
+        marginTop: width/2 - 24,
+        width: width/2,
+        color: '#fff'
     }
 });
