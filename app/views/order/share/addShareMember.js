@@ -30,7 +30,6 @@ var RightDoneButton = require('../../../common/rightDoneButton');
 
 var contactAction = require('../../../actions/contact/contactAction');
 var contactStore = require('../../../stores/contact/contactStore');
-var commentAction = require('../../../actions/comment/commentAction');
 
 var customerListAction = require('../../../actions/contact/customerListAction');
 var customerListStore = require('../../../stores/contact/customerListStore');
@@ -52,8 +51,7 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {
             orderId: this.props.orderId,
-            atUsers: this.props.atUsers || [],
-            atUserIds: this.props.atUserIds || [],
+            customerUserIds: this.props.customerUserIds || [],
             listData: [],
         }
     },
@@ -95,56 +93,39 @@ module.exports = React.createClass({
     },
     mergeListData: function(list){
         var users = [];
-        var ids = this.state.atUserIds;
+        var ids = this.state.customerUserIds;
         for (var i = 0; i < list.length; i++) {
             list[i].isCheck = false;
             for (var j = 0; j < ids.length; j++) {
                 if (list[i].userId == ids[j]) {
                     list[i].isCheck = true;
-                    users.push(list[i]);
                 };
 
             };
 
         };
         this.setState({
-            listData: list,
-            atUsers: users
+            listData: list
         });
     },
-    setAtUserIds: function(data){
-        // console.log('setAtUserIds', data);
-        var ids = this.state.atUserIds;
+    onPressRow: function(data){
+        var ids = this.state.customerUserIds;
         if (!!data.isCheck && underscore.contains(ids, data.userId)) {//从选中状态改为为选中状态
             ids = underscore.without(ids, data.userId);
         }else{
             ids.push(data.userId);
         }
         this.setState({
-            atUserIds: ids
+            customerUserIds: ids
         });
         this.mergeListData(this.state.listData);
     },
-    onPressContactRow: function(data){
-        this.setAtUserIds(data);
-        // var ids = this.state.atUserIds;
-        // ids.push(data.userId);
-        // this.setState({
-        //     atUserIds: ids
-        // });
-    },
-    onPressRow: function(data){
-        this.onPressContactRow(data);
-    },
     _pressDone: function(){
         shareOrderAction.create({
-
+            orderId: this.state.orderId,
+            customerUserIds: this.state.customerUserIds
         })
-        commentAction.at({
-            type: 'at',
-            atUsers: this.state.atUsers
-        });
-        // Actions.pop();
+        Actions.pop();
     },
     goSetting: function(person){
         var options = {

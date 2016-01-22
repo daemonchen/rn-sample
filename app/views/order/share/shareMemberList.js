@@ -3,6 +3,7 @@
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
 var SearchBar = require('react-native-search-bar');
+var Actions = require('react-native-router-flux').Actions;
 var {
     View,
     Text,
@@ -52,10 +53,16 @@ module.exports = React.createClass({
                 )
         }
     },
+    onPressRow: function(data){
+        Actions.contactDetail({
+            title: data.userName,
+            data: data
+        });
+    },
     renderRow: function(data){
         return(
             <TouchableHighlight
-                onPress={()=>{this.props.onPressRow(data)}}
+                onPress={()=>{this.onPressRow(data)}}
                 underlayColor='#eee'>
                 <View style={contactsStyle.contactsItem}>
                     {this.renderAvatar(data)}

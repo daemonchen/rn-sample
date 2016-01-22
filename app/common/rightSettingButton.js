@@ -20,10 +20,14 @@ module.exports = React.createClass({
         this.props.onPress()
     },
     render: function(){
+                // <Image source={require('../images/common/setting.png')}
+                // style={[{ width: 24, height: 24, marginRight: 16, marginLeft: 16  }, this.props.style]} />
         return(
             <TouchableOpacity onPress={this.onPress}>
-                <Image source={require('../images/common/setting.png')}
-                style={[{ width: 24, height: 24, marginRight: 16, marginLeft: 16  }, this.props.style]} />
+                <Text
+                style={[{ width: 30, height: 24, marginRight: 16, marginLeft: 16, color: '#4285f4' }, this.props.style]}>
+                    设置
+                </Text>
             </TouchableOpacity>
             );
     }

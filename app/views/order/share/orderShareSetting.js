@@ -4,6 +4,7 @@ var React = require('react-native');
 import NavigationBar from 'react-native-navbar';
 var TimerMixin = require('react-timer-mixin');
 var Actions = require('react-native-router-flux').Actions;
+var underscore = require('underscore');
 var {
     View,
     Text,
@@ -71,6 +72,12 @@ module.exports = React.createClass({
                 falseSwitchIsOn: status
             });
         };
+        if (result.type == 'create') {
+            this.setState({
+                customers: result.data.customers,
+                falseSwitchIsOn: status
+            });
+        };
     },
     fetchData: function(){
         shareOrderAction.get({
@@ -96,7 +103,8 @@ module.exports = React.createClass({
     },
     goAddShareMember: function(){
         Actions.addShareMember({
-            orderId: this.state.orderId
+            orderId: this.state.orderId,
+            customerUserIds: underscore.pluck(this.state.customers, 'userId')
         });
     },
     renderShareMemberList: function(){
@@ -106,8 +114,7 @@ module.exports = React.createClass({
         return(
             <ShareMemberList
                 style={contactsStyle.scrollView}
-                data={this.state.customers}
-                onPressRow={this.onPressRow} />
+                data={this.state.customers} />
             );
     },
     renderContent: function(){
