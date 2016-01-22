@@ -202,6 +202,7 @@ module.exports = React.createClass({
                 <Route name="validationCode" component={ValidationCode} title="验证码"/>
 
                 <Route name="orderDetail" component={OrderDetail} title="订单详情"/>
+                <Route name="orderDetailReplace" component={OrderDetail} title="订单详情" type="replace"/>
                 <Route name="orderSettings" component={OrderSettings} title="订单设置" schema="modal"/>
                 <Route name="orderSettingsForTemplate" component={OrderSettingsForTemplate} title="订单设置" schema="modal"/>
                 <Route name="orderTemplates" component={OrderTemplates} title="选择模版"/>

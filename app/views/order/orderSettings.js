@@ -118,7 +118,10 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            Actions.pop();
+            Actions.orderDetailReplace({
+                data: result.data
+            });
+            // Actions.pop();
         };
         if (result.type == 'update') {
             Actions.pop();

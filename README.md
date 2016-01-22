@@ -41,4 +41,6 @@ app--应用根目录
 
 - 避免过于复杂的flux数据流，尽量少用ref
 
+- scrollview的 alignItems 和 justifyContent 样式属性不能直接写在scrollview的样式上，要在contentContainerStyle里使用。否则开发模式下会报错崩溃；原因参看scrollview源码383行
+
 ### dive in & have fun !!

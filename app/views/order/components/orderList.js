@@ -81,7 +81,7 @@ var orderList = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            this.setTimeout(this.onRefresh, 350)
+            // this.setTimeout(this.onRefresh, 350)
             // this.onRefresh();
         };
         if (result.type == 'update') {
