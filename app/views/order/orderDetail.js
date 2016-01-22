@@ -12,6 +12,7 @@ var {
     Image,
     ActionSheetIOS,
     TouchableOpacity,
+    TouchableHighlight,
     StyleSheet
 } = React
 
@@ -28,6 +29,7 @@ var OrderDetailSegmentControl = require('./components/orderDetailSegmentControl'
 var WhiteBackButton = require('../../common/whiteBackButton');
 var RightWhiteAddButton = require('../../common/rightWhiteAddButton');
 var RightWhiteSettingButton = require('../../common/rightWhiteSettingButton');
+var Popover = require('../../common/popover');
 
 var util = require('../../common/util');
 var attachAction = require('../../actions/attach/attachAction');
@@ -44,7 +46,9 @@ module.exports = React.createClass({
             orderId: this.props.data || 0,//订单id
             orderData: {},
             tabIndex: 0,
-            images: []
+            images: [],
+            isVisible: false,
+            buttonRect: {},
         }
     },
     componentDidMount: function(){
@@ -131,9 +135,9 @@ module.exports = React.createClass({
         var targetRights = 8;
         if ((rights & targetRights) == targetRights){
             return (
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
                     <RightWhiteAddButton onPress={this._pressCreateButton} />
-                    <RightWhiteSettingButton onPress={this._pressSettingButton} />
+                    <RightWhiteSettingButton onPress={this.showPopover} />
                 </View>
                 );
         }else{
@@ -238,6 +242,76 @@ module.exports = React.createClass({
                 )
         }
     },
+    showPopover: function() {
+        this.btn.measure((ox, oy, width, height, px, py) => {
+            this.setState({
+                isVisible: true,
+                buttonRect: {x: px + 20, y: py - 64, width: width, height: height}
+          });
+        });
+    },
+
+    closePopover: function() {
+        this.setState({isVisible: false});
+      },
+    renderPopOver: function(){
+        var {
+            width, height, scale
+        } = util.getDimensions();
+        var displayArea = {x: 5, y: 20, width: width - 10, height: height - 25};
+        return(
+            <Popover
+                isVisible={this.state.isVisible}
+                fromRect={this.state.buttonRect}
+                displayArea={displayArea}
+                placement={'bottom'}
+                onClose={this.closePopover}>
+                    <TouchableHighlight
+                        style={commonStyle.popoverWrapper}
+                        underlayColor='#eee'
+                        onPress={this._pressSettingButton}>
+                        <View
+                        style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/person/feedback.png')}/>
+                            <Text
+                            style={[commonStyle.settingDetail]}>
+                            编辑
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.popoverWrapper}
+                        underlayColor='#eee' >
+                        <View
+                        style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/person/feedback.png')}/>
+                            <Text
+                            style={[commonStyle.settingDetail]}>
+                            关注
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.popoverWrapper}
+                        underlayColor='#eee' >
+                        <View
+                        style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/person/feedback.png')}/>
+                            <Text
+                            style={[commonStyle.settingDetail]}>
+                            分享
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+            </Popover>
+            );
+    },
     render: function(){
         var title = this.state.orderData.title || ''
         return(
@@ -253,6 +327,7 @@ module.exports = React.createClass({
                     <OrderDetailSegmentControl
                     onSegmentChange={this.onSegmentChange}/>
                     {this.renderTabContent()}
+                    {this.renderPopOver()}
                 </View>
             </View>
             );

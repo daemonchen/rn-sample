@@ -138,6 +138,18 @@ module.exports = React.StyleSheet.create({
         paddingTop: 8,
         backgroundColor: '#fff'
     },
+    popoverWrapper: {
+        width: 150,
+        flexDirection: 'row'
+    },
+    popoverItem: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 16,
+        marginHorizontal: 16
+    },
     settingItemWrapper:{
         width: width,
         // height: 60,
