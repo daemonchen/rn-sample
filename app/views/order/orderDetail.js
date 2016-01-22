@@ -28,7 +28,8 @@ var OrderDetailSegmentControl = require('./components/orderDetailSegmentControl'
 
 var WhiteBackButton = require('../../common/whiteBackButton');
 var RightWhiteAddButton = require('../../common/rightWhiteAddButton');
-var RightWhiteSettingButton = require('../../common/rightWhiteSettingButton');
+var RightWhiteFollowButton = require('../../common/rightWhiteFollowButton');
+var RightWhiteMoreButton = require('../../common/rightWhiteMoreButton');
 var Popover = require('../../common/popover');
 
 var util = require('../../common/util');
@@ -144,8 +145,9 @@ module.exports = React.createClass({
         if ((rights & targetRights) == targetRights){
             return (
                 <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
+                    <RightWhiteFollowButton onPress={this._pressCreateButton} status={true}/>
                     <RightWhiteAddButton onPress={this._pressCreateButton} />
-                    <RightWhiteSettingButton onPress={this.showPopover} />
+                    <RightWhiteMoreButton onPress={this.showPopover} />
                 </View>
                 );
         }else{
@@ -286,20 +288,6 @@ module.exports = React.createClass({
                             <Text
                             style={[commonStyle.settingDetail]}>
                             编辑
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={commonStyle.popoverWrapper}
-                        underlayColor='#eee' >
-                        <View
-                        style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
-                            <Image
-                            style={commonStyle.settingIcon}
-                            source={require('../../images/person/feedback.png')}/>
-                            <Text
-                            style={[commonStyle.settingDetail]}>
-                            关注
                             </Text>
                         </View>
                     </TouchableHighlight>

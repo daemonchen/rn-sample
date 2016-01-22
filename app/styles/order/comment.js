@@ -89,7 +89,7 @@ module.exports = React.StyleSheet.create({
         marginHorizontal: 16
     },
     commentAvatarCircleWrapper:{
-        fontSize: 16,
+        // fontSize: 16,
         flex: 1,
         flexDirection: 'row',
         height: 59,

@@ -57,5 +57,7 @@ module.exports = {
 
     avatar: NZAOM_API_DOMAIN + '/api/user/avatar',
 
-    file: NZAOM_API_DOMAIN + '/api/file'
+    file: NZAOM_API_DOMAIN + '/api/file',
+
+    shareOrder: NZAOM_API_DOMAIN + '/api/sharing'
 }

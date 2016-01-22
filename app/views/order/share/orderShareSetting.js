@@ -1,7 +1,8 @@
 'use strict';
 
 var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from 'react-native-navbar';
+var TimerMixin = require('react-timer-mixin');
 var Actions = require('react-native-router-flux').Actions;
 var {
     View,
@@ -21,42 +22,120 @@ var RightDoneButton = require('../../../common/rightDoneButton');
 
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
+var contactsStyle = require('../../../styles/contact/contactsItem');
+
+var shareOrderAction = require('../../../actions/shareOrder/shareOrderAction');
+var shareOrderStore = require('../../../stores/shareOrder/shareOrderStore');
+
+var ShareMemberList = require('./shareMemberList');
 
 var util = require('../../../common/util');
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
+    displayName: 'orderShareSetting',
     getInitialState: function(){
-        return {}
-    },
-    onPressDone: function(){
-        this.props.onPressDone();
-        Actions.pop();
-    },
-    renderNavigator: function(){
-        if (!!this.props.onPressDone) {
-            return(
-                <NavigationBar
-                    title={{title: this.props.title}}
-                    leftButton={<BlueBackButton />}
-                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
-                );
-        }else{
-            return(
-                <NavigationBar
-                    title={{title: this.props.title}}
-                    leftButton={<BlueBackButton />} />
-                );
+        return {
+            orderId: this.props.data.id || 0,//订单id
+            falseSwitchIsOn: false,
+            customers: null//订单关注数据
         }
     },
+    componentDidMount: function(){
+        this.unlisten = shareOrderStore.listen(this.onChange);
+        if (this._timeout) {
+            this.clearTimeout(this._timeout)
+        };
+        this._timeout = this.setTimeout(this.fetchData, 350)
+    },
+    componentWillUnmount: function() {
+        this.unlisten();
+    },
+    onChange: function(){
+        var result = shareOrderStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        };
+        console.log('-------shareOrderStore result', result.data);
+        var status = (result.data.status == 1) ? true : false;
+        if (result.type == 'get') {
+            this.setState({
+                customers: result.data.customers,
+                falseSwitchIsOn: status
+            });
+        };
+        if (result.type == 'update') {
+            this.setState({
+                customers: result.data.customers,
+                falseSwitchIsOn: status
+            });
+        };
+    },
+    fetchData: function(){
+        shareOrderAction.get({
+            orderId: this.state.orderId
+        });
+    },
+    renderNavigator: function(){
+        return(
+            <NavigationBar
+                title={{title: this.props.title}}
+                leftButton={<BlueBackButton />} />
+            );
+    },
     goWeiXin: function(){
-        var url = 'weixin://dl/officialaccounts';
+        //TODO: open wechat officialaccounts inside
+        // var url = 'weixin://dl/officialaccounts';
+        var url = 'weixin://';
         util.link(url);
     },
     goWebSite: function(){
         var url = 'http://www.nzaom.com/chaxun'
         util.link(url);
     },
+    goAddShareMember: function(){
+        Actions.addShareMember({
+            orderId: this.state.orderId
+        });
+    },
+    renderShareMemberList: function(){
+        if (!this.state.customers) {
+            return false;
+        };
+        return(
+            <ShareMemberList
+                style={contactsStyle.scrollView}
+                data={this.state.customers}
+                onPressRow={this.onPressRow} />
+            );
+    },
     renderContent: function(){
+        if (this.state.falseSwitchIsOn) {
+            return(
+                <View style={commonStyle.section}>
+                    <Text style={commonStyle.settingGroupsTitle}>
+                        查询人
+                    </Text>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this.goAddShareMember}>
+                        <View
+                        style={commonStyle.settingItem}>
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../../images/common/add_circle.png')}/>
+                            <Text
+                            style={[commonStyle.settingDetail, commonStyle.blue]}>
+                                添加查询人
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    {this.renderShareMemberList()}
+                </View>
+                )
+        };
         return(
                 <View style={commonStyle.section}>
                     <Text style={commonStyle.settingGroupsTitle}>
@@ -74,6 +153,12 @@ module.exports = React.createClass({
                 </View>
             );
     },
+    updateShareStatus: function(value){
+        shareOrderAction.update({
+            orderId: this.state.orderId,
+            status: value ? 1 : 2
+        });
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
@@ -88,7 +173,7 @@ module.exports = React.createClass({
                                 分享订单进度
                             </Text>
                             <Switch
-                                onValueChange={(value) => this.setState({falseSwitchIsOn: value})}
+                                onValueChange={(value) => this.updateShareStatus(value)}
                                 style={{marginBottom: 10}}
                                 value={this.state.falseSwitchIsOn} />
                         </View>

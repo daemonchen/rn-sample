@@ -26,6 +26,7 @@ var AttachSetting = require('./order/attach/attachSetting');
 var TaskAttach = require('./order/attach/taskAttach');
 
 var OrderShareSetting = require('./order/share/orderShareSetting');
+var AddShareMember = require('./order/share/addShareMember');
 
 var SettingsWrapper = require('./order/task/settingsWrapper');
 var TaskDetail = require('./order/task/taskDetail');
@@ -135,6 +136,7 @@ module.exports = React.createClass({
     doLogout: function(){
         appConstants = {};
         asyncStorage.setItem('appConstants', appConstants);
+
         this.goWelcome();
     },
     getAppState: function(){
@@ -177,14 +179,14 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-            <Router hideNavBar={true} initialRoutes={['advertisement']}>
+            <Router hideNavBar={true}>
                 <Schema name="modal" sceneConfig={Navigator.SceneConfigs.FloatFromBottom}/>
                 <Schema name="default" sceneConfig={Navigator.SceneConfigs.FloatFromRight}/>
                 <Schema name="withoutAnimation"/>
 
-                <Route name="advertisement" component={Advertisement} wrapRouter={true} title="Advertisement" hideNavBar={true}/>
+                <Route name="advertisement" initial={true} component={Advertisement} wrapRouter={true} title="Advertisement" hideNavBar={true}/>
+                <Route name="launch" component={Launch} title="launch" type="reset" />
                 <Route name="welcome" component={Welcome} title="welcome" type="reset" schema="modal"/>
-                <Route name="launch" component={Launch} title="launch" type="reset"/>
                 <Route name="about" component={About} title="关于我们"/>
                 <Route name="calendar" component={Calendar} title="设置日期"/>
                 <Route name="datePicker" component={DatePicker} title="设置时间"/>
@@ -214,6 +216,7 @@ module.exports = React.createClass({
                 <Route name="taskAttach" component={TaskAttach} title="任务附件"/>
 
                 <Route name="orderShareSetting" component={OrderShareSetting} title="分享订单进度"/>
+                <Route name="addShareMember" component={AddShareMember} title="添加查询人"/>
 
                 <Route name="settingsWrapper" component={SettingsWrapper} title="设置"/>
                 <Route name="taskDetail" component={TaskDetail} title="任务详情"/>

@@ -104,22 +104,22 @@ module.exports = React.createClass({
                 rightButton={<RightDoneButton onPress={this.sendComment} />} />
             );
     },
-    renderAvatar: function(data){
+    renderAvatar: function(data, index){
         if (!data) {
-            return(<View style={styles.commentAvatarCircle}/>);
+            return(<View style={styles.commentAvatarCircle} key={index} />);
         };
         if (data.avatar) {
             return(
                 <Image
                   style={styles.commentAvatarCircle}
-                  source={{uri: data.avatar}} />
+                  source={{uri: data.avatar}} key={index}/>
                 );
         }else{
             var circleBackground = {
                 backgroundColor: data.bgColor
             }
             return(
-                <View style={[styles.commentAvatarCircle, circleBackground]}>
+                <View style={[styles.commentAvatarCircle, circleBackground]} key={index}>
                     <Text style={styles.commentAvatarCircleText}>{data.simpleUserName}</Text>
                 </View>
                 )
@@ -129,7 +129,7 @@ module.exports = React.createClass({
         var self = this;
         var usersArray = this.state.atUsers.slice(0,3);
         var items = usersArray.map(function (item, index) {
-            return self.renderAvatar(item)
+            return self.renderAvatar(item, index)
         });
         return items;
     },
