@@ -91,10 +91,10 @@ module.exports = React.createClass({
             title: '新建客户',
             target: 1
         };
-        var phone = person.phone;
-        var fullName = person.fullName;
 
-        if (!!phone) {
+        if (!!person) {
+            var phone = person.phone;
+            var fullName = person.fullName;
             options = Object.assign(options, {
                 data: {
                     id: 0,

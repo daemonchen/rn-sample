@@ -22,6 +22,7 @@ orderStatus:enum
 3: normal
 */
 var commonStyle = require('../../styles/commonStyle');
+var styles = require('../../styles/order/orderDetail');
 
 var Calendar = require('../calendar');
 var Contact = require('../contact/contact');
@@ -348,6 +349,7 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
                 <ScrollView style={styles.main}
+                contentContainerStyle={{alignItems: 'center'}}
                 keyboardShouldPersistTaps={false}
                 keyboardDismissMode={'interactive'}>
                     <View style={commonStyle.centerWrapper}>
@@ -447,14 +449,5 @@ module.exports = React.createClass({
                 </ScrollView>
             </View>
             );
-    }
-});
-
-var styles = StyleSheet.create({
-    main: {
-        flex: 1,
-        // justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'transparent',
     }
 });

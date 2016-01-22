@@ -167,6 +167,16 @@ module.exports = React.createClass({
                     <View style={commonStyle.textInputWrapper}>
                         <Image
                           style={commonStyle.textIcon}
+                          source={require('../../images/contact/business.png')} />
+                        <TextInput placeholder='请输入客户公司'
+                        style={commonStyle.textInput}
+                        clearButtonMode={'while-editing'}
+                        value={this.state.company}
+                        onChangeText={this.onChangeCompanyText} />
+                    </View>
+                    <View style={commonStyle.textInputWrapper}>
+                        <Image
+                          style={commonStyle.textIcon}
                           source={require('../../images/TabBar/Person.png')} />
 
                         <TextInput placeholder='请输入客户名称'
@@ -184,16 +194,6 @@ module.exports = React.createClass({
                         clearButtonMode={'while-editing'}
                         value={this.state.mobiles[0]}
                         onChangeText={this.onChangePhoneText} />
-                    </View>
-                    <View style={commonStyle.textInputWrapper}>
-                        <Image
-                          style={commonStyle.textIcon}
-                          source={require('../../images/contact/business.png')} />
-                        <TextInput placeholder='请输入客户公司'
-                        style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}
-                        value={this.state.company}
-                        onChangeText={this.onChangeCompanyText} />
                     </View>
                     <View style={commonStyle.textInputWrapper}>
                         <Image
