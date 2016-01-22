@@ -9,7 +9,6 @@ var {
     Image,
     Text,
     AlertIOS,
-    LinkingIOS,
     TouchableHighlight,
     StyleSheet
 } = React
@@ -19,6 +18,7 @@ var asyncStorage = require('../../common/storage');
 var commonStyle = require('../../styles/commonStyle');
 var Button = require('../../common/button.js');
 var Modal = require('../../common/modal');
+var util = require('../../common/util');
 
 
 var loginAction = require('../../actions/user/loginAction');
@@ -42,7 +42,7 @@ module.exports = React.createClass({
     _modal: {},
     doRate: function(){
         var url = 'https://itunes.apple.com/us/app/ni-zao-me/id1025294933?l=zh&ls=1&mt=8'
-        LinkingIOS.openURL(url)
+        util.link(url)
     },
     goAbout: function(){
         Actions.about();

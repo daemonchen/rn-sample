@@ -92,6 +92,14 @@ module.exports = React.createClass({
             });
         };
     },
+    _goShareSetting: function(){
+        // orderShareSetting
+        // var data = Object.assign({orderStatus: 2}, this.state.orderData);
+        Actions.orderShareSetting({
+            // title: '设置订单',
+            data: this.state.orderData
+        });
+    },
     _pressSettingButton: function(){
         var data = Object.assign({orderStatus: 2}, this.state.orderData);
         Actions.orderSettings({
@@ -297,7 +305,8 @@ module.exports = React.createClass({
                     </TouchableHighlight>
                     <TouchableHighlight
                         style={commonStyle.popoverWrapper}
-                        underlayColor='#eee' >
+                        underlayColor='#eee'
+                        onPress={ this._goShareSetting}>
                         <View
                         style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
                             <Image

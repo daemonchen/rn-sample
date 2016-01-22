@@ -25,6 +25,8 @@ var AttachDetail = require('./order/attach/attachDetail');
 var AttachSetting = require('./order/attach/attachSetting');
 var TaskAttach = require('./order/attach/taskAttach');
 
+var OrderShareSetting = require('./order/share/orderShareSetting');
+
 var SettingsWrapper = require('./order/task/settingsWrapper');
 var TaskDetail = require('./order/task/taskDetail');
 var TaskDescribe = require('./order/task/taskDescribe');
@@ -210,6 +212,8 @@ module.exports = React.createClass({
                 <Route name="attachDetail" component={AttachDetail} title="附件详情"/>
                 <Route name="attachSetting" component={AttachSetting} title="附件设置" schema="modal"/>
                 <Route name="taskAttach" component={TaskAttach} title="任务附件"/>
+
+                <Route name="orderShareSetting" component={OrderShareSetting} title="分享订单进度"/>
 
                 <Route name="settingsWrapper" component={SettingsWrapper} title="设置"/>
                 <Route name="taskDetail" component={TaskDetail} title="任务详情"/>
