@@ -59,5 +59,9 @@ module.exports = {
 
     file: NZAOM_API_DOMAIN + '/api/file',
 
-    shareOrder: NZAOM_API_DOMAIN + '/api/sharing'
+    shareOrder: NZAOM_API_DOMAIN + '/api/sharing',
+
+    followOrder: NZAOM_API_DOMAIN + '/api/follow',
+
+    orderHeader: NZAOM_API_DOMAIN + '/api/order_index_head'
 }

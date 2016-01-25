@@ -37,6 +37,8 @@ var attachAction = require('../../actions/attach/attachAction');
 var orderStore = require('../../stores/order/orderStore');
 var orderAction = require('../../actions/order/orderAction');
 var taskListStore = require('../../stores/task/taskListStore');
+var followOrderAction = require('../../actions/followOrder/followOrderAction');
+var followOrderStore = require('../../stores/followOrder/followOrderStore');
 
 
 module.exports = React.createClass({
@@ -53,32 +55,48 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        this.unlistenOrder = orderStore.listen(this.onOrderChange);
         this.unlisten = taskListStore.listen(this.onTaskListChange);
+        this.unlistenOrder = orderStore.listen(this.onOrderChange);
+        this.unlistenFollow = followOrderStore.listen(this.onFollowChange);
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
-        this._timeout = this.setTimeout(this.fetchData, 350)
+        this._timeout = this.setTimeout(this.fetchHeaderData, 350)
     },
     componentWillUnmount: function() {
-        this.unlistenOrder();
         this.unlisten();
+        this.unlistenOrder();
+        this.unlistenFollow();
     },
-    fetchData: function(){
-        orderAction.get({
+    fetchHeaderData: function(){
+        orderAction.getHeader({
             orderId: this.state.orderId
         });
     },
-    onTaskListChange: function(){
-        var result = taskListStore.getState();
+    onFollowChange: function(){
+        var result = followOrderStore.getState();
         var orderData = this.state.orderData;
         if (result.status != 200 && !!result.message) {
             return;
         };
-        if (result.type == 'get') {
+        if (result.type == 'update') {
+            var status = !this.state.orderData.userFollow ? 1 : 0;
             this.setState({
-                orderData: Object.assign(orderData,result.data)
+                orderData: Object.assign(orderData,{userFollow: status})
             });
+        };
+    },
+    onTaskListChange: function(){
+        var result = taskListStore.getState();
+        if (result.status != 200 && !!result.message) {
+            return;
+        };
+        if (result.type == 'delete') {//任务增删改之后，重新更新一下订单首页头部信息
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this._timeout = this.setTimeout(this.fetchHeaderData, 350)
+
         };
     },
     onOrderChange: function(){
@@ -87,7 +105,8 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         };
-        if (result.type == 'get') {
+        console.log('------order header', result);
+        if (result.type == 'getHeader') {
             this.setState({
                 orderData: Object.assign(orderData,result.data)
             });
@@ -125,6 +144,13 @@ module.exports = React.createClass({
                 return
         }
     },
+    _pressFollowButton: function(){
+        var status = !this.state.orderData.userFollow ? 1 : 0;
+        followOrderAction.update({
+            orderId: this.state.orderId,
+            status: status
+        });
+    },
     _pressCreateButton: function(){
         var self = this;
         ActionSheetIOS.showActionSheetWithOptions({
@@ -145,7 +171,7 @@ module.exports = React.createClass({
         if ((rights & targetRights) == targetRights){
             return (
                 <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
-                    <RightWhiteFollowButton onPress={this._pressCreateButton} status={true}/>
+                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.orderData.userFollow}/>
                     <RightWhiteAddButton onPress={this._pressCreateButton} />
                     <RightWhiteMoreButton onPress={this.showPopover} />
                 </View>
@@ -179,7 +205,7 @@ module.exports = React.createClass({
             var uri = response.uri.replace('file://', '');
             attachAction.create({
                 count: 1,
-                hostId: this.state.orderData.id + '',
+                hostId: this.state.orderData.orderId + '',
                 hostType: '1',
                 fileOrgName: name,
                 uri: uri});
@@ -195,7 +221,7 @@ module.exports = React.createClass({
     },
     renderSummary: function(){
         var time = moment(this.state.orderData.endTime).format('YYYY.MM.DD');
-        var jobNum = !!this.state.orderData.jobNum ? this.state.orderData.jobNum : 0;
+        var jobNum = !!this.state.orderData.totaleJobNum ? this.state.orderData.totaleJobNum : 0;
         var overNum = !!this.state.orderData.overNum ? this.state.orderData.overNum : 0;
         var undoNumber = !!this.state.orderData.overNum ? (jobNum - overNum) : 0;
         return(
@@ -216,7 +242,7 @@ module.exports = React.createClass({
             );
     },
     renderTabContent: function(){
-        if (!this.state.orderData.id) {
+        if (!this.state.orderData.orderId) {
             return(
                 <View />
                 );

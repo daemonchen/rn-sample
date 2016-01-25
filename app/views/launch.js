@@ -106,6 +106,7 @@ module.exports = React.createClass({
     },
     factoryNotify: function(response){//处理个推透传消息
         var jsonData = null;
+        console.log('----factoryNotify', response);
         try{
             jsonData = JSON.parse(response);
         }catch(err){

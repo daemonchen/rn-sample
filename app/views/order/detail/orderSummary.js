@@ -64,7 +64,6 @@ module.exports = React.createClass({
         };
     },
     handleGet: function(result){
-        console.log('-----handleGet', result);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -110,7 +109,7 @@ module.exports = React.createClass({
     },
     fetchAttachData: function(){
         attachListAction.getList({
-            hostId: this.props.data.id,
+            hostId: this.props.data.orderId,
             hostType: this.props.hostType
         });
     },

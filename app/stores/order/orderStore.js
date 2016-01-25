@@ -62,6 +62,23 @@ class OrderStore {
         // this.mergeList(responseData)
         this.setState(responseData);
     }
+    onGetHeader(data) {
+        orderService.getHeader(data)
+        .then((responseData) => {
+            orderAction.getHeaderSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetHeaderSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'getHeader'
+
+        // appConstants.memberList = responseData.data
+        // asyncStorage.setItem('appConstants', appConstants);
+        // this.mergeList(responseData)
+        this.setState(responseData);
+    }
 }
 
 module.exports = alt.createStore(OrderStore, 'OrderStore');

@@ -58,7 +58,7 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         };
-        console.log('-------shareOrderStore result', result.data);
+        // console.log('-------shareOrderStore result', result.data);
         var status = (result.data.status == 1) ? true : false;
         if (result.type == 'get') {
             this.setState({
@@ -73,6 +73,12 @@ module.exports = React.createClass({
             });
         };
         if (result.type == 'create') {
+            this.setState({
+                customers: result.data.customers,
+                falseSwitchIsOn: status
+            });
+        };
+        if (result.type == 'delete') {
             this.setState({
                 customers: result.data.customers,
                 falseSwitchIsOn: status
@@ -107,12 +113,34 @@ module.exports = React.createClass({
             customerUserIds: underscore.pluck(this.state.customers, 'userId')
         });
     },
+    _handleSwipeout: function(rowData){
+        var rawData = this.state.customers;
+        if (!rawData) { rawData = [];};
+        for (var i = 0; i <= rawData.length-1; i++) {
+            if (rowData.userId != rawData[i].userId) {
+                rawData[i].active = false
+            }else{
+                rawData[i].active = true
+            }
+        };
+        this.setState({
+            customers : rawData
+        });
+    },
+    onDelete: function(data){
+        shareOrderAction.delete({
+            customerId: data.userId,
+            orderId: this.state.orderId
+        });
+    },
     renderShareMemberList: function(){
         if (!this.state.customers) {
             return false;
         };
         return(
             <ShareMemberList
+                _handleSwipeout={this._handleSwipeout}
+                onDelete={this.onDelete}
                 style={contactsStyle.scrollView}
                 data={this.state.customers} />
             );

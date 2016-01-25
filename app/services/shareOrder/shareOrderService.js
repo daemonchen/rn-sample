@@ -14,6 +14,8 @@ module.exports = {
         return http.put(NZAOM_INTERFACE.shareOrder, data)
     },
     delete: function(data){
-        return http.delete(NZAOM_INTERFACE.shareOrder, data)
+        var urlParams = '/order/{orderId}/customer/{customerId}'.replace('{orderId}', data.orderId)
+        .replace('{customerId}', data.customerId);
+        return http.delete(NZAOM_INTERFACE.shareOrder + urlParams)
     }
 }

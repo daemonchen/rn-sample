@@ -31,7 +31,7 @@ module.exports = React.createClass({
             sectionHeaderHasChanged: (s1, s2) => s1 !== s2}) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
         return {
-            hostId: this.props.data.id,//订单id
+            hostId: this.props.data.orderId,//订单id
             hostType: 1,//所属者类型,1:针对订单,2:针对任务
             pageNum: 1,
             pageSize: 20,

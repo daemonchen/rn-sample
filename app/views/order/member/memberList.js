@@ -69,7 +69,7 @@ module.exports = React.createClass({
     fetchData: function() {
         this.pageNum = 1;
         memberListAction.getList({
-            orderId: this.props.data.id,
+            orderId: this.props.data.orderId,
             pageNum: this.pageNum,
             pageSize: this.state.pageSize
         });

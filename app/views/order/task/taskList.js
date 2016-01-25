@@ -155,7 +155,7 @@ module.exports = React.createClass({
 
         }else{
             taskListAction.getList({
-                orderId: this.props.data.id
+                orderId: this.props.data.orderId
             });
         }
     },
