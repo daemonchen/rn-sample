@@ -37,7 +37,7 @@ module.exports = React.createClass({
     displayName: 'orderShareSetting',
     getInitialState: function(){
         return {
-            orderId: this.props.data.id || 0,//订单id
+            orderId: this.props.data.orderId || 0,//订单id
             falseSwitchIsOn: false,
             customers: null//订单关注数据
         }

@@ -25,6 +25,7 @@ var Modal = require('../../common/modal');
 
 var BlueBackButton = require('../../common/blueBackButton');
 var RightAddButton = require('../../common/rightAddButton');
+var RightMoreButton = require('../../common/rightMoreButton');
 
 var contactAction = require('../../actions/contact/contactAction');
 var contactStore = require('../../stores/contact/contactStore');
@@ -146,6 +147,11 @@ module.exports = React.createClass({
                 return;
         }
     },
+    goCompanySetting: function(){
+        Actions.companySettings({
+            title: '设置'
+        });
+    },
     showActionSheet: function(){
         var self = this;
         ActionSheetIOS.showActionSheetWithOptions({
@@ -157,23 +163,33 @@ module.exports = React.createClass({
             });
     },
     actionList: ['手机通讯录邀请','手机号码邀请','取消'],
-    renderNavigationBar: function(){
+    rightButtonConfig: function(){
+        var self = this;
         var rights = appConstants.userRights.rights;
         var targetRights = 65536;
         if ((rights & targetRights) == targetRights){
-            return(
-                <NavigationBar
-                    title={{ title: this.props.title }}
-                    leftButton={<BlueBackButton />}
-                    rightButton={<RightAddButton onPress={this.showActionSheet} />} />
+            return (
+                <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
+                    <RightAddButton onPress={this.showActionSheet} />
+                    <RightMoreButton onPress={this.goCompanySetting} />
+                </View>
                 );
         }else{
             return(
-                <NavigationBar
-                    title={{ title: this.props.title }}
-                    leftButton={<BlueBackButton />} />
-                );
+                <View style={{flexDirection:'row'}}>
+                    <RightMoreButton onPress={this.goCompanySetting} />
+                </View>
+                )
         }
+
+    },
+    renderNavigationBar: function(){
+        return(
+            <NavigationBar
+                title={{ title: this.props.title }}
+                leftButton={<BlueBackButton />}
+                rightButton={this.rightButtonConfig()} />
+            );
     },
     render: function(){
         return(

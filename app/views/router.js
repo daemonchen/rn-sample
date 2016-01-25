@@ -42,6 +42,7 @@ var InviteMessage = require('./inbox/inviteMessage');
 var SysMessage = require('./inbox/sysMessage');
 
 var CompanyMemberList = require('./contact/companyMemberList');
+var CompanySettings = require('./contact/companySettings');
 var ContactDetail = require('./contact/contactDetail');
 var CreateFactory = require('./contact/createFactory');
 var CustomerList = require('./contact/customerList');
@@ -232,6 +233,7 @@ module.exports = React.createClass({
                 <Route name="sysMessage" component={SysMessage} title="系统信息"/>
 
                 <Route name="companyMemberList" component={CompanyMemberList} title="员工列表"/>
+                <Route name="companySettings" component={CompanySettings} title="设置"/>
                 <Route name="contactDetail" component={ContactDetail} title="联系人详情"/>
                 <Route name="createFactory" component={CreateFactory} title="新建工厂"/>
                 <Route name="customerList" component={CustomerList} title="客户列表"/>
