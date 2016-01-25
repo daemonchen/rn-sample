@@ -81,41 +81,7 @@ module.exports = React.createClass({
         var rights = appConstants.userRights.rights;
         var targetRights = 4;
         var progress = parseInt(this.props.rowData.overPercent)/100 || 0;
-        if ((rights & targetRights) == targetRights){
-            return(
-                <Swipeout autoClose={true} right={swipeoutBtns}
-                backgroundColor='transparent'
-                scroll={event => this.props._allowScroll(event)}
-                close={!this.props.rowData.active}
-                onOpen={this._handleSwipeout}
-                style={styles.swipeWrapper}>
-                    <TouchableHighlight underlayColor='#eee'
-                    onPress={this.onPress}>
-                        <View style={styles.rowStyle}>
-                            <CircleProgressView
-                              progress={progress}
-                              lineWidth={2}
-                              lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
-                              circleRadius={26}
-                              circleColor='#34a853'
-                              circleUnderlayColor='#e6e6e6'
-                              style={styles.circle}/>
-                            {this.renderPercent(this.props.rowData.overPercent)}
-                            <View style={styles.orderContentWrapper}>
-                                <Text style={[styles.orderTitle, commonStyle.textDark]}
-                                numberOfLines={1}>
-                                    {this.props.rowData.title}
-                                </Text>
-                                <View style={styles.orderContent}>
-                                    {this.renderTimeLabel(this.props.rowData.endTime)}
-                                    {this.renderCustomerLabel()}
-                                </View>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                </Swipeout>
-                )
-        }else{
+        if (this.props.status == 2) {//关注列表
             return(
                 <TouchableHighlight underlayColor='#eee'
                 onPress={this.onPress}>
@@ -141,6 +107,69 @@ module.exports = React.createClass({
                     </View>
                 </TouchableHighlight>
                 )
+        }else{
+
+            if ((rights & targetRights) == targetRights){
+                return(
+                    <Swipeout autoClose={true} right={swipeoutBtns}
+                    backgroundColor='transparent'
+                    scroll={event => this.props._allowScroll(event)}
+                    close={!this.props.rowData.active}
+                    onOpen={this._handleSwipeout}
+                    style={styles.swipeWrapper}>
+                        <TouchableHighlight underlayColor='#eee'
+                        onPress={this.onPress}>
+                            <View style={styles.rowStyle}>
+                                <CircleProgressView
+                                  progress={progress}
+                                  lineWidth={2}
+                                  lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
+                                  circleRadius={26}
+                                  circleColor='#34a853'
+                                  circleUnderlayColor='#e6e6e6'
+                                  style={styles.circle}/>
+                                {this.renderPercent(this.props.rowData.overPercent)}
+                                <View style={styles.orderContentWrapper}>
+                                    <Text style={[styles.orderTitle, commonStyle.textDark]}
+                                    numberOfLines={1}>
+                                        {this.props.rowData.title}
+                                    </Text>
+                                    <View style={styles.orderContent}>
+                                        {this.renderTimeLabel(this.props.rowData.endTime)}
+                                        {this.renderCustomerLabel()}
+                                    </View>
+                                </View>
+                            </View>
+                        </TouchableHighlight>
+                    </Swipeout>
+                    )
+            }else{
+                return(
+                    <TouchableHighlight underlayColor='#eee'
+                    onPress={this.onPress}>
+                        <View style={styles.rowStyle}>
+                            <CircleProgressView
+                              progress={progress}
+                              lineWidth={2}
+                              lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
+                              circleRadius={26}
+                              circleColor='#34a853'
+                              circleUnderlayColor='#e6e6e6'
+                              style={styles.circle}/>
+                            {this.renderPercent(this.props.rowData.overPercent)}
+                            <View style={styles.orderContentWrapper}>
+                                <Text style={[styles.orderTitle, commonStyle.textDark]}
+                                numberOfLines={1}>
+                                    {this.props.rowData.title}
+                                </Text>
+                                <View style={styles.orderContent}>
+                                    {this.renderTimeLabel(this.props.rowData.endTime)}
+                                </View>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+                    )
+            }
         }
     }
 });

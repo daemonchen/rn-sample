@@ -103,6 +103,12 @@ var order =  React.createClass({
                     onPressRow={this.onPressOrderRow}
                     status={1} />
                 )
+            case 2:
+                return(
+                    <OrderList
+                    onPressRow={this.onPressOrderRow}
+                    status={2} />
+                )
         }
     },
     renderNavigationBar: function(){

@@ -24,8 +24,36 @@ class FollowOrderStore {
     }
     onGetSuccess(responseData){
         if (!responseData) {return false};
-        responseData.type = 'get'
+        responseData.type = 'get';
+        appConstants.orderList = responseData.data
+        asyncStorage.setItem('appConstants', appConstants);
         this.setState(responseData);
+    }
+    onLoadMore(data) {
+        followOrderService.get(data)
+        .then((responseData) => {
+            followOrderAction.loadMoreSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onLoadMoreSuccess(data){
+        if (!data || !data.data) {return false};
+        data.type = 'get'
+        this.mergeList(data)
+    }
+    mergeList(data){
+        asyncStorage.getItem('appConstants')
+        .then((result)=>{
+            if (!!result.orderList) {
+                data.data = result.orderList.concat(data.data)
+                this.setState(data);
+            }else{
+                this.setState(data);
+            }
+            appConstants.orderList = data.data
+            asyncStorage.setItem('appConstants', appConstants);
+        }).done();
     }
     onUpdate(data) {
         followOrderService.post(data)

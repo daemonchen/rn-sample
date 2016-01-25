@@ -14,6 +14,8 @@ var {
 
 var orderListAction = require('../../../actions/order/orderListAction');
 var orderListStore = require('../../../stores/order/orderListStore');
+var followOrderAction = require('../../../actions/followOrder/followOrderAction');
+var followOrderStore = require('../../../stores/followOrder/followOrderStore');
 var orderStore = require('../../../stores/order/orderStore');
 var util = require('../../../common/util');
 
@@ -51,11 +53,13 @@ var orderList = React.createClass({
     componentDidMount: function(){
         this.onRefresh();
         this.unlisten = orderListStore.listen(this.onChange);
-        this.unlistenOrderChange = orderStore.listen(this.onOrderChange)
+        this.unlistenOrderChange = orderStore.listen(this.onOrderChange);
+        this.unlistenFollowChange = followOrderStore.listen(this.onFollowChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenOrderChange();
+        this.unlistenFollowChange();
     },
     _allowScroll: function(scrollEnabled) {
        this.setState({ scrollEnabled: scrollEnabled })
@@ -89,6 +93,9 @@ var orderList = React.createClass({
             // this.onRefresh();
         };
     },
+    handleFollowListGet: function(result){
+
+    },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {
             this.setState({
@@ -119,6 +126,18 @@ var orderList = React.createClass({
         this.setTimeout(this.onRefresh, 350);
         return;
     },
+    onFollowChange: function(){
+        var result = followOrderStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'get':
+                // return this.handleFollowListGet(result);
+                return this.handleGet(result);
+        }
+    },
     onChange: function() {
         var result = orderListStore.getState();
         if (result.status != 200 && !!result.message) {
@@ -137,11 +156,18 @@ var orderList = React.createClass({
             pageNum: 1,
             isRefreshing: true
         });
-        orderListAction.getList({
-            status: this.state.status,
-            pageNum: this.state.pageNum,
-            pageSize: this.state.pageSize
-        });
+        if (this.state.status == 2) {
+            followOrderAction.get({
+                pageNum: this.state.pageNum,
+                pageSize: this.state.pageSize
+            });
+        }else{
+            orderListAction.getList({
+                status: this.state.status,
+                pageNum: this.state.pageNum,
+                pageSize: this.state.pageSize
+            });
+        }
     },
     onInfinite: function() {
         if (!this.loadedAllData()) {
@@ -150,11 +176,18 @@ var orderList = React.createClass({
         this.setState({
             pageNum: this.state.pageNum + 1
         });
-        orderListAction.loadMore({
-            status: this.state.status,
-            pageNum: this.state.pageNum,
-            pageSize: this.state.pageSize
-        });
+        if (this.state.status == 2) {
+            followOrderAction.loadMore({
+                pageNum: this.state.pageNum,
+                pageSize: this.state.pageSize
+            });
+        }else{
+            orderListAction.loadMore({
+                status: this.state.status,
+                pageNum: this.state.pageNum,
+                pageSize: this.state.pageSize
+            });
+        }
     },
     loadedAllData: function() {
         return this.state.list.length >= this.state.total||this.state.list.length===0;
@@ -167,6 +200,7 @@ var orderList = React.createClass({
     renderRow: function(rowData, sectionID, rowID) {
         return (
             <OrderItem
+            status={this.state.status}
             rowData={rowData}
             sectionID={sectionID}
             rowID={rowID}
