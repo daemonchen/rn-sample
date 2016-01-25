@@ -25,7 +25,7 @@ module.exports = React.createClass({
         return(
             <TouchableOpacity onPress={this.onPress}>
                 <Text
-                style={[{ width: 30, height: 24, marginRight: 16, marginLeft: 16, color: '#4285f4' }, this.props.style]}>
+                style={[{fontSize: 17, width: 36, height: 24, marginTop: 2, marginRight: 16, marginLeft: 16, color: '#4285f4' }, this.props.style]}>
                     设置
                 </Text>
             </TouchableOpacity>
