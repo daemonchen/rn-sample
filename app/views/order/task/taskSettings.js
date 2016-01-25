@@ -61,7 +61,7 @@ module.exports = React.createClass({
                 description: defaultData.description || '',
                 endTime: endTime,
                 endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
-                id: defaultData.id || 0,
+                id: defaultData.orderId || 0,
                 ownerId: defaultData.ownerId || 0,
                 userName: defaultData.userName || '',
                 lastIds: lastIds,
@@ -74,7 +74,7 @@ module.exports = React.createClass({
         var lastIds = [];
         return {
             taskStatus: defaultData.taskStatus || 3,
-            orderId: defaultData.id || 0,
+            orderId: defaultData.orderId || 0,
             ownerId: 0,
             userName: defaultData.userName || '',
             description: '',
@@ -110,9 +110,9 @@ module.exports = React.createClass({
     },
     setAccessoryIds: function(data){
         this.accessoryIds = this.state.accessoryIds;
-        if (!data || !data.id) { return; };
-        if (!underscore.contains(this.accessoryIds, data.id)) {
-            this.accessoryIds.push(data.id);
+        if (!data || !data.orderId) { return; };
+        if (!underscore.contains(this.accessoryIds, data.orderId)) {
+            this.accessoryIds.push(data.orderId);
         }
         this.setState({
             accessoryIds: this.accessoryIds,
@@ -143,7 +143,7 @@ module.exports = React.createClass({
     onPressDone: function(){
         if (this.state.taskStatus == 2) {//修改任务
             taskAction.update({
-                id: this.state.id || 0,
+                id: this.state.orderId || 0,
                 ownerId: this.state.ownerId || 0,
                 description: this.state.description || '',
                 jobName: this.state.jobName || '',

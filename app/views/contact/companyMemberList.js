@@ -18,9 +18,10 @@ var {
 
 var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');
+
 var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
-var InviteEmployee = require('./inviteEmployee');
+
 var Modal = require('../../common/modal');
 
 var BlueBackButton = require('../../common/blueBackButton');
