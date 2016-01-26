@@ -10,16 +10,24 @@ var {
 var UIImagePickerManager = NativeModules.UIImagePickerManager;
 var GeTuiManager = NativeModules.GeTuiManager;
 var QiniuManager = NativeModules.QiniuManager;
+var UMengManager = NativeModules.UMengManager;
 
 module.exports = {
     getParams: function(url){
         var result = {};
-        var ret = url.split('&');
-        for (var i = 0; i < ret.length; i++) {
-            var s = ret[i].split('=');
-            result[s[0]] = s[1];
-        };
+        try{
+            var ret = url.split('&');
+            for (var i = 0; i < ret.length; i++) {
+                var s = ret[i].split('=');
+                result[s[0]] = s[1];
+            };
+        }catch(e){
+            console.log(e);
+        }
         return result;
+    },
+    presentSnsIconSheetView: function(data, callback){
+        UMengManager.presentSnsIconSheetView(data, callback);
     },
     getClientId: function(callback){
         return GeTuiManager.getClientId(function(id){

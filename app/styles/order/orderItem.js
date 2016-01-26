@@ -14,15 +14,17 @@ module.exports = React.StyleSheet.create({
     orderContentWrapper: {
         flex: 1,
         paddingLeft: 16,
-        flexDirection: 'column'
+        marginTop: 5,
+        // backgroundColor: '#000',
+        // flexDirection: 'column'
     },
     orderTitle: {
         fontSize: 16,
-        flex:1,
+        // flex:1,
         paddingBottom: 10
     },
     orderContent: {
-        flex: 1,
+        // flex: 1,
         flexDirection: 'row'
     },
     orderLabel: {
@@ -40,8 +42,9 @@ module.exports = React.StyleSheet.create({
         textAlign: 'left'
     },
     circle: {
-        width: 52,
-        height: 52
+
+        width: 50,
+        height: 50
     },
     percent: {
         width: 50,

@@ -38,6 +38,13 @@ module.exports = React.createClass({
     },
     _modal: {},
     doShare: function(){
+        util.presentSnsIconSheetView({
+            text: '----test from js',
+            image: require('../../images/logo.png'),
+            url: 'http://www.nzaom.com'
+        },function(res){
+            console.log('------res', res);
+        });
         var url = 'https://itunes.apple.com/us/app/ni-zao-me/id1025294933?l=zh&ls=1&mt=8'
         // util.link(url)
     },
