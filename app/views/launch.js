@@ -168,6 +168,7 @@ module.exports = React.createClass({
     _handlePress: function (tab) {
         var self = this;
         return function () {
+            util.logEvent('tabSwitch', {tabName: tab});
             self.setState({
                 selectedTab: tab
             });

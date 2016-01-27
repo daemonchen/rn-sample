@@ -32,6 +32,15 @@ module.exports = {
     presentSnsIconSheetView: function(data, callback){
         UMengManager.presentSnsIconSheetView(data, callback);
     },
+    logPage: function(page){
+        UMengManager.logPage(page);
+    },
+    endLogPageView: function(page){
+        UMengManager.endLogPageView(page);
+    },
+    logEvent: function(event, data){
+        UMengManager.logEvent(event, data);
+    },
     getClientId: function(callback){
         return GeTuiManager.getClientId(function(id){
             !!id && callback(id);

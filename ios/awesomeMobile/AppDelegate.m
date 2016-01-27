@@ -112,7 +112,7 @@
   }
   
 //  NSString *msg = [NSString stringWithFormat:@" payloadId=%@,taskId=%@,messageId:%@,payloadMsg:%@%@",payloadId,taskId,aMsgId,payloadMsg,offLine ? @"<离线消息>" : @""];
-    NSLog(@"\n>>>[GexinSdk ReceivePayload]:%@\n\n", payloadMsg);
+//    NSLog(@"\n>>>[GexinSdk ReceivePayload]:%@\n\n", payloadMsg);
     GeTuiManager *geTuiManager = [GeTuiManager sharedInstance];
   [geTuiManager handleRemoteNotificationReceived:payloadMsg withRoot:self.rootView];
   /**

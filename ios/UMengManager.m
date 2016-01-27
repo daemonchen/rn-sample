@@ -34,7 +34,8 @@
                                          appKey:UmengAppkey
                                       shareText:aData[@"text"]
                                      shareImage:nil
-                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToWechatSession,UMShareToWechatTimeline,UMShareToSms,
+                                                 UMShareToEmail,UMShareToSina,nil]
                                        delegate:self];
   });
   

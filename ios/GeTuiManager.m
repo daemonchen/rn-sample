@@ -37,10 +37,11 @@ static NSString *_ClientId = @"";
 
 - (void)handleRemoteNotificationReceived:(NSString *)payloadMsg withRoot:(RCTRootView *)rootView
 {
-  GeTuiManager *geTuiManager = [rootView.bridge moduleForClass:[GeTuiManager class]];
-
-  [geTuiManager.bridge.eventDispatcher sendAppEventWithName:@"nzaomNotify"
-                                           body:payloadMsg];
+//  GeTuiManager *geTuiManager = [rootView.bridge moduleForClass:[GeTuiManager class]];
+  NSLog(@"-------GeTuiManager trigger event nzaomNotify with data %@", payloadMsg);
+  [_bridge.eventDispatcher sendAppEventWithName:@"nzaomNotify" body:payloadMsg];
+   
+//  [geTuiManager.bridge.eventDispatcher sendAppEventWithName:@"nzaomNotify" body:payloadMsg];
 }
 
 RCT_EXPORT_MODULE();

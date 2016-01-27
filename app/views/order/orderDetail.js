@@ -61,12 +61,14 @@ module.exports = React.createClass({
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
-        this._timeout = this.setTimeout(this.fetchHeaderData, 350)
+        this._timeout = this.setTimeout(this.fetchHeaderData, 350);
+        util.logPage('orderDetail');
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenOrder();
         this.unlistenFollow();
+        util.endLogPageView('orderDetail');
     },
     fetchHeaderData: function(){
         orderAction.getHeader({
@@ -146,6 +148,7 @@ module.exports = React.createClass({
     },
     _pressFollowButton: function(){
         var status = !this.state.orderData.userFollow ? 1 : 0;
+        util.logEvent('followOrder', {status: status+'', orderId: this.state.orderId});
         followOrderAction.update({
             orderId: this.state.orderId,
             status: status

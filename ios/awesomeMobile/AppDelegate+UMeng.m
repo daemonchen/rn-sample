@@ -27,7 +27,7 @@
   
   
 //  对未安装客户端平台进行隐藏
-   [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatTimeline]];
+   [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline]];
   
   //使用友盟统计
   [MobClick startWithAppkey:UmengAppkey reportPolicy:BATCH   channelId:nil];
