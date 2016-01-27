@@ -15,7 +15,7 @@
 
 @interface UMengManager : NSObject <RCTBridgeModule, UMSocialUIDelegate>
 @property (nonatomic, strong) RCTResponseSenderBlock callback;
--(void) shareToSns:(NSDictionary *)aData callBack:(RCTResponseSenderBlock)callback;
+-(void) shareToSns:(NSDictionary *)aData callback:(RCTResponseSenderBlock)callback;
 @end
 
 #endif /* UMengManager_h */

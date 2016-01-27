@@ -28,7 +28,7 @@
   //注册umeng
   [self registerUMeng];
   
-  // 注册APNS
+  // 注册APNS包括getui
   [self registerUserNotification];
   
   // 处理远程通知启动APP

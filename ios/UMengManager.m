@@ -9,30 +9,28 @@
 #import "UMengManager.h"
 
 #import "RCTBridge.h"
+#import "RCTUtils.h"
 
 @implementation UMengManager
 
 @synthesize bridge = _bridge;
 
--(void)shareToSns:(NSDictionary *)aData callBack:(RCTResponseSenderBlock)callback{
-  UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-
+-(void)shareToSns:(NSDictionary *)aData callback:(RCTResponseSenderBlock)callback{
   self.callback = callback;
-  //设置分享的点击链接
-//
-//  [UMSocialData defaultData].extConfig.wechatSessionData.url = aData[@"url"];
-//  [UMSocialData defaultData].extConfig.wechatTimelineData.url =aData[@"url"];
+  
   dispatch_async(dispatch_get_main_queue(), ^{
+    //设置分享的点击链接
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = aData[@"url"];
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url =aData[@"url"];
+//    [UMSocialData defaultData].extConfig.sinaData.url = aData[@"url"];
+    //设置分享图片
+    [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeImage url:aData[@"image"]];
+    UIViewController *vc = RCTKeyWindow().rootViewController;
     [UMSocialSnsService presentSnsIconSheetView:vc
                                          appKey:UmengAppkey
                                       shareText:aData[@"text"]
-//                                      shareText:shareText
-//                                     shareImage:[UIImage image]
-//                                     shareImage:aData[@"image"]
                                      shareImage:nil
-                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,
-                                                 UMShareToWechatFavorite,UMShareToQQ,nil]
-//                                shareToSnsNames:nil
+                                shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,nil]
                                        delegate:self];
   });
   
@@ -50,14 +48,40 @@
   }
 }
 
+
+-(void)postSNSWithTypes:(NSArray *)type params:(NSDictionary *)params callback:(RCTResponseSenderBlock)callback
+{
+  UIViewController *vc = RCTKeyWindow().rootViewController;
+//  设置分享图片
+  UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeImage url:
+                                      params[@"image"]];
+  [[UMSocialDataService defaultDataService]  postSNSWithTypes:type
+                                                      content:params[@"text"]
+                                                        image:nil
+                                                     location:nil
+                                                  urlResource:urlResource
+                                          presentedController:vc
+                                                   completion:^(UMSocialResponseEntity *response){
+                                                     if (response.responseCode == UMSResponseCodeSuccess) {
+                                                       NSLog(@"分享成功！");
+                                                       callback(@[response.data]);
+                                                     }
+                                                   }];
+}
 RCT_EXPORT_MODULE();
 
 
 RCT_EXPORT_METHOD(presentSnsIconSheetView:(NSDictionary *)data callback:(RCTResponseSenderBlock) callback)
 {
 
-  [self shareToSns:data callBack:callback];
+  [self shareToSns:data callback:callback];
   
+}
+
+RCT_EXPORT_METHOD(wechatSessionShare:(NSDictionary *)data callback:(RCTResponseSenderBlock) callback)
+{
+//  data.type = UMShareToWechatSession;
+  [self postSNSWithTypes:@[UMShareToWechatSession] params:data callback:callback];
 }
 
 @end

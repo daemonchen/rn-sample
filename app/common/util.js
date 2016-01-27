@@ -26,6 +26,9 @@ module.exports = {
         }
         return result;
     },
+    wechatSessionShare: function(data, callback){
+        UMengManager.wechatSessionShare(data, callback);
+    },
     presentSnsIconSheetView: function(data, callback){
         UMengManager.presentSnsIconSheetView(data, callback);
     },
