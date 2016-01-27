@@ -9,6 +9,7 @@
 #import "AppDelegate+UMeng.h"
 
 #import "UMSocialWechatHandler.h"
+#import "MobClick.h"
 
 
 @implementation AppDelegate (UMeng)
@@ -29,7 +30,7 @@
    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatTimeline]];
   
   //使用友盟统计
-//  [MobClick startWithAppkey:UmengAppkey];
+  [MobClick startWithAppkey:UmengAppkey reportPolicy:BATCH   channelId:nil];
 
   NSLog(@"-------registerUMeng");
 }

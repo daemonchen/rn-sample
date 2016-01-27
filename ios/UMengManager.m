@@ -74,7 +74,7 @@
 }
 RCT_EXPORT_MODULE();
 
-
+//调用umeng默认的分享
 RCT_EXPORT_METHOD(presentSnsIconSheetView:(NSDictionary *)data callback:(RCTResponseSenderBlock) callback)
 {
 
@@ -82,10 +82,28 @@ RCT_EXPORT_METHOD(presentSnsIconSheetView:(NSDictionary *)data callback:(RCTResp
   
 }
 
+//直接调用微信好友分享
 RCT_EXPORT_METHOD(wechatSessionShare:(NSDictionary *)data callback:(RCTResponseSenderBlock) callback)
 {
 //  data.type = UMShareToWechatSession;
   [self postSNSWithTypes:@[UMShareToWechatSession] params:data callback:callback];
 }
 
+//记录页面加载
+RCT_EXPORT_METHOD(logPage:(NSString *) page)
+{
+  [MobClick beginLogPageView:page];//("page"为页面名称)
+}
+
+//记录页面退出
+RCT_EXPORT_METHOD(endLogPageView:(NSString *) page)
+{
+  [MobClick endLogPageView:page];//("page"为页面名称)
+}
+
+//记录事件
+RCT_EXPORT_METHOD(logEvent:(NSString *)eventId attributes:(NSDictionary *)attributes)
+{
+  [MobClick event:(NSString *)eventId attributes:(NSDictionary *)attributes];
+}
 @end

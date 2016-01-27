@@ -11,11 +11,13 @@
 
 #import "RCTBridgeModule.h"
 #import "UMSocial.h"
+#import "MobClick.h"
 #define UmengAppkey @"56a6dea4e0f55a724800037a"
 
 @interface UMengManager : NSObject <RCTBridgeModule, UMSocialUIDelegate>
 @property (nonatomic, strong) RCTResponseSenderBlock callback;
 -(void) shareToSns:(NSDictionary *)aData callback:(RCTResponseSenderBlock)callback;
+-(void) postSNSWithTypes:(NSArray *) type params:(NSDictionary *)params callback:(RCTResponseSenderBlock)callback;
 @end
 
 #endif /* UMengManager_h */

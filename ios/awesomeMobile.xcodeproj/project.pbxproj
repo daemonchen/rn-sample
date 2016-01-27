@@ -42,6 +42,7 @@
 		D189FDB81C57984300784BB3 /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D189FDB01C57984300784BB3 /* libSocialWechat.a */; };
 		D189FDB91C57984300784BB3 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D189FDB11C57984300784BB3 /* libWeChatSDK.a */; };
 		D189FDBC1C579BDE00784BB3 /* AppDelegate+GeTui.m in Sources */ = {isa = PBXBuildFile; fileRef = D189FDBB1C579BDE00784BB3 /* AppDelegate+GeTui.m */; };
+		D189FDC11C58B04100784BB3 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D189FDBE1C58B04100784BB3 /* libMobClickLibrary.a */; };
 		D1C84B961C4F8D020050EFEE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1C84B951C4F8CF50050EFEE /* libRCTPushNotification.a */; };
 		D1FD91671C571D080067EC7E /* AppDelegate+UMeng.m in Sources */ = {isa = PBXBuildFile; fileRef = D1FD91661C571D080067EC7E /* AppDelegate+UMeng.m */; };
 		D1FD916F1C5741100067EC7E /* UMengManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D1FD916E1C5741100067EC7E /* UMengManager.m */; };
@@ -336,6 +337,9 @@
 		D189FDB41C57984300784BB3 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		D189FDBA1C579BDE00784BB3 /* AppDelegate+GeTui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+GeTui.h"; path = "awesomeMobile/AppDelegate+GeTui.h"; sourceTree = "<group>"; };
 		D189FDBB1C579BDE00784BB3 /* AppDelegate+GeTui.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+GeTui.m"; path = "awesomeMobile/AppDelegate+GeTui.m"; sourceTree = "<group>"; };
+		D189FDBE1C58B04100784BB3 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		D189FDBF1C58B04100784BB3 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		D189FDC01C58B04100784BB3 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		D1C84B901C4F8CF50050EFEE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		D1FD91651C571D080067EC7E /* AppDelegate+UMeng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+UMeng.h"; path = "awesomeMobile/AppDelegate+UMeng.h"; sourceTree = "<group>"; };
 		D1FD91661C571D080067EC7E /* AppDelegate+UMeng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+UMeng.m"; path = "awesomeMobile/AppDelegate+UMeng.m"; sourceTree = "<group>"; };
@@ -539,6 +543,7 @@
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
+				D189FDC11C58B04100784BB3 /* libMobClickLibrary.a in Frameworks */,
 				D189FDB51C57984300784BB3 /* libSocialQQ.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
@@ -661,6 +666,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D189FDBD1C58B04100784BB3 /* UMAnalytics_Sdk_3.6.6 */,
 				D189FDA91C57984300784BB3 /* UMSocial_Sdk_Extra_Frameworks */,
 				D189FD831C57983800784BB3 /* UMSocial_Sdk_4.4 */,
 				D1FD91681C573F220067EC7E /* UMeng */,
@@ -810,6 +816,16 @@
 				D189FDB41C57984300784BB3 /* WXApiObject.h */,
 			);
 			path = Wechat;
+			sourceTree = "<group>";
+		};
+		D189FDBD1C58B04100784BB3 /* UMAnalytics_Sdk_3.6.6 */ = {
+			isa = PBXGroup;
+			children = (
+				D189FDBE1C58B04100784BB3 /* libMobClickLibrary.a */,
+				D189FDBF1C58B04100784BB3 /* MobClick.h */,
+				D189FDC01C58B04100784BB3 /* MobClickSocialAnalytics.h */,
+			);
+			path = UMAnalytics_Sdk_3.6.6;
 			sourceTree = "<group>";
 		};
 		D1C84B911C4F8CF50050EFEE /* Products */ = {
@@ -1728,6 +1744,7 @@
 					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/Whatsapp",
 					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/YiXin",
+					"$(PROJECT_DIR)/UMAnalytics_Sdk_3.6.6",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
@@ -1780,6 +1797,7 @@
 					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/Whatsapp",
 					"$(PROJECT_DIR)/UMSocial_Sdk_Extra_Frameworks/YiXin",
+					"$(PROJECT_DIR)/UMAnalytics_Sdk_3.6.6",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
