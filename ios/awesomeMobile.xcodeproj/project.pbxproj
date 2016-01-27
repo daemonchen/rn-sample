@@ -24,6 +24,7 @@
 		7B3DA2B9DFA44A2492AEE6E9 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6900895165DA41BB84501851 /* libRCTActionSheet.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D1131B661C4F4F1E00F22833 /* libRNPhonePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1131B651C4F4F0400F22833 /* libRNPhonePicker.a */; };
+		D11E67161C5909B5003E9E1B /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D11E67151C5909A7003E9E1B /* libRNSearchBar.a */; };
 		D1877E901C43D99B00C9358D /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1877E8D1C43D99200C9358D /* libRCTCircleProgress.a */; };
 		D189FD9E1C57983800784BB3 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D189FD841C57983800784BB3 /* UMSocialLocalizable.strings */; };
 		D189FD9F1C57983800784BB3 /* libUMSocial_Sdk_4.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D189FD921C57983800784BB3 /* libUMSocial_Sdk_4.4.a */; };
@@ -68,7 +69,6 @@
 		D2BF47341C21495A002C7185 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47331C21495A002C7185 /* CoreBluetooth.framework */; };
 		D2BF48341C219DFE002C7185 /* GeTuiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF48331C219DFE002C7185 /* GeTuiManager.m */; };
 		D2D974CA1C2D28EB00A22F98 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2D974C91C2D28DC00A22F98 /* libRNBlur.a */; };
-		D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */; };
 		D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ED5D771C06DFCA008826C6 /* libRNDeviceInfo.a */; };
 		D2F072DB1C22FEA600A3BABE /* QiniuManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F072DA1C22FEA600A3BABE /* QiniuManager.m */; };
 		D2F0738F1C23049F00A3BABE /* GTM_Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F073581C23049F00A3BABE /* GTM_Base64.m */; };
@@ -215,6 +215,13 @@
 			remoteGlobalIDString = 409A073B1B9047BF00F6A547;
 			remoteInfo = RNPhonePicker;
 		};
+		D11E67141C5909A7003E9E1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D11E67101C5909A7003E9E1B /* RNSearchBar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNSearchBar;
+		};
 		D1877E8C1C43D99200C9358D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */;
@@ -264,13 +271,6 @@
 			remoteGlobalIDString = A68BD7BC1BC31318005F02DF;
 			remoteInfo = RNBlur;
 		};
-		D2ED5D6F1C069A2C008826C6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = RNSearchBar;
-		};
 		D2ED5D761C06DFCA008826C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */;
@@ -302,6 +302,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		A41307C31BEB4DB3B993E0F8 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		D1131B601C4F4F0300F22833 /* RNPhonePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNPhonePicker.xcodeproj; path = "../../../github/react-native-phone-picker/RNPhonePicker.xcodeproj"; sourceTree = "<group>"; };
+		D11E67101C5909A7003E9E1B /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D189FD851C57983800784BB3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		D189FD871C57983800784BB3 /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
@@ -374,7 +375,6 @@
 		D2BF48331C219DFE002C7185 /* GeTuiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeTuiManager.m; sourceTree = "<group>"; };
 		D2BF48351C219E1C002C7185 /* GeTuiManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeTuiManager.h; sourceTree = "<group>"; };
 		D2D974C41C2D28DC00A22F98 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
-		D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		D2F072D91C22FE9E00A3BABE /* QiniuManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuManager.h; sourceTree = "<group>"; };
 		D2F072DA1C22FEA600A3BABE /* QiniuManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QiniuManager.m; sourceTree = "<group>"; };
@@ -510,6 +510,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D11E67161C5909B5003E9E1B /* libRNSearchBar.a in Frameworks */,
 				D2BF47261C214901002C7185 /* libz.tbd in Frameworks */,
 				D1FD924E1C5772990067EC7E /* libstdc++.tbd in Frameworks */,
 				D189FDB91C57984300784BB3 /* libWeChatSDK.a in Frameworks */,
@@ -537,7 +538,6 @@
 				D2BF47231C21476C002C7185 /* libGeTuiSdk-1.3.1.a in Frameworks */,
 				D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */,
 				D2ED5D781C06DFD2008826C6 /* libRNDeviceInfo.a in Frameworks */,
-				D2ED5D711C069A46008826C6 /* libRNSearchBar.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -666,6 +666,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D11E67101C5909A7003E9E1B /* RNSearchBar.xcodeproj */,
 				D189FDBD1C58B04100784BB3 /* UMAnalytics_Sdk_3.6.6 */,
 				D189FDA91C57984300784BB3 /* UMSocial_Sdk_Extra_Frameworks */,
 				D189FD831C57983800784BB3 /* UMSocial_Sdk_4.4 */,
@@ -683,7 +684,6 @@
 				D2BF469B1C1FFD00002C7185 /* RCTOrientation */,
 				D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */,
 				D2ED5D721C06DFCA008826C6 /* RNDeviceInfo.xcodeproj */,
-				D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -728,6 +728,14 @@
 			isa = PBXGroup;
 			children = (
 				D1131B651C4F4F0400F22833 /* libRNPhonePicker.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D11E67111C5909A7003E9E1B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D11E67151C5909A7003E9E1B /* libRNSearchBar.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -934,14 +942,6 @@
 			isa = PBXGroup;
 			children = (
 				D2D974C91C2D28DC00A22F98 /* libRNBlur.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		D2ED5D6C1C069A2C008826C6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1341,8 +1341,8 @@
 					ProjectRef = D1131B601C4F4F0300F22833 /* RNPhonePicker.xcodeproj */;
 				},
 				{
-					ProductGroup = D2ED5D6C1C069A2C008826C6 /* Products */;
-					ProjectRef = D2ED5D6B1C069A2C008826C6 /* RNSearchBar.xcodeproj */;
+					ProductGroup = D11E67111C5909A7003E9E1B /* Products */;
+					ProjectRef = D11E67101C5909A7003E9E1B /* RNSearchBar.xcodeproj */;
 				},
 				{
 					ProductGroup = D2BF46F61C2134CE002C7185 /* Products */;
@@ -1435,6 +1435,13 @@
 			remoteRef = D1131B641C4F4F0400F22833 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D11E67151C5909A7003E9E1B /* libRNSearchBar.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSearchBar.a;
+			remoteRef = D11E67141C5909A7003E9E1B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D1877E8D1C43D99200C9358D /* libRCTCircleProgress.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1482,13 +1489,6 @@
 			fileType = archive.ar;
 			path = libRNBlur.a;
 			remoteRef = D2D974C81C2D28DC00A22F98 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2ED5D701C069A2C008826C6 /* libRNSearchBar.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNSearchBar.a;
-			remoteRef = D2ED5D6F1C069A2C008826C6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D2ED5D771C06DFCA008826C6 /* libRNDeviceInfo.a */ = {

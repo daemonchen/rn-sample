@@ -28,8 +28,8 @@ var BlueBackButton = require('../../common/blueBackButton');
 var RightAddButton = require('../../common/rightAddButton');
 var RightMoreButton = require('../../common/rightMoreButton');
 
-var contactAction = require('../../actions/contact/contactAction');
-var contactStore = require('../../stores/contact/contactStore');
+var factoryAction = require('../../actions/factory/factoryAction');
+var factoryStore = require('../../stores/factory/factoryStore');
 
 var employeeAction = require('../../actions/employee/employeeAction');
 
@@ -39,28 +39,31 @@ var appConstants = require('../../constants/appConstants');
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
         return {
-            target: this.props.target || 3,
+            dataSource: ds,
             listData: [],
         }
     },
     _modal: {},
     componentDidMount: function(){
-        this.unlisten = contactStore.listen(this.onChange)
+        this.unlisten = factoryStore.listen(this.onChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
     },
 
     onChange: function() {
-        var result = contactStore.getState();
+        var result = factoryStore.getState();
         if (result.type != 'get') { return; };
+        console.log('-----factoryStore result', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
         }
         this.setState({
-            listData: result.data
+            listData: result.data,
+            dataSource : this.state.dataSource.cloneWithRows(result.data)
         });
     },
     onPressRow: function(data){
@@ -84,6 +87,9 @@ module.exports = React.createClass({
     },
     onChangeText: function(text){
         console.log('-----onChangeText', text);
+        factoryAction.get({
+            q: text
+        });
     },
     onSearchButtonPress: function(e){
         console.log('-----onSearchButtonPress', e)
@@ -93,29 +99,73 @@ module.exports = React.createClass({
     },
     renderSearchBar: function(){
         return(
-            <SearchBar
-                ref={(ref)=>{this.searchBar = ref}}
-                style={{border: 0}}
-                placeholder='搜索'
-                tintColor='#727272'
-                barTintColor="#fff"
-                textFieldBackgroundColor='#f2f2f2'
-                onChangeText={this.onChangeText}
-                onSearchButtonPress={this.onSearchButtonPress}
-                onCancelButtonPress={this.onCancelButtonPress} />
+            <View>
+                <SearchBar
+                    ref={(ref)=>{this.searchBar = ref}}
+                    placeholder='搜索'
+                    tintColor='#727272'
+                    barTintColor="#fff"
+                    textFieldBackgroundColor='#f2f2f2'
+                    hideBackground={true}
+                    onChangeText={this.onChangeText}
+                    onSearchButtonPress={this.onSearchButtonPress}
+                    onCancelButtonPress={this.onCancelButtonPress} />
+            </View>
+            );
+    },
+    renderRowRightBtn: function(data){
+        return(
+            <Text style={[contactsStyle.contactRightText, commonStyle.textGray]}
+            numberOfLines={1}>
+                {data.position}
+            </Text>
+            );
+    },
+    renderRow: function(data){
+        return(
+            <TouchableHighlight
+                onPress={()=>{this.props.onPressRow(data)}}
+                underlayColor='#eee'>
+                <View style={contactsStyle.contactsItem}>
+                    <Text style={contactsStyle.contactsItemDetail}
+                    numberOfLines={1}>
+                        {data.userName}
+                    </Text>
+                    {this.renderRowRightBtn(data)}
+                </View>
+            </TouchableHighlight>
+            );
+    },
+    renderEmptyRow: function(){
+        return (
+            <View style={commonStyle.emptyView}>
+                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        搜索工厂
+                </Text>
+            </View>
+        )
+    },
+    renderListView: function(){
+        if (!this.props.data || this.props.data.length == 0) {
+            return this.renderEmptyRow();
+        };
+        return(
+            <ListView
+                style={contactsStyle.scrollView}
+                dataSource={this.state.dataSource}
+                renderRow={this.renderRow}
+                contentContainerStyle={{paddingBottom: 40}} />
             );
     },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
-                {this.renderSearchBar()}
                 <ScrollView style={commonStyle.container}
+                keyboardDismissMode={'interactive'}
                 automaticallyAdjustContentInsets={false} >
-                    <ContactList
-                        style={contactsStyle.scrollView}
-                        data={this.state.listData}
-                        onPressRow={this.onPressRow} />
+                    {this.renderSearchBar()}
+                    {this.renderListView()}
                 </ScrollView>
                 <Modal ref={(ref)=>{this._modal = ref}}/>
             </View>

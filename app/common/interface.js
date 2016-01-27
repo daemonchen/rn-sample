@@ -29,6 +29,8 @@ module.exports = {
 
     invite: NZAOM_API_DOMAIN + '/api/invite',
 
+    apply: NZAOM_API_DOMAIN + '/api/apply',
+
     order: NZAOM_API_DOMAIN + '/api/order',
 
     updateTaskStatus: NZAOM_API_DOMAIN + '/api/order_job/over',

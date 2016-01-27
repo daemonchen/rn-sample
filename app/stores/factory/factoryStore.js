@@ -10,7 +10,20 @@ class FactoryStore {
         this.bindActions(factoryAction);
         this.state = {};
     }
+    onGet(data) {
+        factoryService.get(data)
+        .then((responseData) => {
+            factoryAction.getSuccess(responseData)
+        }).done();
 
+        this.preventDefault();
+    }
+    onGetSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'get'
+
+        this.setState(responseData);
+    }
     onCreate(data) {
         factoryService.create(data)
         .then((responseData) => {
