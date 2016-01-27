@@ -19,18 +19,20 @@
 
   self.callback = callback;
   //设置分享的点击链接
-
-  [UMSocialData defaultData].extConfig.wechatSessionData.url = aData[@"url"];
-  [UMSocialData defaultData].extConfig.wechatTimelineData.url =aData[@"url"];
-  
+//
+//  [UMSocialData defaultData].extConfig.wechatSessionData.url = aData[@"url"];
+//  [UMSocialData defaultData].extConfig.wechatTimelineData.url =aData[@"url"];
   dispatch_async(dispatch_get_main_queue(), ^{
     [UMSocialSnsService presentSnsIconSheetView:vc
                                          appKey:UmengAppkey
                                       shareText:aData[@"text"]
+//                                      shareText:shareText
 //                                     shareImage:[UIImage image]
-                                     shareImage:aData[@"image"]
+//                                     shareImage:aData[@"image"]
+                                     shareImage:nil
                                 shareToSnsNames:[NSArray arrayWithObjects:UMShareToSina,UMShareToWechatSession,UMShareToWechatTimeline,
                                                  UMShareToWechatFavorite,UMShareToQQ,nil]
+//                                shareToSnsNames:nil
                                        delegate:self];
   });
   
@@ -43,8 +45,8 @@
   if(response.responseCode == UMSResponseCodeSuccess)
   {
     //得到分享到的微博平台名
-    self.callback(@[response]);
-    NSLog(@"-------share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
+    self.callback(@[response.data]);
+//    NSLog(@"-------share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
   }
 }
 
