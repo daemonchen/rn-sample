@@ -23,7 +23,6 @@ var util = require('../../common/util');
 var Button = require('../../common/button.js');
 
 var employeeAction = require('../../actions/employee/employeeAction');
-var employeeStore = require('../../stores/employee/employeeStore');
 var userAction = require('../../actions/user/userAction');
 var userStore = require('../../stores/user/userStore');
 

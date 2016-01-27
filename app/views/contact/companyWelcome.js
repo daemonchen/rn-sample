@@ -61,16 +61,17 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
                 <ScrollView style={commonStyle.container}
+                contentContainerStyle={{alignItems: 'center'}}
                 automaticallyAdjustContentInsets={false} >
-                    <Text style={[styles.welcomeText, commonStyle.textGray]}>加入或新建工厂</Text>
+                    <Text style={[styles.welcomeText, commonStyle.textDark,{marginTop: 20}]}>加入或新建工厂</Text>
                     <Button
-                    style={commonStyle.blueButton}
-                    onPress={this.goCreateFactory} >
+                    style={[commonStyle.blueButton, {marginTop: 100}]}
+                    onPress={this.goFactoryList} >
                         加入已有工厂
                     </Button>
                     <Button
-                    style={[commonStyle.button, commonStyle.blue]}
-                    onPress={this.goFactoryList} >
+                    style={[commonStyle.greenButton]}
+                    onPress={this.goCreateFactory} >
                         新建工厂
                     </Button>
                 </ScrollView>

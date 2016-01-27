@@ -64,6 +64,16 @@ module.exports = React.StyleSheet.create({
         borderBottomWidth: 1 / React.PixelRatio.get(),
         borderBottomColor: '#eee'
     },
+    greenButton: {
+        width: width - 32,
+        marginTop: 12,
+        marginBottom: 12,
+        paddingVertical: 10,
+        fontSize: 16,
+        fontWeight: '500',
+        color:'#fff',
+        backgroundColor:'#34a853'
+    },
     blueButton: {
         width: width - 32,
         marginTop: 12,

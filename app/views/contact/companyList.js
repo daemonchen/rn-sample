@@ -32,18 +32,10 @@ var contactAction = require('../../actions/contact/contactAction');
 var contactStore = require('../../stores/contact/contactStore');
 
 var employeeAction = require('../../actions/employee/employeeAction');
-var employeeStore = require('../../stores/employee/employeeStore');
 
 var util = require('../../common/util');
 var appConstants = require('../../constants/appConstants');
-/*
-target: 表示从哪里打开通讯录 enum
-{
-    1: 'createTask',
-    2: 'createOrder'
-    3: 'normal'
-}
-*/
+
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
@@ -54,44 +46,12 @@ module.exports = React.createClass({
     },
     _modal: {},
     componentDidMount: function(){
-        contactAction.getList();
         this.unlisten = contactStore.listen(this.onChange)
-        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.unlistenEmployee();
     },
-    handleCreate: function(result){
-        this._modal.showModal('邀请成功');
-        if (this._timeout) {
-            this.clearTimeout(this._timeout);
-        };
-        this._timeout = this.setTimeout(()=>{
-            this._modal.hideModal();
-        },2000);
-    },
-    handleDelete: function(result){
-        if (this._timeout) {
-            this.clearTimeout(this._timeout);
-        };
-        this._timeout = this.setTimeout(()=>{
-            contactAction.getList();
-        },350);
-    },
-    onEmployeeChange: function(){
-        var result = employeeStore.getState();
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
-        switch(result.type){
-            case 'create':
-                return this.handleCreate(result);
-            case 'delete':
-                return this.handleDelete(result);
-        }
-    },
+
     onChange: function() {
         var result = contactStore.getState();
         if (result.type != 'get') { return; };
@@ -115,87 +75,41 @@ module.exports = React.createClass({
             Actions.pop();
         }
     },
-    doInviteEmployee: function(person){
-        var phone = person.phone.replace(/[^\d]/g, '');
-        // if (/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
-        // }else{
-        //     util.alert('手机号码格式错误');
-        // }
-        employeeAction.create({
-            targetMobile: phone
-        });
-    },
-    openAddress: function(){
-        var self = this;
-        PhonePicker.select(function(person) {
-            if (person) {
-                self.doInviteEmployee(person);
-            }
-        })
-    },
-    doPushInviteEmployee: function(){
-        Actions.inviteEmployee({
-            title: '邀请'
-        });
-    },
-    onSelectActionSheet: function(index){
-        switch(index){
-            case 0:
-                return this.openAddress();
-            case 1:
-                return this.doPushInviteEmployee();
-            default :
-                return;
-        }
-    },
-    goCompanySetting: function(){
-        Actions.companySettings({
-            title: '设置'
-        });
-    },
-    showActionSheet: function(){
-        var self = this;
-        ActionSheetIOS.showActionSheetWithOptions({
-            options: this.actionList,
-            cancelButtonIndex: 2,
-            },
-            (buttonIndex) => {
-              self.onSelectActionSheet(buttonIndex);
-            });
-    },
-    actionList: ['手机通讯录邀请','手机号码邀请','取消'],
-    rightButtonConfig: function(){
-        var self = this;
-        var rights = appConstants.userRights.rights;
-        var targetRights = 65536;
-        if ((rights & targetRights) == targetRights){
-            return (
-                <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
-                    <RightAddButton onPress={this.showActionSheet} />
-                    <RightMoreButton onPress={this.goCompanySetting} />
-                </View>
-                );
-        }else{
-            return(
-                <View style={{flexDirection:'row'}}>
-                    <RightMoreButton onPress={this.goCompanySetting} />
-                </View>
-                )
-        }
-
-    },
     renderNavigationBar: function(){
         return(
             <NavigationBar
                 title={{ title: this.props.title }}
-                leftButton={<BlueBackButton />}
-                rightButton={this.rightButtonConfig()} />
+                leftButton={<BlueBackButton />} />
+            );
+    },
+    onChangeText: function(text){
+        console.log('-----onChangeText', text);
+    },
+    onSearchButtonPress: function(e){
+        console.log('-----onSearchButtonPress', e)
+    },
+    onCancelButtonPress: function(e){
+        console.log('-----onCancelButtonPress', e)
+    },
+    renderSearchBar: function(){
+        return(
+            <SearchBar
+                ref={(ref)=>{this.searchBar = ref}}
+                style={{border: 0}}
+                placeholder='搜索'
+                tintColor='#727272'
+                barTintColor="#fff"
+                textFieldBackgroundColor='#f2f2f2'
+                onChangeText={this.onChangeText}
+                onSearchButtonPress={this.onSearchButtonPress}
+                onCancelButtonPress={this.onCancelButtonPress} />
             );
     },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
+                {this.renderSearchBar()}
                 <ScrollView style={commonStyle.container}
                 automaticallyAdjustContentInsets={false} >
                     <ContactList

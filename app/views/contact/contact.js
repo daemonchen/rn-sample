@@ -92,7 +92,7 @@ module.exports = React.createClass({
         });
     },
     goCompanyWelcom: function(){
-        Actions.companyWelcom({
+        Actions.companyWelcome({
             title: '新建或加入工厂'
         });
     },

@@ -21,9 +21,8 @@ var Button = require('../../common/button.js');
 var Modal = require('../../common/modal');
 var util = require('../../common/util');
 
-
-var loginAction = require('../../actions/user/loginAction');
-var loginStore = require('../../stores/user/loginStore');
+var employeeAction = require('../../actions/employee/employeeAction');
+var employeeStore = require('../../stores/employee/employeeStore');
 
 var BlueBackButton = require('../../common/blueBackButton');
 
@@ -34,10 +33,19 @@ module.exports = React.createClass({
         return {}
     },
     componentDidMount: function(){
+        this.unlisten = employeeStore.listen(this.onEmployeeChange)
     },
     componentWillUnmount: function() {
+        this.unlisten();
     },
     _modal: {},
+    onEmployeeChange: function(){
+        var result = employeeStore.getState();
+        if (result.status != 200 && !!result.message) {
+            console.log('------result', result);
+            return;
+        }
+    },
     showShareActionSheet: function() {
         ActionSheetIOS.showShareActionSheetWithOptions({
           url: 'https://code.facebook.com',
@@ -73,7 +81,12 @@ module.exports = React.createClass({
             image: 'http://img01.nzaom.com/logo-mobile-0114logo_welcom.png',
             url: link
         },function(res){
-            console.log('------res', res);
+            console.log('------share done with response:', res);
+        });
+    },
+    doDeleteEmployee: function(){
+        employeeAction.delete({
+            userId: appConstants.user.userId
         });
     },
     doLogout: function(){
@@ -81,7 +94,7 @@ module.exports = React.createClass({
             '退出企业',
             '您确定要退出企业吗',
             [
-                {text: '确定', onPress: () => {loginAction.logout()} },
+                {text: '确定', onPress: () => {this.doDeleteEmployee()} },
                 {text: '取消', onPress: () => {return}, style: 'cancel'},
             ]
         )
@@ -112,7 +125,7 @@ module.exports = React.createClass({
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
-                        onPress={this.goAbout}>
+                        onPress={this.doLogout}>
                         <View
                         style={commonStyle.settingItem}>
                             <Image
