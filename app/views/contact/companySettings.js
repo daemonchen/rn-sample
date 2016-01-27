@@ -61,20 +61,17 @@ module.exports = React.createClass({
         });
     },
     doShare: function(){
-        // util.wechatSessionShare({
-        //     text: '----test from js',
-        //     image: require('../../images/logo.png'),
-        //     url: 'http://www.nzaom.com'
-        // },function(res){
-        //     console.log('------res', res);
-        // });
-        console.log('---appConstants', appConstants.user);
-        var link = "http://www.nzaom.com/h5/invite/{userId}";
+        var userId = appConstants.user.userId;
+        var userName = appConstants.user.userName;
+        var factoryName = appConstants.user.factoryName;
+        var link = `http:\/\/www.nzaom.com/h5/invite/${userId}`;
+        var title = `邀请你加入${factoryName}`;
+        var text = `${userName}在你造么上创建了一个团队-${factoryName}，邀请大家加入。` + link;
         util.presentSnsIconSheetView({
-            text: '----test from js' + new Date(),
-            // image: require('../../images/logo.png'),
-            image: 'http://www.baidu.com/img/bdlogo.gif',
-            url: 'http://www.baidu.com'
+            title: title,
+            text: text,
+            image: 'http://img01.nzaom.com/logo-mobile-0114logo_welcom.png',
+            url: link
         },function(res){
             console.log('------res', res);
         });

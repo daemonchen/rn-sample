@@ -25,6 +25,10 @@
 //    [UMSocialData defaultData].extConfig.sinaData.url = aData[@"url"];
     //设置分享图片
     [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeImage url:aData[@"image"]];
+//    设置微信好友title
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = aData[@"title"];
+//    设置微信朋友圈title
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = aData[@"title"];
     UIViewController *vc = RCTKeyWindow().rootViewController;
     [UMSocialSnsService presentSnsIconSheetView:vc
                                          appKey:UmengAppkey
