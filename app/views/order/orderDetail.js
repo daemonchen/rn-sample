@@ -313,7 +313,7 @@ module.exports = React.createClass({
                         style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/person/feedback.png')}/>
+                            source={require('../../images/order/editor_outling.png')}/>
                             <Text
                             style={[commonStyle.settingDetail]}>
                             编辑
@@ -328,7 +328,7 @@ module.exports = React.createClass({
                         style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/person/feedback.png')}/>
+                            source={require('../../images/order/share_black.png')}/>
                             <Text
                             style={[commonStyle.settingDetail]}>
                             分享

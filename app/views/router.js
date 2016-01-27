@@ -45,6 +45,8 @@ var CompanyMemberList = require('./contact/companyMemberList');
 var CompanySettings = require('./contact/companySettings');
 var ContactDetail = require('./contact/contactDetail');
 var CreateFactory = require('./contact/createFactory');
+var CompanyWelcome = require('./contact/companyWelcome');
+var CompanyList = require('./contact/companyList');
 var CustomerList = require('./contact/customerList');
 var CustomerSettings = require('./contact/customerSettings');
 var InviteEmployee = require('./contact/inviteEmployee');
@@ -236,6 +238,8 @@ module.exports = React.createClass({
                 <Route name="companySettings" component={CompanySettings} title="设置"/>
                 <Route name="contactDetail" component={ContactDetail} title="联系人详情"/>
                 <Route name="createFactory" component={CreateFactory} title="新建工厂"/>
+                <Route name="companyWelcome" component={CompanyWelcome} title="新建或加入工厂" schema="modal"/>
+                <Route name="companyList" component={CompanyList} title="搜索入工厂"/>
                 <Route name="customerList" component={CustomerList} title="客户列表"/>
                 <Route name="customerSettings" component={CustomerSettings} title="客户设置" schema="modal"/>
                 <Route name="inviteEmployee" component={InviteEmployee} title="邀请员工"/>

@@ -102,7 +102,7 @@ module.exports = React.createClass({
                         style={commonStyle.settingItem}>
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/person/score.png')}/>
+                            source={require('../../images/contact/link_gary.png')}/>
                             <Text
                             style={commonStyle.settingDetail}>
                                 分享邀请链接
@@ -117,7 +117,7 @@ module.exports = React.createClass({
                         style={commonStyle.settingItem}>
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/person/logo_gray.png')}/>
+                            source={require('../../images/contact/quit_gray.png')}/>
                             <Text
                             style={commonStyle.settingDetail}>
                                 退出企业

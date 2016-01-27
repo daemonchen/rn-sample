@@ -66,7 +66,7 @@ module.exports = React.createClass({
         if (!this.state.factoryName) {
             return(
                 <TouchableHighlight
-                onPress={this.props.goCreateFactory}
+                onPress={this.props.goCompanyWelcom}
                 underlayColor='#eee'>
                     <View style={contactsStyle.contactsItem}>
                         <Image
@@ -74,7 +74,7 @@ module.exports = React.createClass({
                             source={require('../../images/contact/organization.png')} />
                         <Text style={contactsStyle.contactsItemDetail}>组织架构</Text>
                         <Text style={[contactsStyle.contactRightText, commonStyle.blue]}>
-                            添加工厂
+                            加入 / 新建工厂
                         </Text>
                     </View>
                 </TouchableHighlight>

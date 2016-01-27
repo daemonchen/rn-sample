@@ -19,11 +19,8 @@ var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');
 
 var ContactGroup = require('./group');
-var ContactDetail = require('./contactDetail');
 var ContactList = require('./contactList');
-var CustomerList = require('./customerList');
-var CompanyMemberList = require('./companyMemberList');
-var CreateFactory = require('./createFactory');
+
 var BlueBackButton = require('../../common/blueBackButton');
 
 var contactAction = require('../../actions/contact/contactAction');
@@ -94,9 +91,9 @@ module.exports = React.createClass({
             target: this.state.target
         });
     },
-    goCreateFactory: function(){
-        Actions.createFactory({
-            title: '新建工厂'
+    goCompanyWelcom: function(){
+        Actions.companyWelcom({
+            title: '新建或加入工厂'
         });
     },
     renderNavigationBar: function(){
@@ -126,7 +123,7 @@ module.exports = React.createClass({
                     style={styles.contactGroup}
                     goCustomerList={this.goCustomerList}
                     goCompanyMemberList={this.goCompanyMemberList}
-                    goCreateFactory={this.goCreateFactory} />
+                    goCompanyWelcom={this.goCompanyWelcom} />
                     <View>
                         <Text style={[commonStyle.blue, commonStyle.title]}>
                             常用联系人
