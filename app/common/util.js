@@ -1,6 +1,7 @@
 var React = require('react-native')
 var Dimensions = require('Dimensions')
 var moment = require('moment');
+var toast = require('./toast');
 var {
     AlertIOS,
     NativeModules,
@@ -25,6 +26,9 @@ module.exports = {
             console.log(e);
         }
         return result;
+    },
+    toast: function(msg){
+        toast.showShortCenter(msg);
     },
     wechatSessionShare: function(data, callback){
         UMengManager.wechatSessionShare(data, callback);

@@ -112,6 +112,9 @@ module.exports = React.createClass({
             Actions.pop();
         }
     },
+    goApplicationList: function(){
+        Actions.applicationList();
+    },
     goCustomerList: function(){
         Actions.customerList({
             title: '客户',
@@ -326,6 +329,7 @@ module.exports = React.createClass({
 
                     <ContactGroup
                     style={styles.contactGroup}
+                    goApplicationList={this.goApplicationList}
                     goCustomerList={this.goCustomerList}
                     goCompanyMemberList={this.goCompanyMemberList}
                     goCompanyWelcom={this.goCompanyWelcom} />

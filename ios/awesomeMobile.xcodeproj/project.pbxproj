@@ -45,6 +45,7 @@
 		D189FDBC1C579BDE00784BB3 /* AppDelegate+GeTui.m in Sources */ = {isa = PBXBuildFile; fileRef = D189FDBB1C579BDE00784BB3 /* AppDelegate+GeTui.m */; };
 		D189FDC11C58B04100784BB3 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D189FDBE1C58B04100784BB3 /* libMobClickLibrary.a */; };
 		D1C84B961C4F8D020050EFEE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1C84B951C4F8CF50050EFEE /* libRCTPushNotification.a */; };
+		D1F67BEA1C5A52C3003DF690 /* libRCTToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F67BE01C5A50BB003DF690 /* libRCTToast.a */; };
 		D1FD91671C571D080067EC7E /* AppDelegate+UMeng.m in Sources */ = {isa = PBXBuildFile; fileRef = D1FD91661C571D080067EC7E /* AppDelegate+UMeng.m */; };
 		D1FD916F1C5741100067EC7E /* UMengManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D1FD916E1C5741100067EC7E /* UMengManager.m */; };
 		D1FD91EE1C5762900067EC7E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FD91ED1C5762900067EC7E /* Security.framework */; };
@@ -243,6 +244,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTPushNotification;
 		};
+		D1F67BDF1C5A50BB003DF690 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1F67BD01C5A50BB003DF690 /* RCTToast.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 327633421BFAAD7E004DA88E;
+			remoteInfo = RCTToast;
+		};
 		D22832E91C0F3A3B00027EA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */;
@@ -342,6 +350,7 @@
 		D189FDBF1C58B04100784BB3 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		D189FDC01C58B04100784BB3 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		D1C84B901C4F8CF50050EFEE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		D1F67BD01C5A50BB003DF690 /* RCTToast.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTToast.xcodeproj; path = "../../../github/react-native-toast/ios/RCTToast.xcodeproj"; sourceTree = "<group>"; };
 		D1FD91651C571D080067EC7E /* AppDelegate+UMeng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+UMeng.h"; path = "awesomeMobile/AppDelegate+UMeng.h"; sourceTree = "<group>"; };
 		D1FD91661C571D080067EC7E /* AppDelegate+UMeng.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+UMeng.m"; path = "awesomeMobile/AppDelegate+UMeng.m"; sourceTree = "<group>"; };
 		D1FD916E1C5741100067EC7E /* UMengManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMengManager.m; sourceTree = "<group>"; };
@@ -510,6 +519,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1F67BEA1C5A52C3003DF690 /* libRCTToast.a in Frameworks */,
 				D11E67161C5909B5003E9E1B /* libRNSearchBar.a in Frameworks */,
 				D2BF47261C214901002C7185 /* libz.tbd in Frameworks */,
 				D1FD924E1C5772990067EC7E /* libstdc++.tbd in Frameworks */,
@@ -666,6 +676,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D1F67BD01C5A50BB003DF690 /* RCTToast.xcodeproj */,
 				D11E67101C5909A7003E9E1B /* RNSearchBar.xcodeproj */,
 				D189FDBD1C58B04100784BB3 /* UMAnalytics_Sdk_3.6.6 */,
 				D189FDA91C57984300784BB3 /* UMSocial_Sdk_Extra_Frameworks */,
@@ -840,6 +851,14 @@
 			isa = PBXGroup;
 			children = (
 				D1C84B951C4F8CF50050EFEE /* libRCTPushNotification.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D1F67BD11C5A50BB003DF690 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1F67BE01C5A50BB003DF690 /* libRCTToast.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1313,6 +1332,10 @@
 					ProjectRef = 832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */;
 				},
 				{
+					ProductGroup = D1F67BD11C5A50BB003DF690 /* Products */;
+					ProjectRef = D1F67BD01C5A50BB003DF690 /* RCTToast.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302E01ABCB9EE00DB3ED1 /* Products */;
 					ProjectRef = 00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */;
 				},
@@ -1461,6 +1484,13 @@
 			fileType = archive.ar;
 			path = libRCTPushNotification.a;
 			remoteRef = D1C84B941C4F8CF50050EFEE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D1F67BE01C5A50BB003DF690 /* libRCTToast.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTToast.a;
+			remoteRef = D1F67BDF1C5A50BB003DF690 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D22832EA1C0F3A3B00027EA3 /* libRCTCameraRoll.a */ = {

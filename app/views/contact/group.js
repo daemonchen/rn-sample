@@ -40,6 +40,28 @@ module.exports = React.createClass({
             }
         })
     },
+    renderApplicationItem: function(){
+        var rights = appConstants.userRights.rights;
+        var targetRights = 65536;
+        if ((rights & targetRights) == targetRights){
+            return(
+                <TouchableHighlight
+                onPress={this.props.goApplicationList}
+                underlayColor='#eee'>
+                <View style={contactsStyle.contactsItem}>
+                    <Image
+                    style={contactsStyle.contactsItemCircle}
+                    source={require('../../images/contact/horn_gray_circle.png')} />
+                    <Text style={contactsStyle.contactsItemDetail}>申请人列表</Text>
+                </View>
+            </TouchableHighlight>
+            )
+        }else{
+            return(
+                <View />
+                )
+        }
+    },
     renderCustomerItem: function(){
         var rights = appConstants.userRights.rights;
         var targetRights = 65536;
@@ -104,6 +126,7 @@ module.exports = React.createClass({
                   style={contactsStyle.scrollView}>
                     {this.renderFactoryItem()}
                     {this.renderCustomerItem()}
+                    {this.renderApplicationItem()}
                     <TouchableHighlight
                     underlayColor='#eee'
                     onPress={this.openAddress} >

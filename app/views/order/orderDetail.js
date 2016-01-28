@@ -83,9 +83,11 @@ module.exports = React.createClass({
         };
         if (result.type == 'update') {
             var status = !this.state.orderData.userFollow ? 1 : 0;
+            var toastMessage = !!status ? '关注成功' : '您已取消关注'
             this.setState({
                 orderData: Object.assign(orderData,{userFollow: status})
             });
+            util.toast(toastMessage);
         };
     },
     onTaskListChange: function(){

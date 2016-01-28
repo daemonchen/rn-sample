@@ -22,7 +22,7 @@ var HomeSegmentControl =  React.createClass({
     render:function(){
         return (
             <View style={{paddingHorizontal:16, paddingVertical: 8}}>
-                <SegmentedControlIOS values={['未完成', '已完成']}
+                <SegmentedControlIOS values={['待我完成', '我已完成']}
                 tintColor={'#4285f4'}
                 selectedIndex={this.state.selectedIndex}
                 onChange={this.props.onSegmentChange} />
