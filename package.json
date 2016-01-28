@@ -26,7 +26,6 @@
     "react-native-swiper": "^1.4.3",
     "react-native-vector-icons": "^0.8.5",
     "react-native-webview-bridge": "^0.16.1",
-    "tcomb-form-native": "^0.3.0",
     "underscore": "^1.8.3"
   }
 }

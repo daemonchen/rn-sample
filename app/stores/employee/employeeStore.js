@@ -26,6 +26,36 @@ class EmployeeStore {
         this.setState(responseData);
     }
 
+    onGetApplcationList(data) {
+        employeeService.getApplcationList(data)
+        .then((responseData) => {
+            employeeAction.getApplcationListSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetApplcationListSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'getApplcationList'
+
+        this.setState(responseData);
+    }
+
+    onAgreeApplication(data) {
+        employeeService.agreeApplication(data)
+        .then((responseData) => {
+            employeeAction.agreeApplicationSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onAgreeApplicationSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'agreeApplication'
+
+        this.setState(responseData);
+    }
+
     onCreate(data) {
         employeeService.create(data)
         .then((responseData) => {
@@ -51,6 +81,20 @@ class EmployeeStore {
     onDeleteSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'delete'
+
+        this.setState(responseData);
+    }
+    onJoin(data) {
+        employeeService.joinFactory(data)
+        .then((responseData) => {
+            employeeAction.joinSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onJoinSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'join'
 
         this.setState(responseData);
     }

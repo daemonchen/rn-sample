@@ -54,15 +54,23 @@ module.exports = React.createClass({
     },
     _modal: {},
     componentDidMount: function(){
-        contactAction.getList();
-        this.unlisten = contactStore.listen(this.onChange)
-        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange)
+        this.unlisten = contactStore.listen(this.onChange);
+        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange);
+        if (this._timeout) {this.clearTimeout(this._timeout)};
+        this._timeout = this.setTimeout(this.fetchData, 350);
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenEmployee();
     },
+    fetchData: function(){
+        contactAction.getList();
+    },
     handleCreate: function(result){
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
         this._modal.showModal('邀请成功');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
@@ -72,24 +80,34 @@ module.exports = React.createClass({
         },2000);
     },
     handleDelete: function(result){
-        if (this._timeout) {
-            this.clearTimeout(this._timeout);
-        };
-        this._timeout = this.setTimeout(()=>{
-            contactAction.getList();
-        },350);
-    },
-    onEmployeeChange: function(){
-        var result = employeeStore.getState();
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
         }
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(this.fetchData,350);
+    },
+    handleAgreeApplication: function(result){
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(this.fetchData,350);
+    },
+    onEmployeeChange: function(){
+        var result = employeeStore.getState();
         switch(result.type){
             case 'create':
                 return this.handleCreate(result);
             case 'delete':
                 return this.handleDelete(result);
+            case 'agreeApplication':
+                return this.handleAgreeApplication(result);
         }
     },
     onChange: function() {

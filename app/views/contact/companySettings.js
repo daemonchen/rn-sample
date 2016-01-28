@@ -33,19 +33,10 @@ module.exports = React.createClass({
         return {}
     },
     componentDidMount: function(){
-        this.unlisten = employeeStore.listen(this.onEmployeeChange)
     },
     componentWillUnmount: function() {
-        this.unlisten();
     },
     _modal: {},
-    onEmployeeChange: function(){
-        var result = employeeStore.getState();
-        if (result.status != 200 && !!result.message) {
-            console.log('------result', result);
-            return;
-        }
-    },
     showShareActionSheet: function() {
         ActionSheetIOS.showShareActionSheetWithOptions({
           url: 'https://code.facebook.com',
@@ -100,6 +91,9 @@ module.exports = React.createClass({
         )
 
     },
+    goApplicationList: function(){
+        Actions.applicationList();
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
@@ -134,6 +128,21 @@ module.exports = React.createClass({
                             <Text
                             style={commonStyle.settingDetail}>
                                 退出企业
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this.goApplicationList}>
+                        <View
+                        style={commonStyle.settingItem}>
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/contact/horn_gray.png')}/>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                                申请人列表
                             </Text>
                         </View>
                     </TouchableHighlight>

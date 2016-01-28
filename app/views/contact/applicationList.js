@@ -3,7 +3,6 @@
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar';
 var Actions = require('react-native-router-flux').Actions;
-var SearchBar = require('react-native-search-bar');
 var PhonePicker = require('react-native-phone-picker');
 var TimerMixin = require('react-timer-mixin');
 var {
@@ -50,17 +49,39 @@ module.exports = React.createClass({
     },
     _modal: {},
     componentDidMount: function(){
-        this.unlisten = factoryStore.listen(this.onChange);
-        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange)
+        this.unlisten = employeeStore.listen(this.onChange);
+        if (this._timeout) {this.clearTimeout(this._timeout)};
+        this._timeout = this.setTimeout(this.fetchData, 350);
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.unlistenEmployee();
     },
 
     onChange: function() {
-        var result = factoryStore.getState();
-        if (result.type != 'get') { return; };
+        var result = employeeStore.getState();
+        if (result.type=="getApplcationList") {
+            this.transformList(result);
+        };
+        if (result.type=="agreeApplication") {
+            this.handleAgree(result);
+        };
+
+    },
+    handleAgree: function(result){
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        var currentList = this.state.list;
+        //标记已加入
+        for (var i = 0; i < currentList.length; i++) {
+            (currentList[i].id == result.data) && (currentList[i].status = 2)
+        };
+        this.setState({
+            list: currentList || [],
+            dataSource : this.state.dataSource.cloneWithRows(currentList || [])
+        });
+    },
+    transformList: function(result){
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
@@ -70,30 +91,18 @@ module.exports = React.createClass({
             dataSource : this.state.dataSource.cloneWithRows(result.data || [])
         });
     },
-    onEmployeeChange: function(){
-        var result = employeeStore.getState();
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
-        switch(result.type){
-            case 'join':
-                return this.handleJoin(result);
-        }
-    },
-    handleJoin: function(result){
-        var currentList = this.state.list;
-        //标记已申请
-        for (var i = 0; i < currentList.length; i++) {
-            (currentList[i].factoryId == result.data) && (currentList[i].isSelected = true)
-        };
-        this.setState({
-            list: currentList || [],
-            dataSource : this.state.dataSource.cloneWithRows(currentList || [])
+    doAgree: function(data){
+        employeeAction.agreeApplication({
+            id: data.id,
+            status: 2
         });
     },
     onPressRow: function(data){
-        employeeAction.join({
-            factoryId: data.factoryId
+        data.group = 1;
+        data.mobiles = [data.mobile];
+        Actions.contactDetail({
+            title: data.userName,
+            data: data
         });
     },
     renderNavigationBar: function(){
@@ -103,61 +112,63 @@ module.exports = React.createClass({
                 leftButton={<BlueBackButton />} />
             );
     },
-    doQuery: function(text){
-        if (!text) {return};
-        factoryAction.get({
-            q: text
-        });
-    },
-    onChangeText: function(text){
-        var self = this;
-        if (this._timeout) {this.clearTimeout(this._timeout)};
-        this._timeout = this.setTimeout(function(){
-            self.doQuery(text);
-        }, 500);
-    },
-    onSearchButtonPress: function(text){
-        this.doQuery(text);
-    },
-    onCancelButtonPress: function(e){
-        console.log('-----onCancelButtonPress', e)
-    },
-    renderSearchBar: function(){
-        return(
-            <View style={{paddingHorizontal: 10}}>
-                <SearchBar
-                    ref={(ref)=>{this.searchBar = ref}}
-                    placeholder='搜索'
-                    tintColor='#727272'
-                    barTintColor="#fff"
-                    textFieldBackgroundColor='#f2f2f2'
-                    hideBackground={true}
-                    onChangeText={this.onChangeText}
-                    onSearchButtonPress={this.onSearchButtonPress}
-                    onCancelButtonPress={this.onCancelButtonPress} />
-            </View>
-            );
+    fetchData: function(text){
+        employeeAction.getApplcationList();
     },
     renderRowRightBtn: function(data){
-        if (!!data.isSelected) {
+        if (data.status == 1) {
+            return(
+                <View style={{width: 64}}>
+                    <Button
+                    style={[commonStyle.buttonBlueFlex]}
+                    onPress={()=>{this.doAgree(data)}} >
+                        同意
+                    </Button>
+                </View>
+                );
+        };
+        if ((data.status == 2 ) || (data.status == 5)) {
             return(
                 <View style={{width: 64}}>
                     <Text
                     style={[commonStyle.textGray]} >
-                        已申请
+                        已同意
                     </Text>
                 </View>
                 );
         };
-        return(
-            <View style={{width: 64}}>
-                <Button
-                style={[commonStyle.buttonBlueFlex]}
-                onPress={()=>{this.onPressRow(data)}} >
-                    申请
-                </Button>
-            </View>
-            );
+        if (data.status == 4) {
+            return(
+                <View style={{width: 64}}>
+                    <Text
+                    style={[commonStyle.textGray]} >
+                        已加入
+                    </Text>
+                </View>
+                );
+        };
+        return(<View />);
+    },
+    renderAvatar: function(data){
+        if (!data) {
+            return(<View style={contactsStyle.contactsItemCircle}/>);
+        };
+        if (data.avatar) {
+            return(
+                <Image
+                  style={contactsStyle.contactsItemCircle}
+                  source={{uri: data.avatar}} />
+                );
+        }else{
+            var circleBackground = {
+                backgroundColor: data.bgColor
+            }
+            return(
+                <View style={[contactsStyle.contactsItemCircle, circleBackground]}>
+                    <Text style={contactsStyle.contactsItemTitle}>{data.simpleUserName}</Text>
+                </View>
+                )
+        }
     },
     renderRow: function(data){
         return(
@@ -167,10 +178,17 @@ module.exports = React.createClass({
                 onPress={()=>{this.onPressRow(data)}}>
                 <View
                 style={commonStyle.settingItem}>
-                    <Text
-                    style={commonStyle.settingDetail}>
-                        {data.factoryName}
-                    </Text>
+                    {this.renderAvatar(data)}
+                    <View style={[commonStyle.settingDetailWrapper,{marginLeft: 10}]}>
+                        <Text
+                        style={commonStyle.settingDetail}>
+                            {data.userName}
+                        </Text>
+                        <Text
+                        style={[commonStyle.settingDetail, {marginTop: 10}]}>
+                            {data.mobile}
+                        </Text>
+                    </View>
                     {this.renderRowRightBtn(data)}
                 </View>
             </TouchableHighlight>
@@ -204,7 +222,6 @@ module.exports = React.createClass({
                 <ScrollView style={commonStyle.container}
                 keyboardDismissMode={'interactive'}
                 automaticallyAdjustContentInsets={false} >
-                    {this.renderSearchBar()}
                     {this.renderListView()}
                 </ScrollView>
                 <Modal ref={(ref)=>{this._modal = ref}}/>

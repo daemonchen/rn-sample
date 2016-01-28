@@ -74,7 +74,7 @@ module.exports = React.createClass({
                             source={require('../../images/contact/organization.png')} />
                         <Text style={contactsStyle.contactsItemDetail}>组织架构</Text>
                         <Text style={[contactsStyle.contactRightText, commonStyle.blue]}>
-                            加入 / 新建工厂
+                            加入/新建
                         </Text>
                     </View>
                 </TouchableHighlight>

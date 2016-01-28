@@ -74,6 +74,15 @@ module.exports = React.StyleSheet.create({
         color:'#fff',
         backgroundColor:'#34a853'
     },
+    buttonBlueFlex: {
+        flex: 1,
+        paddingVertical: 8,
+        fontSize: 16,
+        fontWeight: '500',
+        color:'#fff',
+        backgroundColor:'#4285f4',
+        borderRadius: 5
+    },
     blueButton: {
         width: width - 32,
         marginTop: 12,
@@ -184,6 +193,9 @@ module.exports = React.StyleSheet.create({
         // height: 59,
         // paddingTop: 20,
         width: 96,
+    },
+    settingDetailWrapper: {
+        flex: 1
     },
     settingDetail: {
         fontSize: 16,

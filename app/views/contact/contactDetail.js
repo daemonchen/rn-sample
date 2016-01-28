@@ -4,6 +4,7 @@ var React = require('react-native');
 import NavigationBar from 'react-native-navbar';
 var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
+var TimerMixin = require('react-timer-mixin');
 var {
     View,
     Text,
@@ -23,6 +24,7 @@ var util = require('../../common/util');
 var Button = require('../../common/button.js');
 
 var employeeAction = require('../../actions/employee/employeeAction');
+var employeeStore = require('../../stores/employee/employeeStore');
 var userAction = require('../../actions/user/userAction');
 var userStore = require('../../stores/user/userStore');
 
@@ -34,6 +36,7 @@ var RoleSetting = require('./roleSetting');
 var PositionSetting = require('./positionSetting');
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         return {
             group: this.props.data.group,//1: 工厂员工 2: 客户,
@@ -41,10 +44,26 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        this.unlisten = userStore.listen(this.onChange)
+        this.unlisten = userStore.listen(this.onChange);
+        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.unlistenEmployee();
+    },
+    onEmployeeChange: function(){
+        var result = employeeStore.getState();
+        if (result.type =="delete") {
+            if (result.status != 200 && !!result.message) {
+                return;
+            }
+            if (this._timeout) {
+                this.clearTimeout(this._timeout);
+            };
+            this._timeout = this.setTimeout(()=>{
+                Actions.pop();
+            },350);
+        };
     },
     onChange: function() {
         var result = userStore.getState();

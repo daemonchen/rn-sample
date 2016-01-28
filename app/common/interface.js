@@ -55,6 +55,8 @@ module.exports = {
 
     factory: NZAOM_API_DOMAIN + '/api/factory',
 
+    factorys: NZAOM_API_DOMAIN + '/api/factories',
+
     role: NZAOM_API_DOMAIN + '/api/role',
 
     avatar: NZAOM_API_DOMAIN + '/api/user/avatar',

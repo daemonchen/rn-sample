@@ -170,7 +170,7 @@ module.exports = React.createClass({
         )
     },
     renderListView: function(){
-        if (!this.state.dataSource || this.state.dataSource.length == 0) {
+        if (!this.state.list || this.state.list.length == 0) {
             return this.renderEmptyRow();
         };
                 // onRefresh = {this.onRefresh}

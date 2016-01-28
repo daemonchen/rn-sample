@@ -127,6 +127,13 @@ module.exports = React.createClass({
             total: response.total,
             isRefreshing: false
         });
+        if (!this.state.factoryName) {
+            var self = this;
+            if (this._timeout) {this.clearTimeout(this._timeout)};
+            this._timeout = this.setTimeout(function() {
+                self.goCreateFactory();
+            }, 350);
+        }
     },
     getSectionData: function(dataBlob, sectionID){
         return dataBlob[sectionID];
@@ -236,8 +243,8 @@ module.exports = React.createClass({
         return this.renderListView();
     },
     goCreateFactory: function(){
-        Actions.createFactory({
-            title: '新建工厂'
+        Actions.companyWelcome({
+            title: '新建或加入工厂'
         });
     },
     renderEmptyRow: function(){
@@ -251,7 +258,7 @@ module.exports = React.createClass({
                     <Button
                     style={[commonStyle.blueButton, {marginTop: 16}]}
                     onPress={this.goCreateFactory} >
-                        新建工厂
+                        新建 / 加入工厂
                     </Button>
                 </View>
             )
@@ -267,7 +274,7 @@ module.exports = React.createClass({
          }
     },
     renderListView: function(){
-        if (!this.state.dataSource || this.state.dataSource.length == 0) {
+        if (!this.state.list || this.state.list.length == 0) {
             return this.renderEmptyRow();
         };
                 // onRefresh = {this.onRefresh}
