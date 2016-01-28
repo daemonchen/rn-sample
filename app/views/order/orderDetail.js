@@ -107,7 +107,6 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         };
-        console.log('------order header', result);
         if (result.type == 'getHeader') {
             this.setState({
                 orderData: Object.assign(orderData,result.data)
@@ -181,7 +180,8 @@ module.exports = React.createClass({
                 );
         }else{
             return(
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
+                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.orderData.userFollow}/>
                 </View>
                 )
         }
@@ -224,9 +224,9 @@ module.exports = React.createClass({
     },
     renderSummary: function(){
         var time = moment(this.state.orderData.endTime).format('YYYY.MM.DD');
-        var jobNum = !!this.state.orderData.totaleJobNum ? this.state.orderData.totaleJobNum : 0;
-        var overNum = !!this.state.orderData.overNum ? this.state.orderData.overNum : 0;
-        var undoNumber = !!this.state.orderData.overNum ? (jobNum - overNum) : 0;
+        var totaleJobNum = this.state.orderData.totaleJobNum;
+        var overNum = this.state.orderData.overNum ;
+        var undoNumber = totaleJobNum - overNum;
         return(
             <View style={{flexDirection:'row', height: 68, backgroundColor: '#4285f4'}}>
                 <View style={{flex: 1}}>
@@ -285,7 +285,7 @@ module.exports = React.createClass({
         this.btn.measure((ox, oy, width, height, px, py) => {
             this.setState({
                 isVisible: true,
-                buttonRect: {x: px + 20, y: py - 64, width: width, height: height}
+                buttonRect: {x: px + 40, y: py + 3, width: width, height: height}
           });
         });
     },
@@ -297,7 +297,7 @@ module.exports = React.createClass({
         var {
             width, height, scale
         } = util.getDimensions();
-        var displayArea = {x: 5, y: 20, width: width - 10, height: height - 25};
+        var displayArea = {x: 5, y: 64, width: width - 10, height: height};
         return(
             <Popover
                 isVisible={this.state.isVisible}
@@ -339,7 +339,7 @@ module.exports = React.createClass({
             );
     },
     render: function(){
-        var title = this.state.orderData.title || ''
+        var title = this.state.orderData.orderTitle || ''
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
@@ -353,8 +353,8 @@ module.exports = React.createClass({
                     <OrderDetailSegmentControl
                     onSegmentChange={this.onSegmentChange}/>
                     {this.renderTabContent()}
-                    {this.renderPopOver()}
                 </View>
+                {this.renderPopOver()}
             </View>
             );
     }

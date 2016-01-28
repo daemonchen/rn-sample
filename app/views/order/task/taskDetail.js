@@ -222,6 +222,7 @@ module.exports = React.createClass({
     },
     _goTaskDescribe: function(){
         Actions.taskDescribe({
+            title: '任务描述',
             descriptionUrl: this.state.taskData.descriptionUrl
         });
     },

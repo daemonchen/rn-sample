@@ -104,7 +104,8 @@ module.exports = React.createClass({
     },
     _goOrderDescribe: function(){
         Actions.taskDescribe({
-            descriptionUrl: this.state.taskData.descriptionUrl
+            title: '订单描述',
+            descriptionUrl: this.props.data.descriptionUrl
         });
     },
     fetchAttachData: function(){

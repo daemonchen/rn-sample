@@ -4,6 +4,7 @@ import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
 var moment = require('moment');
 var underscore = require('underscore');
+var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     TextInput,
@@ -45,13 +46,14 @@ var attachStore = require('../../stores/attach/attachStore');
 var util = require('../../common/util');
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
 
         var defaultData = this.props.data || {};
         var endTime = defaultData.endTime || new Date().valueOf();
         return {
-            orderId: defaultData.id || 0,
-            orderStatus: defaultData.orderStatus || 3,
+            orderId: defaultData.orderId || 0,
+            orderStatus: defaultData.orderStatus || 1,
             accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
             creatorId: defaultData.creatorId || 0,
@@ -74,11 +76,19 @@ module.exports = React.createClass({
         this.unlisten = orderStore.listen(this.onChange);
         this.unlistenAttach = attachStore.listen(this.onAttachChange);
         this.unlistenOrderList = orderListStore.listen(this.onOrderlistChange);
+        if (this._timeout) {this.clearTimeout(this._timeout)};
+        this._timeout = this.setTimeout(this.fetchData, 350);
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenAttach();
         this.unlistenOrderList();
+    },
+    fetchData: function(){
+        if (!this.state.orderId) {return;};
+        orderAction.get({
+            orderId: this.state.orderId
+        });
     },
     onOrderlistChange: function(){
         var result = orderListStore.getState();
@@ -112,6 +122,28 @@ module.exports = React.createClass({
             accessoryNum: this.accessoryIds.length
         });
     },
+    transformData: function(result){
+        console.log('-----result', result);
+        var defaultData = result.data;
+        var endTime = defaultData.endTime || new Date().valueOf();
+        this.setState({
+            accessoryIds: defaultData.accessoryIds || [],
+            accessoryNum: defaultData.accessoryNum || '',
+            creatorId: defaultData.creatorId || 0,
+            creatorName: defaultData.creatorName || '',
+            customerId: defaultData.customerId || '',
+            customerName: defaultData.customerName || '',
+            description: defaultData.description || '',
+            endTime: endTime,
+            endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
+            factoryId: defaultData.factoryId || 0,
+            lable: defaultData.lable || '',
+            salesManId: defaultData.salesManId || '',
+            salesManName: defaultData.salesManName || '',
+            startTime: defaultData.startTime || '',
+            title: defaultData.title || ''
+        });
+    },
     onChange: function(){
         var result = orderStore.getState();
         if (result.status != 200 && !!result.message) {
@@ -125,6 +157,9 @@ module.exports = React.createClass({
         };
         if (result.type == 'update') {
             Actions.pop();
+        };
+        if (result.type == 'get') {
+            this.transformData(result);
         };
     },
     onCalendarPressDone: function(date){

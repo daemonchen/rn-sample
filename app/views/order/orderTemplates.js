@@ -49,10 +49,9 @@ module.exports = React.createClass({
                 data: rowData
             });
         }else{
-            var data = Object.assign({orderStatus: 1}, rowData);
             Actions.orderSettingsForTemplate({
                 title: '设置订单',
-                data: data
+                data: rowData
             });
         }
     },

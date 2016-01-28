@@ -45,7 +45,7 @@ module.exports = React.createClass({
     renderNavigationBar: function(){
         return(
             <NavigationBar
-                title={{ title: '任务描述'}}
+                title={{ title: this.props.title}}
                 leftButton={<BlueBackButton />} />
             );
     },
