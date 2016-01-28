@@ -345,7 +345,7 @@ module.exports = React.createClass({
                 <NavigationBar
                     statusBar={{style: 'light-content', hidden: false}}
                     tintColor={'#4285f4'}
-                    title={{ title: title, tintColor: '#fff' }}
+                    title={{ title: '订单', tintColor: '#fff' }}
                     leftButton={<WhiteBackButton />}
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>

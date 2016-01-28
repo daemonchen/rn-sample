@@ -20,6 +20,16 @@ module.exports = React.createClass({
         this.props.onPress()
     },
     render: function(){
+        if (this.props.title) {
+            return(
+            <TouchableOpacity onPress={this.onPress}>
+                <Text
+                style={[{fontSize: 17, width: 36, height: 24, marginTop: 2, marginRight: 8, marginLeft: 8, color: '#4285f4' }, this.props.style]}>
+                    {this.props.title}
+                </Text>
+            </TouchableOpacity>
+            );
+        };
         return(
             <TouchableOpacity onPress={this.onPress}>
                 <Image source={require('../images/common/add.png')}

@@ -145,7 +145,15 @@ module.exports = React.createClass({
         return(
             <ScrollView>
                 <View style={commonStyle.section}>
-                    <Text style={commonStyle.settingGroupsTitle}>订单描述</Text>
+                    <View style={commonStyle.settingItemWrapper}>
+                        <View style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                            <Text
+                            numberOfLines={3}
+                            style={{flex: 1,fontSize: 18}}>
+                                {this.props.data.orderTitle}
+                            </Text>
+                        </View>
+                    </View>
                     <TouchableHighlight
                     style={commonStyle.settingItemWrapper}
                     underlayColor='#eee'

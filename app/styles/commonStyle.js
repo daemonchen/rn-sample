@@ -198,7 +198,7 @@ module.exports = React.StyleSheet.create({
         flex: 1
     },
     settingDetail: {
-        fontSize: 16,
+        fontSize: 14,
         flex: 1,
         flexDirection: 'row'
         // height: 59,

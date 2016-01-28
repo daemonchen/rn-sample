@@ -112,7 +112,7 @@ module.exports = React.createClass({
                             source={require('../../images/contact/link_gary.png')}/>
                             <Text
                             style={commonStyle.settingDetail}>
-                                分享邀请链接
+                                发送邀请链接
                             </Text>
                         </View>
                     </TouchableHighlight>

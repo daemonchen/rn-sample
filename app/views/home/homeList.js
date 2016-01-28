@@ -252,7 +252,7 @@ module.exports = React.createClass({
             return (
                 <View style={commonStyle.emptyView}>
                     <Image source={require('../../images/empty/no_task_gray.png')} />
-                    <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                    <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#bdbdbd'}}>
                         您还没有加入工厂
                     </Text>
                     <Button
@@ -266,7 +266,7 @@ module.exports = React.createClass({
             return (
                 <View style={commonStyle.emptyView}>
                     <Image source={require('../../images/empty/no_task_gray.png')} />
-                    <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                    <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#bdbdbd'}}>
                         您还没有任务
                     </Text>
                 </View>

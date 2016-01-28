@@ -192,7 +192,7 @@ module.exports = React.createClass({
                         您还没有任务
                 </Text>
                 <Button
-                style={commonStyle.blueButton}
+                style={[commonStyle.button, commonStyle.blue]}
                 onPress={this.createTask} >
                     新建任务
                 </Button>
