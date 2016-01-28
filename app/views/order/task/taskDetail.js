@@ -378,8 +378,6 @@ module.exports = React.createClass({
         this.unlistenAttach();
         this.unlistenTaskList();
         this.unlistenEmployee();
-        this.keyShowListener.remove();
-        this.keyHideListener.remove();
         Actions.taskDetail({
             title: rowData.title,
             data: rowData.id
