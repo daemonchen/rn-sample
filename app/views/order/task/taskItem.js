@@ -198,6 +198,7 @@ module.exports = React.createClass({
         this.props._handleSwipeout(this.props.rowData, this.props.sectionID, this.props.rowID);
     },
     render: function(){
+        if (!this.props.rowData) {return(<View />);};
         var swipeoutBtns = [
           {
             text: '删除',

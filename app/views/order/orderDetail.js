@@ -101,7 +101,6 @@ module.exports = React.createClass({
             this.setTimeout(this.fetchHeaderData, 350)
         };
         if (result.type == 'update') {
-            console.log('------update', result);
             this.setTimeout(this.fetchHeaderData, 350)
         };
         if (result.type == 'delete') {//任务增删改之后，重新更新一下订单首页头部信息
