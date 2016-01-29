@@ -31,6 +31,10 @@ target: 表示从哪里打开任务列表 enum
     2: 'taskdetail',从任务详情的前置任务进入
     3: 'normal'订单详情里展示任务列表
 }
+
+taskStatus: 表示任务列表数据源
+ 1: 任务列表
+ 2: 前置任务
 */
 
 module.exports = React.createClass({
@@ -148,12 +152,12 @@ module.exports = React.createClass({
         }
     },
     fetchData: function() {
-        if (this.state.taskStatus == 2) {
+        if (this.state.taskStatus == 2) {//获取前置任务列表
             taskListAction.getDependencesList({
                 orderId: this.props.data.orderId
             });
 
-        }else{
+        }else{//获取任务列表
             taskListAction.getList({
                 orderId: this.props.data.orderId
             });

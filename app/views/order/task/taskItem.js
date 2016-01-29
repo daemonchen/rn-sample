@@ -23,11 +23,11 @@ var styles = require('../../../styles/order/orderDetail');
 var util = require('../../../common/util');
 var appConstants = require('../../../constants/appConstants');
 /*
-target: 表示从哪里打开任务列表 enum
+target:
 {
-    1: 'createTask',
-    2: 'taskdetail',从任务详情的前置任务进入
-    3: 'normal'订单详情里展示任务列表
+    1: 'createTask',check icon是用来选择任务依赖
+    2: 'taskdetail',从任务详情的前置任务进入,check icon是用来显示任务完成状态
+    3: 'normal'订单详情里展示任务列表，check icon是用来显示和修改任务状态，默认情况下都是这种情况
 }
 */
 module.exports = React.createClass({
@@ -98,6 +98,7 @@ module.exports = React.createClass({
         if (this.state.target == 1) {
             this.onPressCircle();
         };
+        if (this.state.target == 2) {return;};
         if (this.state.target == 3) {
             !!this.props.onPressRow && this.props.onPressRow(this.props.rowData, this.props.sectionID);
         };
