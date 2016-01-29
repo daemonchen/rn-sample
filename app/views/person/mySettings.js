@@ -57,16 +57,11 @@ module.exports = React.createClass({
         asyncStorage.setItem('appConstants', appConstants)
         .then((error)=>{
             if (!!error) {
-                this._modal.showModal('缓存清除失败');
+                util.toast('缓存清除失败');
             }else{
-                this._modal.showModal('缓存清除成功');
+                util.toast('缓存清除成功');
             }
-            if (this._timeout) {
-                this.clearTimeout(this._timeout);
-            };
-            this._timeout = this.setTimeout(()=>{
-                this._modal.hideModal();
-            },2000);
+
         });
     },
     goChangePassword: function(){

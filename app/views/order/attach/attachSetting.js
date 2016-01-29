@@ -57,12 +57,11 @@ module.exports = React.createClass({
         }
     },
     doUpdate: function(result){
-        this._modal.showModal('修改成功');
+        util.toast('修改成功');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
         this._timeout = this.setTimeout(()=>{
-            this._modal.hideModal();
             Actions.pop();
         },2000);
     },

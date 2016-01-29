@@ -54,12 +54,11 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         }
-        this._modal.showModal('修改密码成功');
+        util.toast('修改密码成功');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
         this._timeout = this.setTimeout(()=>{
-            this._modal.hideModal();
             Actions.pop();
         },2000);
     },

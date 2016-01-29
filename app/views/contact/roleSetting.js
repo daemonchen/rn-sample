@@ -86,12 +86,11 @@ module.exports = React.createClass({
             if (result.status != 200 && !!result.message) {
                 return;
             }
-            this._modal.showModal('修改角色成功');
+            util.toast('修改角色成功');
             if (this._timeout) {
                 this.clearTimeout(this._timeout);
             };
             this._timeout = this.setTimeout(()=>{
-                this._modal.hideModal();
                 Actions.pop();
             },2000);
 

@@ -71,12 +71,11 @@ var setPassWord = React.createClass({
         }
     },
     doReset: function(result){
-        this._modal.showModal('密码设置成功,请重新登录');
+        util.toast('密码设置成功,请重新登录');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
         this._timeout = this.setTimeout(()=>{
-            this._modal.hideModal();
             appConstants = {};
             asyncStorage.setItem('appConstants', appConstants);
             Actions.welcome();

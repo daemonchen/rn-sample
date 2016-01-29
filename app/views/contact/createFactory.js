@@ -53,12 +53,11 @@ module.exports = React.createClass({
         appConstants.user.factoryName = result.data.factoryName;
         asyncStorage.setItem('appConstants', appConstants)
         .then((error)=>{
-            this._modal.showModal('工厂添加成功');
+            util.toast('工厂添加成功');
             if (this._timeout) {
                 this.clearTimeout(this._timeout);
             };
             this._timeout = this.setTimeout(()=>{
-                this._modal.hideModal();
                 Actions.pop();
             },2000);
         });

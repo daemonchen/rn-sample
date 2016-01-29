@@ -70,13 +70,6 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         }
-        // this._modal.showModal('邀请成功');
-        // if (this._timeout) {
-        //     this.clearTimeout(this._timeout);
-        // };
-        // this._timeout = this.setTimeout(()=>{
-        //     this._modal.hideModal();
-        // },2000);
     },
     handleDelete: function(result){
         if (result.status != 200 && !!result.message) {

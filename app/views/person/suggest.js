@@ -48,12 +48,11 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         }
-        this._modal.showModal('感谢您的建议');
+        util.toast('感谢您的建议');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
         this._timeout = this.setTimeout(()=>{
-            this._modal.hideModal();
             Actions.pop();
         },2000);
     },

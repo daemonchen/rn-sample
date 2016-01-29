@@ -55,12 +55,11 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         }
-        this._modal.showModal('添加客户成功');
+        util.toast('添加客户成功');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
         this._timeout = this.setTimeout(()=>{
-            this._modal.hideModal();
             Actions.pop();
         },2000);
     },
@@ -69,12 +68,11 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         }
-        this._modal.showModal('删除客户成功');
+        util.toast('删除客户成功');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
         this._timeout = this.setTimeout(()=>{
-            this._modal.hideModal();
             Actions.pop();
         },2000);
     },
