@@ -22,7 +22,7 @@ var util = require('../../../common/util');
 var Calendar = require('../../calendar');
 // var Contact = require('../../contact/contact');
 var SettingsWrapper = require('./settingsWrapper');
-var TaskList = require('./taskList');
+var TaskDependencesList = require('./taskDependencesList');
 var TaskDetail = require('./taskDetail');
 var OrderList = require('../components/orderList');
 var CompanyMemberList = require('../../contact/companyMemberList');
@@ -269,7 +269,7 @@ module.exports = React.createClass({
         //todo: 把settingwrapper修改为presettings
         Actions.settingsWrapper({
             title:'前置任务',
-            children: TaskList,
+            children: TaskDependencesList,
             target: 1,//用来区分任务列表标题前面的check icon是用来选择任务依赖[1]，还是用来更改任务完成与否的状态[2],如果不传，默认都是2
             data: this.props.data,
             onPressRow: this.onPressTaskRow,

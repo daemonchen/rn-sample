@@ -19,17 +19,24 @@ class TaskListStore {
 
         this.preventDefault();
     }
+    onGetListSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'get'
+        appConstants.taskList = responseData.data
+        asyncStorage.setItem('appConstants', appConstants);
+        this.setState(responseData);
+    }
     onGetDependencesList(data) {
         taskListService.getDependencesList(data)
         .then((responseData) => {
-            taskListAction.getListSuccess(responseData)
+            taskListAction.getDependencesListSuccess(responseData)
         }).done();
 
         this.preventDefault();
     }
-    onGetListSuccess(responseData){
+    onGetDependencesListSuccess(responseData){
         if (!responseData) {return false};
-        responseData.type = 'get'
+        responseData.type = 'getDependencesList'
         appConstants.taskList = responseData.data
         asyncStorage.setItem('appConstants', appConstants);
         this.setState(responseData);

@@ -3,8 +3,9 @@
 var alt = require('../../common/alt');
 module.exports = alt.generateActions(
     'getList',
-    'getDependencesList',
     'getListSuccess',
+    'getDependencesList',
+    'getDependencesListSuccess',
     'loadMore',
     'loadMoreSuccess',
     'update',

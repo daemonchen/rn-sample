@@ -44,7 +44,7 @@ var attachStore = require('../../../stores/attach/attachStore');
 var employeeAction = require('../../../actions/employee/employeeAction');
 var employeeStore = require('../../../stores/employee/employeeStore');
 
-var TaskList = require('./taskList');
+var TaskDependencesList = require('./taskDependencesList');
 var SubTaskList = require('./subTaskList');
 
 module.exports = React.createClass({
@@ -302,7 +302,7 @@ module.exports = React.createClass({
         var data = Object.assign({taskStatus: 2}, this.state.taskData);
         Actions.settingsWrapper({
             title:'前置任务',
-            children: TaskList,
+            children: TaskDependencesList,
             target: 2,//用来区分任务列表标题前面的check icon
             data: data
         });
