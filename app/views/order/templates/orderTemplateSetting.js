@@ -25,7 +25,7 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {
             templateStatus: this.props.target,//1新建 2 修改
-            title: this.props.data.title || this.props.data.templateName,
+            title: this.props.data.orderTitle || this.props.data.templateName,
             description: this.props.data.description
         }
     },
@@ -63,14 +63,14 @@ module.exports = React.createClass({
             templateAction.create({
                 templateName: this.state.title || '',
                 description: this.state.description || '',
-                orderId: this.props.data.id
+                orderId: this.props.data.orderId
             });
         }
         if (this.state.templateStatus == 2) {//update
             templateAction.update({
                 templateName: this.state.title || '',
                 description: this.state.description || '',
-                id: this.props.data.id
+                id: this.props.data.orderId
             });
         }
     },
