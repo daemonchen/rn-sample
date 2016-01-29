@@ -118,15 +118,30 @@ module.exports = React.createClass({
     transfromDataList: function(list){
         if (!list) { return []};
         var result = [];
-        for (var i = 0; i < this.state.lastIdList.length; i++) {
-            for (var j = 0; j < list.length; j++) {
-                if(this.state.lastIdList[i] == list[j].jobDO.id){
-                    list[j].isCheck = true;
-                    result.push(list[j]);
-                }
-            };
-
+        for (var i = 0; i < list.length; i++) {
+            list[i].isCheck = 0;
         };
+        for (var i = 0; i < list.length; i++) {
+            for (var j = 0; j < this.state.lastIdList.length; j++) {
+                if(this.state.lastIdList[j] == list[i].jobDO.id){
+                    list[i].isCheck = 1;
+                    result.push(list[i]);
+                    // return;
+                }
+                // list[i].isCheck = false;
+            };
+        };
+        // for (var i = 0; i < this.state.lastIdList.length; i++) {
+        //     for (var j = 0; j < list.length; j++) {
+        //         if(this.state.lastIdList[i] == list[j].jobDO.id){
+        //             list[j].isCheck = true;
+        //             result.push(list[j]);
+        //         }else{
+        //             list[j].isCheck = false;
+        //         }
+        //     };
+
+        // };
         if (this.props.target == 2) {
             return result;
         }else{

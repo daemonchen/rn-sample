@@ -61,7 +61,7 @@ module.exports = React.createClass({
                 description: defaultData.description || '',
                 endTime: endTime,
                 endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
-                id: defaultData.orderId || 0,
+                id: defaultData.id || 0,
                 ownerId: defaultData.ownerId || 0,
                 userName: defaultData.userName || '',
                 lastIds: lastIds,
@@ -143,7 +143,7 @@ module.exports = React.createClass({
     onPressDone: function(){
         if (this.state.taskStatus == 2) {//修改任务
             taskAction.update({
-                id: this.state.orderId || 0,
+                id: this.state.id || 0,
                 ownerId: this.state.ownerId || 0,
                 description: this.state.description || '',
                 jobName: this.state.jobName || '',

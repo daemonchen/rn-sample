@@ -221,6 +221,10 @@ module.exports = React.createClass({
         });
     },
     _goTaskDescribe: function(){
+        if (!this.state.taskData.descriptionUrl || (this.state.taskData.descriptionUrl.length == 0)) {
+            util.toast('暂无更多描述');
+            return;
+        };
         Actions.taskDescribe({
             title: '任务描述',
             descriptionUrl: this.state.taskData.descriptionUrl

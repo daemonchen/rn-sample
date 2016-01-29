@@ -28,6 +28,7 @@ var appConstants = require('../../../constants/appConstants');
 
 // var AttachItem = require('./attachItem');
 var Button = require('../../../common/button.js');
+var util = require('../../../common/util');
 var CollectionView = require('../../../common/collectionView');
 
 module.exports = React.createClass({
@@ -103,6 +104,10 @@ module.exports = React.createClass({
         }
     },
     _goOrderDescribe: function(){
+        if (!this.props.data.descriptionUrl || (this.props.data.descriptionUrl.length == 0)) {
+            util.toast('暂无更多描述');
+            return;
+        };
         Actions.taskDescribe({
             title: '订单描述',
             descriptionUrl: this.props.data.descriptionUrl
