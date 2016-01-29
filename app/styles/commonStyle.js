@@ -118,12 +118,14 @@ module.exports = React.StyleSheet.create({
         flex: 1,
         minHeight: 24,
         lineHeight: 24,
+        marginTop: 4,
         textAlign: 'justify',
         fontSize: 16
     },
     textInputIcon: {
         width: 24,
-        height: 24
+        height: 24,
+        marginRight: 16
     },
     textAreaWrapper: {
         width: width - 32,

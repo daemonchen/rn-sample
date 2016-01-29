@@ -119,23 +119,38 @@ var Login = React.createClass({
             </View>
             );
     },
+    renderLoginBtn: function(){
+        if (!!this.state.mobile && !!this.state.password) {
+            return(
+                <Button
+                    style={[commonStyle.button, commonStyle.blue, {fontSize: 24, marginTop: 10, marginBottom: 28}]}
+                    onPress={this.doLogin} >
+                        登录
+                    </Button>
+
+                );
+        };
+        return(
+            <Button
+                    style={[commonStyle.button, commonStyle.textLight, {fontSize: 24, marginTop: 10, marginBottom: 28}]}
+                    onPress={this.doLogin} >
+                        登录
+                    </Button>
+                );
+    },
     render: function(){
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={<NavTitleWithLogo />}
                     leftButton={<LeftCloseButton />} />
-                <View style={styles.main}>
+                <View style={[styles.main, {paddingTop: 20}]}>
                     {this.renderPhoneTextInput()}
                     {this.renderPasswordTextInput()}
+                    {this.renderLoginBtn()}
 
                     <Button
-                    style={[commonStyle.button, commonStyle.blue]}
-                    onPress={this.doLogin} >
-                        登录
-                    </Button>
-                    <Button
-                    style={[commonStyle.textLight, {fontSize: 12}]}
+                    style={[commonStyle.textLight, {fontSize: 14}]}
                     onPress={this.goResetPassword} >
                         忘记您的密码?
                     </Button>
