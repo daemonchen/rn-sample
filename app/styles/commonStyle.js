@@ -106,20 +106,31 @@ module.exports = React.StyleSheet.create({
     },
     textInputWrapper: {
         width: width - 32,
-        height: 41,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        paddingVertical: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee'
+    },
+    textInputWrapperBlueBorder: {
+        borderBottomColor: '#4285f4'
     },
     textInput: {
         flex: 1,
-        height: 40,
+        minHeight: 24,
+        lineHeight: 24,
+        textAlign: 'justify',
         fontSize: 16
+    },
+    textInputIcon: {
+        width: 24,
+        height: 24
     },
     textAreaWrapper: {
         width: width - 32,
         height: 76,
         flexDirection: 'row',
         borderStyle: 'solid',
-        borderBottomWidth: 1 / React.PixelRatio.get(),
+        borderBottomWidth: 1,
         borderBottomColor: '#eee'
     },
     textArea: {

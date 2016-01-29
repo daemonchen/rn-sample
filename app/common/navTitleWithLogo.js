@@ -17,7 +17,7 @@ module.exports = React.createClass({
     },
     render: function(){
         return(
-            <Image style={styles.navTitleImage} source={require('../images/logo.png')} />
+            <Image style={styles.navTitleImage} source={require('../images/navigator/logo_navigation_bar.png')} />
             );
     }
 });

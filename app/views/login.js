@@ -7,6 +7,7 @@ var md5 = require('md5');
 var Actions = require('react-native-router-flux').Actions;
 var {View,
     Text,
+    Image,
     TextInput,
     StyleSheet
 } = React;
@@ -27,7 +28,10 @@ var NavTitleWithLogo = require('../common/navTitleWithLogo');
 var Login = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        return {}
+        return {
+            isFocusPhone: false,
+            isFocusPassword: false
+        }
     },
     goResetPassword: function(){
         Actions.resetPassword();
@@ -59,6 +63,62 @@ var Login = React.createClass({
     onSubmitEditing: function(){
         this.doLogin();
     },
+    onFocusPhone: function(){
+        this.setState({
+            isFocusPhone: true
+        });
+    },
+    onBlurPhone: function(){
+        this.setState({
+            isFocusPhone: false
+        });
+    },
+    onFocusPassword: function(){
+        this.setState({
+            isFocusPassword: true
+        });
+    },
+    onBlurPassword: function(){
+        this.setState({
+            isFocusPassword: false
+        });
+    },
+    renderPhoneTextInput: function(){
+        var icon = !!this.state.isFocusPhone ? require('../images/login/phone_number_selected.png') : require('../images/login/phone_number.png');
+        var borderStyle = !!this.state.isFocusPhone ? commonStyle.textInputWrapperBlueBorder : null;
+        return(
+            <View style={[commonStyle.textInputWrapper, borderStyle]}>
+                <Image style={commonStyle.textInputIcon}
+                source={icon} />
+                <TextInput placeholder='手机号码'
+                style={commonStyle.textInput}
+                clearButtonMode={'while-editing'}
+                onChangeText={this.onChangeMobileText}
+                onFocus={this.onFocusPhone}
+                onBlur={this.onBlurPhone}
+                keyboardType={'number-pad'} />
+            </View>
+            );
+    },
+    renderPasswordTextInput: function(){
+        var icon = !!this.state.isFocusPassword ? require('../images/login/encryption_selected.png') : require('../images/login/encryption.png');
+        var borderStyle = !!this.state.isFocusPassword ? commonStyle.textInputWrapperBlueBorder : null;
+        return(
+            <View style={[commonStyle.textInputWrapper, borderStyle]}>
+                <Image style={commonStyle.textInputIcon}
+                source={icon} />
+                <TextInput placeholder='密码'
+                style={commonStyle.textInput}
+                secureTextEntry={true}
+                clearButtonMode={'while-editing'}
+                onChangeText={this.onChangePasswordText}
+                onFocus={this.onFocusPassword}
+                onBlur={this.onBlurPassword}
+                returnKeyType={'join'}
+                onSubmitEditing={this.onSubmitEditing} />
+            </View>
+            );
+    },
     render: function(){
         return (
             <View style={commonStyle.container}>
@@ -66,24 +126,11 @@ var Login = React.createClass({
                     title={<NavTitleWithLogo />}
                     leftButton={<LeftCloseButton />} />
                 <View style={styles.main}>
-                    <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='手机号码'
-                        style={commonStyle.textInput}
-                        clearButtonMode={'while-editing'}
-                        onChangeText={this.onChangeMobileText}
-                        keyboardType={'number-pad'} />
-                    </View>
-                    <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='密码'
-                        style={commonStyle.textInput}
-                        secureTextEntry={true}
-                        clearButtonMode={'while-editing'}
-                        onChangeText={this.onChangePasswordText}
-                        returnKeyType={'join'}
-                        onSubmitEditing={this.onSubmitEditing} />
-                    </View>
+                    {this.renderPhoneTextInput()}
+                    {this.renderPasswordTextInput()}
+
                     <Button
-                    style={commonStyle.blueButton}
+                    style={[commonStyle.button, commonStyle.blue]}
                     onPress={this.doLogin} >
                         登录
                     </Button>
