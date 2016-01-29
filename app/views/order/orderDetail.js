@@ -37,6 +37,7 @@ var attachAction = require('../../actions/attach/attachAction');
 var orderStore = require('../../stores/order/orderStore');
 var orderAction = require('../../actions/order/orderAction');
 var taskListStore = require('../../stores/task/taskListStore');
+var taskStore = require('../../stores/task/taskStore');
 var followOrderAction = require('../../actions/followOrder/followOrderAction');
 var followOrderStore = require('../../stores/followOrder/followOrderStore');
 
@@ -93,7 +94,15 @@ module.exports = React.createClass({
     onTaskListChange: function(){
         var result = taskListStore.getState();
         if (result.status != 200 && !!result.message) {
+            // util.alert(result.message);
             return;
+        }
+        if (result.type == 'create') {
+            this.setTimeout(this.fetchHeaderData, 350)
+        };
+        if (result.type == 'update') {
+            console.log('------update', result);
+            this.setTimeout(this.fetchHeaderData, 350)
         };
         if (result.type == 'delete') {//任务增删改之后，重新更新一下订单首页头部信息
             if (this._timeout) {
