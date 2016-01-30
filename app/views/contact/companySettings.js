@@ -100,6 +100,60 @@ module.exports = React.createClass({
     goApplicationList: function(){
         Actions.applicationList();
     },
+    renderApplicationItem: function(){
+        var rights = appConstants.userRights.rights;
+        var targetRights = 4194304;
+        if ((rights & targetRights) == targetRights){
+            return(
+                <TouchableHighlight
+                    style={commonStyle.settingItemWrapper}
+                    underlayColor='#eee'
+                    onPress={this.goApplicationList}>
+                    <View
+                    style={commonStyle.settingItem}>
+                        <Image
+                        style={commonStyle.settingIcon}
+                        source={require('../../images/contact/horn_gray.png')}/>
+                        <Text
+                        style={commonStyle.settingDetail}>
+                            申请人列表
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                );
+        }else{
+            return(
+                <View />
+                );
+        }
+    },
+    renderChartItem: function(){
+        var rights = appConstants.userRights.rights;
+        var targetRights = 4194304;
+        if ((rights & targetRights) == targetRights){
+            return(
+                <TouchableHighlight
+                    style={commonStyle.settingItemWrapper}
+                    underlayColor='#eee'
+                    onPress={this.goSheet}>
+                    <View
+                    style={commonStyle.settingItem}>
+                        <Image
+                        style={commonStyle.settingIcon}
+                        source={require('../../images/contact/chart_gray.png')}/>
+                        <Text
+                        style={commonStyle.settingDetail}>
+                            企业报表
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+                );
+        }else{
+            return(
+                <View />
+                );
+        }
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
@@ -122,36 +176,9 @@ module.exports = React.createClass({
                             </Text>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee'
-                        onPress={this.goApplicationList}>
-                        <View
-                        style={commonStyle.settingItem}>
-                            <Image
-                            style={commonStyle.settingIcon}
-                            source={require('../../images/contact/horn_gray.png')}/>
-                            <Text
-                            style={commonStyle.settingDetail}>
-                                申请人列表
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee'
-                        onPress={this.goSheet}>
-                        <View
-                        style={commonStyle.settingItem}>
-                            <Image
-                            style={commonStyle.settingIcon}
-                            source={require('../../images/contact/chart_gray.png')}/>
-                            <Text
-                            style={commonStyle.settingDetail}>
-                                企业报表
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
+                    {this.renderApplicationItem()}
+                    {this.renderChartItem()}
+
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'

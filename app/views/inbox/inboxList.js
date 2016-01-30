@@ -182,6 +182,8 @@ module.exports = React.createClass({
                 Actions.inviteMessage({
                     data: rowData
                 });
+            case 6:
+                Actions.applicationList();
                 return;
             default:
                 return
