@@ -69,6 +69,7 @@ module.exports = React.createClass({
     },
     handleAgree: function(result){
         if (result.status != 200 && !!result.message) {
+            util.toast(result.message);
             return;
         }
         var currentList = this.state.list;
@@ -82,8 +83,9 @@ module.exports = React.createClass({
         });
     },
     transformList: function(result){
+        console.log('---result', result);
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
+            util.toast(result.message);
             return;
         }
         this.setState({

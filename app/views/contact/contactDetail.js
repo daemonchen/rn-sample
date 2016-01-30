@@ -21,6 +21,7 @@ var {
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/person/style');
 var util = require('../../common/util');
+var appConstants = require('../../constants/appConstants');
 var Button = require('../../common/button.js');
 
 var employeeAction = require('../../actions/employee/employeeAction');
@@ -307,23 +308,29 @@ module.exports = React.createClass({
             );
     },
     renderDeleteButton: function(){
-        if (this.state.group == 2) {
-            return(
-                <View />
-                );
+        // 524288
+        var rights = appConstants.userRights.rights;
+        var targetRights = 524288;
+        if (this.state.group == 1) {
+            if ((rights & targetRights) == targetRights){
+                return(
+                    <TouchableHighlight
+                        style={commonStyle.logoutWrapper}
+                        underlayColor='#eee'>
+                        <View style={commonStyle.logoutBorder}>
+                            <Button
+                            style={[commonStyle.button, commonStyle.red]}
+                            onPress={this.doDeleteEmployee} >
+                                删除成员
+                            </Button>
+                        </View>
+                    </TouchableHighlight>
+                    );
+
+            }
         };
         return(
-            <TouchableHighlight
-                style={commonStyle.logoutWrapper}
-                underlayColor='#eee'>
-                <View style={commonStyle.logoutBorder}>
-                    <Button
-                    style={[commonStyle.button, commonStyle.red]}
-                    onPress={this.doDeleteEmployee} >
-                        删除成员
-                    </Button>
-                </View>
-            </TouchableHighlight>
+            <View />
             );
     },
     render: function(){
