@@ -64,7 +64,7 @@ var register = React.createClass({
                 <NavigationBar
                     title={<NavTitleWithLogo />}
                     leftButton={<LeftCloseButton />} />
-                <View style={styles.main}>
+                <View style={[styles.main, {marginTop: 20}]}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='手机号码'
                         style={commonStyle.textInput}

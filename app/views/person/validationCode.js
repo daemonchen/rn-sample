@@ -59,6 +59,7 @@ var validationCode = React.createClass({
         this._timeInterval = this.setInterval(this._timerHandle, 1000);
     },
     _timerHandle: function(){
+        console.log('-----this.state.timer', this.state.timer);
         if (this.state.timer == 0) {
             this.setState({
                 canReGetCode: true,
@@ -80,10 +81,7 @@ var validationCode = React.createClass({
                 return;
             }
             this.clearInterval(this._timeInterval);
-            this.setState({
-                canReGetCode: true,
-                timer: 0
-            });
+            this.doTimer();
             return;
         }
         if (result.type == 'check') {
@@ -110,7 +108,6 @@ var validationCode = React.createClass({
             type: this.state.type,
             isReset: 'isReset'
         });
-        this.doTimer();
     },
     doVerify: function(){
         if (!this.state.code) {
@@ -153,11 +150,6 @@ var validationCode = React.createClass({
             return(
                 <View>
                     <Button
-                    style={commonStyle.blueButton}
-                    onPress={this.doVerify} >
-                        下一步
-                    </Button>
-                    <Button
                         style={commonStyle.blueButton}
                         onPress={this.reGetCode} >
                             重新获取验证码
@@ -179,7 +171,7 @@ var validationCode = React.createClass({
                 <NavigationBar
                     title={{title:'验证'}}
                     leftButton={<BlueBackButton />} />
-                <View style={styles.main}>
+                <View style={[styles.main, {marginTop: 20}]}>
                     <View style={styles.phoneWrapper}>
                         <Image source={require('../../images/Send.png')}/>
                         <Text style={styles.phoneText}>{this.state.mobile}</Text>
@@ -219,7 +211,7 @@ var styles = StyleSheet.create({
         backgroundColor: '#fff',
         position: 'absolute',
         right: 0,
-        top: 12
+        top: 18
     },
     phoneText: {
         paddingLeft: 16

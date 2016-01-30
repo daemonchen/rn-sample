@@ -42,7 +42,7 @@ module.exports = React.createClass({
     },
     renderApplicationItem: function(){
         var rights = appConstants.userRights.rights;
-        var targetRights = 65536;
+        var targetRights = 4194304;
         if ((rights & targetRights) == targetRights){
             return(
                 <TouchableHighlight
