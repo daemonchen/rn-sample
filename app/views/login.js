@@ -152,7 +152,7 @@ var Login = React.createClass({
                     <Button
                     style={[commonStyle.textLight, {fontSize: 14}]}
                     onPress={this.goResetPassword} >
-                        忘记您的密码?
+                        找回密码
                     </Button>
                 </View>
             </View>

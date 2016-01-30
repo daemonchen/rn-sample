@@ -146,6 +146,31 @@ module.exports = React.createClass({
             </TouchableOpacity>
             );
     },
+    renderDescribeItem: function(){
+        console.log('------this.props.data', this.props.data);
+        if (!this.props.data.hadDes) {
+            return(
+                <View />);
+        };
+        return(
+            <TouchableHighlight
+            style={commonStyle.settingItemWrapper}
+            underlayColor='#eee'
+            onPress={this._goOrderDescribe} >
+                <View
+                style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                    <Text
+                    numberOfLines={3}
+                    style={commonStyle.settingDetail}>
+                        {this.props.data.description}
+                    </Text>
+                    <Image
+                    style={commonStyle.settingArrow}
+                    source={require('../../../images/common/arrow_right.png')} />
+                </View>
+            </TouchableHighlight>
+            );
+    },
     render: function() {
         return(
             <ScrollView>
@@ -159,22 +184,7 @@ module.exports = React.createClass({
                             </Text>
                         </View>
                     </View>
-                    <TouchableHighlight
-                    style={commonStyle.settingItemWrapper}
-                    underlayColor='#eee'
-                    onPress={this._goOrderDescribe} >
-                        <View
-                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
-                            <Text
-                            numberOfLines={3}
-                            style={commonStyle.settingDetail}>
-                                {this.props.data.description}
-                            </Text>
-                            <Image
-                            style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
-                        </View>
-                    </TouchableHighlight>
+                    {this.renderDescribeItem()}
                 </View>
                 {this.renderListView()}
             </ScrollView>
@@ -242,8 +252,8 @@ module.exports = React.createClass({
             <View style={commonStyle.container}>
                 <ActivityIndicatorIOS
                     animating={!this.state.loaded}
-                    style={[styles.activityIndicator, {height: 80}]}
-                    size="large" />
+                    style={[styles.activityIndicator]}
+                    size="small" />
             </View>
         );
     }

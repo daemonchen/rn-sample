@@ -225,8 +225,8 @@ module.exports = React.createClass({
                 <View style={commonStyle.container}>
                     <ActivityIndicatorIOS
                         animating={!this.state.loaded}
-                        style={[commonStyle.activityIndicator, {height: 80}]}
-                        size="large" />
+                        style={[commonStyle.activityIndicator]}
+                        size="small" />
                 </View>
             </View>
         );
