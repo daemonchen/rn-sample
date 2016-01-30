@@ -5,7 +5,7 @@ var AsyncStorage = React.AsyncStorage
 module.exports = {
     setItem: function(key, value){
         if (value == null) return Promise.reject('value is null');
-        console.log('-----setItem', key, value);
+        // console.log('-----setItem', key, value);
         return AsyncStorage.setItem(key, JSON.stringify(value))
     },
     getItem: function(key){

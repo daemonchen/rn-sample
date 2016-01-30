@@ -19,6 +19,7 @@ var {
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/order/orderDetail');
 var appConstants = require('../../constants/appConstants');
+var asyncStorage = require('../../common/storage');
 
 var TaskList = require('./task/taskList');
 var NewsList = require('./news/newsList');
@@ -53,6 +54,7 @@ module.exports = React.createClass({
             images: [],
             isVisible: false,
             buttonRect: {},
+            appConstants: appConstants
         }
     },
     componentDidMount: function(){
@@ -64,12 +66,27 @@ module.exports = React.createClass({
         };
         this._timeout = this.setTimeout(this.fetchHeaderData, 350);
         util.logPage('orderDetail');
+        this.getAppConstants();
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenOrder();
         this.unlistenFollow();
         util.endLogPageView('orderDetail');
+    },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                this.setTimeout(function(){
+                    self.setState({
+                        appConstants: appConstants
+                    });
+                }, 350)
+            }
+        }).done();
     },
     fetchHeaderData: function(){
         orderAction.getHeader({

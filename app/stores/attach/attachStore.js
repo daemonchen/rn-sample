@@ -64,12 +64,13 @@ class AttachStore {
         )
     }
     onCreate(data) {
-        var paramsObj = {
-            count: data.count
-        }
         this.doConfirm(()=>{
-            attachService.qiniuToken(paramsObj)
+            attachService.qiniuToken(data)
             .then((responseData) => {
+                if (responseData.status != 200) {
+                    util.toast(responseData.message);
+                    return;
+                };
                 var options = this.transformData(responseData, data)
                 attachAction.uploadToQiniu(options)
             }).done();
