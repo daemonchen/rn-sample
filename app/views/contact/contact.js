@@ -136,6 +136,14 @@ module.exports = React.createClass({
             targetMobile: phone
         });
     },
+    openCustomerAddress: function(){
+        var self = this;
+        PhonePicker.select(function(person) {
+            if (person) {
+                self.goSetting(person);
+            }
+        })
+    },
     openAddress: function(){
         var self = this;
         PhonePicker.select(function(person) {
@@ -210,7 +218,7 @@ module.exports = React.createClass({
     onSelectCustomerActionSheet: function(index){
         switch(index){
             case 0:
-                return this.openAddress();
+                return this.openCustomerAddress();
             case 1:
                 return this.goSetting();
             default :

@@ -103,6 +103,7 @@ module.exports = React.createClass({
         this.unlistenTaskChange();
     },
     transfromDataBlob: function(response){
+        // console.log('--------response', response);
         var rawData = response.data
         if (!rawData) { rawData = [];};
         var dataBlob = {};
@@ -220,7 +221,8 @@ module.exports = React.createClass({
         });
     },
     onInfinite: function() {
-        if (!this.loadedAllData()) {
+        console.log('----onInfinite', this.loadedAllData());
+        if (!!this.loadedAllData()) {
             return;
         };
 

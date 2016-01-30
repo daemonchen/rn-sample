@@ -170,7 +170,7 @@ var orderList = React.createClass({
         }
     },
     onInfinite: function() {
-        if (!this.loadedAllData()) {
+        if (!!this.loadedAllData()) {
             return;
         };
         this.setState({

@@ -2,6 +2,7 @@
 var React = require('react-native')
 var TimerMixin = require('react-timer-mixin');
 var Actions = require('react-native-router-flux').Actions;
+var _ = require('underscore');
 var {
     Text,
     TextInput,
@@ -115,8 +116,17 @@ module.exports = React.createClass({
             total: result.total
         });
     },
+    withoutCurrentTask: function(list){
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].jobDO.id == this.props.data.id) {
+                list.splice(i, 1);
+            };
+        };
+        return list;
+    },
     transfromDataList: function(list){
         if (!list) { return []};
+        list = this.withoutCurrentTask(list);
         var result = [];
         for (var i = 0; i < list.length; i++) {
             list[i].isCheck = 0;
@@ -208,7 +218,7 @@ module.exports = React.createClass({
             <View style={commonStyle.emptyView}>
                 <Image source={require('../../../images/empty/no_task_gray.png')} />
                 <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
-                        您还没有任务
+                        您还没有前置任务
                 </Text>
                 <Button
                 style={[commonStyle.button, commonStyle.blue]}

@@ -143,7 +143,8 @@ module.exports = React.createClass({
         });
     },
     onInfinite: function() {
-        if (!this.loadedAllData()) {
+
+        if (!!this.loadedAllData()) {
             return;
         };
         this.setState({
@@ -155,6 +156,7 @@ module.exports = React.createClass({
         });
     },
     loadedAllData: function() {
+        console.log('-------', this.state.list.length, this.state.total);
         return this.state.list.length >= this.state.total||this.state.list.length===0;
     },
     onPressRow: function(rowData, sectionID){

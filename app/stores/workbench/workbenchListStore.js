@@ -36,7 +36,8 @@ class WorkbenchListStore {
     }
     onLoadMoreSuccess(responseData){
         if (!responseData || !responseData.data) {return false};
-        responseData.type = 'loadmore'
+        responseData.type = 'loadmore';
+        console.log('---------loadmore result', responseData);
         this.mergeList(responseData)
     }
     mergeList(responseData){
