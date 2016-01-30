@@ -91,6 +91,12 @@ module.exports = React.createClass({
         )
 
     },
+    goSheet: function(){
+        Actions.taskDescribe({
+            title: '企业报表',
+            descriptionUrl: 'http://nzaom.ngrok.natapp.cn/h5/report/report/index'
+        });
+    },
     goApplicationList: function(){
         Actions.applicationList();
     },
@@ -119,21 +125,6 @@ module.exports = React.createClass({
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
-                        onPress={this.doLogout}>
-                        <View
-                        style={commonStyle.settingItem}>
-                            <Image
-                            style={commonStyle.settingIcon}
-                            source={require('../../images/contact/quit_gray.png')}/>
-                            <Text
-                            style={commonStyle.settingDetail}>
-                                退出企业
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee'
                         onPress={this.goApplicationList}>
                         <View
                         style={commonStyle.settingItem}>
@@ -143,6 +134,36 @@ module.exports = React.createClass({
                             <Text
                             style={commonStyle.settingDetail}>
                                 申请人列表
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this.goSheet}>
+                        <View
+                        style={commonStyle.settingItem}>
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/contact/chart_gray.png')}/>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                                企业报表
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this.doLogout}>
+                        <View
+                        style={commonStyle.settingItem}>
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/contact/quit_gray.png')}/>
+                            <Text
+                            style={commonStyle.settingDetail}>
+                                退出企业
                             </Text>
                         </View>
                     </TouchableHighlight>

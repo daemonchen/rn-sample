@@ -132,6 +132,7 @@ module.exports = React.createClass({
         appConstants.user = result.data.user;
         appConstants.userRights = result.data.userRights;
         asyncStorage.setItem('appConstants', appConstants);
+        // console.log('----after login', result);
         this.setTimeout(function(){
             appAction.init(appConstants);
         }, 350)

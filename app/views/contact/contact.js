@@ -35,6 +35,7 @@ var employeeStore = require('../../stores/employee/employeeStore');
 var util = require('../../common/util');
 var Modal = require('../../common/modal');
 var appConstants = require('../../constants/appConstants');
+var asyncStorage = require('../../common/storage');
 /*
 target: 表示从哪里打开通讯录 enum
 {
@@ -76,11 +77,20 @@ module.exports = React.createClass({
         }
         util.toast('邀请成功');
     },
+    handleDelete: function(result){
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        appConstants.user.factoryName = '';
+        asyncStorage.setItem('appConstants', appConstants);
+    },
     onEmployeeChange: function(){
         var result = employeeStore.getState();
         switch(result.type){
             case 'create':
                 return this.handleCreate(result);
+            case 'delete':
+                return this.handleDelete(result);
         }
     },
     onChange: function() {
