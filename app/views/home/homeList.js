@@ -29,6 +29,7 @@ var HomeTaskItem = require('./homeTaskItem');
 var Button = require('../../common/button.js');
 
 var appConstants = require('../../constants/appConstants');
+var asyncStorage = require('../../common/storage');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -97,10 +98,25 @@ module.exports = React.createClass({
         this.unlisten = workbenchListStore.listen(this.onChange);
         this.unlistenTaskChange = taskStore.listen(this.onTaskChange)
         this.unlistenTaskListChange = taskListStore.listen(this.onTaskListChange)
+        this.getAppConstants();
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenTaskChange();
+    },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                this.setTimeout(function(){
+                    self.setState({
+                        factoryName: !!appConstants.user ? appConstants.user.factoryName : ''
+                    });
+                }, 350)
+            }
+        }).done();
     },
     transfromDataBlob: function(response){
         // console.log('--------response', response);

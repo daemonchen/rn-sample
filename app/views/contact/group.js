@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var PhonePicker = require('react-native-phone-picker');
-
+var TimerMixin = require('react-timer-mixin');
 var {
     View,
     Text,
@@ -17,9 +17,11 @@ var {
 var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');
 var appConstants = require('../../constants/appConstants');
+var asyncStorage = require('../../common/storage');
 
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         return {
             factoryName: !!appConstants.user ? appConstants.user.factoryName : ''
@@ -29,6 +31,25 @@ module.exports = React.createClass({
         this.setState({
             factoryName: !!appConstants.user ? appConstants.user.factoryName : ''
         });
+    },
+    componentDidMount: function(){
+        this.getAppConstants();
+    },
+    componentWillUnmount: function() {
+    },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                this.setTimeout(function(){
+                    self.setState({
+                        factoryName: !!appConstants.user ? appConstants.user.factoryName : ''
+                    });
+                }, 350)
+            }
+        }).done();
     },
     openAddress: function(){
         PhonePicker.select(function(person) {
