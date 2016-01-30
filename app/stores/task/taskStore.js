@@ -23,9 +23,6 @@ class TaskStore {
         if (!responseData) {return false};
         responseData.type = 'create'
 
-        // appConstants.memberList = responseData.data
-        // asyncStorage.setItem('appConstants', appConstants);
-        // this.mergeList(responseData)
         this.setState(responseData);
     }
     onUpdate(data){
@@ -53,9 +50,6 @@ class TaskStore {
         if (!responseData) {return false};
         responseData.type = 'get'
 
-        // appConstants.memberList = responseData.data
-        // asyncStorage.setItem('appConstants', appConstants);
-        // this.mergeList(responseData)
         this.setState(responseData);
     }
 }

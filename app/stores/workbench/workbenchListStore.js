@@ -10,7 +10,17 @@ class WorkbenchListStore {
         this.bindActions(workbenchListAction);
         this.state = {};
     }
+    doCache(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.workbenchList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
 
+            }
+        }).done();
+    }
     onGetList(data) {
         workbenchListService.getList(data)
         .then((responseData) => {
@@ -22,8 +32,7 @@ class WorkbenchListStore {
     onGetListSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'get'
-        appConstants.workbenchList = responseData.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(responseData)
         this.setState(responseData);
     }
     onLoadMore(data) {
@@ -49,8 +58,7 @@ class WorkbenchListStore {
             }else{
                 this.setState(responseData);
             }
-            appConstants.workbenchList = responseData.data
-            asyncStorage.setItem('appConstants', appConstants);
+            this.doCache(responseData)
         }).done();
     }
 }

@@ -70,7 +70,7 @@ module.exports = React.StyleSheet.create({
         marginBottom: 12,
         paddingVertical: 10,
         fontSize: 16,
-        fontWeight: '500',
+        fontWeight: '400',
         color:'#fff',
         backgroundColor:'#34a853'
     },
@@ -78,7 +78,7 @@ module.exports = React.StyleSheet.create({
         flex: 1,
         paddingVertical: 8,
         fontSize: 16,
-        fontWeight: '500',
+        fontWeight: '400',
         color:'#fff',
         backgroundColor:'#4285f4',
         borderRadius: 5
@@ -89,7 +89,7 @@ module.exports = React.StyleSheet.create({
         marginBottom: 12,
         paddingVertical: 10,
         fontSize: 16,
-        fontWeight: '500',
+        fontWeight: '400',
         color:'#fff',
         backgroundColor:'#4285f4'
     },
@@ -97,7 +97,7 @@ module.exports = React.StyleSheet.create({
         width: width - 32,
         height: 48,
         paddingVertical: 16,
-        fontWeight: '500',
+        fontWeight: '400',
         fontSize: 16
     },
     textIcon: {

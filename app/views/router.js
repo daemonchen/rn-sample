@@ -131,8 +131,10 @@ module.exports = React.createClass({
         appConstants.xAuthToken = result.data.token;
         appConstants.user = result.data.user;
         appConstants.userRights = result.data.userRights;
-        asyncStorage.setItem('appConstants', appConstants);
-        // console.log('----after login', result);
+        asyncStorage.clear();
+        console.log('----doLogin');
+        asyncStorage.setItem('appConstants', appConstants).done();
+
         this.setTimeout(function(){
             appAction.init(appConstants);
         }, 350)
@@ -140,6 +142,7 @@ module.exports = React.createClass({
     },
     doLogout: function(){
         appConstants = {};
+        console.log('---doLogout');
         asyncStorage.setItem('appConstants', appConstants);
 
         this.goWelcome();
@@ -162,7 +165,8 @@ module.exports = React.createClass({
         appConstants.unreadMsg = result.data.unreadMsg;
         this.setTimeout(function(){
             appAction.init(appConstants);
-        }, 350)
+        }, 350);
+        console.log('----on systemStore change', result);
         asyncStorage.setItem('appConstants', appConstants)
         .then(()=>{
             this.doLaunch();

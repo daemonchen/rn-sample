@@ -41,6 +41,21 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
         this.unlisten();
+        this.getAppConstants();
+    },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                this.setTimeout(function(){
+                    self.setState({
+                        factoryName: !!appConstants.user ? appConstants.user.factoryName : ''
+                    });
+                }, 350)
+            }
+        }).done();
     },
     onChange: function() {
         var result = factoryStore.getState();

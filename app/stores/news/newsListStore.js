@@ -11,6 +11,17 @@ class NewsListStore {
         this.state = {};
     }
 
+    doCache(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.newsList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
+
+            }
+        }).done();
+    }
     onGetList(data) {
         newsListService.getList(data)
         .then((responseData) => {
@@ -22,8 +33,7 @@ class NewsListStore {
     onGetListSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'get'
-        appConstants.newsList = responseData.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(responseData);
         this.setState(responseData);
     }
     onLoadMore(data) {
@@ -48,8 +58,7 @@ class NewsListStore {
             }else{
                 this.setState(responseData);
             }
-            appConstants.newsList = responseData.data
-            asyncStorage.setItem('appConstants', appConstants);
+            this.doCache(responseData);
         }).done();
     }
 }

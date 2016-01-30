@@ -18,6 +18,7 @@ var {
 var util = require('../../common/util.js');
 
 var appConstants = require('../../constants/appConstants');
+var asyncStorage = require('../../common/storage');
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/person/style');
 
@@ -43,10 +44,25 @@ module.exports = React.createClass({
         });
     },
     componentDidMount: function(){
-        this.unlisten = avatarStore.listen(this.onChange)
+        this.unlisten = avatarStore.listen(this.onChange);
+        this.getAppConstants();
     },
     componentWillUnmount: function() {
         this.unlisten();
+    },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                this.setTimeout(function(){
+                    self.setState({
+                        user: !!appConstants.user ? appConstants.user : {}
+                    });
+                }, 350)
+            }
+        }).done();
     },
     onChange: function(){
         var result = avatarStore.getState();

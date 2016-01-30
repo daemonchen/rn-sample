@@ -10,7 +10,17 @@ class CommentListStore {
         this.bindActions(commentListAction);
         this.state = {};
     }
+    doCache(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.commentList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
 
+            }
+        }).done();
+    }
     onGetList(data) {
         commentListService.getList(data)
         .then((responseData) => {
@@ -22,8 +32,7 @@ class CommentListStore {
     onGetListSuccess(data){
         if (!data) {return false};
         data.type = 'get'
-        appConstants.commentList = data.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(data);
         this.setState(data);
     }
     onLoadMore(data) {
@@ -48,8 +57,7 @@ class CommentListStore {
             }else{
                 this.setState(data);
             }
-            appConstants.commentList = data.data
-            asyncStorage.setItem('appConstants', appConstants);
+            this.doCache(data);
         }).done();
     }
     onUpdate(data){

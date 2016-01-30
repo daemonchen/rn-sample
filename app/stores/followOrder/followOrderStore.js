@@ -14,6 +14,17 @@ class FollowOrderStore {
         this.bindActions(followOrderAction);
         this.state = {};
     }
+    doCache(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.orderList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
+
+            }
+        }).done();
+    }
     onGet(data) {
         followOrderService.get(data)
         .then((responseData) => {
@@ -25,8 +36,7 @@ class FollowOrderStore {
     onGetSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'get';
-        appConstants.orderList = responseData.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(responseData);
         this.setState(responseData);
     }
     onLoadMore(data) {
@@ -51,8 +61,7 @@ class FollowOrderStore {
             }else{
                 this.setState(data);
             }
-            appConstants.orderList = data.data
-            asyncStorage.setItem('appConstants', appConstants);
+            this.doCache(data);
         }).done();
     }
     onUpdate(data) {

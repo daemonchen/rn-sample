@@ -10,7 +10,17 @@ class MemberListStore {
         this.bindActions(memberListAction);
         this.state = {};
     }
+    doCache(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.memberList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
 
+            }
+        }).done();
+    }
     onGetList(data) {
         memberListService.getList(data)
         .then((responseData) => {
@@ -22,8 +32,7 @@ class MemberListStore {
     onGetListSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'get'
-        appConstants.memberList = responseData.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(responseData);
         this.setState(responseData);
     }
 }

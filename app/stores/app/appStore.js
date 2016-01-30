@@ -15,7 +15,6 @@ class AppStore {
         this.state = {};
     }
     onInit(data) {
-        console.log('-----onInit', data);
         this.setState(data);
     }
 }

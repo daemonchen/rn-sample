@@ -98,6 +98,7 @@ var orderList = React.createClass({
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {
+            util.toast(result.message);
             this.setState({
                 loaded: true,
                 list: []
@@ -120,7 +121,7 @@ var orderList = React.createClass({
     },
     handleDelete: function(result){
         if (result.status != 200 && !!result.message) {
-
+            util.toast(result.message);
             return;
         }
         this.setTimeout(this.onRefresh, 350);
@@ -129,7 +130,6 @@ var orderList = React.createClass({
     onFollowChange: function(){
         var result = followOrderStore.getState();
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
             return;
         }
         switch(result.type){
@@ -140,10 +140,7 @@ var orderList = React.createClass({
     },
     onChange: function() {
         var result = orderListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
+
         switch(result.type){
             case 'get':
                 return this.handleGet(result);

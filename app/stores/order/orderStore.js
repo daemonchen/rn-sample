@@ -23,9 +23,6 @@ class OrderStore {
         if (!responseData) {return false};
         responseData.type = 'create'
 
-        // appConstants.memberList = responseData.data
-        // asyncStorage.setItem('appConstants', appConstants);
-        // this.mergeList(responseData)
         this.setState(responseData);
     }
     onUpdate(data) {
@@ -40,9 +37,6 @@ class OrderStore {
         if (!responseData) {return false};
         responseData.type = 'update'
 
-        // appConstants.memberList = responseData.data
-        // asyncStorage.setItem('appConstants', appConstants);
-        // this.mergeList(responseData)
         this.setState(responseData);
     }
     onGet(data) {
@@ -57,9 +51,6 @@ class OrderStore {
         if (!responseData) {return false};
         responseData.type = 'get'
 
-        // appConstants.memberList = responseData.data
-        // asyncStorage.setItem('appConstants', appConstants);
-        // this.mergeList(responseData)
         this.setState(responseData);
     }
     onGetHeader(data) {
@@ -74,9 +65,6 @@ class OrderStore {
         if (!responseData) {return false};
         responseData.type = 'getHeader'
 
-        // appConstants.memberList = responseData.data
-        // asyncStorage.setItem('appConstants', appConstants);
-        // this.mergeList(responseData)
         this.setState(responseData);
     }
 }

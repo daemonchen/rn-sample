@@ -10,7 +10,17 @@ class OrderListStore {
         this.bindActions(orderListAction);
         this.state = {};
     }
+    doCache(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.orderList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
 
+            }
+        }).done();
+    }
     onGetList(data) {
         orderListService.getList(data)
         .then((responseData) => {
@@ -22,8 +32,7 @@ class OrderListStore {
     onGetListSuccess(data){
         if (!data) {return false};
         data.type = 'get'
-        appConstants.orderList = data.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(data);
         this.setState(data);
     }
     onLoadMore(data) {
@@ -48,8 +57,7 @@ class OrderListStore {
             }else{
                 this.setState(data);
             }
-            appConstants.orderList = data.data
-            asyncStorage.setItem('appConstants', appConstants);
+            this.doCache(data);
         }).done();
     }
     onDelete(data){
@@ -63,9 +71,6 @@ class OrderListStore {
     onDeleteSuccess(data){
         if (!data) {return false};
         data.type = 'delete'
-        // appConstants.orderList = this.removeItemFromCache(appConstants.orderList, data.data);
-        // asyncStorage.setItem('appConstants', appConstants);
-        // data.data = appConstants.orderList;
         this.setState(data);
     }
     removeItemFromCache(collection, id){

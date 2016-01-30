@@ -10,7 +10,17 @@ class AttachListStore {
         this.bindActions(attachListAction);
         this.state = {};
     }
+    doCache(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.attachList = responseData.data;
+                asyncStorage.setItem('appConstants', appConstants);
 
+            }
+        }).done();
+    }
     onGetList(data) {
         attachListService.getList(data)
         .then((responseData) => {
@@ -22,8 +32,7 @@ class AttachListStore {
     onGetListSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'get'
-        appConstants.attachList = responseData.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(responseData);
         this.setState(responseData);
     }
     onDelete(data){
@@ -35,12 +44,20 @@ class AttachListStore {
         this.preventDefault();
     }
     onDeleteSuccess(responseData){
+        var self = this;
         if (!responseData) {return false};
         responseData.type = 'delete'
-        appConstants.attachList = this.removeItemFromCache(appConstants.attachList, responseData.data);
-        asyncStorage.setItem('appConstants', appConstants);
-        responseData.data = appConstants.attachList;
-        this.setState(responseData);
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.attachList = self.removeItemFromCache(appConstants.attachList, responseData.data);
+                asyncStorage.setItem('appConstants', appConstants);
+                responseData.data = appConstants.attachList;
+                self.setState(responseData);
+
+            }
+        }).done();
     }
     removeItemFromCache(collection, id){
         for (var i = 0; i < collection.length; i++) {

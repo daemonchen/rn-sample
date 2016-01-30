@@ -57,6 +57,7 @@ var awesomeMobile = React.createClass({
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 appConstants.location = position;
+                console.log('-----getLocation');
                 asyncStorage.setItem('appConstants', appConstants);
             },
             (error) => console.log(error.message),

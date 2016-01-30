@@ -10,7 +10,17 @@ class InboxStore {
         this.bindActions(inboxAction);
         this.state = {};
     }
+    doCache(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.inboxList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
 
+            }
+        }).done();
+    }
     onGetList(data) {
         inboxService.getList(data)
         .then((responseData) => {
@@ -22,8 +32,7 @@ class InboxStore {
     onGetListSuccess(response){
         if (!response) {return false};
         response.type = 'get';
-        appConstants.inboxList = response.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(response);
         this.setState(response);
     }
     onLoadMore(data) {
@@ -48,8 +57,7 @@ class InboxStore {
             }else{
                 this.setState(response);
             }
-            appConstants.inboxList = response.data
-            asyncStorage.setItem('appConstants', appConstants);
+            this.doCache(response);
         }).done();
     }
     onUpdate(data){

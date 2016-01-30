@@ -61,11 +61,21 @@ module.exports = React.createClass({
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
-        this._timeout = this.setTimeout(this.fetchData, 350)
+        this._timeout = this.setTimeout(this.fetchData, 350);
+        this.getAppConstants();
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenEmployee();
+    },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+            }
+        }).done();
     },
     fetchData: function(){
         contactAction.getList();

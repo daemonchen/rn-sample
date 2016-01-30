@@ -37,10 +37,25 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function(){
-        this.unlisten = userStore.listen(this.onChange)
+        this.unlisten = userStore.listen(this.onChange);
+        this.getAppConstants();
     },
     componentWillUnmount: function() {
         this.unlisten();
+    },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                this.setTimeout(function(){
+                    self.setState({
+                        userName: !!appConstants.user ? appConstants.user.userName : ''
+                    });
+                }, 350)
+            }
+        }).done();
     },
     onChange: function() {
         var result = userStore.getState();

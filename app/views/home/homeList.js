@@ -258,7 +258,7 @@ module.exports = React.createClass({
                         您还没有加入工厂
                     </Text>
                     <Button
-                    style={[commonStyle.blueButton, {marginTop: 16}]}
+                    style={[commonStyle.button,, commonStyle.blue, {marginTop: 16}]}
                     onPress={this.goCreateFactory} >
                         新建 / 加入工厂
                     </Button>

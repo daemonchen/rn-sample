@@ -11,6 +11,17 @@ class TaskListStore {
         this.state = {};
     }
 
+    doCache(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.taskList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
+
+            }
+        }).done();
+    }
     onGetList(data) {
         taskListService.getList(data)
         .then((responseData) => {
@@ -22,8 +33,7 @@ class TaskListStore {
     onGetListSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'get'
-        appConstants.taskList = responseData.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(responseData);
         this.setState(responseData);
     }
     onGetDependencesList(data) {
@@ -37,8 +47,7 @@ class TaskListStore {
     onGetDependencesListSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'getDependencesList'
-        appConstants.taskList = responseData.data
-        asyncStorage.setItem('appConstants', appConstants);
+        this.doCache(responseData);
         this.setState(responseData);
     }
     onLoadMore(data) {
@@ -63,8 +72,7 @@ class TaskListStore {
             }else{
                 this.setState(responseData);
             }
-            appConstants.taskList = responseData.data
-            asyncStorage.setItem('appConstants', appConstants);
+            this.doCache(responseData);
         }).done();
     }
     onUpdate(data){
@@ -89,12 +97,20 @@ class TaskListStore {
         this.preventDefault();
     }
     onDeleteSuccess(responseData){
+        var self = this;
         if (!responseData) {return false};
         responseData.type = 'delete'
-        appConstants.taskList = this.removeItemFromCache(appConstants.taskList, responseData.data);
-        asyncStorage.setItem('appConstants', appConstants);
-        responseData.data = appConstants.taskList;
-        this.setState(responseData);
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.taskList = self.removeItemFromCache(appConstants.taskList, responseData.data);
+                asyncStorage.setItem('appConstants', appConstants);
+                responseData.data = appConstants.taskList;
+                self.setState(responseData);
+            }
+        }).done();
+
     }
     removeItemFromCache(obj, id){
         try{

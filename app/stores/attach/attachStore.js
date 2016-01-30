@@ -88,9 +88,6 @@ class AttachStore {
         if (!responseData) {return false};
         responseData.type = 'create'
 
-        // appConstants.memberList = responseData.data
-        // asyncStorage.setItem('appConstants', appConstants);
-        // this.mergeList(responseData)
         util.alert('上传成功');
         this.setState(responseData);
     }
