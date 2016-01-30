@@ -2,6 +2,7 @@
 var React = require('react-native')
 import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
+var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     TextInput,
@@ -31,6 +32,7 @@ var RightDoneButton = require('../../common/rightDoneButton');
 
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         return {
             userName: appConstants.user.userName
@@ -49,7 +51,7 @@ module.exports = React.createClass({
         .then((data)=>{
             if(!!data && !!data.xAuthToken){
                 appConstants = data;
-                this.setTimeout(function(){
+                self.setTimeout(function(){
                     self.setState({
                         userName: !!appConstants.user ? appConstants.user.userName : ''
                     });
