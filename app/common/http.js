@@ -21,7 +21,12 @@ module.exports = {
         }
     },
     getAuthToken: function(){
-        appConstants = appStore.getState();
+        var currentToken = appConstants.xAuthToken;
+        var newToken = appStore.getState().xAuthToken;
+        console.log('-----xAuthToken',currentToken,newToken);
+        if (!!newToken && (currentToken != newToken)) {//切换账号之后，要更新token
+            appConstants = appStore.getState();
+        };
         // .then((data)=>{
         //     if(!!data && !!data.xAuthToken){
         //         appConstants.xAuthToken = data.xAuthToken;

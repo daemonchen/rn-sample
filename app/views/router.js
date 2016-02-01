@@ -103,6 +103,7 @@ module.exports = React.createClass({
     },
     onAuthTokenChange: function(){
         var result = authTokenStore.getState();
+        console.log('-----auth token result', result);
         if (result.status != 200 && !!result.message) {
             this.goWelcome();
             return;
@@ -137,15 +138,17 @@ module.exports = React.createClass({
 
         this.setTimeout(function(){
             appAction.init(appConstants);
+            this.getAppState();
         }, 350)
-        this.getAppState();
     },
     doLogout: function(){
         appConstants = {};
         console.log('---doLogout');
         asyncStorage.setItem('appConstants', appConstants);
-
-        this.goWelcome();
+        this.setTimeout(function(){
+            appAction.init(appConstants);
+            this.goWelcome();
+        }, 350)
     },
     getAppState: function(){
         if (this._timeout) {
@@ -166,7 +169,7 @@ module.exports = React.createClass({
         this.setTimeout(function(){
             appAction.init(appConstants);
         }, 350);
-        console.log('----on systemStore change', result);
+        console.log('----on systemStore change');
         asyncStorage.setItem('appConstants', appConstants)
         .then(()=>{
             this.doLaunch();
