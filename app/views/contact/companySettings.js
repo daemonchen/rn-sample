@@ -94,7 +94,7 @@ module.exports = React.createClass({
     goSheet: function(){
         Actions.taskDescribe({
             title: '企业报表',
-            descriptionUrl: 'http://nzaom.ngrok.natapp.cn/h5/report/report/index'
+            descriptionUrl: 'http://www.nzaom.com/h5/report/report/index'
         });
     },
     goApplicationList: function(){
