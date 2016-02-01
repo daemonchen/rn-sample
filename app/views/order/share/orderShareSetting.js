@@ -10,6 +10,7 @@ var {
     Text,
     Image,
     ListView,
+    WebView,
     Switch,
     ScrollView,
     TouchableOpacity,
@@ -20,6 +21,7 @@ var {
 
 var BlueBackButton = require('../../../common/blueBackButton');
 var RightDoneButton = require('../../../common/rightDoneButton');
+var RightAddButton = require('../../../common/rightAddButton');
 
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
@@ -39,6 +41,7 @@ module.exports = React.createClass({
         return {
             orderId: this.props.data.orderId || 0,//订单id
             falseSwitchIsOn: false,
+            url: '',
             customers: null//订单关注数据
         }
     },
@@ -58,29 +61,34 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         };
-        // console.log('-------shareOrderStore result', result.data);
+        console.log('-------shareOrderStore result', result.data);
         var status = (result.data.status == 1) ? true : false;
+
         if (result.type == 'get') {
             this.setState({
                 customers: result.data.customers,
+                url: result.data.guideUrl,
                 falseSwitchIsOn: status
             });
         };
         if (result.type == 'update') {
             this.setState({
                 customers: result.data.customers,
+                url: result.data.guideUrl,
                 falseSwitchIsOn: status
             });
         };
         if (result.type == 'create') {
             this.setState({
                 customers: result.data.customers,
+                url: result.data.guideUrl,
                 falseSwitchIsOn: status
             });
         };
         if (result.type == 'delete') {
             this.setState({
                 customers: result.data.customers,
+                url: result.data.guideUrl,
                 falseSwitchIsOn: status
             });
         };
@@ -90,11 +98,33 @@ module.exports = React.createClass({
             orderId: this.state.orderId
         });
     },
+    goGuide: function(){
+        Actions.taskDescribe({
+            title: '分享规则',
+            descriptionUrl: this.state.url
+        });
+    },
+    rightButtonConfig: function(){
+        if (!!this.state.url && this.state.url.length > 0){
+            return (
+                <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
+                    <RightAddButton onPress={this.goGuide} title='帮助' />
+                </View>
+                );
+        }else{
+            return(
+                <View style={{flexDirection:'row'}}>
+                </View>
+                )
+        }
+
+    },
     renderNavigator: function(){
         return(
             <NavigationBar
                 title={{title: this.props.title}}
-                leftButton={<BlueBackButton />} />
+                leftButton={<BlueBackButton />}
+                rightButton={this.rightButtonConfig()} />
             );
     },
     goWeiXin: function(){
@@ -172,21 +202,22 @@ module.exports = React.createClass({
                 )
         };
         return(
-                <View style={commonStyle.section}>
-                    <Text style={commonStyle.settingGroupsTitle}>
-                        开启订单进度查询，并在此添加客户手机号码，您的客户便能方便查询订单进度。
-                    </Text>
-                    <Text style={commonStyle.settingGroupsTitle}>
-                        您的客户只需要
-                    </Text>
-                    <Text style={commonStyle.settingGroupsTitle}>
-                        关注微信服务号“<Text style={commonStyle.blue} onPress={this.goWeiXin}>你造么服务中心</Text>”，或
-                    </Text>
-                    <Text style={commonStyle.settingGroupsTitle}>
-                        登录<Text style={commonStyle.blue} onPress={this.goWebSite}>www.nzaom.com/chaxun</Text>
-                    </Text>
+                <View style={[commonStyle.section, {flex: 1}]}>
+                    {this.renderWebView()}
                 </View>
             );
+    },
+    renderWebView: function(){
+        if (!!this.state.url && this.state.url.length > 0) {
+            return(
+                <WebView
+                      automaticallyAdjustContentInsets={false}
+                      url={this.state.url}
+                      decelerationRate="normal"
+                      startInLoadingState={true}/>
+                );
+        };
+        return(<View />);
     },
     updateShareStatus: function(value){
         shareOrderAction.update({

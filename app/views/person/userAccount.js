@@ -60,7 +60,7 @@ module.exports = React.createClass({
                                 姓名
                             </Text>
                             <Text
-                            style={commonStyle.settingDetail}>
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
                                 {this.state.user.userName}
                             </Text>
                             <Image
