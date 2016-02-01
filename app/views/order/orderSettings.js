@@ -123,7 +123,7 @@ module.exports = React.createClass({
         });
     },
     transformData: function(result){
-        console.log('-----result', result);
+        // console.log('-----result', result);
         var defaultData = result.data;
         var endTime = defaultData.endTime || new Date().valueOf();
         this.setState({

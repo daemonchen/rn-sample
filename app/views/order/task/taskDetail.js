@@ -144,7 +144,7 @@ module.exports = React.createClass({
             this.setState({
                 taskData: this.transformatData(result.data)
             });
-            console.log('----result', this.state.taskData);
+            // console.log('----result', this.state.taskData);
             // if (this._timeout) {
             //     this.clearTimeout(this._timeout);
             // };

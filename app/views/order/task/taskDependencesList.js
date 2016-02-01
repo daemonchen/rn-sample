@@ -170,6 +170,8 @@ module.exports = React.createClass({
             return;
         }
         switch(result.type){
+            case 'get':
+                return this.handleGet(result);
             case 'getDependencesList':
                 return this.handleGet(result);
             case 'delete':
@@ -177,6 +179,7 @@ module.exports = React.createClass({
         }
     },
     fetchData: function() {
+        console.log('-------this.state.taskStatus', this.state.taskStatus);
         if (this.state.taskStatus == 2) {//获取前置任务列表
             taskListAction.getDependencesList({
                 orderId: this.props.data.orderId
