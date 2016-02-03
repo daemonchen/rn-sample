@@ -40,7 +40,7 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         return {
-            group: this.props.data.group,//1: 工厂员工 2: 客户,
+            group: this.props.data.group,//1: 企业员工 2: 客户,
             data: this.props.data
         }
     },
@@ -95,7 +95,7 @@ module.exports = React.createClass({
         });
     },
     renderNavigationBar: function(){
-        if (this.state.group == 1) {//1: 工厂员工
+        if (this.state.group == 1) {//1: 企业员工
             return(
                 <NavigationBar
                     title={{ title: '详细资料' }}
@@ -191,7 +191,7 @@ module.exports = React.createClass({
         util.link(url);
     },
     renderContent: function(){
-        if (this.state.group == 1) {//工厂
+        if (this.state.group == 1) {//企业
             return(
                 <View>
                     <TouchableHighlight

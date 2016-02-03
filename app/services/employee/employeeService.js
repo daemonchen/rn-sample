@@ -14,7 +14,7 @@ module.exports = {
         var urlParams = '/{userId}'.replace('{userId}', data.userId);
         return http.delete(NZAOM_INTERFACE.user + urlParams)
     },
-    joinFactory: function(data){//申请加入一家工厂
+    joinFactory: function(data){//申请加入一家企业
         return http.post(NZAOM_INTERFACE.apply, data);
     },
     getApplcationList: function(){//获取申请列表

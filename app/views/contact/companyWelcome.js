@@ -40,12 +40,12 @@ module.exports = React.createClass({
 
     goCreateFactory: function(){
         Actions.createFactory({
-            title: '新建工厂'
+            title: '新建企业'
         });
     },
     goFactoryList: function(){
         Actions.companyList({
-            title: '搜索工厂'
+            title: '搜索企业'
         });
     },
 
@@ -63,16 +63,16 @@ module.exports = React.createClass({
                 <ScrollView style={commonStyle.container}
                 contentContainerStyle={{alignItems: 'center'}}
                 automaticallyAdjustContentInsets={false} >
-                    <Text style={[styles.welcomeText, commonStyle.textDark,{marginTop: 20}]}>加入或新建工厂</Text>
+                    <Text style={[styles.welcomeText, commonStyle.textDark,{marginTop: 20}]}>加入或新建企业</Text>
                     <Button
                     style={[commonStyle.blueButton, {marginTop: 100}]}
                     onPress={this.goFactoryList} >
-                        加入已有工厂
+                        加入已有企业
                     </Button>
                     <Button
                     style={[commonStyle.greenButton]}
                     onPress={this.goCreateFactory} >
-                        新建工厂
+                        新建企业
                     </Button>
                 </ScrollView>
             </View>

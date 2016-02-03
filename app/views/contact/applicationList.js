@@ -200,7 +200,7 @@ module.exports = React.createClass({
         return (
             <View style={commonStyle.emptyView}>
                 <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
-                        搜索工厂
+                        搜索企业
                 </Text>
             </View>
         )

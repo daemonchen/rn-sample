@@ -246,9 +246,9 @@ module.exports = React.createClass({
                 <Route name="companyMemberList" component={CompanyMemberList} title="员工列表"/>
                 <Route name="companySettings" component={CompanySettings} title="设置"/>
                 <Route name="contactDetail" component={ContactDetail} title="联系人详情"/>
-                <Route name="createFactory" component={CreateFactory} title="新建工厂"/>
-                <Route name="companyWelcome" component={CompanyWelcome} title="新建或加入工厂" schema="modal"/>
-                <Route name="companyList" component={CompanyList} title="搜索入工厂"/>
+                <Route name="createFactory" component={CreateFactory} title="新建企业"/>
+                <Route name="companyWelcome" component={CompanyWelcome} title="新建或加入企业" schema="modal"/>
+                <Route name="companyList" component={CompanyList} title="搜索入企业"/>
                 <Route name="applicationList" component={ApplicationList} title="申请列表"/>
                 <Route name="customerList" component={CustomerList} title="客户列表"/>
                 <Route name="customerSettings" component={CustomerSettings} title="客户设置" schema="modal"/>

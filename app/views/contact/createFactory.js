@@ -68,7 +68,7 @@ module.exports = React.createClass({
         appConstants.user.factoryName = result.data.factoryName;
         asyncStorage.setItem('appConstants', appConstants)
         .then((error)=>{
-            util.toast('工厂添加成功');
+            util.toast('企业添加成功');
             if (this._timeout) {
                 this.clearTimeout(this._timeout);
             };
@@ -101,12 +101,12 @@ module.exports = React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
-                    title={{title: '新建工厂'}}
+                    title={{title: '新建企业'}}
                     leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
-                        <TextInput placeholder='请输入工厂名称'
+                        <TextInput placeholder='请输入企业名称'
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
                         onChangeText={this.onChangeNameText}

@@ -143,7 +143,7 @@ module.exports = React.createClass({
     },
     goCompanyWelcom: function(){
         Actions.companyWelcome({
-            title: '新建或加入工厂'
+            title: '新建或加入企业'
         });
     },
     doInviteEmployee: function(person){

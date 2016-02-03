@@ -263,7 +263,7 @@ module.exports = React.createClass({
     },
     goCreateFactory: function(){
         Actions.companyWelcome({
-            title: '新建或加入工厂'
+            title: '新建或加入企业'
         });
     },
     renderEmptyRow: function(){
@@ -272,12 +272,12 @@ module.exports = React.createClass({
                 <View style={commonStyle.emptyView}>
                     <Image source={require('../../images/empty/no_task_gray.png')} />
                     <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#bdbdbd'}}>
-                        您还没有加入工厂
+                        您还没有加入企业
                     </Text>
                     <Button
                     style={[commonStyle.button,, commonStyle.blue, {marginTop: 16}]}
                     onPress={this.goCreateFactory} >
-                        新建 / 加入工厂
+                        新建 / 加入企业
                     </Button>
                 </View>
             )
