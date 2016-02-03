@@ -23,7 +23,8 @@ var util = require('../../common/util');
 module.exports = React.createClass({
     getInitialState: function(){
         return{
-            isDelete: false
+            isDelete: false,
+            readStatus: this.props.rowData.readStatus
         }
     },
     componentWillReceiveProps: function(nextProps){
@@ -97,6 +98,7 @@ module.exports = React.createClass({
         }
     },
     renderDot: function(){
+        console.log('------this.',this.state.readStatus);
         if (this.state.readStatus == 1) {
             return(
                 <Image
