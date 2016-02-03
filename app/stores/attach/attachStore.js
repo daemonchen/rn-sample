@@ -51,32 +51,19 @@ class AttachStore {
         result.params['x:fileOrgName'] = fileData.fileOrgName;
         return result;
     }
-    doConfirm(callback){
-        AlertIOS.alert(
-            '',
-            '您确定要上传附件吗',
-            [
-                {text: '确定', onPress: () => {
-                    callback();
-                } },
-                {text: '取消', onPress: () => {return}, style: 'cancel'},
-            ]
-        )
-    }
-    onCreate(data) {
-        this.doConfirm(()=>{
-            attachService.qiniuToken(data)
-            .then((responseData) => {
-                if (responseData.status != 200) {
-                    util.toast(responseData.message);
-                    return;
-                };
-                var options = this.transformData(responseData, data)
-                attachAction.uploadToQiniu(options)
-            }).done();
 
-            this.preventDefault();
-        });
+    onCreate(data) {
+        attachService.qiniuToken(data)
+        .then((responseData) => {
+            if (responseData.status != 200) {
+                attachAction.createSuccess({});//如果上传失败，也要通知view去掉lodadingOverlay
+                util.toast(responseData.message);
+                return;
+            };
+            var options = this.transformData(responseData, data)
+            attachAction.uploadToQiniu(options)
+        }).done();
+
         this.preventDefault();
     }
 
@@ -91,8 +78,8 @@ class AttachStore {
         if (!responseData) {return false};
         responseData.type = 'create'
 
-        util.alert('上传成功');
         this.setState(responseData);
+        util.toast('上传成功');
     }
     onUpdate(data) {
         attachService.update(data)

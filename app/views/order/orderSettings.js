@@ -14,6 +14,7 @@ var {
     Image,
     TouchableOpacity,
     TouchableHighlight,
+    AlertIOS,
     StyleSheet
 } = React
 /*
@@ -25,16 +26,17 @@ orderStatus:enum
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/order/orderDetail');
 
-var Calendar = require('../calendar');
-var Contact = require('../contact/contact');
+// var Calendar = require('../calendar');
+// var Contact = require('../contact/contact');
 var CustomerList = require('../contact/customerList');
-var CompanyMemberList = require('../contact/companyMemberList');
-var OrderTemplates = require('./orderTemplates');
-var OrderTemplateSetting = require('./templates/orderTemplateSetting');
+// var CompanyMemberList = require('../contact/companyMemberList');
+// var OrderTemplates = require('./orderTemplates');
+// var OrderTemplateSetting = require('./templates/orderTemplateSetting');
 
 var BlueBackButton = require('../../common/blueBackButton');
 var LeftCloseButton = require('../../common/leftCloseButton');
 var RightDoneButton = require('../../common/rightDoneButton');
+var LoadingOverlay = require('../../common/loadingOverlay');
 
 var orderAction = require('../../actions/order/orderAction');
 var orderStore = require('../../stores/order/orderStore');
@@ -52,6 +54,7 @@ module.exports = React.createClass({
         var defaultData = this.props.data || {};
         var endTime = defaultData.endTime || new Date().valueOf();
         return {
+            isVisible: false,
             orderId: defaultData.orderId || 0,
             orderStatus: defaultData.orderStatus || 1,
             // accessoryIds: defaultData.accessoryIds || [],
@@ -118,7 +121,7 @@ module.exports = React.createClass({
         //     this.accessoryIds.push(data.id);
         // }
         this.setState({
-            // accessoryIds: this.accessoryIds,
+            isVisible: false,
             accessoryNum: this.state.accessoryNum + 1
         });
     },
@@ -224,8 +227,23 @@ module.exports = React.createClass({
                 fileOrgName: name,
                 uri: uri
             }, params);
-            attachAction.create(fileObj);
+            this.doConfirm(fileObj);
         });
+    },
+    doConfirm: function(fileObj){
+        AlertIOS.alert(
+            '',
+            '您确定要上传附件吗',
+            [
+                {text: '确定', onPress: () => {
+                    attachAction.create(fileObj);
+                    this.setState({
+                        isVisible: true
+                    });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
     },
     _selectTemplate: function(){
         Actions.orderTemplates({
@@ -485,6 +503,7 @@ module.exports = React.createClass({
                     </TouchableHighlight>
                     {this.renderOptionalSettings()}
                 </ScrollView>
+                 <LoadingOverlay isVisible={this.state.isVisible} />
             </View>
             );
     }

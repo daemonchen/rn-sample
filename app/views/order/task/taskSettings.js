@@ -12,6 +12,7 @@ var {
     ScrollView,
     Image,
     TouchableHighlight,
+    AlertIOS,
     StyleSheet
 } = React
 
@@ -19,17 +20,19 @@ var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
 var util = require('../../../common/util');
 
-var Calendar = require('../../calendar');
+// var Calendar = require('../../calendar');
 // var Contact = require('../../contact/contact');
-var SettingsWrapper = require('./settingsWrapper');
+// var SettingsWrapper = require('./settingsWrapper');
 var TaskDependencesList = require('./taskDependencesList');
-var TaskDetail = require('./taskDetail');
+// var TaskDetail = require('./taskDetail');
 var OrderList = require('../components/orderList');
-var CompanyMemberList = require('../../contact/companyMemberList');
+// var CompanyMemberList = require('../../contact/companyMemberList');
 
 var BlueBackButton = require('../../../common/blueBackButton');
 var LeftCloseButton = require('../../../common/leftCloseButton');
 var RightDoneButton = require('../../../common/rightDoneButton');
+var LoadingOverlay = require('../../../common/loadingOverlay');
+
 
 var taskAction = require('../../../actions/task/taskAction');
 var taskStore = require('../../../stores/task/taskStore');
@@ -56,6 +59,7 @@ module.exports = React.createClass({
             var endTime = defaultData.endTime || new Date().valueOf();
             var lastIds = defaultData.lastIdList || [];
             return {
+                isVisible: false,
                 taskStatus: defaultData.taskStatus,
                 done: defaultData.status,
                 jobName: defaultData.jobName || '',
@@ -74,6 +78,7 @@ module.exports = React.createClass({
         var endTime = new Date().valueOf();
         var lastIds = [];
         return {
+            isVisible: false,
             taskStatus: defaultData.taskStatus || 3,
             orderId: defaultData.orderId || 0,
             ownerId: 0,
@@ -112,13 +117,14 @@ module.exports = React.createClass({
     },
     setAccessoryNum: function(data){
         // this.accessoryIds = this.state.accessoryIds;
-        console.log('-----setAccessoryNum', data.id, this.state.accessoryNum);
+        // console.log('-----setAccessoryNum', data.id, this.state.accessoryNum);
         if (!data || !data.id) { return; };
         // if (!underscore.contains(this.accessoryIds, data.id)) {
         //     this.accessoryIds.push(data.id);
         // }
         this.setState({
             // accessoryIds: this.accessoryIds,
+            isVisible: false,
             accessoryNum: this.state.accessoryNum + 1
         });
     },
@@ -230,8 +236,23 @@ module.exports = React.createClass({
                 fileOrgName: name,
                 uri: uri
             }, params);
-            attachAction.create(fileObj);
+            this.doConfirm(fileObj);
         });
+    },
+    doConfirm: function(fileObj){
+        AlertIOS.alert(
+            '',
+            '您确定要上传附件吗',
+            [
+                {text: '确定', onPress: () => {
+                    attachAction.create(fileObj);
+                    this.setState({
+                        isVisible: true
+                    });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
     },
     onCalendarPressDone: function(date){
         this.setState({
@@ -413,6 +434,7 @@ module.exports = React.createClass({
                     </TouchableHighlight>
                     {this.renderOptionalSettings()}
                 </ScrollView>
+                <LoadingOverlay isVisible={this.state.isVisible} />
             </View>
             );
     }
