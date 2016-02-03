@@ -51,6 +51,7 @@ module.exports = React.createClass({
         return this.initTaskState(defaultData);
     },
     initTaskState: function(defaultData){
+        console.log('-----tasksettings data', defaultData);
         if (defaultData.taskStatus == 2) {
             var endTime = defaultData.endTime || new Date().valueOf();
             var lastIds = defaultData.lastIdList || [];
@@ -67,7 +68,7 @@ module.exports = React.createClass({
                 lastIds: lastIds,
                 lastIdsNumber: lastIds.length,
                 accessoryNum: defaultData.accessoryNum || '',
-                accessoryIds: defaultData.accessoryIds || []
+                // accessoryIds: defaultData.accessoryIds || []
             }
         };
         var endTime = new Date().valueOf();
@@ -84,7 +85,7 @@ module.exports = React.createClass({
             lastIds: lastIds,
             lastIdsNumber: lastIds.length,
             accessoryNum: '',
-            accessoryIds: []
+            // accessoryIds: []
         }
     },
     componentDidMount: function(){
@@ -99,24 +100,26 @@ module.exports = React.createClass({
     },
     onAttachChange: function(){
         var result = attachStore.getState();
+        // console.log('-----attachStore result:', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
         }
         if (result.type == 'create') {
             // this.fetchData();
-            this.setAccessoryIds(result.data);
+            this.setAccessoryNum(result.data);
         };
     },
-    setAccessoryIds: function(data){
-        this.accessoryIds = this.state.accessoryIds;
-        if (!data || !data.orderId) { return; };
-        if (!underscore.contains(this.accessoryIds, data.orderId)) {
-            this.accessoryIds.push(data.orderId);
-        }
+    setAccessoryNum: function(data){
+        // this.accessoryIds = this.state.accessoryIds;
+        console.log('-----setAccessoryNum', data.id, this.state.accessoryNum);
+        if (!data || !data.id) { return; };
+        // if (!underscore.contains(this.accessoryIds, data.id)) {
+        //     this.accessoryIds.push(data.id);
+        // }
         this.setState({
-            accessoryIds: this.accessoryIds,
-            accessoryNum: this.accessoryIds.length
+            // accessoryIds: this.accessoryIds,
+            accessoryNum: this.state.accessoryNum + 1
         });
     },
     onChange: function(){
@@ -149,7 +152,7 @@ module.exports = React.createClass({
                 jobName: this.state.jobName || '',
                 endTime: this.state.endTime || new Date().valueOf(),
                 lastIds: this.state.lastIds || [],
-                accessoryIds: this.state.accessoryIds || [],
+                // accessoryIds: this.state.accessoryIds || [],
                 accessoryNum: this.state.accessoryNum || ''
             });
         }
@@ -161,7 +164,7 @@ module.exports = React.createClass({
                 jobName: this.state.jobName || '',
                 endTime: this.state.endTime || new Date().valueOf(),
                 lastIds: this.state.lastIds || [],
-                accessoryIds: this.state.accessoryIds || [],
+                // accessoryIds: this.state.accessoryIds || [],
                 accessoryNum: this.state.accessoryNum || ''
             });
         };

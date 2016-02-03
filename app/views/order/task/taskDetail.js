@@ -335,6 +335,33 @@ module.exports = React.createClass({
                 );
         }
     },
+    renderAttachItem: function(){
+        if (this.state.taskData.accessoryNum > 0) {
+            return(
+                <TouchableHighlight
+                underlayColor='#eee'
+                onPress={this._goTaskAttachList} >
+                    <View style={commonStyle.settingItemWrapper}>
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                附件
+                            </Text>
+                            <Text
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
+                            {this.state.taskData.accessoryNum}
+                            </Text>
+                            <Image
+                        style={commonStyle.settingArrow}
+                        source={require('../../../images/common/arrow_right.png')} />
+                        </View>
+                    </View>
+                </TouchableHighlight>
+                );
+        };
+        return(<View />);
+    },
     renderOverTime: function(){
         if (!this.state.taskData.overTime) {
             return(
@@ -487,26 +514,7 @@ module.exports = React.createClass({
                     {this.renderSubTask()}
                     {this.renderOverTime()}
                     {this.renderDependences()}
-                    <TouchableHighlight
-                    underlayColor='#eee'
-                    onPress={this._goTaskAttachList} >
-                        <View style={commonStyle.settingItemWrapper}>
-                            <View
-                            style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
-                                <Text
-                                style={commonStyle.settingTitle}>
-                                    附件
-                                </Text>
-                                <Text
-                                style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                                {this.state.taskData.accessoryNum}
-                                </Text>
-                                <Image
-                            style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
-                            </View>
-                        </View>
-                    </TouchableHighlight>
+                    {this.renderAttachItem()}
                     <TouchableHighlight
                     underlayColor='#eee'
                     onPress={this._goOrderDetail} >

@@ -160,11 +160,6 @@ module.exports = React.createClass({
                     <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
                             您还没有附件
                     </Text>
-                    <Button
-                    style={commonStyle.blueButton}
-                    onPress={this.props.onEmptyButtonPress} >
-                        添加附件
-                    </Button>
                 </View>
                 );
         }else{
@@ -173,6 +168,11 @@ module.exports = React.createClass({
                 </View>
                 )
         }
+                    // <Button
+                    // style={commonStyle.blueButton}
+                    // onPress={this.props.onEmptyButtonPress} >
+                    //     添加附件
+                    // </Button>
     },
     renderLoadingView: function(){
         return (

@@ -68,22 +68,22 @@ module.exports = React.createClass({
         });
     },
     renderNavigationBar: function(){
-        var rights = appConstants.userRights.rights;
-        var targetRights = 512;
-        if ((rights & targetRights) == targetRights){
-            return(
-                <NavigationBar
-                    title={{ title: '附件' }}
-                    leftButton={<BlueBackButton />}
-                    rightButton={<RightAddButton onPress={this.doAddPhoto} />} />
-                );
-        }else{
-            return(
-                <NavigationBar
-                    title={{ title: '附件' }}
-                    leftButton={<BlueBackButton />} />
-                );
-        }
+        return(
+            <NavigationBar
+                title={{ title: '附件' }}
+                leftButton={<BlueBackButton />} />
+            );
+        // var rights = appConstants.userRights.rights;
+        // var targetRights = 512;
+        // if ((rights & targetRights) == targetRights){
+        //     return(
+        //         <NavigationBar
+        //             title={{ title: '附件' }}
+        //             leftButton={<BlueBackButton />}
+        //             rightButton={<RightAddButton onPress={this.doAddPhoto} />} />
+        //         );
+        // }else{
+        // }
     },
     render:function(){
         return (

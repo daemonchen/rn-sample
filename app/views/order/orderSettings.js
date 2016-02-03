@@ -54,7 +54,7 @@ module.exports = React.createClass({
         return {
             orderId: defaultData.orderId || 0,
             orderStatus: defaultData.orderStatus || 1,
-            accessoryIds: defaultData.accessoryIds || [],
+            // accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
             creatorId: defaultData.creatorId || 0,
             creatorName: defaultData.creatorName || '',
@@ -101,25 +101,25 @@ module.exports = React.createClass({
     },
     onAttachChange: function(){
         var result = attachStore.getState();
-        console.log('-----attachStore result:', result);
+        // console.log('-----attachStore result:', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
         }
         if (result.type == 'create') {
             // this.fetchData();
-            this.setAccessoryIds(result.data);
+            this.setAccessoryNum(result.data);
         };
     },
-    setAccessoryIds: function(data){
-        this.accessoryIds = this.state.accessoryIds;
+    setAccessoryNum: function(data){
+        // this.accessoryIds = this.state.accessoryIds;
         if (!data || !data.id) { return; };
-        if (!underscore.contains(this.accessoryIds, data.id)) {
-            this.accessoryIds.push(data.id);
-        }
+        // if (!underscore.contains(this.accessoryIds, data.id)) {
+        //     this.accessoryIds.push(data.id);
+        // }
         this.setState({
-            accessoryIds: this.accessoryIds,
-            accessoryNum: this.accessoryIds.length
+            // accessoryIds: this.accessoryIds,
+            accessoryNum: this.state.accessoryNum + 1
         });
     },
     transformData: function(result){
@@ -127,7 +127,7 @@ module.exports = React.createClass({
         var defaultData = result.data;
         var endTime = defaultData.endTime || new Date().valueOf();
         this.setState({
-            accessoryIds: defaultData.accessoryIds || [],
+            // accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
             creatorId: defaultData.creatorId || 0,
             creatorName: defaultData.creatorName || '',
@@ -236,7 +236,7 @@ module.exports = React.createClass({
         if (this.state.orderStatus == 2) {//修改订单
             orderAction.update({
                 id: this.state.orderId,
-                accessoryIds: this.state.accessoryIds || [],
+                // accessoryIds: this.state.accessoryIds || [],
                 accessoryNum: this.state.accessoryNum || '',
                 creatorId: this.state.creatorId || 0,
                 creatorName: this.state.creatorName || '',
@@ -254,7 +254,7 @@ module.exports = React.createClass({
         }
         if (this.state.orderStatus == 1) {//新增订单
             orderAction.create({
-                accessoryIds: this.state.accessoryIds || [],
+                // accessoryIds: this.state.accessoryIds || [],
                 accessoryNum: this.state.accessoryNum || '',
                 creatorId: this.state.creatorId || 0,
                 creatorName: this.state.creatorName || '',

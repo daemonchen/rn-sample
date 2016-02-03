@@ -77,6 +77,7 @@ class AttachStore {
 
             this.preventDefault();
         });
+        this.preventDefault();
     }
 
     onUploadToQiniu(data){
@@ -84,6 +85,7 @@ class AttachStore {
             attachAction.createSuccess(result)
             this.preventDefault();
         });
+        this.preventDefault();
     }
     onCreateSuccess(responseData){
         if (!responseData) {return false};

@@ -23,7 +23,7 @@ module.exports = {
     getAuthToken: function(){
         var currentToken = appConstants.xAuthToken;
         var newToken = appStore.getState().xAuthToken;
-        console.log('-----xAuthToken',currentToken,newToken);
+        // console.log('-----xAuthToken',currentToken,newToken);
         if (!!newToken && (currentToken != newToken)) {//切换账号之后，要更新token
             appConstants = appStore.getState();
         };

@@ -103,6 +103,7 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenTaskChange();
+        this.unlistenTaskListChange();
     },
     getAppConstants: function(){
         var self = this;
@@ -196,7 +197,7 @@ module.exports = React.createClass({
             this.setTimeout(this.onRefresh, 350)
         };
         if (result.type == 'update') {
-            this.setTimeout(this.onRefresh, 350)
+            // this.setTimeout(this.onRefresh, 350)
         };
     },
     handleGet: function(result, isLoadmore){
