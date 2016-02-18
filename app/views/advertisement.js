@@ -1,8 +1,8 @@
 'use strict';
 
 var React = require('react-native');
-var TimerMixin = require('react-timer-mixin');
-var Actions = require('react-native-router-flux').Actions;
+// var TimerMixin = require('react-timer-mixin');
+// var Actions = require('react-native-router-flux').Actions;
 var {
   AppRegistry,
   StyleSheet,
@@ -18,7 +18,7 @@ var {
 
 var commonStyle = require('../styles/commonStyle');
 
-var Modal = require('../common/modal');
+// var Modal = require('../common/modal');
 
 //获取可视窗口的宽高
 var util = require('../common/util.js');
@@ -27,11 +27,11 @@ var {
 } = util.getDimensions();
 
 module.exports = React.createClass({
-    mixins: [TimerMixin],
+    // mixins: [TimerMixin],
     getInitialState: function(){
         return {}
     },
-    _modal: {},
+    // _modal: {},
     componentDidMount: function(){
 
     },
@@ -39,15 +39,16 @@ module.exports = React.createClass({
 
     },
     render: function(){
+                    // <ActivityIndicatorIOS
+                    //     animating={true}
+                    //     style={[commonStyle.activityIndicator, {height: 80}]}
+                    //     size="small" />
+                  // <Modal ref={(ref)=>{this._modal = ref}}/>
         return (
             <View style={commonStyle.container}>
                 <View style={{width: width, height: height, backgroundColor: '#fff', justifyContent: 'center'}}>
-                    <ActivityIndicatorIOS
-                        animating={true}
-                        style={[commonStyle.activityIndicator, {height: 80}]}
-                        size="small" />
+                    <Image source={require('../images/default.png')} />
                 </View>
-                  <Modal ref={(ref)=>{this._modal = ref}}/>
             </View>
         );
     }

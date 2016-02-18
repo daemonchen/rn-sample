@@ -143,7 +143,7 @@ module.exports = React.createClass({
     },
     doLogout: function(){
         appConstants = {};
-        console.log('---doLogout');
+        // console.log('---doLogout');
         asyncStorage.setItem('appConstants', appConstants);
         this.setTimeout(function(){
             appAction.init(appConstants);
