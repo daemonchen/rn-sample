@@ -74,15 +74,15 @@ module.exports = React.createClass({
                 position: 'absolute',
                 width: this.state.circleBounceValue.interpolate({
                            inputRange: [0, 0.8, 1],
-                           outputRange: [10, 40, 30]
+                           outputRange: [10, 40, 40]
                         }),
                 height: this.state.circleBounceValue.interpolate({
                            inputRange: [0, 0.8, 1],
-                           outputRange: [10, 40, 30]
+                           outputRange: [10, 40, 40]
                         }),
                 borderRadius: this.state.circleBounceValue.interpolate({
                            inputRange: [0, 0.8, 1],
-                           outputRange: [5, 20, 15]
+                           outputRange: [5, 20, 20]
                         }),
                 backgroundColor: params.backgroundColor,
                 transform: [                        // `transform`是一个有序数组（动画按顺序执行）
