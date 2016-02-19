@@ -105,7 +105,7 @@ module.exports = React.createClass({
         var result = authTokenStore.getState();
         console.log('-----auth token result', result);
         if (result.status != 200 && !!result.message) {
-            this.goWelcome();
+            // this.goWelcome();
             return;
         }
         switch(result.type){
@@ -132,7 +132,7 @@ module.exports = React.createClass({
         appConstants.xAuthToken = result.data.token;
         appConstants.user = result.data.user;
         appConstants.userRights = result.data.userRights;
-        asyncStorage.clear();
+        asyncStorage.clear();//清空了之后再赋值
         console.log('----doLogin');
         asyncStorage.setItem('appConstants', appConstants).done();
 
@@ -167,6 +167,10 @@ module.exports = React.createClass({
         }
         appConstants.unreadMsg = result.data.unreadMsg;
         this.setTimeout(function(){
+            /*
+                获取了 appConstants 之后，
+                要在下一次发fetch数据的时候使用新的token
+            */
             appAction.init(appConstants);
         }, 350);
         console.log('----on systemStore change');

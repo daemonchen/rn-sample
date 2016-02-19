@@ -25,6 +25,11 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {}
     },
+    componentDidMount: function(){
+        // LayoutAnimation.easeInEaseOut();
+
+    },
+    componentWillUnmount: function(){},
     goRegister: function(){
         Actions.register();
     },
@@ -73,6 +78,7 @@ var styles = StyleSheet.create({
         marginTop: 100
     },
     welcomeText: {
+        fontSize: 20,
         paddingVertical: 12
     }
 });

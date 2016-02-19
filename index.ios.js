@@ -34,7 +34,7 @@ var awesomeMobile = React.createClass({
     },
     componentWillMount: function(){
         Orientation.lockToPortrait();
-        this.getAppState();
+        this.getAppState();//TODO:settimeout
         this.getLocation();
         PushNotificationIOS.addEventListener('notification', this._onNotification);
     },

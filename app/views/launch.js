@@ -117,7 +117,7 @@ module.exports = React.createClass({
             this.setBadge(jsonData.data.unreadMsgCount);
             notificationAction.notify(jsonData);
         };
-        if (jsonData.type == 2) {
+        if (jsonData.type == 2) {//权限更新
             authTokenAction.updateToken()
         };
         if (jsonData.type == 3) {
