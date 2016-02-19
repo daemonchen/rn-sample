@@ -125,7 +125,7 @@ module.exports = React.createClass({
         this.setState({
             // accessoryIds: this.accessoryIds,
             isVisible: false,
-            accessoryNum: this.state.accessoryNum + 1
+            accessoryNum: !!this.state.accessoryNum ? (parseInt(this.state.accessoryNum) + 1) : 1
         });
     },
     onChange: function(){
