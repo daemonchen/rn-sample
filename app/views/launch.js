@@ -13,7 +13,8 @@ var {
   PushNotificationIOS,
   NativeAppEventEmitter,
   LinkingIOS,
-  View
+  View,
+  Animated
 } = React;
 
 var AppNavigator = require('../common/navbar');
@@ -46,6 +47,7 @@ module.exports = React.createClass({
             selectedTab: 'Workspace',
             notifCount: appConstants.unreadMsg || 0,
             presses: 0,
+            viewBounceValue: new Animated.Value(0)
         };
     },
     componentDidMount: function(){
@@ -61,6 +63,13 @@ module.exports = React.createClass({
 
         var url = LinkingIOS.popInitialURL();
         this.factoryLinkingScheme(url);
+        Animated.spring(                          // 可选的基本动画类型: spring, decay, timing
+          this.state.viewBounceValue,                 // 将`circleBounceValue`值动画化
+          {
+            toValue: 1,                         // 将其值以动画的形式改到一个较小值
+            friction: 7,                          // Bouncier spring
+          }
+        ).start();
     },
     componentWillUnmount: function() {
         this.unlisten();
@@ -176,6 +185,14 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
+            <Animated.View style={{
+                flex: 1,
+                transform: [                        // `transform`是一个有序数组（动画按顺序执行）
+                    {
+                        scale: this.state.viewBounceValue
+                   }
+                  ]
+            }}>
             <TabBarIOS
                 tintColor = "#4285f4"
                 translucent = {true} >
@@ -221,6 +238,7 @@ module.exports = React.createClass({
                     <AppNavigator initialRoute={{title: 'Person', component:UserIndex, topNavigator: this.props.navigator}} key='Person' />
                 </TabBarIOS.Item>
             </TabBarIOS>
+            </Animated.View>
         );
     }
 });
