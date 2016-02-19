@@ -73,16 +73,16 @@ module.exports = React.createClass({
             <Animated.View style={{
                 position: 'absolute',
                 width: this.state.circleBounceValue.interpolate({
-                           inputRange: [0, 1],
-                           outputRange: [10, 40]
+                           inputRange: [0, 0.8, 1],
+                           outputRange: [10, 40, 30]
                         }),
                 height: this.state.circleBounceValue.interpolate({
-                           inputRange: [0, 1],
-                           outputRange: [10, 40]
+                           inputRange: [0, 0.8, 1],
+                           outputRange: [10, 40, 30]
                         }),
                 borderRadius: this.state.circleBounceValue.interpolate({
-                           inputRange: [0, 1],
-                           outputRange: [5, 20]
+                           inputRange: [0, 0.8, 1],
+                           outputRange: [5, 20, 15]
                         }),
                 backgroundColor: params.backgroundColor,
                 transform: [                        // `transform`是一个有序数组（动画按顺序执行）
