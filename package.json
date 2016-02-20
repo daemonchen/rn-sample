@@ -13,6 +13,7 @@
     "query-string": "^3.0.0",
     "react-native": "^0.18.0",
     "react-native-blur": "^0.7.7",
+    "react-native-code-push": "^1.7.3-beta",
     "react-native-device-info": "^0.5.1",
     "react-native-image-picker": "^0.9.0",
     "react-native-lightbox": "^0.5.0",

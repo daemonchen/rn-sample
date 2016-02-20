@@ -26,6 +26,7 @@
 		D110ACC71C61CBF200682D17 /* libRNOverlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D110ACC61C61CBE700682D17 /* libRNOverlay.a */; };
 		D1131B661C4F4F1E00F22833 /* libRNPhonePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1131B651C4F4F0400F22833 /* libRNPhonePicker.a */; };
 		D11E67161C5909B5003E9E1B /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D11E67151C5909A7003E9E1B /* libRNSearchBar.a */; };
+		D121E5261C7800810034509B /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D121E50F1C7800670034509B /* libCodePush.a */; };
 		D1877E901C43D99B00C9358D /* libRCTCircleProgress.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1877E8D1C43D99200C9358D /* libRCTCircleProgress.a */; };
 		D189FD9E1C57983800784BB3 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D189FD841C57983800784BB3 /* UMSocialLocalizable.strings */; };
 		D189FD9F1C57983800784BB3 /* libUMSocial_Sdk_4.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D189FD921C57983800784BB3 /* libUMSocial_Sdk_4.4.a */; };
@@ -231,6 +232,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNSearchBar;
 		};
+		D121E50E1C7800670034509B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D121E50A1C7800670034509B /* CodePush.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = CodePush;
+		};
 		D1877E8C1C43D99200C9358D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */;
@@ -320,6 +328,7 @@
 		D110ACC11C61CBE700682D17 /* RNOverlay.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNOverlay.xcodeproj; path = "../node_modules/react-native-overlay/RNOverlay.xcodeproj"; sourceTree = "<group>"; };
 		D1131B601C4F4F0300F22833 /* RNPhonePicker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNPhonePicker.xcodeproj; path = "../../../github/react-native-phone-picker/RNPhonePicker.xcodeproj"; sourceTree = "<group>"; };
 		D11E67101C5909A7003E9E1B /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
+		D121E50A1C7800670034509B /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		D1877E871C43D99100C9358D /* RCTCircleProgress.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCircleProgress.xcodeproj; path = "../../../github/react-native-circle-progress/RCTCircleProgress.xcodeproj"; sourceTree = "<group>"; };
 		D189FD851C57983800784BB3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		D189FD871C57983800784BB3 /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
@@ -528,10 +537,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2BF47261C214901002C7185 /* libz.tbd in Frameworks */,
+				D121E5261C7800810034509B /* libCodePush.a in Frameworks */,
 				D110ACC71C61CBF200682D17 /* libRNOverlay.a in Frameworks */,
 				D1F67BEA1C5A52C3003DF690 /* libRCTToast.a in Frameworks */,
 				D11E67161C5909B5003E9E1B /* libRNSearchBar.a in Frameworks */,
-				D2BF47261C214901002C7185 /* libz.tbd in Frameworks */,
 				D1FD924E1C5772990067EC7E /* libstdc++.tbd in Frameworks */,
 				D189FDB91C57984300784BB3 /* libWeChatSDK.a in Frameworks */,
 				D2BF47281C214912002C7185 /* libsqlite3.tbd in Frameworks */,
@@ -686,6 +696,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D121E50A1C7800670034509B /* CodePush.xcodeproj */,
 				D110ACC11C61CBE700682D17 /* RNOverlay.xcodeproj */,
 				D1F67BD01C5A50BB003DF690 /* RCTToast.xcodeproj */,
 				D11E67101C5909A7003E9E1B /* RNSearchBar.xcodeproj */,
@@ -766,6 +777,14 @@
 			isa = PBXGroup;
 			children = (
 				D11E67151C5909A7003E9E1B /* libRNSearchBar.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D121E50B1C7800670034509B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D121E50F1C7800670034509B /* libCodePush.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1311,6 +1330,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = D121E50B1C7800670034509B /* Products */;
+					ProjectRef = D121E50A1C7800670034509B /* CodePush.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -1493,6 +1516,13 @@
 			fileType = archive.ar;
 			path = libRNSearchBar.a;
 			remoteRef = D11E67141C5909A7003E9E1B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D121E50F1C7800670034509B /* libCodePush.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCodePush.a;
+			remoteRef = D121E50E1C7800670034509B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D1877E8D1C43D99200C9358D /* libRCTCircleProgress.a */ = {
@@ -1784,6 +1814,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/**",
+					"$(SRCROOT)/../node_modules/react-native-code-push/**",
 				);
 				INFOPLIST_FILE = awesomeMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1837,6 +1868,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/**",
+					"$(SRCROOT)/../node_modules/react-native-code-push/**",
 				);
 				INFOPLIST_FILE = awesomeMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

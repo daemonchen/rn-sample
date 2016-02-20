@@ -11,10 +11,14 @@
 
 #import "RCTRootView.h"
 #import "RCTLinkingManager.h"
+
+#import "CodePush.h"
+
 #import "RCTPushNotificationManager.h"
 #import "GeTuiManager.h"
 #import "AppDelegate+UMeng.h"
 #import "AppDelegate+GeTui.h"
+
 
 @interface AppDelegate ()
 
@@ -39,11 +43,10 @@
 #ifdef DEBUG
   jsCodeLocation = [NSURL URLWithString:@"http://192.168.1.119:8081/index.ios.bundle?platform=ios&dev=true"];
 #else
-  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+//  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  jsCodeLocation = [CodePush bundleURL];
 #endif
   
-
-//   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"awesomeMobile"

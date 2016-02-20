@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 // var TimerMixin = require('react-timer-mixin');
+import codePush from "react-native-code-push";
 var Actions = require('react-native-router-flux').Actions;
 var {
   AppRegistry,
@@ -41,6 +42,7 @@ module.exports = React.createClass({
     },
     // _modal: {},
     componentDidMount: function(){
+        codePush.sync();//静默更新
         this.unAuthTokenlisten = authTokenStore.listen(this.onAuthTokenChange);
         this.state.viewBounceValue.setValue(0);   //默认隐藏登陆注册模块
         Animated.spring(                          // 可选的基本动画类型: spring, decay, timing
