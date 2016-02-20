@@ -47,7 +47,7 @@ module.exports = React.createClass({
           this.state.circleBounceValue,                 // 将`circleBounceValue`值动画化
           {
             toValue: 0.8,                         // 将其值以动画的形式改到一个较小值
-            friction: 7,                          // Bouncier spring
+            friction: 9,                          // Bouncier spring
           }
         ).start();                                // 开始执行动画
     },
@@ -108,14 +108,14 @@ module.exports = React.createClass({
               this.state.circleBounceValue,                 // 将`circleBounceValue`值动画化
               {
                 toValue: 1,                         // 将其值以动画的形式改到一个较小值
-                friction: 7,                          // Bouncier spring
+                friction: 9,                          // Bouncier spring
               }
             ),
             Animated.spring(                          // 可选的基本动画类型: spring, decay, timing
               this.state.viewBounceValue,                 // 将`circleBounceValue`值动画化
               {
                 toValue: 1,                         // 将其值以动画的形式改到一个较小值
-                friction: 7,                          // Bouncier spring
+                friction: 9,                          // Bouncier spring
               }
             ),
             ]).start();
