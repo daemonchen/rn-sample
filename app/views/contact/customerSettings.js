@@ -62,21 +62,20 @@ module.exports = React.createClass({
         };
         this._timeout = this.setTimeout(()=>{
             Actions.pop();
-        },2000);
+        },350);
     },
     handleDelete: function(result){
-        console.log('------删除客户 result', result);
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
+            // util.alert(result.message);
             return;
         }
-        util.toast('删除客户成功');
+        // util.toast('删除客户成功');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
         this._timeout = this.setTimeout(()=>{
             Actions.pop();
-        },2000);
+        },350);
     },
     onChange: function() {
         var result = customerStore.getState();

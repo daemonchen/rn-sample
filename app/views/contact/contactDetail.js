@@ -26,8 +26,11 @@ var Button = require('../../common/button.js');
 
 var employeeAction = require('../../actions/employee/employeeAction');
 var employeeStore = require('../../stores/employee/employeeStore');
+
 var userAction = require('../../actions/user/userAction');
 var userStore = require('../../stores/user/userStore');
+
+var customerStore = require('../../stores/contact/customerStore');
 
 var BlueBackButton = require('../../common/blueBackButton');
 var RightSettingButton = require('../../common/rightSettingButton');
@@ -46,11 +49,35 @@ module.exports = React.createClass({
     },
     componentDidMount: function(){
         this.unlisten = userStore.listen(this.onChange);
-        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange)
+        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange);
+        this.unlistenCustomer = customerStore.listen(this.onCustomerChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenEmployee();
+        this.unlistenCustomer();
+    },
+    onCustomerChange: function(){
+        var result = customerStore.getState();
+        switch(result.type){
+            case 'delete':
+                return this.handleDelete(result);
+        }
+    },
+
+    handleDelete: function(result){
+        console.log('------删除客户 result', result);
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        util.toast('删除客户成功');
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            Actions.pop();
+        },2000);
     },
     onEmployeeChange: function(){
         var result = employeeStore.getState();
