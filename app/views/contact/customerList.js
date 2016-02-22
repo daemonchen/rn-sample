@@ -93,11 +93,11 @@ module.exports = React.createClass({
         };
 
         if (!!person) {
-            var phone = person.phone;
+            var phone = person.phone.replace(/[^\d]/g, '');
             var fullName = person.fullName;
             options = Object.assign(options, {
                 data: {
-                    id: 0,
+                    userId: 0,
                     mobiles: [phone],
                     userName: fullName
                 }

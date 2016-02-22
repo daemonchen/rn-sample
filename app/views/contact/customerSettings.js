@@ -34,9 +34,10 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         var defaultData = this.props.data;
+        console.log('-----defaultData', defaultData);
         return {
             target: this.props.target || 1,//1: create 2: update
-            id: defaultData ? defaultData.id : 0,//客户id
+            id: defaultData ? defaultData.userId : 0,//客户id
             userName: defaultData ? defaultData.userName :'',
             mobiles: defaultData ? defaultData.mobiles :[],
             company: defaultData ? defaultData.company :'',
@@ -64,6 +65,7 @@ module.exports = React.createClass({
         },2000);
     },
     handleDelete: function(result){
+        console.log('------删除客户 result', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;

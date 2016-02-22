@@ -3,7 +3,6 @@
 var React = require('react-native');
 import NavigationBar from 'react-native-navbar';
 var Actions = require('react-native-router-flux').Actions;
-var PhonePicker = require('react-native-phone-picker');
 var TimerMixin = require('react-timer-mixin');
 var {
     View,
