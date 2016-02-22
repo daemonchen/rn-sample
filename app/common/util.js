@@ -5,7 +5,7 @@ var toast = require('./toast');
 var {
     AlertIOS,
     NativeModules,
-    LinkingIOS
+    Linking
 } = React
 
 var UIImagePickerManager = NativeModules.UIImagePickerManager;
@@ -94,11 +94,11 @@ module.exports = {
         AlertIOS.alert(content)
     },
     link: function(url){
-        LinkingIOS.canOpenURL(url, (supported) => {
+        Linking.canOpenURL(url, (supported) => {
             if (!supported) {
                 console.warn("Can't support the url")
             } else {
-                LinkingIOS.openURL(url)
+                Linking.openURL(url)
             }
         })
     },

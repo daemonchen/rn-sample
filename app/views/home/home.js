@@ -39,6 +39,7 @@ var Home =  React.createClass({
     },
     onSchemeChange: function(){
         var result = schemeStore.getState();
+        // console.log('---scheme change', result.scheme);
         if (!result.scheme) { return; };
         var params = util.getParams(result.scheme.split('?')[1]);
         if (/nzaom:\/\/workbench/.test(result.scheme)) {

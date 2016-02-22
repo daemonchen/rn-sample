@@ -12,7 +12,7 @@ var {
   Text,
   PushNotificationIOS,
   NativeAppEventEmitter,
-  LinkingIOS,
+  Linking,
   View,
   Animated
 } = React;
@@ -59,9 +59,9 @@ module.exports = React.createClass({
                 this.factoryNotify(notifData);
             }
         );
-        LinkingIOS.addEventListener('url', this._handleOpenURL);
+        Linking.addEventListener('url', this._handleOpenURL);
 
-        var url = LinkingIOS.popInitialURL();
+        var url = Linking.getInitialURL();
         this.factoryLinkingScheme(url);
         Animated.spring(                          // 可选的基本动画类型: spring, decay, timing
           this.state.viewBounceValue,                 // 将`circleBounceValue`值动画化
@@ -75,24 +75,24 @@ module.exports = React.createClass({
         this.unlisten();
         this.unlistenScheme();
         this.unlistenNotification.remove();
-        LinkingIOS.removeEventListener('url', this._handleOpenURL);
+        Linking.removeEventListener('url', this._handleOpenURL);
     },
     onSchemeChange: function(){
         var result = schemeStore.getState();
-        // console.log('---scheme change', result.scheme);
+        // console.log('---scheme change', result.scheme, /nzaom:\/\/setting/.test(result.scheme));
         if (!result.scheme) { return;};
         var params = util.getParams(result.scheme.split('?')[1]);
         if (/nzaom:\/\/workbench/.test(result.scheme)) {
-            this._handlePress('Workspace');
+            this._handlePress('Workspace')();
         };
         if (/nzaom:\/\/order/.test(result.scheme)) {
-            this._handlePress('Order');
+            this._handlePress('Order')();
         };
         if (/nzaom:\/\/message/.test(result.scheme)) {
-            this._handlePress('Inbox');
+            this._handlePress('Inbox')();
         };
         if (/nzaom:\/\/setting/.test(result.scheme)) {
-            this._handlePress('Person');
+            this._handlePress('Person')();
         };
         if (/nzaom:\/\/order_detail/.test(result.scheme)) {
             Actions.orderDetail({
@@ -106,6 +106,8 @@ module.exports = React.createClass({
         };
     },
     factoryLinkingScheme: function(scheme){
+        if (typeof(scheme) != 'string') {return;};
+        // console.log('-----factoryLinkingScheme', scheme);
         schemeAction.change({
             "scheme": scheme
         });
@@ -177,6 +179,7 @@ module.exports = React.createClass({
     _handlePress: function (tab) {
         var self = this;
         return function () {
+            // console.log('----_handlePress', tab);
             util.logEvent('tabSwitch', {tabName: tab});
             self.setState({
                 selectedTab: tab

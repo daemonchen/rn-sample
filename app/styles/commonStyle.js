@@ -116,7 +116,7 @@ module.exports = React.StyleSheet.create({
     },
     textInput: {
         flex: 1,
-        minHeight: 24,
+        height: 24,
         lineHeight: 24,
         marginTop: 4,
         textAlign: 'justify',

@@ -1,4 +1,4 @@
-// var keyMirror = require('keymirror');
+// var keyMirror = require('keyMirror');
 
 /*
     global variable cached in memory
