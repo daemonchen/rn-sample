@@ -1,2 +1,5 @@
+#!/bin/sh
+VERSION=$1
+: ${VERSION:="3.0.5"}
 code-push release \
-awesomeMobile $HOME/Documents/nzaom/nzaom-ios-platform/release 3.0.4 --deploymentName Production
+awesomeMobile $PWD/release $VERSION --deploymentName Production

@@ -1,7 +1,8 @@
+#!/bin/sh
 rm -rf $TMPDIR/react-*
 react-native bundle \
  --dev false \
- --assets-dest $HOME/Documents/nzaom/nzaom-ios-platform/release \
+ --assets-dest $PWD/release \
  --minify --platform ios \
- --entry-file $HOME/Documents/nzaom/nzaom-ios-platform/index.ios.js \
- --bundle-output $HOME/Documents/nzaom/nzaom-ios-platform/release/main.jsbundle
+ --entry-file $PWD/index.ios.js \
+ --bundle-output $PWD/release/main.jsbundle
