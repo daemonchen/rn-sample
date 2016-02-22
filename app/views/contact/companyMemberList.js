@@ -12,6 +12,7 @@ var {
     Image,
     ScrollView,
     TouchableOpacity,
+    TouchableHighlight,
     ActionSheetIOS,
     StyleSheet
 } = React;
@@ -36,6 +37,7 @@ var employeeStore = require('../../stores/employee/employeeStore');
 
 var util = require('../../common/util');
 var appConstants = require('../../constants/appConstants');
+var asyncStorage = require('../../common/storage');
 /*
 target: 表示从哪里打开通讯录 enum
 {
@@ -48,6 +50,7 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         return {
+            // factory: {},
             target: this.props.target || 3,
             listData: [],
         }
@@ -58,13 +61,29 @@ module.exports = React.createClass({
         this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange);
         if (this._timeout) {this.clearTimeout(this._timeout)};
         this._timeout = this.setTimeout(this.fetchData, 350);
+        this.getAppConstants();
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenEmployee();
     },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                // this.setTimeout(function(){
+                //     self.setState({
+                //         factory: !!appConstants.factory ? appConstants.factory : {}
+                //     });
+                // }, 350)
+            }
+        }).done();
+    },
     fetchData: function(){
         contactAction.getList();
+
     },
     handleCreate: function(result){
         if (result.status != 200 && !!result.message) {
@@ -113,6 +132,7 @@ module.exports = React.createClass({
             listData: result.data
         });
     },
+
     onPressRow: function(data){
         if (this.state.target == 3) {
             Actions.contactDetail({

@@ -30,13 +30,30 @@ var BlueBackButton = require('../../common/blueBackButton');
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
-        return {}
+        return {
+            factory: {}
+        }
     },
     componentDidMount: function(){
+        this.getAppConstants();
     },
     componentWillUnmount: function() {
     },
     _modal: {},
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                this.setTimeout(function(){
+                    self.setState({
+                        factory: !!appConstants.factory ? appConstants.factory : {}
+                    });
+                }, 350)
+            }
+        }).done();
+    },
     showShareActionSheet: function() {
         ActionSheetIOS.showShareActionSheetWithOptions({
           url: 'https://code.facebook.com',
@@ -100,6 +117,31 @@ module.exports = React.createClass({
     goApplicationList: function(){
         Actions.applicationList();
     },
+    goVersionPage: function(){
+        Actions.taskDescribe({
+            title: '企业等级',
+            descriptionUrl:  this.state.factory.levelUrl
+        });
+    },
+    renderCompanyVersionItem: function(){
+        return(
+            <TouchableHighlight
+                style={commonStyle.settingItemWrapper}
+                underlayColor='#eee'
+                onPress={this.goVersionPage}>
+                <View
+                style={commonStyle.settingItem}>
+                    <Image
+                    style={commonStyle.settingIcon}
+                    source={require('../../images/contact/version_gray.png')}/>
+                    <Text
+                    style={commonStyle.settingDetail}>
+                        企业等级
+                    </Text>
+                </View>
+            </TouchableHighlight>
+            );
+    },
     renderApplicationItem: function(){
         var rights = appConstants.userRights.rights;
         var targetRights = 4194304;
@@ -116,7 +158,7 @@ module.exports = React.createClass({
                         source={require('../../images/contact/horn_gray.png')}/>
                         <Text
                         style={commonStyle.settingDetail}>
-                            申请人列表
+                            新的成员
                         </Text>
                     </View>
                 </TouchableHighlight>
@@ -143,7 +185,7 @@ module.exports = React.createClass({
                         source={require('../../images/contact/chart_gray.png')}/>
                         <Text
                         style={commonStyle.settingDetail}>
-                            企业报表
+                            统计报表
                         </Text>
                     </View>
                 </TouchableHighlight>
@@ -161,6 +203,7 @@ module.exports = React.createClass({
                     title={{title: '设置'}}
                     leftButton={<BlueBackButton />} />
                 <View style={commonStyle.settingGroups}>
+                    {this.renderChartItem()}
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
@@ -172,13 +215,12 @@ module.exports = React.createClass({
                             source={require('../../images/contact/link_gary.png')}/>
                             <Text
                             style={commonStyle.settingDetail}>
-                                发送邀请链接
+                                分享邀请链接
                             </Text>
                         </View>
                     </TouchableHighlight>
                     {this.renderApplicationItem()}
-                    {this.renderChartItem()}
-
+                    {this.renderCompanyVersionItem()}
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'

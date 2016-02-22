@@ -24,6 +24,20 @@ class FactoryStore {
 
         this.setState(responseData);
     }
+    onGetList(data) {
+        factoryService.getList(data)
+        .then((responseData) => {
+            factoryAction.getListSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetListSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'getList'
+
+        this.setState(responseData);
+    }
     onCreate(data) {
         factoryService.create(data)
         .then((responseData) => {

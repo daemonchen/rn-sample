@@ -29,8 +29,12 @@ var Popover = require('../../common/popover');
 
 var contactAction = require('../../actions/contact/contactAction');
 var contactStore = require('../../stores/contact/contactStore');
+
 var employeeAction = require('../../actions/employee/employeeAction');
 var employeeStore = require('../../stores/employee/employeeStore');
+
+var factoryAction = require('../../actions/factory/factoryAction');
+var factoryStore = require('../../stores/factory/factoryStore');
 
 var util = require('../../common/util');
 var Modal = require('../../common/modal');
@@ -48,6 +52,7 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         return {
+            factory: {},
             target: this.props.target || 3,
             listData: [],
             isVisible: false,
@@ -58,6 +63,7 @@ module.exports = React.createClass({
     componentWillMount: function(){
         this.unlisten = contactStore.listen(this.onChange);
         this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange);
+        this.unlistenFactory = factoryStore.listen(this.onFactoryChange);
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
@@ -67,6 +73,21 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenEmployee();
+        this.unlistenFactory();
+    },
+    onFactoryChange: function(){
+        var result = factoryStore.getState();
+        if (result.type != 'get') { return; };
+        if (result.status != 200 && !!result.message) {
+            util.alert(result.message);
+            return;
+        }
+        appConstants.factory = result.data;
+        asyncStorage.setItem('appConstants', appConstants);
+        console.log('-----factory', result.data);
+        this.setState({
+            factory: !!appConstants.factory ? appConstants.factory : {}
+        });
     },
     getAppConstants: function(){
         var self = this;
@@ -74,11 +95,17 @@ module.exports = React.createClass({
         .then((data)=>{
             if(!!data && !!data.xAuthToken){
                 appConstants = data;
+                this.setTimeout(function(){
+                    self.setState({
+                        factory: !!appConstants.factory ? appConstants.factory : {}
+                    });
+                }, 350)
             }
         }).done();
     },
     fetchData: function(){
         contactAction.getList();
+        factoryAction.get();//获取工厂信息
     },
     handleCreate: function(result){
         if (result.status != 200 && !!result.message) {
@@ -341,6 +368,36 @@ module.exports = React.createClass({
                 );
         }
     },
+    goVersionPage: function(){
+        Actions.taskDescribe({
+            title: '企业等级',
+            descriptionUrl: this.state.factory.levelUrl
+        });
+    },
+    renderVersionTips: function(){
+        if (!!this.state.factory && (this.state.factory.level == 0)) {
+            return(
+                <TouchableHighlight
+                underlayColor='#eee'
+                onPress={this.goVersionPage} >
+                    <View style={[commonStyle.settingItemWrapper, {backgroundColor: '#fbbc05'}]}>
+                        <View
+                        style={commonStyle.tipsItem} >
+                            <Text
+                            style={[commonStyle.tipsItemDetail, commonStyle.textWhite]}
+                            numberOfLines={1}>
+                            {this.state.factory.levelMemo}
+                            </Text>
+                            <Image
+                        style={commonStyle.settingArrow}
+                        source={require('../../images/common/arrow_right_white.png')} />
+                        </View>
+                    </View>
+                </TouchableHighlight>
+                );
+        };
+        return(<View />);
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
@@ -348,7 +405,7 @@ module.exports = React.createClass({
                 <ScrollView style={commonStyle.container}
 
                 automaticallyAdjustContentInsets={false} >
-
+                    {this.renderVersionTips()}
                     <ContactGroup
                     style={styles.contactGroup}
                     goApplicationList={this.goApplicationList}

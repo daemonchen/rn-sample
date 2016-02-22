@@ -15,7 +15,8 @@ module.exports = {
     commentList: null,
     workbenchList: null,
     newsList: null,
-    location: null
+    location: null,
+    factory: null
 };
 
 // TODO: orderList inboxList

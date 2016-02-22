@@ -18,6 +18,9 @@ module.exports = React.StyleSheet.create({
     alignCenter:{
         textAlign: 'center'
     },
+    textWhite: {
+        color: '#fff'
+    },
     textGray:{
         color: '#727272'
     },
@@ -186,6 +189,20 @@ module.exports = React.StyleSheet.create({
         width: width,
         // height: 60,
         alignItems: 'center'
+    },
+    tipsItem: {
+        width: width - 32,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 4
+    },
+    tipsItemDetail: {
+        fontSize: 14,
+        flex: 1,
+        flexDirection: 'row'
+        // height: 59,
+        // paddingTop: 20,
     },
     settingItem: {
         width: width - 32,

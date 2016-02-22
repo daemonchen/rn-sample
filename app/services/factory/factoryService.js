@@ -7,6 +7,9 @@ module.exports = {
         return http.post(NZAOM_INTERFACE.factory, data)
     },
     get: function(data){
+        return http.get(NZAOM_INTERFACE.factory)
+    },
+    getList: function(data){
         return http.get(NZAOM_INTERFACE.factorys, data)
     }
 }

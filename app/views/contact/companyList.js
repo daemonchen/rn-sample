@@ -60,7 +60,7 @@ module.exports = React.createClass({
 
     onChange: function() {
         var result = factoryStore.getState();
-        if (result.type != 'get') { return; };
+        if (result.type != 'getList') { return; };
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
@@ -105,7 +105,7 @@ module.exports = React.createClass({
     },
     doQuery: function(text){
         if (!text) {return};
-        factoryAction.get({
+        factoryAction.getList({
             q: text
         });
     },
