@@ -95,20 +95,14 @@ module.exports = {
         url += '?' + this.getUrlParams(params)
         this.fetchOptions.method = 'POST';
         this.fetchOptions.headers['x-auth-token'] = this.getAuthToken();
-        this.fetchOptions.headers['Content-Type'] = 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d';
+        this.fetchOptions.headers['Content-Type'] = 'multipart/form-data';
 
         var data = new FormData()
         for (var i = 0; i < uris.length; i++) {
            data.append('file[]', {uri: uris[i], name: 'image.jpg', type: 'image/jpg'})
 
         };
-        // _.each(params, (value, key) => {
-        //     if (value instanceof Date) {
-        //       data.append(key, value.toISOString())
-        //     } else {
-        //       data.append(key, String(value))
-        //     }
-        // })
+
         this.fetchOptions.body = data;
         console.log('http filesUpload',url, data);
         return fetch(url, this.fetchOptions)
@@ -122,7 +116,7 @@ module.exports = {
         url += '?' + this.getUrlParams(params)
         this.fetchOptions.method = type;
         this.fetchOptions.headers['x-auth-token'] = this.getAuthToken();
-        this.fetchOptions.headers['Content-Type'] = 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d';
+        this.fetchOptions.headers['Content-Type'] = 'multipart/form-data';
 
         var data = new FormData()
          if (fileURL) {

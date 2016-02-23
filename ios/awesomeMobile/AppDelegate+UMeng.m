@@ -30,7 +30,12 @@
    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToWechatSession,UMShareToWechatTimeline]];
   
   //使用友盟统计
+#ifdef DEBUG
+//  [MobClick startWithAppkey:UmengAppkey reportPolicy:BATCH   channelId:nil];
+#else
   [MobClick startWithAppkey:UmengAppkey reportPolicy:BATCH   channelId:nil];
+#endif
+  
 
   NSLog(@"-------registerUMeng");
 }

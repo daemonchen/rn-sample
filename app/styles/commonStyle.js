@@ -64,7 +64,7 @@ module.exports = React.StyleSheet.create({
         borderTopColor: '#eee'
     },
     bottomBorder: {
-        borderBottomWidth: 1 / React.PixelRatio.get(),
+        borderBottomWidth: 1,
         borderBottomColor: '#eee'
     },
     greenButton: {
@@ -235,7 +235,8 @@ module.exports = React.StyleSheet.create({
         // paddingTop: 20,
     },
     settingDetailTextRight: {
-        textAlign: 'right'
+        textAlign: 'right',
+        color: '#4285f4'
     },
     settingArrow: {
         width: 24,
