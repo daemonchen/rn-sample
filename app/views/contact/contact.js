@@ -375,7 +375,7 @@ module.exports = React.createClass({
         });
     },
     renderVersionTips: function(){
-        if (!!this.state.factory && (this.state.factory.level == 0)) {
+        if (!!this.state.factory && !!this.state.factory.levelMemo) {
             return(
                 <TouchableHighlight
                 underlayColor='#eee'
