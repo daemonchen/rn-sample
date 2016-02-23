@@ -56,7 +56,6 @@
 		D1FD924E1C5772990067EC7E /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D1FD924D1C5772990067EC7E /* libstdc++.tbd */; };
 		D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D22832EA1C0F3A3B00027EA3 /* libRCTCameraRoll.a */; };
 		D22832FF1C0FCAFA00027EA3 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */; };
-		D25AF01C1BF9AE8100009F01 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */; };
 		D2A90CEC1C34F19B000464CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ADA4801C313A1A0078F08F /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D2A95C621C3E661D0065EDE0 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A95C611C3E660E0065EDE0 /* libReact-Native-Webview-Bridge.a */; };
 		D2BF469E1C1FFD00002C7185 /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF469D1C1FFD00002C7185 /* Orientation.m */; };
@@ -379,7 +378,6 @@
 		D22832E51C0F3A3B00027EA3 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		D22832FD1C0FCAFA00027EA3 /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImagePickerManager.h; sourceTree = "<group>"; };
 		D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerManager.m; sourceTree = "<group>"; };
-		D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		D26F5C9A1C23A8E4006D4BE7 /* awesomeMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = awesomeMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D26F5C9B1C23A8E4006D4BE7 /* awesomeMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = awesomeMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
@@ -743,7 +741,6 @@
 			children = (
 				D2BF47241C2148D5002C7185 /* Frameworks */,
 				D22832FC1C0FCAFA00027EA3 /* UIImagePickerManager */,
-				D25AF01B1BF9AE8100009F01 /* Default-568h@2x.png */,
 				13B07FAE1A68108700A75B9A /* awesomeMobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* awesomeMobileTests */,
@@ -1612,7 +1609,6 @@
 				D2F073D81C2304B800A3BABE /* LICENSE in Resources */,
 				D189FDA51C57983800784BB3 /* UMSLoginViewController.xib in Resources */,
 				D189FDA21C57983800784BB3 /* UMSCommentInputControlleriPad.xib in Resources */,
-				D25AF01C1BF9AE8100009F01 /* Default-568h@2x.png in Resources */,
 				D2F0740D1C2304CA00A3BABE /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
