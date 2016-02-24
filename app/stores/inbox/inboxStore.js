@@ -61,7 +61,7 @@ class InboxStore {
         }).done();
     }
     onUpdate(data){
-        inboxService.updateList(data)
+        inboxService.updateMessage(data)
         .then((responseData) => {
             responseData.readStatus = data.readStatus;
             inboxAction.updateSuccess(responseData)
@@ -75,7 +75,7 @@ class InboxStore {
         this.setState(data);
     }
     onDelete(data){
-        inboxService.deleteList(data)
+        inboxService.deleteMessage(data)
         .then((responseData) => {
             inboxAction.deleteSuccess(responseData)
         }).done();
@@ -98,6 +98,32 @@ class InboxStore {
     onGetInviteSuccess(data){
         if (!data) {return false};
         data.type = 'getInvite'
+        this.setState(data);
+    }
+    onGetMessageOrder(data){
+        inboxService.getMessageOrder(data)
+        .then((responseData) => {
+            inboxAction.getMessageOrderSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetMessageOrderSuccess(data){
+        if (!data) {return false};
+        data.type = 'getMessageOrder'
+        this.setState(data);
+    }
+    onGetMessageSystem(data){
+        inboxService.getMessageSystem(data)
+        .then((responseData) => {
+            inboxAction.getMessageSystemSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetMessageSystemSuccess(data){
+        if (!data) {return false};
+        data.type = 'getMessageSystem'
         this.setState(data);
     }
     onAgreeInvite(data){

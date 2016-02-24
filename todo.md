@@ -52,3 +52,7 @@ swipeout & rn panresponseder bug: 打开swipeout组件的index.js文件，109行
     }).catch(function(error) {
       // might be a timeout error
     })
+
+- 搜索企业增加 无结果提示
+
+- 重置密码之后，要直接登陆

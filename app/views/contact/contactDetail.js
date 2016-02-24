@@ -348,8 +348,15 @@ module.exports = React.createClass({
         // 524288
         var rights = appConstants.userRights.rights;
         var targetRights = 524288;
+        console.log('----appConstants', appConstants.user.userName);
+        console.log('----data', this.state.data.userName);
         if (this.state.group == 1) {
             if ((rights & targetRights) == targetRights){
+                if (appConstants.user.userName == this.state.data.userName) {//不允许删除自己
+                    return(
+                        <View />
+                        );
+                };
                 return(
                     <TouchableHighlight
                         style={commonStyle.logoutWrapper}

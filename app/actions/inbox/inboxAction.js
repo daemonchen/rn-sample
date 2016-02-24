@@ -12,5 +12,9 @@ module.exports = alt.generateActions(
     'deleteSuccess',
     'getInvite',
     'getInviteSuccess',
+    'getMessageOrder',
+    'getMessageOrderSuccess',
+    'getMessageSystem',
+    'getMessageSystemSuccess',
     'agreeInvite',
     'agreeInviteSuccess');

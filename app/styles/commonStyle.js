@@ -310,5 +310,53 @@ module.exports = React.StyleSheet.create({
         marginTop: width/2 - 24,
         width: width/2,
         color: '#fff'
+    },
+    cardWraper: {
+        backgroundColor: 'transparent'
+    },
+    cardOuterTitle: {
+        width: width,
+        paddingVertical: 16,
+        textAlign: 'center'
+    },
+    card: {
+        marginHorizontal: 16,
+        borderRadius: 6,
+        borderWidth: 1,
+        borderColor: '#eee'
+    },
+    cardHeader:{
+        paddingVertical: 12,
+        backgroundColor: "#4285F4",
+        justifyContent: 'center',
+        borderTopLeftRadius: 6,
+        borderTopRightRadius: 6
+    },
+    cardHeaderTitle: {
+        // flex: 1,
+        textAlign: 'center',
+        fontSize: 16
+    },
+    cardBody: {
+        paddingHorizontal: 16
+    },
+    cardBodyTitle: {
+        textAlign: 'left',
+        fontSize: 16,
+        paddingVertical: 16
+    },
+    cardBodyContentItem: {
+        flex: 1,
+        paddingBottom: 8,
+        flexDirection: 'row'
+    },
+    cardFooter: {
+        paddingHorizontal: 16
+    },
+    cardFooterBody: {
+        paddingVertical: 10,
+        flexDirection: 'row',
+        borderTopColor: '#eee',
+        borderTopWidth: 1
     }
 });

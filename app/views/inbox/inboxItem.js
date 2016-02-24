@@ -98,18 +98,14 @@ module.exports = React.createClass({
         }
     },
     renderDot: function(){
-        console.log('------this.',this.state.readStatus);
-        if (this.state.readStatus == 1) {
-            return(
-                <Image
-                  style={styles.dot}
-                  source={require('../../images/inbox/dot.png')} />
-                );
-        }else{
-            return(
-                <View />
-                );
-        }
+        console.log('------this.',this.props.rowData.unreadMsgCount);
+        var textLength = this.props.rowData.unreadMsgCount.length;
+        var labelWidth = (parseInt(this.props.rowData.unreadMsgCount/10) + 1) * 18;
+        return(
+            <Text style={[styles.redDot, commonStyle.textWhite, {width: labelWidth, height: labelWidth, borderRadius: labelWidth/2}]}>
+                {this.props.rowData.unreadMsgCount}
+            </Text>
+            );
     },
     renderTimeLabel: function(timestamp){
         var time = util.formatTimestamp(timestamp);
@@ -153,18 +149,20 @@ module.exports = React.createClass({
                 onPress={this.onPress}>
                     <View style={styles.rowStyle}>
                         {this.renderAvatar()}
-                        {this.renderDot()}
                         <View style={styles.rowTextWrapper}>
                             <Text style={styles.inboxTitle}
                             numberOfLines={1}>
-                                {this.props.rowData.msgTitle}
+                                {this.props.rowData.categoryName}
                             </Text>
                             <Text style={[styles.inboxDetail,commonStyle.textGray]}
                             numberOfLines={1} >
-                                {this.props.rowData.msgContent}
+                                {this.props.rowData.lastMsgContent}
                             </Text>
                         </View>
-                        {this.renderTimeLabel(this.props.rowData.gmtCreate)}
+                        <View style={styles.rightLabel}>
+                            {this.renderTimeLabel(this.props.rowData.lastMsgModified)}
+                            {this.renderDot()}
+                        </View>
                     </View>
                 </TouchableHighlight>
             </Swipeout>

@@ -15,33 +15,13 @@ var {
     StyleSheet
 } = React
 
-/**
-     * 订单消息
-
-    public final static int ORDER_MESSAGE = 1;
-
-     * 任务消息
-
-    public final static int TASK_MESSAGE = 2;
-
-     * 个人消息，如邀请消息
-
-    public final static int PROFILE_MESSAGE = 3;
-
-     * 系统消息，由你造么发送的消息
-
-    public final static int SYSTEM_MESSAGE = 4;
-*/
 var inboxAction = require('../../actions/inbox/inboxAction');
 var inboxStore = require('../../stores/inbox/inboxStore');
 var notificationStore = require('../../stores/notification/notificationStore');
 
 var commonStyle = require('../../styles/commonStyle');
-var InboxItem = require('./inboxItem');
+var MessageGroupItem = require('./messageGroupItem');
 
-
-var SysMessage = require('./sysMessage');
-var InviteMessage = require('./inviteMessage');
 
 var util = require('../../common/util');
 
@@ -50,8 +30,8 @@ module.exports = React.createClass({
     getInitialState: function(){
 
         var ds = new ListView.DataSource({
-            // rowHasChanged: (r1, r2) => r1 !== r2
-            rowHasChanged: (r1, r2) => true////为了在swipe的时候刷新列表
+            rowHasChanged: (r1, r2) => r1 !== r2
+            // rowHasChanged: (r1, r2) => true////为了在swipe的时候刷新列表
         });
 
         return {
@@ -66,30 +46,18 @@ module.exports = React.createClass({
     componentDidMount: function(){
         this.onRefresh();
         this.unlisten = inboxStore.listen(this.onChange)
-        this.unlistenNotification = notificationStore.listen(this.onNotificationChange)
+        // this.unlistenNotification = notificationStore.listen(this.onNotificationChange)
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.unlistenNotification();
+        // this.unlistenNotification();
     },
     _allowScroll: function(scrollEnabled) {
        this.setState({ scrollEnabled: scrollEnabled })
     },
-    _handleSwipeout: function(rowData, sectionID, rowID){
-        var rawData = this.state.list;
-        for (var i = 0; i < rawData.length; i++) {
-            if (rowData.msgId != rawData[i].msgId) {
-                rawData[i].active = false
-            }else{
-                rawData[i].active = true
-            }
-        }
 
-        this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(rawData || [])
-        });
-    },
     handleGet: function(result){
+        console.log('-------messageListCategory', result);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -97,7 +65,6 @@ module.exports = React.createClass({
             })
             return;
         }
-        console.log('-------inboxlist', result);
         this.setState({
             dataSource : this.state.dataSource.cloneWithRows(result.data || []),
             list: result.data || [],
@@ -118,30 +85,34 @@ module.exports = React.createClass({
             return;
         }
         switch(result.type){
-            case 'get':
+            case 'getMessageOrder':
+                return this.handleGet(result);
+            case 'getMessageSystem':
                 return this.handleGet(result);
             case 'delete':
                 return this.handleDelete(result);
         }
-    },
-    onNotificationChange: function(){
-        var result = notificationStore.getState();
-        if (result.type == 1) {
-            if (this._timeout) {
-                this.clearTimeout(this._timeout);
-            };
-            this._timeout = this.setTimeout(this.onRefresh, 15)
-        };
     },
     onRefresh: function() {
         this.setState({
             pageNum: 1,
             isRefreshing: true
         });
-       inboxAction.getList({
-            pageNum: this.state.pageNum,
-            pageSize: this.state.pageSize
-        });
+        if (this.props.msgType == 1) {
+            var params = util.getParams(this.props.url.split('?')[1]);
+            var options = Object.assign(params, {
+                pageNum: this.state.pageNum,
+                pageSize: this.state.pageSize
+            });
+            console.log('-----onRefresh');
+            inboxAction.getMessageOrder(options);
+        };
+        if (this.props.msgType == 4) {
+            inboxAction.getMessageSystem({
+                pageNum: this.state.pageNum,
+                pageSize: this.state.pageSize
+            });
+        };
     },
     onInfinite: function() {
 
@@ -165,10 +136,9 @@ module.exports = React.createClass({
         // var params = util.getParams(rowData.url.split('?')[1]);
         switch(rowData.msgType){
             case 1:
-                Actions.messageGroup(rowData);
-                // Actions.orderDetail({
-                //     data: rowData.extra.orderId
-                // });
+                Actions.orderDetail({
+                    data: rowData.extra.orderId
+                });
                 return;
             case 2:
                 Actions.taskDetail({
@@ -178,10 +148,9 @@ module.exports = React.createClass({
             case 3:
                 return;
             case 4:
-                Actions.messageGroup(rowData);
-                // Actions.sysMessage({
-                //     data: rowData
-                // });
+                Actions.sysMessage({
+                    data: rowData
+                });
                 return;
             case 5:
                 Actions.inviteMessage({
@@ -194,12 +163,6 @@ module.exports = React.createClass({
                 return
         }
     },
-    onUpdate: function(rowData){
-        inboxAction.update({
-            msgIds:[rowData.msgId],
-            readStatus: rowData.readStatus
-        });
-    },
     onDelete: function(rowData){
         inboxAction.delete({
             msgId:rowData.msgId
@@ -207,14 +170,12 @@ module.exports = React.createClass({
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <InboxItem rowData={rowData}
+            <MessageGroupItem rowData={rowData}
             sectionID={sectionID}
             rowID={rowID}
             onPress={this.onPressRow}
             onDelete={this.onDelete}
-            _allowScroll={this._allowScroll}
-            _handleSwipeout={this._handleSwipeout}
-            onUpdate={this.onUpdate} />
+            _allowScroll={this._allowScroll} />
             )
     },
     renderInbox: function() {

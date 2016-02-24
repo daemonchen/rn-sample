@@ -46,6 +46,7 @@
 		D189FDB91C57984300784BB3 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D189FDB11C57984300784BB3 /* libWeChatSDK.a */; };
 		D189FDBC1C579BDE00784BB3 /* AppDelegate+GeTui.m in Sources */ = {isa = PBXBuildFile; fileRef = D189FDBB1C579BDE00784BB3 /* AppDelegate+GeTui.m */; };
 		D189FDC11C58B04100784BB3 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D189FDBE1C58B04100784BB3 /* libMobClickLibrary.a */; };
+		D1C80AAB1C7D7C770014E596 /* libToolTipMenu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1C80AA81C7D7C6E0014E596 /* libToolTipMenu.a */; };
 		D1C84B961C4F8D020050EFEE /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1C84B951C4F8CF50050EFEE /* libRCTPushNotification.a */; };
 		D1F67BEA1C5A52C3003DF690 /* libRCTToast.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F67BE01C5A50BB003DF690 /* libRCTToast.a */; };
 		D1FD91671C571D080067EC7E /* AppDelegate+UMeng.m in Sources */ = {isa = PBXBuildFile; fileRef = D1FD91661C571D080067EC7E /* AppDelegate+UMeng.m */; };
@@ -251,6 +252,20 @@
 			remoteGlobalIDString = F8BD55C51B6A6B6200E49ED0;
 			remoteInfo = RCTCircleProgressTests;
 		};
+		D1C80AA71C7D7C6E0014E596 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1C80A8B1C7D7C6D0014E596 /* ToolTipMenu.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4681C0211B05271A004D67D4;
+			remoteInfo = ToolTipMenu;
+		};
+		D1C80AA91C7D7C6E0014E596 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1C80A8B1C7D7C6D0014E596 /* ToolTipMenu.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4681C02C1B05271A004D67D4;
+			remoteInfo = ToolTipMenuTests;
+		};
 		D1C84B941C4F8CF50050EFEE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D1C84B901C4F8CF50050EFEE /* RCTPushNotification.xcodeproj */;
@@ -365,6 +380,7 @@
 		D189FDBE1C58B04100784BB3 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		D189FDBF1C58B04100784BB3 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		D189FDC01C58B04100784BB3 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		D1C80A8B1C7D7C6D0014E596 /* ToolTipMenu.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ToolTipMenu.xcodeproj; path = "../node_modules/react-native-tooltip/ToolTipMenu.xcodeproj"; sourceTree = "<group>"; };
 		D1C84B901C4F8CF50050EFEE /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		D1F67BD01C5A50BB003DF690 /* RCTToast.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTToast.xcodeproj; path = "../../../github/react-native-toast/ios/RCTToast.xcodeproj"; sourceTree = "<group>"; };
 		D1FD91651C571D080067EC7E /* AppDelegate+UMeng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+UMeng.h"; path = "awesomeMobile/AppDelegate+UMeng.h"; sourceTree = "<group>"; };
@@ -533,6 +549,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1C80AAB1C7D7C770014E596 /* libToolTipMenu.a in Frameworks */,
 				D2BF47261C214901002C7185 /* libz.tbd in Frameworks */,
 				D121E5261C7800810034509B /* libCodePush.a in Frameworks */,
 				D110ACC71C61CBF200682D17 /* libRNOverlay.a in Frameworks */,
@@ -692,6 +709,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D1C80A8B1C7D7C6D0014E596 /* ToolTipMenu.xcodeproj */,
 				D121E50A1C7800670034509B /* CodePush.xcodeproj */,
 				D110ACC11C61CBE700682D17 /* RNOverlay.xcodeproj */,
 				D1F67BD01C5A50BB003DF690 /* RCTToast.xcodeproj */,
@@ -877,6 +895,15 @@
 				D189FDC01C58B04100784BB3 /* MobClickSocialAnalytics.h */,
 			);
 			path = UMAnalytics_Sdk_3.6.6;
+			sourceTree = "<group>";
+		};
+		D1C80A8C1C7D7C6D0014E596 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1C80AA81C7D7C6E0014E596 /* libToolTipMenu.a */,
+				D1C80AAA1C7D7C6E0014E596 /* ToolTipMenuTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D1C84B911C4F8CF50050EFEE /* Products */ = {
@@ -1411,6 +1438,10 @@
 					ProductGroup = D2BF46F61C2134CE002C7185 /* Products */;
 					ProjectRef = A41307C31BEB4DB3B993E0F8 /* RNVectorIcons.xcodeproj */;
 				},
+				{
+					ProductGroup = D1C80A8C1C7D7C6D0014E596 /* Products */;
+					ProjectRef = D1C80A8B1C7D7C6D0014E596 /* ToolTipMenu.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1531,6 +1562,20 @@
 			fileType = wrapper.cfbundle;
 			path = RCTCircleProgressTests.xctest;
 			remoteRef = D1877E8E1C43D99200C9358D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D1C80AA81C7D7C6E0014E596 /* libToolTipMenu.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libToolTipMenu.a;
+			remoteRef = D1C80AA71C7D7C6E0014E596 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D1C80AAA1C7D7C6E0014E596 /* ToolTipMenuTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ToolTipMenuTests.xctest;
+			remoteRef = D1C80AA91C7D7C6E0014E596 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D1C84B951C4F8CF50050EFEE /* libRCTPushNotification.a */ = {

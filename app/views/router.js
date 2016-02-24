@@ -40,6 +40,8 @@ var CommentAtPersonList = require('./order/comments/commentAtPersonList');
 
 var InviteMessage = require('./inbox/inviteMessage');
 var SysMessage = require('./inbox/sysMessage');
+var MessageGroup = require('./inbox/messageGroup');
+
 
 var CompanyMemberList = require('./contact/companyMemberList');
 var CompanySettings = require('./contact/companySettings');
@@ -245,6 +247,7 @@ module.exports = React.createClass({
                 <Route name="commentAtPersonList" component={CommentAtPersonList} title="@好友"/>
 
                 <Route name="inviteMessage" component={InviteMessage} title="邀请信息"/>
+                <Route name="messageGroup" component={MessageGroup} title="消息列表"/>
                 <Route name="sysMessage" component={SysMessage} title="系统信息"/>
 
                 <Route name="companyMemberList" component={CompanyMemberList} title="员工列表"/>

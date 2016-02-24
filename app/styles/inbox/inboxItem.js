@@ -28,10 +28,19 @@ module.exports = React.StyleSheet.create({
         marginTop: 5,
         marginLeft: 10
     },
+    rightLabel: {
+        width:64
+    },
     timeLabel: {
-        width:64,
         marginTop: 5,
         textAlign: 'right'
+    },
+    redDot: {
+        position: 'absolute',
+        right: 0,
+        top: 30,
+        backgroundColor: '#fb3d38',
+        textAlign: 'center'
     },
     rightButton: {
         width:56,
