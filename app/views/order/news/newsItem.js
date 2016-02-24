@@ -52,9 +52,9 @@ module.exports = React.createClass({
         }
     },
     renderTimeLabel: function(timestamp){
-        var time = util.formatTimestamp(timestamp);
+        var time = moment(timestamp).format('HH:mm');
         return(
-            <Text style={[styles.rowText, commonStyle.textGray]}>
+            <Text style={[styles.rowTextSmall, commonStyle.textGray]}>
                 {time}
             </Text>
             );

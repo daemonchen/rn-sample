@@ -129,6 +129,11 @@ module.exports = React.StyleSheet.create({
         fontSize: 16,
         paddingBottom: 10
     },
+    rowTextSmall: {
+        color: '#212121',
+        fontSize: 12,
+        paddingBottom: 10
+    },
     rowTextDetail: {
         fontSize: 14
     },
@@ -204,7 +209,8 @@ module.exports = React.StyleSheet.create({
         borderRadius: 18
     },
     newsSectionHeder: {
-        padding: 16
+        padding: 16,
+        backgroundColor: '#fff'
     },
     newsSectionText: {
         marginLeft: 68
