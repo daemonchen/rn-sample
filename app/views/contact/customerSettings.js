@@ -9,6 +9,7 @@ var {View,
     Image,
     TextInput,
     TouchableHighlight,
+    AlertIOS,
     StyleSheet
 } = React;
 
@@ -22,7 +23,7 @@ var customerAction = require('../../actions/contact/customerAction');
 var customerStore = require('../../stores/contact/customerStore');
 
 var BlueBackButton = require('../../common/blueBackButton');
-var RightDoneButton = require('../../common/rightDoneButton');
+var RightAddButton = require('../../common/rightAddButton');
 
 //获取可视窗口的宽高
 var util = require('../../common/util.js');
@@ -131,9 +132,18 @@ module.exports = React.createClass({
         this.doCommit();
     },
     doDeleteCustomer: function(){
-        customerAction.delete({
-            id: this.state.id
-        });
+        AlertIOS.alert(
+            '删除客户',
+            '您确定要删除客户吗',
+            [
+                {text: '确定', onPress: () => {
+                    customerAction.delete({
+                        id: this.state.id
+                    });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
     },
     renderDeleteButton: function(){
         if (this.state.target == 1) {
@@ -161,7 +171,7 @@ module.exports = React.createClass({
                 <NavigationBar
                     title={{title: this.props.title}}
                     leftButton={<BlueBackButton />}
-                    rightButton={<RightDoneButton onPress={this.onPressDone} />} />
+                    rightButton={<RightAddButton onPress={this.onPressDone} title="保存" />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <Image

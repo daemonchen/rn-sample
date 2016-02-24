@@ -14,6 +14,7 @@ var {
     TouchableOpacity,
     TouchableHighlight,
     ActionSheetIOS,
+    AlertIOS,
     StyleSheet
 } = React;
 
@@ -33,7 +34,7 @@ var userStore = require('../../stores/user/userStore');
 var customerStore = require('../../stores/contact/customerStore');
 
 var BlueBackButton = require('../../common/blueBackButton');
-var RightSettingButton = require('../../common/rightSettingButton');
+var RightAddButton = require('../../common/rightAddButton');
 
 var CustomerSettings = require('./customerSettings');
 var RoleSetting = require('./roleSetting');
@@ -117,9 +118,18 @@ module.exports = React.createClass({
         });
     },
     doDeleteEmployee: function(){
-        employeeAction.delete({
-            userId: this.state.data.userId
-        });
+        AlertIOS.alert(
+            '删除成员',
+            '您确定要删除成员吗',
+            [
+                {text: '确定', onPress: () => {
+                    employeeAction.delete({
+                        userId: this.state.data.userId
+                    });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
     },
     renderNavigationBar: function(){
         if (this.state.group == 1) {//1: 企业员工
@@ -134,7 +144,7 @@ module.exports = React.createClass({
                 <NavigationBar
                     title={{ title: '详细资料' }}
                     leftButton={<BlueBackButton />}
-                    rightButton={<RightSettingButton onPress={this.goSetting} />} />
+                    rightButton={<RightAddButton onPress={this.goSetting} title="编辑" />} />
                 );
         }
     },
