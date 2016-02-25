@@ -24,6 +24,8 @@ var MessageGroupItem = require('./messageGroupItem');
 
 var BlueBackButton = require('../../common/blueBackButton');
 
+var InvertibleScrollView = require('../../common/invertibleScrollView.js');
+
 var util = require('../../common/util');
 
 module.exports = React.createClass({
@@ -55,7 +57,7 @@ module.exports = React.createClass({
     },
 
     handleGet: function(result){
-        // console.log('-------messageListCategory', result);
+        console.log('-------messageListCategory', result);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -113,7 +115,7 @@ module.exports = React.createClass({
         };
     },
     onInfinite: function() {
-
+        console.log('----onInfinite');
         if (!!this.loadedAllData()) {
             return;
         };
@@ -205,26 +207,27 @@ module.exports = React.createClass({
         return (
             <ListView
                 ref = {(list) => {this.list= list}}
+                renderScrollComponent={props => <InvertibleScrollView {...props} inverted />}
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
                 scrollEventThrottle={10}
                 style={commonStyle.container}
-                contentContainerStyle={{paddingBottom: 40}}
+                contentContainerStyle={{paddingTop: 16}}
                 onEndReached={this.onInfinite}
                 onEndReachedThreshold={40}
                 scrollEnabled={this.state.scrollEnabled}
-                refreshControl={
-                          <RefreshControl
-                            refreshing={this.state.isRefreshing}
-                            onRefresh={this.onRefresh}
-                            tintColor="#969696"
-                            title=""
-                            colors={['#969696', '#969696', '#969696']}
-                            progressBackgroundColor="#969696" />
-                        }
                 >
             </ListView>
             )
+                // refreshControl={
+                //           <RefreshControl
+                //             refreshing={this.state.isRefreshing}
+                //             onRefresh={this.onRefresh}
+                //             tintColor="#969696"
+                //             title=""
+                //             colors={['#969696', '#969696', '#969696']}
+                //             progressBackgroundColor="#969696" />
+                //         }
     },
     renderLoadingView: function(){
         return (

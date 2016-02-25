@@ -10,6 +10,8 @@ module.exports = alt.generateActions(
     'updateSuccess',
     'delete',
     'deleteSuccess',
+    'deleteList',
+    'deleteListSuccess',
     'getInvite',
     'getInviteSuccess',
     'getMessageOrder',

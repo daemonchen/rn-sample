@@ -10,6 +10,7 @@ var {
     TouchableOpacity,
     TouchableHighlight,
     TouchableWithoutFeedback,
+    AlertIOS,
     StyleSheet
 } = React
 
@@ -35,6 +36,17 @@ module.exports = React.createClass({
     onPress: function(){
         var rowData = this.props.rowData;
         this.props.onPress(rowData, this.props.sectionID);
+    },
+    doDelete: function(){
+        AlertIOS.alert(
+            '删除消息',
+            '您确定要删除这条消息吗',
+            [
+                {text: '确定', onPress: () => {this.onDelete()} },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
+
     },
     onDelete: function(){
         this.props.onDelete(this.props.rowData, this.props.sectionID);
@@ -124,7 +136,7 @@ module.exports = React.createClass({
                 <ToolTip
                     ref='theToolTip'
                     actions={[
-                      {text: '删除', onPress: () => { this.onDelete() }}
+                      {text: '删除', onPress: () => { this.doDelete() }}
                     ]}
                     underlayColor='#eee'
                     onPress={this.onPress}

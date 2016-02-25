@@ -14,7 +14,6 @@ var {
     ListView,
     TouchableOpacity,
     TouchableHighlight,
-    ActionSheetIOS,
     StyleSheet
 } = React;
 

@@ -120,7 +120,7 @@ module.exports = React.createClass({
         switch(result.type){
             case 'get':
                 return this.handleGet(result);
-            case 'delete':
+            case 'deleteList':
                 return this.handleDelete(result);
         }
     },
