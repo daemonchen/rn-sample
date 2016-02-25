@@ -97,7 +97,7 @@ module.exports = React.createClass({
             })
             return;
         }
-        console.log('-------inboxlist', result);
+        // console.log('-------inboxlist', result);
         this.setState({
             dataSource : this.state.dataSource.cloneWithRows(result.data || []),
             list: result.data || [],

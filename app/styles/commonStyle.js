@@ -350,6 +350,11 @@ module.exports = React.StyleSheet.create({
         paddingBottom: 8,
         flexDirection: 'row'
     },
+    cardBodyImage: {
+        width: width-64,
+        height: 140,
+        marginTop: 16
+    },
     cardFooter: {
         paddingHorizontal: 16
     },

@@ -98,11 +98,12 @@ module.exports = React.createClass({
         }
     },
     renderDot: function(){
-        console.log('------this.',this.props.rowData.unreadMsgCount);
-        var textLength = this.props.rowData.unreadMsgCount.length;
-        var labelWidth = (parseInt(this.props.rowData.unreadMsgCount/10) + 1) * 18;
+        if (this.props.rowData.unreadMsgCount == 0) {
+            return(<View />);
+        };
+        var labelWidth = parseInt(this.props.rowData.unreadMsgCount/10)* 10 + 20;
         return(
-            <Text style={[styles.redDot, commonStyle.textWhite, {width: labelWidth, height: labelWidth, borderRadius: labelWidth/2}]}>
+            <Text style={[styles.redDot, commonStyle.textWhite, {width: labelWidth, height: 20, borderRadius: 10}]}>
                 {this.props.rowData.unreadMsgCount}
             </Text>
             );

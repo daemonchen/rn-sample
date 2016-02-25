@@ -39,13 +39,15 @@ module.exports = React.createClass({
         return(
             <Text style={[styles.orderTextRight, commonStyle.textGray]}
             numberOfLines={1}>
-                客户:{this.props.rowData.customerName}
+                客户：{this.props.rowData.customerName}
             </Text>
             )
     },
     renderTimeLabel: function(timestamp){
+        var status = this.props.status;//0:未完成 1:已完成 2:关注
         var time = moment(timestamp).format('YYYY-MM-DD');
-        if (moment().valueOf() > (timestamp + 24 *60 * 60 * 1000)) {//任务过期
+        var isDelay = moment().valueOf() > (timestamp + 24 *60 * 60 * 1000);
+        if ((status == 0) && isDelay) {//未完成任务过期
             return(
                 <Text style={[styles.orderTextLeft, commonStyle.red]}>
                     {time}

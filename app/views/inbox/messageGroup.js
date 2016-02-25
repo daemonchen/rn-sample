@@ -22,6 +22,7 @@ var notificationStore = require('../../stores/notification/notificationStore');
 var commonStyle = require('../../styles/commonStyle');
 var MessageGroupItem = require('./messageGroupItem');
 
+var BlueBackButton = require('../../common/blueBackButton');
 
 var util = require('../../common/util');
 
@@ -52,12 +53,9 @@ module.exports = React.createClass({
         this.unlisten();
         // this.unlistenNotification();
     },
-    _allowScroll: function(scrollEnabled) {
-       this.setState({ scrollEnabled: scrollEnabled })
-    },
 
     handleGet: function(result){
-        console.log('-------messageListCategory', result);
+        // console.log('-------messageListCategory', result);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -128,21 +126,23 @@ module.exports = React.createClass({
         });
     },
     loadedAllData: function() {
-        console.log('-------', this.state.list.length, this.state.total);
+        // console.log('-------', this.state.list.length, this.state.total);
         return this.state.list.length >= this.state.total||this.state.list.length===0;
     },
     onPressRow: function(rowData, sectionID){
+        console.log('----press ', rowData);
         if (!rowData.url) { return; };
-        // var params = util.getParams(rowData.url.split('?')[1]);
-        switch(rowData.msgType){
+        var params = util.getParams(rowData.url.split('?')[1]);
+        console.log('-----params', params);
+        switch(rowData.msgSubType){
             case 1:
                 Actions.orderDetail({
-                    data: rowData.extra.orderId
+                    data: params.orderId
                 });
                 return;
             case 2:
                 Actions.taskDetail({
-                    data: rowData.extra.jobId
+                    data: params.taskId
                 });
                 return;
             case 3:
@@ -170,12 +170,13 @@ module.exports = React.createClass({
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <MessageGroupItem rowData={rowData}
+            <MessageGroupItem
+            rowData={rowData}
+            msgType={this.props.msgType}
             sectionID={sectionID}
             rowID={rowID}
             onPress={this.onPressRow}
-            onDelete={this.onDelete}
-            _allowScroll={this._allowScroll} />
+            onDelete={this.onDelete} />
             )
     },
     renderInbox: function() {
@@ -242,6 +243,7 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
+                    leftButton={<BlueBackButton />}
                     title={{ title: '消息' }} />
                 <View style={styles.main}>
                     {this.renderInbox()}

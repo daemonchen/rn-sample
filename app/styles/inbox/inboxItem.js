@@ -40,7 +40,10 @@ module.exports = React.StyleSheet.create({
         right: 0,
         top: 30,
         backgroundColor: '#fb3d38',
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingTop: 2
+        // justifyContent: 'center',
+        // lineHeight: 20
     },
     rightButton: {
         width:56,
