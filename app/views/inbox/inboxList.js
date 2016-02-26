@@ -11,6 +11,7 @@ var {
     RefreshControl,
     Image,
     TouchableOpacity,
+    AlertIOS,
     ActivityIndicatorIOS,
     StyleSheet
 } = React
@@ -191,7 +192,29 @@ module.exports = React.createClass({
                 Actions.applicationList();
                 return;
             default:
+                this.doDefaultAction(rowData);
                 return
+        }
+    },
+    doDefaultAction: function(rowData){
+        if (/http/.test(rowData.url)) {
+            Actions.taskDescribe({
+                title: rowData.categoryName,
+                descriptionUrl: rowData.url
+            });
+        }else{
+            AlertIOS.alert(
+                '更新提示',
+                '您的应用版本过低，需要更新后才能打开"'+ rowData.categoryName + '"消息',
+                [
+                    {text: '确定', onPress: () => {
+                        var url = 'https://itunes.apple.com/us/app/ni-zao-me/id1025294933?l=zh&ls=1&mt=8'
+                        util.link(url)
+                    } },
+                    {text: '取消', onPress: () => {return}, style: 'cancel'},
+                ]
+            )
+
         }
     },
     onUpdate: function(rowData){
@@ -201,8 +224,9 @@ module.exports = React.createClass({
         });
     },
     onDelete: function(rowData){
-        inboxAction.delete({
-            msgId:rowData.msgId
+        console.log('---rowData', rowData);
+        inboxAction.deleteList({
+            categoryId:rowData.categoryId
         });
     },
     renderRow: function(rowData, sectionID, rowID) {

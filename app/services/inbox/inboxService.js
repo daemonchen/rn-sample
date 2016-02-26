@@ -15,7 +15,7 @@ module.exports = {
     },
     deleteMessageCategory: function(data){
         var urlParams = '/{categoryId}'.replace('{categoryId}', data.categoryId);
-        return http.delete(NZAOM_INTERFACE.message + urlParams)
+        return http.delete(NZAOM_INTERFACE.messageCategory + urlParams)
     },
     getInvite: function(data){
         var urlParams = '/{id}'.replace('{id}', data.id);

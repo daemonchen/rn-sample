@@ -122,12 +122,12 @@ module.exports = React.createClass({
     render: function(){
         var readText = (this.state.readStatus == 1) ? '已读' : '未读'
         var swipeoutBtns = [
-          {
-            text: readText,
-            type: 'secondary',
-            onPress: this.onUpdate
-            // backgroundColor: ''
-          },
+          // {
+          //   text: readText,
+          //   type: 'secondary',
+          //   onPress: this.onUpdate
+          //   // backgroundColor: ''
+          // },
           {
             text: '删除',
             type: 'delete',

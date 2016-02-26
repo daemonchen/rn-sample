@@ -87,6 +87,19 @@ class InboxStore {
         data.type = 'delete'
         this.setState(data);
     }
+    onDeleteList(data){
+        inboxService.deleteMessageCategory(data)
+        .then((responseData) => {
+            inboxAction.deleteListSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onDeleteListSuccess(data){
+        if (!data) {return false};
+        data.type = 'deleteList'
+        this.setState(data);
+    }
     onGetInvite(data){
         inboxService.getInvite(data)
         .then((responseData) => {

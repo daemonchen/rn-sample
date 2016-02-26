@@ -29,6 +29,8 @@ module.exports = {
 
     messageCategories: NZAOM_API_DOMAIN + '/api/message/categories',
 
+    messageCategory: NZAOM_API_DOMAIN + '/api/message/category',
+
     messageOrder: NZAOM_API_DOMAIN + '/api/message/order',
 
     messageSystem: NZAOM_API_DOMAIN + '/api/message/system',
