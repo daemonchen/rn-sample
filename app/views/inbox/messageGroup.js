@@ -44,11 +44,17 @@ module.exports = React.createClass({
             loaded : false,
             list: [],
             dataSource: ds,
-            scrollEnabled: true
+            scrollEnabled: true,
+            isRevert: true
         }
     },
+    itemsHeight: 0,
+    listViewHeight: 0,
     componentDidMount: function(){
-        this.onRefresh();
+        if (this._timeout) {
+            this.clearTimeout(this._timeout)
+        };
+        this._timeout = this.setTimeout(this.onRefresh, 350)
         this.unlisten = inboxStore.listen(this.onChange)
         // this.unlistenNotification = notificationStore.listen(this.onNotificationChange)
     },
@@ -56,9 +62,23 @@ module.exports = React.createClass({
         this.unlisten();
         // this.unlistenNotification();
     },
+    doReLayout: function(obj){
+        console.log('----doReLayout', this.itemsHeight, obj.nativeEvent.layout);
+        this.listViewHeight = obj.nativeEvent.layout.height;
+        this.setState({
+            isRevert: !(this.itemsHeight <= this.listViewHeight)
+        });
+    },
+    doAddItemHeight: function(obj){
+        this.itemsHeight = this.itemsHeight + obj.nativeEvent.layout.height;
+        this.setState({
+            isRevert: !(this.itemsHeight <= this.listViewHeight)
+        });
 
+        console.log('----doAddItemHeight', this.itemsHeight);
+    },
     handleGet: function(result){
-        console.log('-------messageListCategory', result);
+        // console.log('-------messageListCategory', result);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -206,6 +226,7 @@ module.exports = React.createClass({
     renderRow: function(rowData, sectionID, rowID) {
         return (
             <MessageGroupItem
+            onLayout={this.doAddItemHeight}
             rowData={rowData}
             msgType={this.props.msgType}
             sectionID={sectionID}
@@ -234,33 +255,39 @@ module.exports = React.createClass({
         if (!this.state.list || this.state.list.length == 0) {
             return this.renderEmptyRow();
         };
-                // onRefresh = {this.onRefresh}
-                // onInfinite = {this.onInfinite}
-                // loadedAllData={this.loadedAllData}
+        if (this.state.isRevert) {
+            return (
+                <ListView
+                    ref = {(list) => {this.list= list}}
+                    onLayout={this.doReLayout}
+                    renderScrollComponent={props => <InvertibleScrollView {...props} inverted />}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow}
+                    scrollEventThrottle={10}
+                    style={commonStyle.container}
+                    contentContainerStyle={{paddingTop: 16}}
+                    onEndReached={this.onInfinite}
+                    onEndReachedThreshold={40}
+                    scrollEnabled={this.state.scrollEnabled}
+                    >
+                </ListView>
+                )
+        };
         return (
-            <ListView
-                ref = {(list) => {this.list= list}}
-                renderScrollComponent={props => <InvertibleScrollView {...props} inverted />}
-                dataSource={this.state.dataSource}
-                renderRow={this.renderRow}
-                scrollEventThrottle={10}
-                style={commonStyle.container}
-                contentContainerStyle={{paddingTop: 16}}
-                onEndReached={this.onInfinite}
-                onEndReachedThreshold={40}
-                scrollEnabled={this.state.scrollEnabled}
-                >
-            </ListView>
-            )
-                // refreshControl={
-                //           <RefreshControl
-                //             refreshing={this.state.isRefreshing}
-                //             onRefresh={this.onRefresh}
-                //             tintColor="#969696"
-                //             title=""
-                //             colors={['#969696', '#969696', '#969696']}
-                //             progressBackgroundColor="#969696" />
-                //         }
+                <ListView
+                    ref = {(list) => {this.list= list}}
+                    onLayout={this.doReLayout}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow}
+                    scrollEventThrottle={10}
+                    style={commonStyle.container}
+                    contentContainerStyle={{paddingBottom: 16}}
+                    onEndReached={this.onInfinite}
+                    onEndReachedThreshold={40}
+                    scrollEnabled={this.state.scrollEnabled}
+                    >
+                </ListView>
+                )
     },
     renderLoadingView: function(){
         return (

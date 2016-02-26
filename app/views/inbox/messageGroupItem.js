@@ -27,7 +27,6 @@ var util = require('../../common/util');
 module.exports = React.createClass({
     getInitialState: function(){
         moment.locale('zh-cn', esLocale);
-        console.log('------moment');
         return{
             isDelete: false
         }
@@ -135,7 +134,8 @@ module.exports = React.createClass({
             return(<View />)
         };
         return(
-            <View style={commonStyle.cardWraper}>
+            <View style={commonStyle.cardWraper}
+            onLayout={this.props.onLayout} >
                 {this.renderTimeLabel(this.props.rowData.gmtCreate)}
                 <ToolTip
                     ref='theToolTip'
