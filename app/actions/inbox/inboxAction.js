@@ -16,7 +16,11 @@ module.exports = alt.generateActions(
     'getInviteSuccess',
     'getMessageOrder',
     'getMessageOrderSuccess',
+    'loadMoreMessageOrder',
+    'loadMoreMessageOrderSuccess',
     'getMessageSystem',
     'getMessageSystemSuccess',
+    'loadMoreMessageSystem',
+    'loadMoreMessageSystemSuccess',
     'agreeInvite',
     'agreeInviteSuccess');

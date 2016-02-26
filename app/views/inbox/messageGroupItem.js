@@ -1,5 +1,7 @@
 'use strict';
 var React = require('react-native')
+var moment = require('moment');
+var esLocale = require('moment/locale/zh-cn');
 var _ = require('underscore');
 
 var {
@@ -24,6 +26,8 @@ var util = require('../../common/util');
 
 module.exports = React.createClass({
     getInitialState: function(){
+        moment.locale('zh-cn', esLocale);
+        console.log('------moment');
         return{
             isDelete: false
         }
@@ -55,7 +59,7 @@ module.exports = React.createClass({
 
 
     renderTimeLabel: function(timestamp){
-        var time = util.formatTimestamp(timestamp);
+        var time = moment(timestamp).calendar();
         return(
             <Text style={[commonStyle.cardOuterTitle, commonStyle.textGray]}>
                 {time}

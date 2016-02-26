@@ -100,18 +100,65 @@ class InboxStore {
         data.type = 'getInvite'
         this.setState(data);
     }
+    doCacheMessageOrder(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.messageOrderList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
+
+            }
+        }).done();
+    }
     onGetMessageOrder(data){
         inboxService.getMessageOrder(data)
         .then((responseData) => {
             inboxAction.getMessageOrderSuccess(responseData)
         }).done();
-
         this.preventDefault();
     }
     onGetMessageOrderSuccess(data){
         if (!data) {return false};
         data.type = 'getMessageOrder'
+        this.doCacheMessageOrder(data);
         this.setState(data);
+    }
+    onLoadMoreMessageOrder(data) {
+        inboxService.getMessageOrder(data)
+        .then((responseData) => {
+            inboxAction.loadMoreMessageOrderSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onLoadMoreMessageOrderSuccess(response){
+        if (!response || !response.data) {return false};
+        response.type = 'getMessageOrder'
+        this.mergeMessageOrderList(response)
+    }
+    mergeMessageOrderList(response){
+        asyncStorage.getItem('appConstants')
+        .then((result)=>{
+            if (!!result.inboxList) {
+                response.data = result.messageOrderList.concat(response.data)
+                this.setState(response);
+            }else{
+                this.setState(response);
+            }
+            this.doCacheMessageOrder(response);
+        }).done();
+    }
+    doCacheMessageSystem(responseData){
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data){
+                appConstants = data;
+                appConstants.messageSystemList = responseData.data
+                asyncStorage.setItem('appConstants', appConstants);
+
+            }
+        }).done();
     }
     onGetMessageSystem(data){
         inboxService.getMessageSystem(data)
@@ -124,7 +171,33 @@ class InboxStore {
     onGetMessageSystemSuccess(data){
         if (!data) {return false};
         data.type = 'getMessageSystem'
+        this.doCacheMessageSystem(data);
         this.setState(data);
+    }
+    onLoadMoreMessageSystem(data) {
+        inboxService.getMessageSystem(data)
+        .then((responseData) => {
+            inboxAction.loadMoreMessageSystemSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onLoadMoreMessageSystemSuccess(response){
+        if (!response || !response.data) {return false};
+        response.type = 'getMessageSystem'
+        this.mergeMessageSystemList(response)
+    }
+    mergeMessageSystemList(response){
+        asyncStorage.getItem('appConstants')
+        .then((result)=>{
+            if (!!result.inboxList) {
+                response.data = result.messageSystemList.concat(response.data)
+                this.setState(response);
+            }else{
+                this.setState(response);
+            }
+            this.doCacheMessageSystem(response);
+        }).done();
     }
     onAgreeInvite(data){
         inboxService.agreeInvite(data)

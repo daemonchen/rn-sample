@@ -98,21 +98,21 @@ module.exports = React.createClass({
             pageNum: 1,
             isRefreshing: true
         });
-        if (this.props.msgType == 1) {
+        if (this.props.msgType == 1) {//订单消息
             var params = util.getParams(this.props.url.split('?')[1]);
             var options = Object.assign(params, {
                 pageNum: this.state.pageNum,
                 pageSize: this.state.pageSize
             });
-            console.log('-----onRefresh');
             inboxAction.getMessageOrder(options);
         };
-        if (this.props.msgType == 4) {
+        if (this.props.msgType == 4) {//系统消息
             inboxAction.getMessageSystem({
                 pageNum: this.state.pageNum,
                 pageSize: this.state.pageSize
             });
         };
+
     },
     onInfinite: function() {
         console.log('----onInfinite');
@@ -122,10 +122,20 @@ module.exports = React.createClass({
         this.setState({
             pageNum: this.state.pageNum + 1
         });
-        inboxAction.loadMore({
-           pageNum: this.state.pageNum,
-           pageSize: this.state.pageSize
-        });
+        if (this.props.msgType == 1) {//订单消息
+            var params = util.getParams(this.props.url.split('?')[1]);
+            var options = Object.assign(params, {
+                pageNum: this.state.pageNum,
+                pageSize: this.state.pageSize
+            });
+            inboxAction.loadMoreMessageOrder(options);
+        };
+        if (this.props.msgType == 4) {//系统消息
+            inboxAction.loadMoreMessageSystem({
+                pageNum: this.state.pageNum,
+                pageSize: this.state.pageSize
+            });
+        };
     },
     loadedAllData: function() {
         // console.log('-------', this.state.list.length, this.state.total);
