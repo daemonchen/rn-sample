@@ -60,7 +60,7 @@ module.exports = React.createClass({
     },
      _setRelatedPerson: function(){//增加@的人
         Actions.companyMemberList({
-            title:'负责人',
+            title:'责任人',
             target: 1,
             onPressContactRow: this.onPressContactRow
         });

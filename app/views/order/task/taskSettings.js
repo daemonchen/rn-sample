@@ -209,7 +209,7 @@ module.exports = React.createClass({
     },
     _setResponsibility: function(){
         Actions.companyMemberList({
-            title:'负责人',
+            title:'责任人',
             target: 1,
             onPressContactRow: this.onPressContactRow
         });
@@ -383,7 +383,7 @@ module.exports = React.createClass({
                         style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
                             <Text
                             style={commonStyle.settingTitle}>
-                                负责人
+                                责任人
                             </Text>
                             <Text
                             style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>

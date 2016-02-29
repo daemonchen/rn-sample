@@ -435,7 +435,7 @@ module.exports = React.createClass({
                     style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
                         <Text
                         style={commonStyle.settingTitle}>
-                            负责人
+                            责任人
                         </Text>
                         <Text
                         style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>

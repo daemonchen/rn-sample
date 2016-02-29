@@ -1,5 +1,6 @@
 'use strict';
 var React = require('react-native')
+var _ = require('underscore');
 var TimerMixin = require('react-timer-mixin');
 import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
@@ -8,6 +9,7 @@ var {
     TextInput,
     View,
     ListView,
+    ScrollView,
     RefreshControl,
     Image,
     TouchableOpacity,
@@ -48,8 +50,8 @@ module.exports = React.createClass({
             isRevert: true
         }
     },
-    itemsHeight: 0,
-    listViewHeight: 0,
+    lastItemHeight: 0,
+    scrollViewHeight: 0,
     componentDidMount: function(){
         if (this._timeout) {
             this.clearTimeout(this._timeout)
@@ -62,26 +64,41 @@ module.exports = React.createClass({
         this.unlisten();
         // this.unlistenNotification();
     },
-    doReLayout: function(obj){
-        console.log('----doReLayout', this.itemsHeight, obj.nativeEvent.layout);
-        this.listViewHeight = obj.nativeEvent.layout.height;
-        this.setState({
-            isRevert: !(this.itemsHeight <= this.listViewHeight)
-        });
+    // componentDidUpdate: function(){
+    //     this.scrollToBottom();
+    // },
+    scrollToBottom: function(){
+        var self = this;
+        if (!!this.hasScrollToBottom) {return;};
+        if (!!this._scrollView) {
+            console.log('-----this._scrollView', this.footerY, this.lastItemHeight);
+            if (!this.scrollViewHeight) {
+                this.setTimeout(()=>{
+                    this.scrollToBottom();
+                }, 350);
+                return false;
+            };
+            if (this.footerY - this.scrollViewHeight > 0) {
+                this.hasScrollToBottom = true;
+                this._scrollView.scrollTo({x:0, y: this.footerY - this.scrollViewHeight, animated: true})
+            };
+        };
     },
-    doAddItemHeight: function(obj){
-        this.itemsHeight = this.itemsHeight + obj.nativeEvent.layout.height;
-        this.setState({
-            isRevert: !(this.itemsHeight <= this.listViewHeight)
-        });
-
-        console.log('----doAddItemHeight', this.itemsHeight);
+    doReLayout: function(obj){
+        this.scrollViewHeight = obj.nativeEvent.layout.height -16;
+    },
+    doAddItemHeight: function(obj, index){
+        if (index == this.state.list.length - 1) {
+            this.lastItemHeight = obj.nativeEvent.layout.height;
+        };
+        console.log('----doAddItemHeight', this.lastItemHeight);
     },
     handleGet: function(result){
         // console.log('-------messageListCategory', result);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
+                isRefreshing: false,
                 list: []
             })
             return;
@@ -136,12 +153,20 @@ module.exports = React.createClass({
 
     },
     onInfinite: function() {
-        console.log('----onInfinite');
+        var  self = this;
         if (!!this.loadedAllData()) {
+            this.setTimeout(()=>{
+                self.setState({
+                    loaded: true,
+                    isRefreshing: false
+                })
+                console.log('----onInfinite', this.loadedAllData());
+            }, 1500);
             return;
         };
         this.setState({
-            pageNum: this.state.pageNum + 1
+            pageNum: this.state.pageNum + 1,
+            isRefreshing: true
         });
         if (this.props.msgType == 1) {//订单消息
             var params = util.getParams(this.props.url.split('?')[1]);
@@ -162,7 +187,7 @@ module.exports = React.createClass({
         // console.log('-------', this.state.list.length, this.state.total);
         return this.state.list.length >= this.state.total||this.state.list.length===0;
     },
-    onPressRow: function(rowData, sectionID){
+    onPressRow: function(rowData){
         console.log('----press ', rowData);
         if (!rowData.url) { return; };
         var params = util.getParams(rowData.url.split('?')[1]);
@@ -223,14 +248,14 @@ module.exports = React.createClass({
             msgId:rowData.msgId
         });
     },
-    renderRow: function(rowData, sectionID, rowID) {
+    renderRow: function(rowData, index) {
+        // onLayout={(obj)=>{this.doAddItemHeight(obj, index)}}
+        // console.log('---rowData', rowData, index);
         return (
             <MessageGroupItem
-            onLayout={this.doAddItemHeight}
+            key={index}
             rowData={rowData}
             msgType={this.props.msgType}
-            sectionID={sectionID}
-            rowID={rowID}
             onPress={this.onPressRow}
             onDelete={this.onDelete} />
             )
@@ -251,43 +276,74 @@ module.exports = React.createClass({
             </View>
         )
     },
+    renderItems: function(){
+        var self = this;
+        var dataList = this.state.list.reverse();
+        return _.map(dataList, function(item, key){
+            return self.renderRow(item, key);
+        });
+    },
     renderListView: function(){
         if (!this.state.list || this.state.list.length == 0) {
             return this.renderEmptyRow();
         };
-        if (this.state.isRevert) {
-            return (
-                <ListView
-                    ref = {(list) => {this.list= list}}
-                    onLayout={this.doReLayout}
-                    renderScrollComponent={props => <InvertibleScrollView {...props} inverted />}
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderRow}
-                    scrollEventThrottle={10}
-                    style={commonStyle.container}
-                    contentContainerStyle={{paddingTop: 16}}
-                    onEndReached={this.onInfinite}
-                    onEndReachedThreshold={40}
-                    scrollEnabled={this.state.scrollEnabled}
-                    >
-                </ListView>
-                )
-        };
-        return (
-                <ListView
-                    ref = {(list) => {this.list= list}}
-                    onLayout={this.doReLayout}
-                    dataSource={this.state.dataSource}
-                    renderRow={this.renderRow}
-                    scrollEventThrottle={10}
-                    style={commonStyle.container}
-                    contentContainerStyle={{paddingBottom: 16}}
-                    onEndReached={this.onInfinite}
-                    onEndReachedThreshold={40}
-                    scrollEnabled={this.state.scrollEnabled}
-                    >
-                </ListView>
-                )
+        console.log('-------renderListView');
+        return(
+            <ScrollView ref={component => this._scrollView = component}
+            contentContainerStyle={{paddingBottom: 16}}
+            onLayout={this.doReLayout}
+            style={commonStyle.container}
+            refreshControl={
+                          <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this.onInfinite}
+                            tintColor="#969696"
+                            title=""
+                            colors={['#969696', '#969696', '#969696']}
+                            progressBackgroundColor="#969696" />
+                        }
+                >
+                {this.renderItems()}
+                <View onLayout={(e)=> {
+                  this.footerY = e.nativeEvent.layout.y;
+                  console.log('-----this._scrollViewww', this.footerY);
+                  this.scrollToBottom();
+                  }}/>
+            </ScrollView>
+            );
+        // if (this.state.isRevert) {
+        //     return (
+        //         <ListView
+        //             ref = {(list) => {this.list= list}}
+        //             onLayout={this.doReLayout}
+        //             renderScrollComponent={props => <InvertibleScrollView {...props} inverted />}
+        //             dataSource={this.state.dataSource}
+        //             renderRow={this.renderRow}
+        //             scrollEventThrottle={10}
+        //             style={commonStyle.container}
+        //             contentContainerStyle={{paddingTop: 16}}
+        //             onEndReached={this.onInfinite}
+        //             onEndReachedThreshold={40}
+        //             scrollEnabled={this.state.scrollEnabled}
+        //             >
+        //         </ListView>
+        //         )
+        // };
+        // return (
+        //         <ListView
+        //             ref = {(list) => {this.list= list}}
+        //             onLayout={this.doReLayout}
+        //             dataSource={this.state.dataSource}
+        //             renderRow={this.renderRow}
+        //             scrollEventThrottle={10}
+        //             style={commonStyle.container}
+        //             contentContainerStyle={{paddingBottom: 16}}
+        //             onEndReached={this.onInfinite}
+        //             onEndReachedThreshold={40}
+        //             scrollEnabled={this.state.scrollEnabled}
+        //             >
+        //         </ListView>
+        //         )
     },
     renderLoadingView: function(){
         return (

@@ -33,6 +33,7 @@ module.exports = React.createClass({
         this.props.onDelete(this.props.rowData, this.props.sectionID);
     },
     renderCustomerLabel: function(){
+        console.log('---this.props.rowData', this.props.rowData);
         if (!this.props.rowData.customerName) {
             return(<View />);
         };
@@ -104,6 +105,7 @@ module.exports = React.createClass({
                             </Text>
                             <View style={styles.orderContent}>
                                 {this.renderTimeLabel(this.props.rowData.endTime)}
+                                {this.renderCustomerLabel()}
                             </View>
                         </View>
                     </View>
@@ -166,6 +168,7 @@ module.exports = React.createClass({
                                 </Text>
                                 <View style={styles.orderContent}>
                                     {this.renderTimeLabel(this.props.rowData.endTime)}
+                                    {this.renderCustomerLabel()}
                                 </View>
                             </View>
                         </View>

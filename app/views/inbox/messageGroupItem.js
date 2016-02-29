@@ -38,7 +38,7 @@ module.exports = React.createClass({
     },
     onPress: function(){
         var rowData = this.props.rowData;
-        this.props.onPress(rowData, this.props.sectionID);
+        this.props.onPress(rowData);
     },
     doDelete: function(){
         AlertIOS.alert(
@@ -52,7 +52,7 @@ module.exports = React.createClass({
 
     },
     onDelete: function(){
-        this.props.onDelete(this.props.rowData, this.props.sectionID);
+        this.props.onDelete(this.props.rowData);
     },
     messageTitleBgColor:["#4285F4", "#34A853"],
 
@@ -134,8 +134,7 @@ module.exports = React.createClass({
             return(<View />)
         };
         return(
-            <View style={commonStyle.cardWraper}
-            onLayout={this.props.onLayout} >
+            <View style={commonStyle.cardWraper} >
                 {this.renderTimeLabel(this.props.rowData.gmtCreate)}
                 <ToolTip
                     ref='theToolTip'
