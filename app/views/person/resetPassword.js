@@ -46,7 +46,7 @@ module.exports = React.createClass({
         }
         Actions.validationCode({
             title: 'ValidationCode',
-            type: 2
+            validateType: 2
         });
     },
     getCode: function(){

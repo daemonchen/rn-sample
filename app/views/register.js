@@ -38,7 +38,7 @@ var register = React.createClass({
             util.alert(result.message);
             return;
         }
-        Actions.validationCode({type: 1});
+        Actions.validationCode({validateType: 1});
     },
     getCode: function(){
         if (!this.state.mobile || !/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(this.state.mobile)) {

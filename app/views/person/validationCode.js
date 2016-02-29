@@ -33,7 +33,7 @@ var validationCode = React.createClass({
         return {
             mobile: '',
             code: '',
-            type: this.props.type,
+            type: this.props.validateType,
             canReGetCode: false,
             timer: 60
         }
@@ -96,7 +96,7 @@ var validationCode = React.createClass({
                 token: result.data
             }).then(()=>{
                 Actions.setPassword({
-                    type: this.state.type,
+                    registerType: this.state.type,
                     data: result.data
                 });
             });

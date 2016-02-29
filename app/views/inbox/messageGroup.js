@@ -103,9 +103,10 @@ module.exports = React.createClass({
             })
             return;
         }
+        var dataList = result.data || [];
         this.setState({
-            dataSource : this.state.dataSource.cloneWithRows(result.data || []),
-            list: result.data || [],
+            // dataSource : this.state.dataSource.cloneWithRows(result.data || []),
+            list: dataList.reverse(),
             loaded     : true,
             total: result.total,
             isRefreshing: false
@@ -153,17 +154,6 @@ module.exports = React.createClass({
 
     },
     onInfinite: function() {
-        var  self = this;
-        if (!!this.loadedAllData()) {
-            this.setTimeout(()=>{
-                self.setState({
-                    loaded: true,
-                    isRefreshing: false
-                })
-                console.log('----onInfinite', this.loadedAllData());
-            }, 1500);
-            return;
-        };
         this.setState({
             pageNum: this.state.pageNum + 1,
             isRefreshing: true
@@ -278,7 +268,7 @@ module.exports = React.createClass({
     },
     renderItems: function(){
         var self = this;
-        var dataList = this.state.list.reverse();
+        var dataList = this.state.list;
         return _.map(dataList, function(item, key){
             return self.renderRow(item, key);
         });
@@ -287,7 +277,21 @@ module.exports = React.createClass({
         if (!this.state.list || this.state.list.length == 0) {
             return this.renderEmptyRow();
         };
-        console.log('-------renderListView');
+        if (!!this.loadedAllData()) {
+            return(
+                <ScrollView ref={component => this._scrollView = component}
+                contentContainerStyle={{paddingBottom: 16}}
+                onLayout={this.doReLayout}
+                style={commonStyle.container} >
+                    {this.renderItems()}
+                    <View onLayout={(e)=> {
+                      this.footerY = e.nativeEvent.layout.y;
+                      console.log('-----this._scrollViewww', this.footerY);
+                      this.scrollToBottom();
+                      }}/>
+                </ScrollView>
+                );
+        };
         return(
             <ScrollView ref={component => this._scrollView = component}
             contentContainerStyle={{paddingBottom: 16}}
@@ -311,39 +315,7 @@ module.exports = React.createClass({
                   }}/>
             </ScrollView>
             );
-        // if (this.state.isRevert) {
-        //     return (
-        //         <ListView
-        //             ref = {(list) => {this.list= list}}
-        //             onLayout={this.doReLayout}
-        //             renderScrollComponent={props => <InvertibleScrollView {...props} inverted />}
-        //             dataSource={this.state.dataSource}
-        //             renderRow={this.renderRow}
-        //             scrollEventThrottle={10}
-        //             style={commonStyle.container}
-        //             contentContainerStyle={{paddingTop: 16}}
-        //             onEndReached={this.onInfinite}
-        //             onEndReachedThreshold={40}
-        //             scrollEnabled={this.state.scrollEnabled}
-        //             >
-        //         </ListView>
-        //         )
-        // };
-        // return (
-        //         <ListView
-        //             ref = {(list) => {this.list= list}}
-        //             onLayout={this.doReLayout}
-        //             dataSource={this.state.dataSource}
-        //             renderRow={this.renderRow}
-        //             scrollEventThrottle={10}
-        //             style={commonStyle.container}
-        //             contentContainerStyle={{paddingBottom: 16}}
-        //             onEndReached={this.onInfinite}
-        //             onEndReachedThreshold={40}
-        //             scrollEnabled={this.state.scrollEnabled}
-        //             >
-        //         </ListView>
-        //         )
+
     },
     renderLoadingView: function(){
         return (
