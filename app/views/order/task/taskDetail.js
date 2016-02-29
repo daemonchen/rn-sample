@@ -144,6 +144,7 @@ module.exports = React.createClass({
     },
     onChange: function(){
         var result = taskStore.getState();
+        console.log('-----------task result', result);
         if (result.status != 200 && !!result.message) {
             return;
         };
@@ -343,6 +344,7 @@ module.exports = React.createClass({
         }
     },
     renderAttachItem: function(){
+        console.log('---------this.state.taskData', this.state.taskData);
         if (this.state.taskData.accessoryNum > 0) {
             return(
                 <TouchableHighlight
