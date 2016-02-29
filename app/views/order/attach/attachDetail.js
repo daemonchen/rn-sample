@@ -103,7 +103,7 @@ module.exports = React.createClass({
                     title={{ title: this.props.title}}
                     leftButton={<BlueBackButton />}
                     rightButton={<RightSettingButton onPress={this._pressSettingButton} />} />
-                <View style={styles.main}>
+                <ScrollView style={styles.main}>
                     <View style={styles.attachImageWrapper}>
                         <Image
                           source={{uri: this.state.fileAddress}}
@@ -140,7 +140,7 @@ module.exports = React.createClass({
                             {this.renderTime(this.state.gmtCreate)}
                         </View>
                     </TouchableHighlight>
-                </View>
+                </ScrollView>
             </View>
             );
     }

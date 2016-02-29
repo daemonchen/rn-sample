@@ -104,6 +104,9 @@ module.exports = React.createClass({
     },
     onAttachChange: function(){
         var result = attachStore.getState();
+        this.setState({
+            isVisible: false
+        });
         // console.log('-----attachStore result:', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
@@ -121,7 +124,6 @@ module.exports = React.createClass({
         //     this.accessoryIds.push(data.id);
         // }
         this.setState({
-            isVisible: false,
             accessoryNum: this.state.accessoryNum + 1
         });
     },

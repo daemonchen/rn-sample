@@ -140,16 +140,30 @@ module.exports = React.createClass({
     },
     showActionSheet: function(){
         var self = this;
-        ActionSheetIOS.showActionSheetWithOptions({
-            options: this.actionList,
-            destructiveButtonIndex: 2,
-            cancelButtonIndex: 3,
+        if (!!this.state.user.avatar) {
+            ActionSheetIOS.showActionSheetWithOptions(
+                {
+                    options: this.actionList,
+                    destructiveButtonIndex: 2,
+                    cancelButtonIndex: 3
+                },
+                (buttonIndex) => {
+                  self.onSelectActionSheet(buttonIndex);
+                });
+            return;
+        };
+        ActionSheetIOS.showActionSheetWithOptions(
+            {
+                options: this.actionListWithoutDeleteButton,
+                // destructiveButtonIndex: 2,
+                cancelButtonIndex: 2
             },
             (buttonIndex) => {
               self.onSelectActionSheet(buttonIndex);
             });
     },
     actionList: ['拍照', '选择图片', '删除头像', '取消'],
+    actionListWithoutDeleteButton: ['拍照', '选择图片', '取消'],
     renderAvatar: function(data){
         if (!data) {
             return(<View style={styles.avatarWrapper}/>);

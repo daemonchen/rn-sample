@@ -76,6 +76,8 @@ class AttachStore {
     }
     onCreateSuccess(responseData){
         if (!responseData) {return false};
+        console.log('------create success', responseData, !responseData);
+
         responseData.type = 'create'
 
         this.setState(responseData);
