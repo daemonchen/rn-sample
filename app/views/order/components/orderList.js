@@ -9,6 +9,7 @@ var {
     RefreshControl,
     TouchableOpacity,
     ActivityIndicatorIOS,
+    AlertIOS,
     StyleSheet
 } = React
 
@@ -190,9 +191,19 @@ var orderList = React.createClass({
         return this.state.list.length >= this.state.total||this.state.list.length===0;
     },
     onDelete: function(rowData){
-        orderListAction.delete({
-            orderId:rowData.id
-        });
+        AlertIOS.alert(
+            '删除订单',
+            '删除订单将连同该订单任务一起删除，确定删除吗？',
+            [
+                {text: '确定', onPress: () => {
+                    orderListAction.delete({
+                        orderId:rowData.id
+                    });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
+
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (

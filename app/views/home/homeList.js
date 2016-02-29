@@ -180,11 +180,14 @@ module.exports = React.createClass({
     },
     onTaskListChange: function(){
         var result = taskListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            // util.alert(result.message);
-            return;
-        }
-        if (result.type == 'delete') {
+        if (result.type == 'deleteHomeTask') {
+            util.toast(result.message);
+            if (result.status != 200 && !!result.message) {
+                return;
+            }
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
             this.setTimeout(this.onRefresh, 350)
         };
     },

@@ -149,6 +149,7 @@ module.exports = React.createClass({
         }
     },
     handleDelete: function(result){
+        util.toast(result.message);
         if (result.status != 200 && !!result.message) {
             return;
         }
@@ -156,9 +157,6 @@ module.exports = React.createClass({
     },
     onChange: function() {
         var result = taskListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
         switch(result.type){
             case 'get':
                 return this.handleGet(result);

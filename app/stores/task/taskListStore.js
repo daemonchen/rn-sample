@@ -100,16 +100,21 @@ class TaskListStore {
         var self = this;
         if (!responseData) {return false};
         responseData.type = 'delete'
-        asyncStorage.getItem('appConstants')
-        .then((data)=>{
-            if(!!data){
-                appConstants = data;
-                appConstants.taskList = self.removeItemFromCache(appConstants.taskList, responseData.data);
-                asyncStorage.setItem('appConstants', appConstants);
-                responseData.data = appConstants.taskList;
-                self.setState(responseData);
-            }
+        self.setState(responseData);
+    }
+    onDeleteHomeTask(data){
+        taskListService.deleteList(data)
+        .then((responseData) => {
+            taskListAction.deleteHomeTaskSuccess(responseData)
         }).done();
+
+        this.preventDefault();
+    }
+    onDeleteHomeTaskSuccess(responseData){
+        var self = this;
+        if (!responseData) {return false};
+        responseData.type = 'deleteHomeTask'
+        self.setState(responseData);
 
     }
     removeItemFromCache(obj, id){

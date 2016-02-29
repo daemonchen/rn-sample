@@ -73,9 +73,19 @@ module.exports = React.createClass({
         this.props.onPressRow(this.props.rowData, this.props.sectionID, this.props.rowID);
     },
     onDelete: function(){
-        taskListAction.delete({
-            jobId: this.props.rowData.id
-        });
+        AlertIOS.alert(
+            '删除任务',
+            '确定删除该任务吗？',
+            [
+                {text: '确定', onPress: () => {
+                    taskListAction.deleteHomeTask({
+                        jobId: this.props.rowData.id
+                    });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
+
     },
     renderCheckIcon: function(){
         var circleImage = (this.state.done == 1) ? require('../../images/task/task_status_done.png') : require('../../images/task/task_status.png')

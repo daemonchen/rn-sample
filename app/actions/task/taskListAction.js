@@ -12,4 +12,6 @@ module.exports = alt.generateActions(
     'updateSuccess',
     'delete',
     'deleteSuccess',
+    'deleteHomeTask',
+    'deleteHomeTaskSuccess',
     'addDependinces');

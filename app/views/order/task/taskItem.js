@@ -104,9 +104,19 @@ module.exports = React.createClass({
         };
     },
     onDelete: function(){
-        taskListAction.delete({
-            jobId: this.props.rowData.jobDO.id
-        });
+        AlertIOS.alert(
+            '删除任务',
+            '确定删除该任务吗？',
+            [
+                {text: '确定', onPress: () => {
+                    taskListAction.delete({
+                        jobId: this.props.rowData.jobDO.id
+                    });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
+
     },
     renderAvatar: function(user){
         if (!user) {

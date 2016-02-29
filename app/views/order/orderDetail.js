@@ -148,6 +148,13 @@ module.exports = React.createClass({
             data: this.state.orderData
         });
     },
+    _saveTemplate: function(){
+        Actions.orderTemplateSetting({
+            title: '保存为模版',
+            target: 1,//新建模版
+            data: this.state.orderData
+        });
+    },
     _pressSettingButton: function(){
         var data = Object.assign({orderStatus: 2}, this.state.orderData);
         Actions.orderSettings({
@@ -325,6 +332,9 @@ module.exports = React.createClass({
             width, height, scale
         } = util.getDimensions();
         var displayArea = {x: 5, y: 64, width: width - 10, height: height};
+        // <Image
+        // style={commonStyle.settingIcon}
+        // source={require('../../images/order/editor_outling.png')}/>
         return(
             <Popover
                 isVisible={this.state.isVisible}
@@ -338,9 +348,6 @@ module.exports = React.createClass({
                         onPress={this._pressSettingButton}>
                         <View
                         style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
-                            <Image
-                            style={commonStyle.settingIcon}
-                            source={require('../../images/order/editor_outling.png')}/>
                             <Text
                             style={[commonStyle.settingDetail]}>
                             编辑
@@ -353,12 +360,21 @@ module.exports = React.createClass({
                         onPress={ this._goShareSetting}>
                         <View
                         style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
-                            <Image
-                            style={commonStyle.settingIcon}
-                            source={require('../../images/order/share_black.png')}/>
                             <Text
                             style={[commonStyle.settingDetail]}>
                             分享
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.popoverWrapper}
+                        underlayColor='#eee'
+                        onPress={ this._saveTemplate}>
+                        <View
+                        style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={[commonStyle.settingDetail]}>
+                            保存为模版
                             </Text>
                         </View>
                     </TouchableHighlight>

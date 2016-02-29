@@ -73,7 +73,7 @@ module.exports = React.createClass({
                     <Image
                     style={contactsStyle.contactsItemCircle}
                     source={require('../../images/contact/horn_gray_circle.png')} />
-                    <Text style={contactsStyle.contactsItemDetail}>申请人列表</Text>
+                    <Text style={contactsStyle.contactsItemDetail}>新的成员</Text>
                 </View>
             </TouchableHighlight>
             )

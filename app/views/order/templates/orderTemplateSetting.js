@@ -2,6 +2,7 @@
 var React = require('react-native')
 import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
+var TimerMixin = require('react-timer-mixin');
 var {
     View,
     Text,
@@ -22,6 +23,7 @@ var templateStore = require('../../../stores/template/templateStore');
 var util = require('../../../common/util');
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         return {
             templateStatus: this.props.target,//1新建 2 修改
@@ -41,12 +43,31 @@ module.exports = React.createClass({
             util.alert(result.message);
             return;
         }
-        if (result.type == 'create') {
-            Actions.pop();
+        util.toast(result.message);
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
         };
-        if (result.type == 'update') {
+        this._timeout = this.setTimeout(()=>{
             Actions.pop();
-        };
+        },2000);
+        // if (result.type == 'create') {
+        //     util.toast(result.message);
+        //     if (this._timeout) {
+        //         this.clearTimeout(this._timeout);
+        //     };
+        //     this._timeout = this.setTimeout(()=>{
+        //         Actions.pop();
+        //     },2000);
+        // };
+        // if (result.type == 'update') {
+        //     util.toast(result.message);
+        //     if (this._timeout) {
+        //         this.clearTimeout(this._timeout);
+        //     };
+        //     this._timeout = this.setTimeout(()=>{
+        //         Actions.pop();
+        //     },2000);
+        // };
     },
     onChangeNameText: function(text){
         this.setState({
