@@ -304,9 +304,20 @@ module.exports = React.createClass({
         Actions.pop();
     },
     _deleteTask: function(){
-        taskListAction.delete({
-            orderId: this.state.orderId
-        })
+        console.log('-----delete task', this.props.data);
+        AlertIOS.alert(
+            '删除任务',
+            '确定删除该任务吗？',
+            [
+                {text: '确定', onPress: () => {
+                    taskListAction.delete({
+                        jobId: this.state.orderId
+                    })
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
+
     },
     renderOptionalSettings: function(){
         if (this.state.taskStatus == 2) {//修改任务
@@ -432,10 +443,10 @@ module.exports = React.createClass({
                             source={require('../../../images/common/arrow_right.png')} />
                         </View>
                     </TouchableHighlight>
-                    {this.renderOptionalSettings()}
                 </ScrollView>
                 <LoadingOverlay isVisible={this.state.isVisible} />
             </View>
             );
+                    // {this.renderOptionalSettings()}
     }
 });

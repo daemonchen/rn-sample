@@ -63,7 +63,8 @@ module.exports = React.createClass({
         this.unlisten = taskStore.listen(this.onChange);
         this.unlistenAttach = attachStore.listen(this.onAttachChange);
         this.unlistenTaskList = taskListStore.listen(this.onTaskListChange);
-        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange)
+        this.unlistenEmployee = employeeStore.listen(this.onEmployeeChange);
+        this.generatorOwnerDataDebounce();
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
@@ -130,10 +131,16 @@ module.exports = React.createClass({
             jobId: this.state.jobId
         });
     },
+    generatorOwnerDataDebounce: function(){
+        var self = this;
+        this._fetchOwnerDataDebounce = underscore.debounce(()=>{
+            employeeAction.get({
+                userId: self.state.taskData.ownerId
+            });
+        }, 300);
+    },
     fetchOwnerData: function(){
-        employeeAction.get({
-            userId: this.state.taskData.ownerId
-        });
+        this._fetchOwnerDataDebounce();
     },
     onChange: function(){
         var result = taskStore.getState();
