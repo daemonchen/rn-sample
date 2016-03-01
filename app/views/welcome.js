@@ -9,7 +9,8 @@ var {
   TabBarIOS,
   Image,
   Text,
-  View
+  View,
+  Animated
 } = React;
 
 var Button = require('../common/button');
@@ -28,11 +29,19 @@ module.exports = React.createClass({
         return {
             index: this.props.index || 0,
             autoplay: this.props.autoplay || false,
-            loop: this.props.loop || true
+            loop: this.props.loop || true,
+            viewBounceValue: new Animated.Value(0)
         }
     },
     componentDidMount: function(){
         // LayoutAnimation.easeInEaseOut();
+        Animated.spring(                          // 可选的基本动画类型: spring, decay, timing
+          this.state.viewBounceValue,                 // 将`circleBounceValue`值动画化
+          {
+            toValue: 1,                         // 将其值以动画的形式改到一个较小值
+            friction: 7,                          // Bouncier spring
+          }
+        ).start();
 
     },
     componentWillUnmount: function(){},
@@ -76,7 +85,14 @@ module.exports = React.createClass({
     },
     render: function(){
         return (
-            <View style={styles.welcome}>
+            <Animated.View style={[styles.welcome,{
+                flex: 1,
+                transform: [                        // `transform`是一个有序数组（动画按顺序执行）
+                    {
+                        scale: this.state.viewBounceValue
+                   }
+                  ]
+            }]}>
                 {this.renderSlider()}
                 <View style={styles.welcomeWrapper}>
                     <View style={{flex: 1}}>
@@ -96,7 +112,7 @@ module.exports = React.createClass({
                     </View>
 
                 </View>
-            </View>
+            </Animated.View>
         );
     }
 });
@@ -118,20 +134,24 @@ var styles = StyleSheet.create({
         // marginTop: 100
     },
     dotStyle: {
-        backgroundColor:'rgba(0,0,0,.2)',
-        width: 5,
-        height: 5,
+        backgroundColor:'#fff',
+        width: 7,
+        height: 7,
         borderRadius: 4,
+        borderWidth: 1,
+        borderColor: '#000',
         marginLeft: 3,
         marginRight: 3,
         marginTop: 3,
         marginBottom: 3
     },
     activeDotStyle: {
-        backgroundColor: '#000',
+        backgroundColor:'#000',
         width: 8,
         height: 8,
         borderRadius: 4,
+        // borderWidth: 1,
+        // borderColor: '#fff',
         marginLeft: 3,
         marginRight: 3,
         marginTop: 3,

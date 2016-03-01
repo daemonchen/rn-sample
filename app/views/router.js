@@ -209,8 +209,8 @@ module.exports = React.createClass({
                 <Route name="calendar" component={Calendar} title="设置日期"/>
                 <Route name="datePicker" component={DatePicker} title="设置时间"/>
                 <Route name="error" component={Error} title="设置"/>
-                <Route name="login" component={Login} title="登录" />
-                <Route name="register" component={Register} title="注册"/>
+                <Route name="login" component={Login} title="登录" schema="modal"/>
+                <Route name="register" component={Register} title="注册" schema="modal"/>
                 <Route name="imageSwiperPage" component={ImageSwiperPage} title="图片详情" schema="withoutAnimation"/>
 
 
