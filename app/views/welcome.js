@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var Actions = require('react-native-router-flux').Actions;
+var TimerMixin = require('react-timer-mixin');
 var {
   AppRegistry,
   StyleSheet,
@@ -11,7 +12,8 @@ var {
   View
 } = React;
 
-var Button = require('../common/button.js');
+var Button = require('../common/button');
+var Swiper = require('../common/swiper')
 var commonStyle = require('../styles/commonStyle');
 
 
@@ -23,7 +25,11 @@ var {
 
 module.exports = React.createClass({
     getInitialState: function(){
-        return {}
+        return {
+            index: this.props.index || 0,
+            autoplay: this.props.autoplay || false,
+            loop: this.props.loop || true
+        }
     },
     componentDidMount: function(){
         // LayoutAnimation.easeInEaseOut();
@@ -36,25 +42,59 @@ module.exports = React.createClass({
     goLogin: function(){
         Actions.login();
     },
+    renderSlider: function(){
+        return(
+            <View style={styles.imageGalleryWrapper}>
+                <Swiper
+                index={this.state.index}
+                autoplay={this.state.autoplay}
+                loop={this.state.loop}
+                dot={this.renderDot()}
+                activeDot={this.renderActiveDot()}
+                paginationStyle={{
+                              bottom: 70,
+                            }}>
+                    <Image style={styles.welcomeImage}
+                    source={require('../images/welcome/slide1.png')} />
+                    <Image style={styles.welcomeImage}
+                    source={require('../images/welcome/slide2.png')} />
+                    <Image style={styles.welcomeImage}
+                    source={require('../images/welcome/slide3.png')} />
+                </Swiper>
+            </View>
+            );
+    },
+    renderDot: function(){
+        return(
+            <View style={styles.dotStyle} />
+            );
+    },
+    renderActiveDot: function(){
+        return(
+            <View style={styles.activeDotStyle} />
+            );
+    },
     render: function(){
         return (
             <View style={styles.welcome}>
-                <Image style={styles.welcomeImage} source={require('../images/logo/logo_welcom.png')} />
+                {this.renderSlider()}
                 <View style={styles.welcomeWrapper}>
-                    <Text style={[styles.welcomeText, commonStyle.textGray]} >
-                    欢迎使用你造么
-                    </Text>
-                    <Text style={[styles.welcomeText, commonStyle.textGray]}>生产管理从未如此轻松</Text>
-                    <Button
-                    style={commonStyle.blueButton}
-                    onPress={this.goRegister} >
-                        注册
-                    </Button>
-                    <Button
-                    style={[commonStyle.button, commonStyle.blue]}
-                    onPress={this.goLogin} >
-                        登录
-                    </Button>
+                    <View style={{flex: 1}}>
+                        <Button
+                        style={commonStyle.buttonFlex}
+                        onPress={this.goRegister} >
+                            注册
+                        </Button>
+                    </View>
+                    <View style={styles.sepVertical}/>
+                    <View style={{flex: 1}}>
+                        <Button
+                        style={[commonStyle.buttonFlex]}
+                        onPress={this.goLogin} >
+                            登录
+                        </Button>
+                    </View>
+
                 </View>
             </View>
         );
@@ -64,21 +104,49 @@ module.exports = React.createClass({
 var styles = StyleSheet.create({
     welcome: {
         backgroundColor: '#fff',
-        flex: 1,
-        alignItems: 'center'
+        flex: 1
     },
-    welcomeWrapper:{
-        position:'absolute',
-        bottom: 16,
+    imageGalleryWrapper: {
+        backgroundColor: '#000',
         width: width,
-        justifyContent: 'center',
-        alignItems: 'center'
+        height: height - 49
     },
     welcomeImage:{
-        marginTop: 100
+        width: width,
+        height: height - 49
+        // width: width
+        // marginTop: 100
     },
-    welcomeText: {
-        fontSize: 20,
-        paddingVertical: 12
+    dotStyle: {
+        backgroundColor:'rgba(0,0,0,.2)',
+        width: 5,
+        height: 5,
+        borderRadius: 4,
+        marginLeft: 3,
+        marginRight: 3,
+        marginTop: 3,
+        marginBottom: 3
+    },
+    activeDotStyle: {
+        backgroundColor: '#000',
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        marginLeft: 3,
+        marginRight: 3,
+        marginTop: 3,
+        marginBottom: 3
+    },
+    sepVertical: {
+        height: 37,
+        width: 1,
+        marginTop: 6,
+        backgroundColor: '#fff'
+    },
+    welcomeWrapper:{
+        width: width,
+        height: 49,
+        flexDirection: 'row',
+        backgroundColor: '#4285f4'
     }
 });

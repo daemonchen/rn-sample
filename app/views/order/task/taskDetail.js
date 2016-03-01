@@ -398,7 +398,8 @@ module.exports = React.createClass({
     renderNavigationBar: function(){
         var rights = appConstants.userRights.rights;
         var targetRights = 128;
-        if ((rights & targetRights) == targetRights){
+        var hasRights = (rights & targetRights) == targetRights;
+        if (hasRights && !this.state.taskData.done){
             return(
                 <NavigationBar
                     title={{ title: '任务详情'}}

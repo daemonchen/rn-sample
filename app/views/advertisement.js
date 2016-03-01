@@ -43,7 +43,7 @@ module.exports = React.createClass({
     // _modal: {},
     componentDidMount: function(){
         codePush.sync();//静默更新
-        this.unAuthTokenlisten = authTokenStore.listen(this.onAuthTokenChange);
+        // this.unAuthTokenlisten = authTokenStore.listen(this.onAuthTokenChange);
         this.state.viewBounceValue.setValue(0);   //默认隐藏登陆注册模块
         Animated.spring(                          // 可选的基本动画类型: spring, decay, timing
           this.state.circleBounceValue,                 // 将`circleBounceValue`值动画化
@@ -55,22 +55,22 @@ module.exports = React.createClass({
         ).start();                                // 开始执行动画
     },
     componentWillUnmount: function() {
-        this.unAuthTokenlisten();
+        // this.unAuthTokenlisten();
     },
-    onAuthTokenChange: function(){
-        var result = authTokenStore.getState();
-        console.log('-----auth token result', result);
-        if (result.status != 200 && !!result.message) {
-            this.showLoginBlock();
-            return;
-        }
-    },
-    goRegister: function(){
-        Actions.register();
-    },
-    goLogin: function(){
-        Actions.login();
-    },
+    // onAuthTokenChange: function(){
+    //     var result = authTokenStore.getState();
+    //     console.log('-----auth token result', result);
+    //     if (result.status != 200 && !!result.message) {
+    //         this.showLoginBlock();
+    //         return;
+    //     }
+    // },
+    // goRegister: function(){
+    //     Actions.register();
+    // },
+    // goLogin: function(){
+    //     Actions.login();
+    // },
     renderCircleItem: function(params){
         return(
             <Animated.View style={{
@@ -192,10 +192,10 @@ module.exports = React.createClass({
                         middleY: this.state.yCenterOrigin - 40,
                         endY: this.state.yCenterOrigin - 40 - 100
                     })}
-                    {this.renderLoginBlock()}
                 </View>
             </View>
         );
+        // {this.renderLoginBlock()}
     }
 });
 

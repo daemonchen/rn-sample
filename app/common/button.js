@@ -1,5 +1,6 @@
-'use strict';
 // https://github.com/ide/react-native-button/blob/master/Button.js
+'use strict';
+
 var React = require('react-native');
 var {
   PropTypes,
@@ -44,8 +45,10 @@ var systemButtonOpacity = 0.2;
 var Button = React.createClass({
   propTypes: {
     ...TouchableOpacity.propTypes,
+    containerStyle: View.propTypes.style,
     disabled: PropTypes.bool,
     style: Text.propTypes.style,
+    styleDisabled: Text.propTypes.style,
   },
 
   render() {
@@ -60,20 +63,24 @@ var Button = React.createClass({
     }
 
     return (
-      <TouchableOpacity {...touchableProps} testID={this.props.testID}>
+      <TouchableOpacity {...touchableProps} testID={this.props.testID} style={this.props.containerStyle}>
         {this._renderGroupedChildren()}
       </TouchableOpacity>
     );
   },
 
   _renderGroupedChildren() {
-    var buttonStateStyle = this.props.disabled ? styles.disabledText : null;
+    var {disabled} = this.props
+    var style = [
+      styles.text,
+      disabled ? styles.disabledText : null,
+      this.props.style,
+      disabled ? this.props.styleDisabled : null,
+    ];
 
     var children = coalesceNonElementChildren(this.props.children, (children, index) => {
       return (
-        <Text
-          key={index}
-          style={[styles.text, buttonStateStyle, this.props.style]}>
+        <Text key={index} style={style}>
           {children}
         </Text>
       );

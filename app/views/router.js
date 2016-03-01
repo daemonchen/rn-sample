@@ -107,7 +107,7 @@ module.exports = React.createClass({
         var result = authTokenStore.getState();
         console.log('-----auth token result', result);
         if (result.status != 200 && !!result.message) {
-            // this.goWelcome();
+            this.goWelcome();
             return;
         }
         switch(result.type){
