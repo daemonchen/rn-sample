@@ -212,7 +212,7 @@ module.exports = React.createClass({
             return(
                 <WebView
                       automaticallyAdjustContentInsets={false}
-                      url={this.state.url}
+                      source={this.state.url}
                       decelerationRate="normal"
                       startInLoadingState={true}/>
                 );

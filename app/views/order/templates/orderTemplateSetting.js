@@ -96,6 +96,7 @@ module.exports = React.createClass({
         }
     },
     render: function(){
+        var description = (this.state.templateStatus == 1) ? '' : this.state.description
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
@@ -118,7 +119,7 @@ module.exports = React.createClass({
                         clearButtonMode={'while-editing'}
                         returnKeyType={'done'}
                         onSubmitEditing={this.onPressDone}
-                        value={this.state.description}
+                        value={description}
                         onChangeText={this.onChangeDescribeText} />
                     </View>
                 </ScrollView>

@@ -41,7 +41,7 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.getAppConstants();
+        // this.getAppConstants();
     },
     getAppConstants: function(){
         var self = this;
@@ -84,7 +84,7 @@ module.exports = React.createClass({
     },
     doCommit: function(){
         if (!this.state.factoryName) {
-            util.alert('请输入姓名');
+            util.toast('请输入工厂名');
             return;
         };
         factoryAction.create({

@@ -109,7 +109,7 @@ module.exports = React.createClass({
                     <WebViewBridge
                         automaticallyAdjustContentInsets={false}
                         style={styles.webView}
-                        url={this.state.url}
+                        source={this.state.url}
                         javaScriptEnabled={true}
                         domStorageEnabled={true}
                         startInLoadingState={true}
