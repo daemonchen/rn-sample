@@ -83,7 +83,7 @@ var setPassWord = React.createClass({
     },
     doRegister: function(){
         if (this.state.password.length < 6) {
-            util.alert('密码长度不能小于6位');
+            util.toast('密码长度不能小于6位');
             return false;
         };
         if (this.props.registerType == 1) {//注册用户

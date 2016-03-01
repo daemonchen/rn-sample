@@ -72,7 +72,7 @@ module.exports = React.createClass({
                 <View style={contactsStyle.contactsItem}>
                     <Image
                     style={contactsStyle.contactsItemCircle}
-                    source={require('../../images/contact/horn_gray_circle.png')} />
+                    source={require('../../images/contact/group_add_circle.png')} />
                     <Text style={contactsStyle.contactsItemDetail}>新的成员</Text>
                 </View>
             </TouchableHighlight>
@@ -94,7 +94,7 @@ module.exports = React.createClass({
                 <View style={contactsStyle.contactsItem}>
                     <Image
                     style={contactsStyle.contactsItemCircle}
-                    source={require('../../images/contact/Client.png')} />
+                    source={require('../../images/contact/Client_yel.png')} />
                     <Text style={contactsStyle.contactsItemDetail}>客户</Text>
                 </View>
             </TouchableHighlight>

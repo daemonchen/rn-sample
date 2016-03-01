@@ -132,8 +132,7 @@ var Login = React.createClass({
         };
         return(
             <Button
-                    style={[commonStyle.button, commonStyle.textLight, {fontSize: 24, marginTop: 10, marginBottom: 28}]}
-                    onPress={this.doLogin} >
+                    style={[commonStyle.button, commonStyle.textLight, {fontSize: 24, marginTop: 10, marginBottom: 28}]} >
                         登录
                     </Button>
                 );

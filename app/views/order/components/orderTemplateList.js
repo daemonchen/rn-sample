@@ -10,6 +10,7 @@ var {
     Image,
     ScrollView,
     TouchableHighlight,
+    ActivityIndicatorIOS,
     StyleSheet
 } = React
 /*
@@ -172,7 +173,23 @@ module.exports = React.createClass({
             </View>
         )
     },
+    renderLoadingView: function(){
+        return (
+            <View style={commonStyle.header}>
+                <Text style={commonStyle.headerText}>User List</Text>
+                <View style={commonStyle.container}>
+                    <ActivityIndicatorIOS
+                        animating={!this.state.loaded}
+                        style={[commonStyle.activityIndicator]}
+                        size="small" />
+                </View>
+            </View>
+        );
+    },
     render: function(){
+        if (!this.state.loaded) {
+            return this.renderLoadingView();
+        }
         if (!this.state.list || this.state.list.length == 0) {
             return this.renderEmptyRow();
         };

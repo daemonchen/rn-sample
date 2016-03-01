@@ -348,6 +348,9 @@ module.exports = React.createClass({
                         onPress={this._pressSettingButton}>
                         <View
                         style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/order/editor_outling_chu.png')}/>
                             <Text
                             style={[commonStyle.settingDetail]}>
                             编辑
@@ -360,6 +363,9 @@ module.exports = React.createClass({
                         onPress={ this._goShareSetting}>
                         <View
                         style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/order/share_black_chu.png')}/>
                             <Text
                             style={[commonStyle.settingDetail]}>
                             分享
@@ -367,11 +373,14 @@ module.exports = React.createClass({
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
-                        style={commonStyle.popoverWrapper}
+                        style={[commonStyle.popoverWrapper, {width: 180}]}
                         underlayColor='#eee'
                         onPress={ this._saveTemplate}>
                         <View
                         style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/order/template_outline_chu.png')}/>
                             <Text
                             style={[commonStyle.settingDetail]}>
                             保存为模版

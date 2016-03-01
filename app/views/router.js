@@ -98,7 +98,7 @@ module.exports = React.createClass({
         var result = verifyCodeStore.getState();
         if (result.type != 'register') {return};
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
+            util.toast(result.message);
             return;
         }
         return this.doLogin(result);
@@ -135,7 +135,7 @@ module.exports = React.createClass({
         appConstants.user = result.data.user;
         appConstants.userRights = result.data.userRights;
         asyncStorage.clear();//清空了之后再赋值
-        console.log('----doLogin');
+        console.log('----doLogin', result);
         asyncStorage.setItem('appConstants', appConstants).done();
 
         this.setTimeout(function(){

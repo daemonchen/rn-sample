@@ -77,7 +77,7 @@ var validationCode = React.createClass({
         var result = verifyCodeStore.getState();
         if(result.type == 'isReset'){
             if (result.status != 200 && !!result.message) {
-                util.alert(result.message);
+                util.toast(result.message);
                 return;
             }
             this.clearInterval(this._timeInterval);
@@ -86,7 +86,7 @@ var validationCode = React.createClass({
         }
         if (result.type == 'check') {
             if (result.status != 200 && !!result.message) {
-                util.alert(result.message);
+                util.toast(result.message);
                 return;
             }
             this.clearInterval(this._timeInterval);

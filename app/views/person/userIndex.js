@@ -229,7 +229,7 @@ module.exports = React.createClass({
                         style={commonStyle.settingItem}>
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/person/template.png')}/>
+                            source={require('../../images/person/template_gray.png')}/>
                             <Text
                             style={commonStyle.settingDetail}>
                                 我的模版

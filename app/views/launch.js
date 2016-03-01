@@ -3,6 +3,7 @@
 var React = require('react-native');
 // var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 var Actions = require('react-native-router-flux').Actions;
+var TimerMixin = require('react-timer-mixin');
 var {
   AppRegistry,
   StyleSheet,
@@ -42,6 +43,7 @@ var {
 } = util.getDimensions();
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function () {
         return {
             selectedTab: 'Workspace',
@@ -59,10 +61,14 @@ module.exports = React.createClass({
                 this.factoryNotify(notifData);
             }
         );
+
+        this.getAppConstants();//初始化消息未读数
+
         Linking.addEventListener('url', this._handleOpenURL);
 
         var url = Linking.getInitialURL();
         this.factoryLinkingScheme(url);
+
         Animated.spring(                          // 可选的基本动画类型: spring, decay, timing
           this.state.viewBounceValue,                 // 将`circleBounceValue`值动画化
           {
@@ -76,6 +82,23 @@ module.exports = React.createClass({
         this.unlistenScheme();
         this.unlistenNotification.remove();
         Linking.removeEventListener('url', this._handleOpenURL);
+    },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                if (this._timeout) {
+                    this.clearTimeout(this._timeout);
+                };
+                this._timeout = this.setTimeout(function(){
+                    self.setState({
+                        notifCount: !!appConstants.unreadMsg ? appConstants.unreadMsg : 0
+                    });
+                }, 350)
+            }
+        }).done();
     },
     onSchemeChange: function(){
         var result = schemeStore.getState();

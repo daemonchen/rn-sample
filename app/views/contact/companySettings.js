@@ -155,7 +155,7 @@ module.exports = React.createClass({
                     style={commonStyle.settingItem}>
                         <Image
                         style={commonStyle.settingIcon}
-                        source={require('../../images/contact/horn_gray.png')}/>
+                        source={require('../../images/contact/group_add_gray.png')}/>
                         <Text
                         style={commonStyle.settingDetail}>
                             新的成员

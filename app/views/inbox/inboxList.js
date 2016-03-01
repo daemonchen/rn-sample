@@ -230,6 +230,7 @@ module.exports = React.createClass({
         });
     },
     renderRow: function(rowData, sectionID, rowID) {
+        console.log('-----inbox rowData', rowData);
         return (
             <InboxItem rowData={rowData}
             sectionID={sectionID}

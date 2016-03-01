@@ -2,7 +2,8 @@ const React = require('react-native');
 
 module.exports = React.StyleSheet.create({
   rowStyle: {
-        padding: 16,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
         flex: 1,
         flexDirection: 'row'
     },

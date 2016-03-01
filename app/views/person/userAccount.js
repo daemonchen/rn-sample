@@ -2,6 +2,7 @@
 var React = require('react-native')
 import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
+var TimerMixin = require('react-timer-mixin');
 var {
     Text,
     TextInput,
@@ -20,22 +21,45 @@ var {
 
 var commonStyle = require('../../styles/commonStyle');
 var appConstants = require('../../constants/appConstants');
-
+var asyncStorage = require('../../common/storage');
 var BlueBackButton = require('../../common/blueBackButton');
 
 var ChangeName = require('./changeName');
 
 
 module.exports = React.createClass({
+    mixins: [TimerMixin],
     getInitialState: function(){
         return {
             user: !!appConstants.user ? appConstants.user : {}
         }
     },
-    componentWillReceiveProps: function(){
-        this.setState({
-            user: !!appConstants.user ? appConstants.user : {}
-        });
+    componentDidMount: function(){
+        this.getAppConstants();
+    },
+    componentWillUnmount: function() {
+    },
+    // componentWillReceiveProps: function(){
+    //     this.setState({
+    //         user: !!appConstants.user ? appConstants.user : {}
+    //     });
+    // },
+    getAppConstants: function(){
+        var self = this;
+        asyncStorage.getItem('appConstants')
+        .then((data)=>{
+            if(!!data && !!data.xAuthToken){
+                appConstants = data;
+                if (this._timeout) {
+                    this.clearTimeout(this._timeout);
+                };
+                this._timeout = this.setTimeout(function(){
+                    self.setState({
+                        user: !!appConstants.user ? appConstants.user : {}
+                    });
+                }, 350)
+            }
+        }).done();
     },
     goAccount: function(){
         Actions.changeName({
