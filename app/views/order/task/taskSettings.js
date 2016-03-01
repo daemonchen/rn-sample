@@ -285,8 +285,8 @@ module.exports = React.createClass({
     },
     onTaskPressDone: function(){
         this.setState({
-            lastIds: this.lastIds,
-            lastIdsNumber: this.lastIds.length
+            lastIds: this.state.lastIds,
+            lastIdsNumber: this.state.lastIds.length
         });
     },
     _setTaskDependence: function(){
