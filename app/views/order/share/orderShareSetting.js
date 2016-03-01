@@ -99,7 +99,7 @@ module.exports = React.createClass({
         });
     },
     goGuide: function(){
-        Actions.taskDescribe({
+        Actions.webViewWrapper({
             title: '分享规则',
             descriptionUrl: this.state.url
         });
@@ -212,7 +212,7 @@ module.exports = React.createClass({
             return(
                 <WebView
                       automaticallyAdjustContentInsets={false}
-                      source={this.state.url}
+                      source={{uri: this.state.url}}
                       decelerationRate="normal"
                       startInLoadingState={true}/>
                 );

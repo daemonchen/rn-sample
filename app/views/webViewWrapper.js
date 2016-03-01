@@ -14,18 +14,19 @@ var {
     TouchableHighlight,
     TouchableOpacity,
     TouchableWithoutFeedback,
+    WebView,
     StyleSheet
 } = React;
 
 
-var commonStyle = require('../../../styles/commonStyle');
-var styles = require('../../../styles/order/orderDetail');
-var util = require('../../../common/util');
-var http = require('../../../common/http');
-var appConstants = require('../../../constants/appConstants');
+var commonStyle = require('../styles/commonStyle');
+var styles = require('../styles/order/orderDetail');
+var util = require('../common/util');
+var http = require('../common/http');
+var appConstants = require('../constants/appConstants');
 
-var BlueBackButton = require('../../../common/blueBackButton');
-var RightSettingButton = require('../../../common/rightSettingButton');
+var BlueBackButton = require('../common/blueBackButton');
+var RightSettingButton = require('../common/rightSettingButton');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -100,13 +101,14 @@ module.exports = React.createClass({
         });
     },
     render: function(){
+        console.log('------url', this.state.url);
         return(
             <View style={{height: this.state.visibleHeight}} >
                 {this.renderNavigationBar()}
                 <ScrollView style={styles.main}
                 contentContainerStyle={{alignItems: 'center'}}
                 keyboardDismissMode={'interactive'} >
-                    <WebViewBridge
+                    <WebView
                         automaticallyAdjustContentInsets={false}
                         style={styles.webView}
                         source={{uri: this.state.url}}

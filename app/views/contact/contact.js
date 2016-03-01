@@ -369,7 +369,7 @@ module.exports = React.createClass({
         }
     },
     goVersionPage: function(){
-        Actions.taskDescribe({
+        Actions.webViewWrapper({
             title: '企业等级',
             descriptionUrl: this.state.factory.levelUrl
         });

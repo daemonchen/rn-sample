@@ -109,7 +109,7 @@ module.exports = React.createClass({
 
     },
     goSheet: function(){
-        Actions.taskDescribe({
+        Actions.webViewWrapper({
             title: '企业报表',
             descriptionUrl: 'http://www.nzaom.com/h5/report/report/index'
         });
@@ -118,7 +118,8 @@ module.exports = React.createClass({
         Actions.applicationList();
     },
     goVersionPage: function(){
-        Actions.taskDescribe({
+        console.log('-------appConstants', this.state.factory);
+        Actions.webViewWrapper({
             title: '企业等级',
             descriptionUrl:  this.state.factory.levelUrl
         });

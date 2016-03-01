@@ -179,7 +179,7 @@ module.exports = React.createClass({
     },
     doDefaultAction: function(rowData){
         if (/http/i.test(rowData.url)) {
-            Actions.taskDescribe({
+            Actions.webViewWrapper({
                 title: rowData.categoryName,
                 descriptionUrl: rowData.url
             });
