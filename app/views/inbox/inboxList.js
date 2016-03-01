@@ -17,21 +17,10 @@ var {
 } = React
 
 /**
-     * 订单消息
-
-    public final static int ORDER_MESSAGE = 1;
-
-     * 任务消息
-
-    public final static int TASK_MESSAGE = 2;
-
-     * 个人消息，如邀请消息
-
-    public final static int PROFILE_MESSAGE = 3;
-
-     * 系统消息，由你造么发送的消息
-
-    public final static int SYSTEM_MESSAGE = 4;
+  public final static int order_message = 1;
+    public final static int invite_message = 2;
+    public final static int apply_message = 3;
+    public final static int system_message = 4 ;
 */
 var inboxAction = require('../../actions/inbox/inboxAction');
 var inboxStore = require('../../stores/inbox/inboxStore');
@@ -165,31 +154,23 @@ module.exports = React.createClass({
         if (!rowData.url) { return; };
         // var params = util.getParams(rowData.url.split('?')[1]);
         switch(rowData.msgType){
-            case 1:
+            case 1: //订单消息
                 Actions.messageGroup(rowData);
                 // Actions.orderDetail({
                 //     data: rowData.extra.orderId
                 // });
                 return;
-            case 2:
-                Actions.taskDetail({
-                    data: rowData.extra.jobId
-                });
+            case 2://邀请消息
+                Actions.inviteMessage();
                 return;
-            case 3:
+            case 3://申请消息
+                Actions.applicationList();
                 return;
-            case 4:
+            case 4://系统消息
                 Actions.messageGroup(rowData);
                 // Actions.sysMessage({
                 //     data: rowData
                 // });
-                return;
-            case 5:
-                Actions.inviteMessage({
-                    data: rowData
-                });
-            case 6:
-                Actions.applicationList();
                 return;
             default:
                 this.doDefaultAction(rowData);
@@ -197,7 +178,7 @@ module.exports = React.createClass({
         }
     },
     doDefaultAction: function(rowData){
-        if (/http/.test(rowData.url)) {
+        if (/http/i.test(rowData.url)) {
             Actions.taskDescribe({
                 title: rowData.categoryName,
                 descriptionUrl: rowData.url
@@ -230,7 +211,7 @@ module.exports = React.createClass({
         });
     },
     renderRow: function(rowData, sectionID, rowID) {
-        console.log('-----inbox rowData', rowData);
+        // console.log('-----inbox rowData', rowData);
         return (
             <InboxItem rowData={rowData}
             sectionID={sectionID}

@@ -139,14 +139,14 @@ var styles = StyleSheet.create({
         height: 7,
         borderRadius: 4,
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: '#333',
         marginLeft: 3,
         marginRight: 3,
         marginTop: 3,
         marginBottom: 3
     },
     activeDotStyle: {
-        backgroundColor:'#000',
+        backgroundColor:'#333',
         width: 8,
         height: 8,
         borderRadius: 4,

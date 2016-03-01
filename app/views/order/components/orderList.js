@@ -86,12 +86,17 @@ var orderList = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            // this.setTimeout(this.onRefresh, 350)
-            // this.onRefresh();
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this._timeout = this.setTimeout(this.onRefresh, 350)
+
         };
         if (result.type == 'update') {
-            this.setTimeout(this.onRefresh, 350)
-            // this.onRefresh();
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this._timeout = this.setTimeout(this.onRefresh, 350)
         };
     },
     handleFollowListGet: function(result){
@@ -207,15 +212,17 @@ var orderList = React.createClass({
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <OrderItem
-            status={this.state.status}
-            rowData={rowData}
-            sectionID={sectionID}
-            rowID={rowID}
-            onPress={this.props.onPressRow}
-            _allowScroll={this._allowScroll}
-            _handleSwipeout={this._handleSwipeout}
-            onDelete={this.onDelete} />
+            <View>
+                <OrderItem
+                status={this.state.status}
+                rowData={rowData}
+                sectionID={sectionID}
+                rowID={rowID}
+                onPress={this.props.onPressRow}
+                _allowScroll={this._allowScroll}
+                _handleSwipeout={this._handleSwipeout}
+                onDelete={this.onDelete} />
+            </View>
             )
     },
     render: function() {

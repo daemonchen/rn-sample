@@ -138,6 +138,16 @@ module.exports = React.createClass({
                 return;
         }
     },
+    onSelectActionSheetWithoutDeleteButton: function(index){
+        switch(index){
+            case 0:
+                return this.launchCamera();
+            case 1:
+                return this.launchImageLibrary();
+            default :
+                return;
+        }
+    },
     showActionSheet: function(){
         var self = this;
         if (!!this.state.user.avatar) {
@@ -159,7 +169,7 @@ module.exports = React.createClass({
                 cancelButtonIndex: 2
             },
             (buttonIndex) => {
-              self.onSelectActionSheet(buttonIndex);
+              self.onSelectActionSheetWithoutDeleteButton(buttonIndex);
             });
     },
     actionList: ['拍照', '选择图片', '删除头像', '取消'],

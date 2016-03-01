@@ -21,6 +21,10 @@ module.exports = {
         var urlParams = '/{id}'.replace('{id}', data.id);
         return http.get(NZAOM_INTERFACE.invite + urlParams)
     },
+    getInviteList: function(data){
+        // var urlParams = '/{id}'.replace('{id}', data.id);
+        return http.get(NZAOM_INTERFACE.invite)
+    },
     getMessageOrder: function(data){
         var urlParams = '/{orderId}'.replace('{orderId}', data.orderId);
         return http.get(NZAOM_INTERFACE.messageOrder + urlParams, data)

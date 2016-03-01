@@ -113,6 +113,19 @@ class InboxStore {
         data.type = 'getInvite'
         this.setState(data);
     }
+    onGetInviteList(data){
+        inboxService.getInviteList(data)
+        .then((responseData) => {
+            inboxAction.getInviteListSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetInviteListSuccess(data){
+        if (!data) {return false};
+        data.type = 'getInviteList'
+        this.setState(data);
+    }
     doCacheMessageOrder(responseData){
         asyncStorage.getItem('appConstants')
         .then((data)=>{

@@ -215,6 +215,7 @@ module.exports = React.createClass({
         if (!!this.state.data.mobile) {
             url = 'tel:' + this.state.data.mobile;
         };
+        console.log('------doCall', this.state.data, url);
         util.link(url);
     },
     doSendMsg: function(){

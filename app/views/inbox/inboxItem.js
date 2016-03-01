@@ -21,21 +21,10 @@ var contactsStyle = require('../../styles/contact/contactsItem');
 var util = require('../../common/util');
 
 /**
-     * 订单消息
-
-    public final static int ORDER_MESSAGE = 1;
-
-     * 任务消息
-
-    public final static int TASK_MESSAGE = 2;
-
-     * 个人消息，如邀请消息
-
-    public final static int PROFILE_MESSAGE = 3;
-
-     * 系统消息，由你造么发送的消息
-
-    public final static int SYSTEM_MESSAGE = 4;
+  public final static int order_message = 1;
+    public final static int invite_message = 2;
+    public final static int apply_message = 3;
+    public final static int system_message = 4 ;
 */
 
 module.exports = React.createClass({
@@ -79,11 +68,11 @@ module.exports = React.createClass({
         this.props.onDelete(this.props.rowData, this.props.sectionID);
     },
     iconList:[
-        require('../../images/inbox/order_circle.png'),
-        require('../../images/inbox/task_circle.png'),
-        require('../../images/inbox/group add_circle.png'),//新的成员
-        require('../../images/inbox/nzaom_circle.png'),//系统icon
-        require('../../images/inbox/horn_circle.png')//默认icon
+        require('../../images/inbox/horn_circle.png'),//默认icon
+        require('../../images/inbox/order_circle.png'),//订单消息
+        require('../../images/inbox/notifications-circle.png'),//邀请消息
+        require('../../images/inbox/group_add_circle.png'),//申请消息
+        require('../../images/inbox/nzaom_circle.png')//系统icon
     ],
     renderUserAvatar: function(){
         var data = this.props.rowData;
@@ -108,7 +97,7 @@ module.exports = React.createClass({
     },
     renderAvatar: function(){
         var data = this.props.rowData;
-        var circleImage = this.iconList[data.msgType-1] || this.iconList[this.iconList.length - 1];
+        var circleImage = this.iconList[data.msgType] || this.iconList[0];
         if (!data.fromUser) {
             return(
                 <Image source={circleImage} style={styles.inboxIcon}/>

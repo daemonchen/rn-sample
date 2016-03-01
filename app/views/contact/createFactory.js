@@ -84,7 +84,7 @@ module.exports = React.createClass({
     },
     doCommit: function(){
         if (!this.state.factoryName) {
-            util.toast('请输入工厂名');
+            util.toast('请输入企业名');
             return;
         };
         factoryAction.create({

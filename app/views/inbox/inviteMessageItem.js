@@ -23,9 +23,9 @@ module.exports = React.createClass({
         }
     },
     componentWillReceiveProps: function(nextProps){
-        this.setState({
-            agree: nextProps.data.agree
-        });
+        // this.setState({
+        //     agree: nextProps.data.agree
+        // });
     },
     doAgree: function(){
         this.props.onAgree(this.props.data);

@@ -94,13 +94,13 @@ module.exports = {
         AlertIOS.alert(content)
     },
     link: function(url){
-        Linking.canOpenURL(url, (supported) => {
-            if (!supported) {
-                console.warn("Can't support the url")
-            } else {
-                Linking.openURL(url)
-            }
-        })
+        Linking.canOpenURL(url).then(supported => {
+          if (!supported) {
+            console.log('Can\'t handle url: ' + url);
+          } else {
+            return Linking.openURL(url);
+          }
+        }).catch(err => console.error('An error occurred', err));
     },
     parseImgUrl: function(url){
         if (/^\/\/.*/.test(url)) {

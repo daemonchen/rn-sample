@@ -25,7 +25,7 @@ var util = require('../../../common/util');
 // var SettingsWrapper = require('./settingsWrapper');
 var TaskDependencesList = require('./taskDependencesList');
 // var TaskDetail = require('./taskDetail');
-var OrderList = require('../components/orderList');
+// var OrderList = require('../components/orderList');
 // var CompanyMemberList = require('../../contact/companyMemberList');
 
 var BlueBackButton = require('../../../common/blueBackButton');

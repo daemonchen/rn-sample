@@ -8,6 +8,7 @@ var {
     TextInput,
     View,
     ListView,
+    ScrollView,
     Image,
     TouchableOpacity,
     ActivityIndicatorIOS,
@@ -19,6 +20,8 @@ var inboxStore = require('../../stores/inbox/inboxStore');
 var authTokenAction = require('../../actions/user/authTokenAction');
 
 var commonStyle = require('../../styles/commonStyle');
+var contactsStyle = require('../../styles/contact/contactsItem');
+
 var InviteMessageItem = require('./inviteMessageItem');
 var BlueBackButton = require('../../common/blueBackButton');
 
@@ -27,8 +30,14 @@ var util = require('../../common/util');
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
+        var ds = new ListView.DataSource({
+            // rowHasChanged: (r1, r2) => r1 !== r2
+            rowHasChanged: (r1, r2) => true////为了在swipe的时候刷新列表
+        });
         return {
-            data: null
+            loaded : false,
+            list: [],
+            dataSource: ds
         }
     },
     componentWillMount: function(){
@@ -39,25 +48,31 @@ module.exports = React.createClass({
         this.unlisten();
     },
     getInvite: function(){
-        inboxAction.getInvite({
-            id: this.props.data.extra.inviteId
-        });
+        inboxAction.getInviteList();
     },
-    renderPage: function(data){
-        this.setState({
-            data: data.data
-        })
+    handleGetInviteList: function(result){
+        if (result.status != 200 && !!result.message) {
+            util.toast(result.message);
+            this.setState({
+               loaded: true,
+               list: []
+            })
+            return;
+       }
+       this.setState({
+           dataSource : this.state.dataSource.cloneWithRows(result.data || []),
+           list: result.data || [],
+           loaded     : true,
+           total: result.total
+       });
     },
     handleAgree: function(data){
-        this.state.data['agree'] = data.data
-        this.setState({
-            data: this.state.data
-        });
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
         this._timeout = this.setTimeout(()=>{
             authTokenAction.updateToken();
+            // this.getInvite();
         },350);
     },
     onChange: function(){
@@ -66,8 +81,8 @@ module.exports = React.createClass({
             return;
         }
         switch(result.type){
-            case 'getInvite':
-                return this.renderPage(result);
+            case 'getInviteList':
+                return this.handleGetInviteList(result);
             case 'agreeInvite':
                 return this.handleAgree(result);
         }
@@ -77,27 +92,66 @@ module.exports = React.createClass({
             id: data.id
         });
     },
-    renderContent: function() {
-        if (!this.state.data) {
-            return(
-                <View />
-                );
-        };
+    renderRow: function(data) {
+        // if (!this.state.data) {
+        //     return(
+        //         <View />
+        //         );
+        // };
+        console.log('------invite row data', data);
         return (
-            <InviteMessageItem data={this.state.data}
+            <InviteMessageItem data={data}
             onAgree={this.onAgree} />
             )
     },
-
+    renderLoadingView: function(){
+        return (
+            <View style={commonStyle.header}>
+                <Text style={commonStyle.headerText}>User List</Text>
+                <View style={commonStyle.container}>
+                    <ActivityIndicatorIOS
+                        animating={!this.state.loaded}
+                        style={[commonStyle.activityIndicator]}
+                        size="small" />
+                </View>
+            </View>
+        );
+    },
+    renderEmptyRow: function(){
+        return (
+            <View style={commonStyle.emptyView}>
+                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
+                        暂无邀请消息
+                </Text>
+            </View>
+        )
+    },
+    renderListView: function(){
+        if (!this.state.loaded) {
+            return this.renderLoadingView();
+        }
+        if (!this.state.list || this.state.list.length == 0) {
+            return this.renderEmptyRow();
+        };
+        return(
+            <ListView
+                style={contactsStyle.scrollView}
+                dataSource={this.state.dataSource}
+                renderRow={this.renderRow}
+                contentContainerStyle={{paddingBottom: 40}} />
+            );
+    },
     render: function(){
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
                     title={{ title: '系统消息' }}
                     leftButton={<BlueBackButton />} />
-                <View style={styles.main}>
-                    {this.renderContent()}
-                </View>
+                <ScrollView style={commonStyle.container}
+                keyboardDismissMode={'interactive'}
+                automaticallyAdjustContentInsets={false} >
+                    {this.renderListView()}
+                </ScrollView>
             </View>
             );
     }

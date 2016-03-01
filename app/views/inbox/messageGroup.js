@@ -17,6 +17,31 @@ var {
     AlertIOS,
     StyleSheet
 } = React
+/**
+     * 订单消息
+
+    public final static int ORDER_MESSAGE = 1;
+    /**
+     * 任务消息
+
+    public final static int TASK_MESSAGE = 2;
+    /**
+     * 个人消息
+
+    public final static int PROFILE_MESSAGE = 3;
+    /**
+     * 系统消息，由你造么发送的消息
+
+    public final static int SYSTEM_MESSAGE = 4;
+    /**
+     * 邀请消息
+
+    public final static int INVITED_MESSAGE = 5;
+    /**
+     * 申请消息
+
+    public final static int APPLY_MESSAGE = 6;
+ */
 
 var inboxAction = require('../../actions/inbox/inboxAction');
 var inboxStore = require('../../stores/inbox/inboxStore');
@@ -106,7 +131,7 @@ module.exports = React.createClass({
         var dataList = result.data || [];
         this.setState({
             // dataSource : this.state.dataSource.cloneWithRows(result.data || []),
-            list: dataList.reverse(),
+            list: dataList,
             loaded     : true,
             total: result.total,
             isRefreshing: false
@@ -213,7 +238,7 @@ module.exports = React.createClass({
         }
     },
     doDefaultAction: function(rowData){
-        if (/http/.test(rowData.url)) {
+        if (/http/i.test(rowData.url)) {
             Actions.taskDescribe({
                 title: rowData.msgContent,
                 descriptionUrl: rowData.url
