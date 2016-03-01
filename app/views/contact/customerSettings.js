@@ -186,7 +186,7 @@ module.exports = React.createClass({
                     <View style={commonStyle.textInputWrapper}>
                         <Image
                           style={commonStyle.textIcon}
-                          source={require('../../images/TabBar/Person.png')} />
+                          source={require('../../images/contact/Person_gray.png')} />
 
                         <TextInput placeholder='请输入客户名称'
                         style={commonStyle.textInput}
