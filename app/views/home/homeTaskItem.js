@@ -35,7 +35,7 @@ module.exports = React.createClass({
         this.unlisten();
     },
     handleUpdate: function(result){
-        if (parseInt(result.data) != this.props.rowData.id) {
+        if (parseInt(result.data) != this.props.rowData.taskId) {
             return;
         };
         var status = (this.state.done == 1) ? 0 : 1
@@ -58,7 +58,7 @@ module.exports = React.createClass({
             [
                 {text: '确定', onPress: () => {
                     taskListAction.update({
-                        id: this.props.rowData.id,
+                        id: this.props.rowData.taskId,
                         status: status,
                     });
                 } },
@@ -79,7 +79,7 @@ module.exports = React.createClass({
             [
                 {text: '确定', onPress: () => {
                     taskListAction.deleteHomeTask({
-                        jobId: this.props.rowData.id
+                        jobId: this.props.rowData.taskId
                     });
                 } },
                 {text: '取消', onPress: () => {return}, style: 'cancel'},
@@ -141,7 +141,7 @@ module.exports = React.createClass({
                                 <View style={styles.contentTop}>
                                     <Text style={styles.rowText}
                                     numberOfLines={1}>
-                                        {this.props.rowData.jobName}
+                                        {this.props.rowData.taskTitle}
                                     </Text>
                                 </View>
                                 <View style={styles.contentBottom}>
@@ -165,7 +165,7 @@ module.exports = React.createClass({
                         {this.renderCheckIcon()}
                         <View style={styles.contentWrapper}>
                             <View style={styles.contentTop}>
-                                <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
+                                <Text style={styles.rowText}>{this.props.rowData.taskTitle}</Text>
                             </View>
                             <View style={styles.contentBottom}>
                                 <Text style={[styles.rowTextDetail, styles.rowTextDetailLeft, commonStyle.textGray]}

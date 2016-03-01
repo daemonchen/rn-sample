@@ -20,7 +20,8 @@ module.exports = {
     system: NZAOM_API_DOMAIN + '/api/system',
     password: NZAOM_API_DOMAIN + '/api/password',
 
-    workbench: NZAOM_API_DOMAIN + '/api/workbench',
+    workbench: NZAOM_API_DOMAIN + '/api/v2/workbench',
+    myTask: NZAOM_API_DOMAIN + '/api/tasks',
 
     contacts: NZAOM_API_DOMAIN + '/api/contacts',
     customer: NZAOM_API_DOMAIN + '/api/customer',

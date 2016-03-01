@@ -12,6 +12,7 @@ var {
 } = React;
 var HomeSegmentControl = require('./homeSegmentControl');
 var HomeList = require('./homeList');
+var HomeListDone = require('./homeListDone');
 
 var RightAddButton = require('../../common/rightAddButton');
 
@@ -91,7 +92,7 @@ var Home =  React.createClass({
     onPressTaskRow: function(rowData, sectionID){
         Actions.taskDetail({
             title: rowData.title,
-            data: rowData.id
+            data: rowData.taskId
         });
     },
     onSegmentChange: function(event){
@@ -108,8 +109,9 @@ var Home =  React.createClass({
                     status={0} />
                 )
             case 1:
+                console.log('----------homeListDone');
                 return(
-                    <HomeList
+                    <HomeListDone
                     onPressRow={this.onPressTaskRow}
                     status={1} />
                 )

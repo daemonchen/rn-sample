@@ -14,8 +14,8 @@ var {
     StyleSheet
 } = React
 
-var workbenchListAction = require('../../actions/workbench/workbenchListAction');
-var workbenchListStore = require('../../stores/workbench/workbenchListStore');
+var workbenchDoneListAction = require('../../actions/workbench/workbenchDoneListAction');
+var workbenchDoneListStore = require('../../stores/workbench/workbenchDoneListStore');
 var taskListStore = require('../../stores/task/taskListStore');
 var taskListAction = require('../../actions/task/taskListAction');
 var taskStore = require('../../stores/task/taskStore');
@@ -25,7 +25,7 @@ var commonStyle = require('../../styles/commonStyle');
 
 var util = require('../../common/util');
 
-var HomeTaskItem = require('./homeTaskItem');
+var HomeTaskItemDone = require('./homeTaskItemDone');
 var Button = require('../../common/button.js');
 
 var appConstants = require('../../constants/appConstants');
@@ -35,12 +35,9 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function() {
         var ds = new ListView.DataSource({
-            getSectionData: this.getSectionData,
-            getRowData: this.getRowData,
-            // rowHasChanged: (r1, r2) => r1 !== r2,
-            rowHasChanged: (r1, r2) => true,//为了在swipe的时候刷新列表
-            sectionHeaderHasChanged: (s1, s2) => s1 !== s2}) // assumes immutable objects
-            // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
+            // rowHasChanged: (r1, r2) => r1 !== r2
+            rowHasChanged: (r1, r2) => true////为了在swipe的时候刷新列表
+        });
         return {
             status: this.props.status,
             pageNum: 1,
@@ -55,33 +52,7 @@ module.exports = React.createClass({
     _allowScroll: function(scrollEnabled) {
        this.setState({ scrollEnabled: scrollEnabled })
     },
-    _handleSwipeout: function(rowData, sectionID, rowID){
-        var rawData = this.state.list;
-        if (!rawData) { rawData = [];};
-        var dataBlob = {};
-        var sectionIDs = [];
-        var rowIDs = [];
-        for (var i = 0; i <= rawData.length-1; i++) {
-            sectionIDs.push(i);
-            dataBlob[i] = rawData[i];
-            rowIDs[i] = [];
-            var subChildren = rawData[i].taskList;
-            for (var j = 0; j <= subChildren.length - 1; j++) {
-                var sub = subChildren[j];
-                rowIDs[i].push(sub.taskId);
 
-                if (rowData.taskId != sub.taskId) {
-                    sub.active = false
-                }else{
-                    sub.active = true
-                }
-                dataBlob[i + ':' + sub.taskId] = sub;
-            };
-        };
-        this.setState({
-            dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs)
-        });
-    },
     componentWillReceiveProps: function(nextProps){
         this.setState({
             status: nextProps.status
@@ -95,7 +66,7 @@ module.exports = React.createClass({
     },
     componentDidMount: function(){
         this.setTimeout(this.onRefresh, 350)
-        this.unlisten = workbenchListStore.listen(this.onChange);
+        this.unlisten = workbenchDoneListStore.listen(this.onChange);
         this.unlistenTaskChange = taskStore.listen(this.onTaskChange)
         this.unlistenTaskListChange = taskListStore.listen(this.onTaskListChange)
         this.getAppConstants();
@@ -119,40 +90,6 @@ module.exports = React.createClass({
             }
         }).done();
     },
-    transfromDataBlob: function(response){
-        console.log('--------response', response);
-        var rawData = response.data
-        if (!rawData) { rawData = [];};
-        var dataBlob = {};
-        var sectionIDs = [];
-        var rowIDs = [];
-        for (var i = 0; i <= rawData.length-1; i++) {
-            sectionIDs.push(i);
-            dataBlob[i] = rawData[i];
-            rowIDs[i] = [];
-            var subChildren = rawData[i].taskList;
-            for (var j = 0; j <= subChildren.length - 1; j++) {
-                var sub = subChildren[j];
-                rowIDs[i].push(sub.taskId);
-
-                dataBlob[i + ':' + sub.taskId] = sub;
-            };
-        };
-        this.setState({
-            dataSource : this.state.dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
-            loaded     : true,
-            list: rawData || [],
-            total: response.total,
-            isRefreshing: false
-        });
-        if (!this.state.factoryName) {
-            var self = this;
-            if (this._timeout) {this.clearTimeout(this._timeout)};
-            this._timeout = this.setTimeout(function() {
-                self.goCreateFactory();
-            }, 350);
-        }
-    },
     getSectionData: function(dataBlob, sectionID){
         return dataBlob[sectionID];
     },
@@ -161,10 +98,8 @@ module.exports = React.createClass({
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <HomeTaskItem rowData={rowData} sectionID={sectionID}
+            <HomeTaskItemDone rowData={rowData} sectionID={sectionID}
             rowID={rowID}
-            _allowScroll={this._allowScroll}
-            _handleSwipeout={this._handleSwipeout}
             onPressRow={this.props.onPressRow} />
             )
     },
@@ -212,13 +147,28 @@ module.exports = React.createClass({
             })
             return;
         }
-        this.transfromDataBlob(result);
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRows(result.data || []),
+            list: result.data || [],
+            loaded     : true,
+            total: result.total,
+            isRefreshing: false
+        });
+        if (!this.state.factoryName) {
+            var self = this;
+            if (this._timeout) {this.clearTimeout(this._timeout)};
+            this._timeout = this.setTimeout(function() {
+                self.goCreateFactory();
+            }, 350);
+        }
+        // this.transfromDataBlob(result);
         // this.setState({isRefreshing: false});
         // !isLoadmore && this.list.hideHeader();
         // !!isLoadmore && this.list.hideFooter();
     },
     onChange: function() {
-        var result = workbenchListStore.getState();
+        var result = workbenchDoneListStore.getState();
+        console.log('----------workbenchDoneListStore', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;
@@ -235,7 +185,7 @@ module.exports = React.createClass({
             pageNum: 1,
             isRefreshing: true
         });
-        workbenchListAction.getList({
+        workbenchDoneListAction.getList({
             status: this.state.status,
             pageNum: this.state.pageNum,
             pageSize: this.state.pageSize
@@ -250,7 +200,7 @@ module.exports = React.createClass({
         this.setState({
             pageNum: this.state.pageNum + 1
         });
-        workbenchListAction.loadMore({
+        workbenchDoneListAction.loadMore({
             status: this.state.status,
             pageNum: this.state.pageNum,
             pageSize: this.state.pageSize
@@ -304,12 +254,12 @@ module.exports = React.createClass({
                 // onInfinite = {this.onInfinite}
                 // loadedAllData={this.loadedAllData}
                 // scrollEnabled={this.state.scrollEnabled}
+                // renderSectionHeader={this.renderSectionHeader}
         return (
             <ListView
                 ref = {(list) => {this.list= list}}
                 dataSource={this.state.dataSource}
                 renderRow={this.renderRow}
-                renderSectionHeader={this.renderSectionHeader}
                 scrollEventThrottle={10}
                 contentContainerStyle={{paddingBottom: 40}}
                 onEndReached={this.onInfinite}
