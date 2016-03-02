@@ -34,20 +34,20 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
     },
-    handleUpdate: function(result){
-        if (parseInt(result.data) != this.props.rowData.taskId) {
-            return;
-        };
-        var status = (this.state.done == 1) ? 0 : 1
-        this.setState({
-            done: status
-        });
-    },
+    // handleUpdate: function(result){
+    //     if (parseInt(result.data) != this.props.rowData.taskId) {
+    //         return;
+    //     };
+    //     var status = (this.state.done == 1) ? 0 : 1
+    //     this.setState({
+    //         done: status
+    //     });
+    // },
     onChange: function() {
         var result = taskListStore.getState();
         switch(result.type){
-            case 'update':
-                return this.handleUpdate(result);
+            // case 'update':
+            //     return this.handleUpdate(result);
         }
     },
     onPressCircle: function(){
@@ -81,13 +81,6 @@ module.exports = React.createClass({
     },
     renderTimeLabel: function(timestamp){
         var time = moment(timestamp).format('YYYY-MM-DD');
-        if (moment().valueOf() > (timestamp + 24 *60 * 60 * 1000)) {//任务过期
-            return(
-                <Text style={[styles.timeLabel, styles.rowTextDetailRight, commonStyle.red]}>
-                    {time}
-                </Text>
-                );
-        };
         return(
             <Text style={[styles.timeLabel, styles.rowTextDetailRight, commonStyle.textGray]}>
                 {time}

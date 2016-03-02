@@ -33,7 +33,7 @@ module.exports = React.createClass({
         this.props.onDelete(this.props.rowData, this.props.sectionID);
     },
     renderCustomerLabel: function(){
-        console.log('---this.props.rowData', this.props.rowData);
+        // console.log('---this.props.rowData', this.props.rowData);
         if (!this.props.rowData.customerName) {
             return(<View />);
         };

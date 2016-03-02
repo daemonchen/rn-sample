@@ -120,7 +120,7 @@ module.exports = React.createClass({
         }).done();
     },
     transfromDataBlob: function(response){
-        console.log('--------response', response);
+        // console.log('--------response', response);
         var rawData = response.data
         if (!rawData) { rawData = [];};
         var dataBlob = {};
@@ -190,6 +190,15 @@ module.exports = React.createClass({
             };
             this.setTimeout(this.onRefresh, 350)
         };
+        if (result.type == 'update') {
+            if (result.status != 200 && !!result.message) {
+                return;
+            }
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this.setTimeout(this.onRefresh, 350)
+        };
     },
     onTaskChange: function(){
         var result = taskStore.getState();
@@ -242,7 +251,7 @@ module.exports = React.createClass({
         });
     },
     onInfinite: function() {
-        console.log('----onInfinite', this.loadedAllData());
+        // console.log('----onInfinite', this.loadedAllData());
         if (!!this.loadedAllData()) {
             return;
         };

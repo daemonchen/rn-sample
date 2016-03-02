@@ -44,30 +44,30 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
     },
-    handleUpdate: function(result){
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
-        if (parseInt(result.data) != this.props.rowData.jobDO.id) {
-            return;
-        };
-        var status = (this.state.done == 1) ? 0 : 1
-        this.setState({
-            done: status
-        });
-    },
+    // handleUpdate: function(result){
+    //     if (result.status != 200 && !!result.message) {
+    //         return;
+    //     }
+    //     if (parseInt(result.data) != this.props.rowData.jobDO.id) {
+    //         return;
+    //     };
+    //     var status = (this.props.rowData.jobDO.status == 1) ? 0 : 1
+    //     this.setState({
+    //         done: status
+    //     });
+    // },
     onChange: function() {
         var result = taskListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
-        switch(result.type){
-            case 'update':
-                return this.handleUpdate(result);
-        }
+        // if (result.status != 200 && !!result.message) {
+        //     return;
+        // }
+        // switch(result.type){
+        //     case 'update':
+        //         return this.handleUpdate(result);
+        // }
     },
     onPressCircle: function(){
-        var status = (this.state.done == 1) ? 0 : 1
+        var status = (this.props.rowData.jobDO.status == 1) ? 0 : 1
         var isCheck = (this.state.isCheck == 1) ? 0 : 1;
         if (this.state.target == 1) {//新建任务的时候，选择任务依赖
             taskListAction.addDependinces({
@@ -158,7 +158,7 @@ module.exports = React.createClass({
             return(<View />);
             //如果是查看任务依赖列表，不需要timeline
         };
-        if(this.state.done == 0){
+        if(this.props.rowData.jobDO.status == 0){
             return(
                 <View style={styles.timelineWrapper}>
                     <View style={[styles.timeline]}></View>
@@ -175,6 +175,7 @@ module.exports = React.createClass({
         }
     },
     renderCheckIcon: function(){
+        console.log('----(this.state.target', this.state.target, this.props.rowData.jobDO.status);
         if (this.state.target == 1) {//新建修改任务时候设置任务依赖
             var circleImage = (this.state.isCheck == 1) ? require('../../../images/task/Check_box_selected.png') : require('../../../images/task/Check_box.png');
             return(
@@ -186,7 +187,7 @@ module.exports = React.createClass({
             )
         }
         if (this.state.target == 2) {//察看前置任务
-            var circleImage = (this.state.done == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
+            var circleImage = (this.props.rowData.jobDO.status == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
             return(
                 <View style={styles.checkIconWrapper}>
                     <Image source={circleImage} style={styles.checkIcon}/>
@@ -194,7 +195,7 @@ module.exports = React.createClass({
                 );
         };
         if (this.state.target == 3) {//查看任务列表
-            var circleImage = (this.state.done == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
+            var circleImage = (this.props.rowData.jobDO.status == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
             return(
                 <TouchableWithoutFeedback onPress={this.onPressCircle}>
                     <View style={styles.checkIconWrapper}>

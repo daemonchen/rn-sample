@@ -108,13 +108,19 @@ module.exports = React.createClass({
         };
     },
     handleUpdate: function(result){
-        if (parseInt(result.data) != this.state.taskData.id) {
-            return;
+        // console.log('----handleUpdate',this.state.taskData.id, result.data);
+        // if (parseInt(result.data) != this.state.taskData.id) {
+        //     return;
+        // };
+        // console.log('----handleUpdate');
+        if (this._timeout) {
+            this.clearTimeout(this._timeout)
         };
-        this.state.taskData.status = (this.state.taskData.done == 1) ? 0 : 1
-        this.setState({
-            taskData: this.transformatData(this.state.taskData)
-        });
+        this._timeout = this.setTimeout(this.fetchData, 550)
+        // this.state.taskData.status = (this.state.taskData.done == 1) ? 0 : 1
+        // this.setState({
+        //     taskData: this.transformatData(this.state.taskData)
+        // });
     },
     onTaskListChange: function(){
         var result = taskListStore.getState();
@@ -144,7 +150,7 @@ module.exports = React.createClass({
     },
     onChange: function(){
         var result = taskStore.getState();
-        console.log('-----------task result', result);
+        // console.log('-----------task result', result);
         if (result.status != 200 && !!result.message) {
             return;
         };
@@ -344,7 +350,7 @@ module.exports = React.createClass({
         }
     },
     renderAttachItem: function(){
-        console.log('---------this.state.taskData', this.state.taskData);
+        // console.log('---------this.state.taskData', this.state.taskData);
         if (this.state.taskData.accessoryNum > 0) {
             return(
                 <TouchableHighlight

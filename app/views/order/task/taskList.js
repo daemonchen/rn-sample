@@ -153,6 +153,16 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         }
+        if (this._timeout) {
+            this.clearTimeout(this._timeout)
+        };
+        this.setTimeout(this.fetchData, 350)
+    },
+    handleUpdate: function(result){
+        if (result.status != 200 && !!result.message) {
+            // util.toast(result.message);
+            return;
+        }
         this.setTimeout(this.fetchData, 350)
     },
     onChange: function() {
@@ -160,6 +170,8 @@ module.exports = React.createClass({
         switch(result.type){
             case 'get':
                 return this.handleGet(result);
+            case 'update':
+                return this.handleUpdate(result);
             case 'delete':
                 return this.handleDelete(result);
         }
@@ -178,14 +190,16 @@ module.exports = React.createClass({
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
-            <TaskItem
-            rowData={rowData}
-            sectionID={sectionID}
-            rowID={rowID}
-            target={this.props.target}
-            onPressRow={this.props.onPressRow}
-            _allowScroll={this._allowScroll}
-            _handleSwipeout={this._handleSwipeout} />
+            <View>
+                <TaskItem
+                rowData={rowData}
+                sectionID={sectionID}
+                rowID={rowID}
+                target={this.props.target}
+                onPressRow={this.props.onPressRow}
+                _allowScroll={this._allowScroll}
+                _handleSwipeout={this._handleSwipeout} />
+            </View>
             )
     },
     render: function() {

@@ -34,21 +34,21 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
     },
-    handleUpdate: function(result){
-        if (parseInt(result.data) != this.props.rowData.id) {
-            return;
-        };
-        var status = (this.state.done == 1) ? 0 : 1
-        this.setState({
-            done: status
-        });
-    },
+    // handleUpdate: function(result){
+    //     if (parseInt(result.data) != this.props.rowData.id) {
+    //         return;
+    //     };
+    //     var status = (this.state.done == 1) ? 0 : 1
+    //     this.setState({
+    //         done: status
+    //     });
+    // },
     onChange: function() {
         var result = taskListStore.getState();
-        switch(result.type){
-            case 'update':
-                return this.handleUpdate(result);
-        }
+        // switch(result.type){
+        //     case 'update':
+        //         return this.handleUpdate(result);
+        // }
     },
     onPressCircle: function(){
         var status = (this.state.done == 1) ? 0 : 1

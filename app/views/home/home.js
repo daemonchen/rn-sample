@@ -52,7 +52,7 @@ var Home =  React.createClass({
     },
     handleUpdate: function(result){
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
+            util.toast(result.message);
             return;
         }
     },
