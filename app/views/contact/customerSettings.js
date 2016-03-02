@@ -130,10 +130,13 @@ module.exports = React.createClass({
         };
         console.log('-----position result', this.state.position);
         var phone = this.state.mobiles[0];
+        if (!!phone) {
+            phone = phone.replace(/[^\d]/g, '');
+        };
         if (this.state.target == 1) {//新建
             customerAction.create({
                 userName: this.state.userName,
-                mobiles: this.state.mobiles,
+                mobiles: [phone],
                 company: this.state.company,
                 position: this.state.position
             });
@@ -141,7 +144,7 @@ module.exports = React.createClass({
             customerAction.update({//编辑
                 id: this.state.id,
                 userName: this.state.userName,
-                mobiles: this.state.mobiles,
+                mobiles: [phone],
                 company: this.state.company,
                 position: this.state.position
             });
