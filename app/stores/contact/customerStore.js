@@ -25,6 +25,20 @@ class CustomerStore {
 
         this.setState(responseData);
     }
+    onUpdate(data) {
+        customerService.update(data)
+        .then((responseData) => {
+            customerAction.updateSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onUpdateSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'update'
+
+        this.setState(responseData);
+    }
     onDelete(data) {
         customerService.delete(data)
         .then((responseData) => {

@@ -54,7 +54,7 @@ module.exports = React.createClass({
     },
     handleCreate: function(result){
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
+            util.toast(result.message);
             return;
         }
         util.toast('添加客户成功');
@@ -65,9 +65,22 @@ module.exports = React.createClass({
             Actions.pop();
         },350);
     },
+    handleUpdate: function(result){
+        if (result.status != 200 && !!result.message) {
+            util.toast(result.message);
+            return;
+        }
+        util.toast('编辑成功');
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(()=>{
+            Actions.pop();
+        },350);
+    },
     handleDelete: function(result){
         if (result.status != 200 && !!result.message) {
-            // util.alert(result.message);
+            // util.toast(result.message);
             return;
         }
         // util.toast('删除客户成功');
@@ -83,6 +96,8 @@ module.exports = React.createClass({
         switch(result.type){
             case 'create':
                 return this.handleCreate(result);
+            case 'update':
+                return this.handleUpdate(result);
             case 'delete':
                 return this.handleDelete(result);
         }
@@ -103,6 +118,7 @@ module.exports = React.createClass({
         });
     },
     onChangePositionText: function(text){
+        console.log('----position', text);
         this.setState({
             position: text
         });
@@ -112,18 +128,24 @@ module.exports = React.createClass({
             util.alert('请输入姓名');
             return;
         };
+        console.log('-----position result', this.state.position);
         var phone = this.state.mobiles[0];
-        // if (!/^1[3|4|5|6|7|8|9][0-9]\d{8}$/.test(phone)) {
-        //     util.alert('手机号码格式错误');
-        //     return;
-
-        // }
-        customerAction.create({
-            userName: this.state.userName,
-            mobiles: this.state.mobiles,
-            company: this.state.company,
-            position: this.state.position
-        });
+        if (this.state.target == 1) {//新建
+            customerAction.create({
+                userName: this.state.userName,
+                mobiles: this.state.mobiles,
+                company: this.state.company,
+                position: this.state.position
+            });
+        }else{
+            customerAction.update({//编辑
+                id: this.state.id,
+                userName: this.state.userName,
+                mobiles: this.state.mobiles,
+                company: this.state.company,
+                position: this.state.position
+            });
+        }
     },
     onPressDone: function(){
         this.doCommit();

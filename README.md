@@ -43,4 +43,6 @@ app--应用根目录
 
 - scrollview的 alignItems 和 justifyContent 样式属性不能直接写在scrollview的样式上，要在contentContainerStyle里使用。否则开发模式下会报错崩溃；原因参看scrollview源码383行
 
+- 发版本要打tag `git tag -a v0.1.2 -m “v0.1.2”`
+
 ### dive in & have fun !!
