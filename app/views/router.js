@@ -73,6 +73,7 @@ var systemStore = require('../stores/system/systemStore');
 var loginStore = require('../stores/user/loginStore');
 var authTokenStore = require('../stores/user/authTokenStore');
 var verifyCodeStore = require('../stores/user/verifyCodeStore');
+var authStore = require('../stores/user/authStore');
 
 var appConstants = require('../constants/appConstants');
 var asyncStorage = require('../common/storage');
@@ -87,13 +88,15 @@ module.exports = React.createClass({
         this.unlisten = systemStore.listen(this.onChange);
         this.unlistenLogin = loginStore.listen(this.onLoginChange);
         this.unAuthTokenlisten = authTokenStore.listen(this.onAuthTokenChange);
-        this.unlistenVerifyCode = verifyCodeStore.listen(this.onVerifyCodeChange)
+        this.unlistenVerifyCode = verifyCodeStore.listen(this.onVerifyCodeChange);
+        this.unlistenAuth = authStore.listen(this.onAuthChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenLogin();
         this.unAuthTokenlisten();
         this.unlistenVerifyCode();
+        this.unlistenAuth();
     },
     onVerifyCodeChange: function(){
         var result = verifyCodeStore.getState();
@@ -117,6 +120,18 @@ module.exports = React.createClass({
             default: return;
         }
     },
+    onAuthChange: function(){
+        var result = authStore.getState();
+        if (result.status != 200 && !!result.message) {
+            util.toast(result.message);
+            return;
+        }
+        switch(result.type){
+            case 'reset':
+                return this.doLogin(result);
+            default: return;
+        }
+    },
     onLoginChange: function(){
         var result = loginStore.getState();
         if (result.status != 200 && !!result.message) {
@@ -136,7 +151,7 @@ module.exports = React.createClass({
         appConstants.user = result.data.user;
         appConstants.userRights = result.data.userRights;
         asyncStorage.clear();//清空了之后再赋值
-        console.log('----doLogin', result);
+        console.log('----doLogin | reset', result);
         asyncStorage.setItem('appConstants', appConstants).done();
 
         this.setTimeout(function(){
@@ -154,6 +169,7 @@ module.exports = React.createClass({
         }, 350)
     },
     getAppState: function(){
+        //打开APP初始化操作,获取APP版本、当前登陆用户、所在公司、未读消息、系统时间等
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };

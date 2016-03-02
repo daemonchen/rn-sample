@@ -21,7 +21,7 @@ var verifyCodeAction = require('../../actions/user/verifyCodeAction');
 
 
 var authAction = require('../../actions/user/authAction');
-var authStore = require('../../stores/user/authStore');
+// var authStore = require('../../stores/user/authStore');
 
 var asyncStorage = require('../../common/storage');
 var appConstants = require('../../constants/appConstants');
@@ -45,7 +45,7 @@ var setPassWord = React.createClass({
     },
     _modal: {},
     componentDidMount: function(){
-        this.unlistenAuth = authStore.listen(this.onAuthChange)
+        // this.unlistenAuth = authStore.listen(this.onAuthChange)
         asyncStorage.getItem('verifyData')
         .then((value) => {
             this.setState({
@@ -56,31 +56,31 @@ var setPassWord = React.createClass({
         }).done();
     },
     componentWillUnmount: function() {
-        this.unlistenAuth();
+        // this.unlistenAuth();
     },
-    onAuthChange: function(){
-        var result = authStore.getState();
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
-            return;
-        }
-        switch(result.type){
-            case 'reset':
-                return this.doReset(result);
-            default: return;
-        }
-    },
-    doReset: function(result){
-        util.toast('密码设置成功,请重新登录');
-        if (this._timeout) {
-            this.clearTimeout(this._timeout);
-        };
-        this._timeout = this.setTimeout(()=>{
-            appConstants = {};
-            asyncStorage.setItem('appConstants', appConstants);
-            Actions.welcome();
-        },2000);
-    },
+    // onAuthChange: function(){
+    //     var result = authStore.getState();
+    //     if (result.status != 200 && !!result.message) {
+    //         util.alert(result.message);
+    //         return;
+    //     }
+    //     switch(result.type){
+    //         case 'reset':
+    //             return this.doReset(result);
+    //         default: return;
+    //     }
+    // },
+    // doReset: function(result){
+    //     util.toast('密码设置成功,请重新登录');
+    //     if (this._timeout) {
+    //         this.clearTimeout(this._timeout);
+    //     };
+    //     this._timeout = this.setTimeout(()=>{
+    //         appConstants = {};
+    //         asyncStorage.setItem('appConstants', appConstants);
+    //         Actions.welcome();
+    //     },2000);
+    // },
     doRegister: function(){
         if (this.state.password.length < 6) {
             util.toast('密码长度不能小于6位');
