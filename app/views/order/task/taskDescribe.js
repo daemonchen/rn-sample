@@ -4,7 +4,7 @@ var React = require('react-native');
 import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
-var WebViewBridge = require('react-native-webview-bridge');
+import WebViewBridge from 'react-native-webview-bridge';
 var {
     View,
     Text,
@@ -100,6 +100,7 @@ module.exports = React.createClass({
         });
     },
     render: function(){
+                        // source={{uri: this.state.url}}
         return(
             <View style={{height: this.state.visibleHeight}} >
                 {this.renderNavigationBar()}
@@ -107,9 +108,9 @@ module.exports = React.createClass({
                 contentContainerStyle={{alignItems: 'center'}}
                 keyboardDismissMode={'interactive'} >
                     <WebViewBridge
+                        url={this.state.url}
                         automaticallyAdjustContentInsets={false}
                         style={styles.webView}
-                        source={{uri: this.state.url}}
                         javaScriptEnabled={true}
                         domStorageEnabled={true}
                         startInLoadingState={true}
