@@ -88,8 +88,8 @@ module.exports = React.StyleSheet.create({
     },
     buttonFlex: {
         flex: 1,
-        paddingVertical: 16,
-        fontSize: 16,
+        paddingVertical: 15,
+        fontSize: 19,
         fontWeight: '400',
         color:'#fff'
     },

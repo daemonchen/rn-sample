@@ -109,7 +109,7 @@ var Button = React.createClass({
 var styles = StyleSheet.create({
   text: {
     color: '#007aff',
-    fontFamily: '.HelveticaNeueInterface-MediumP4',
+    // fontFamily: '.HelveticaNeueInterface-MediumP4',
     fontSize: 17,
     fontWeight: 'bold',
     textAlign: 'center',
