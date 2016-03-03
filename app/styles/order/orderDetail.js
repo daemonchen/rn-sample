@@ -216,9 +216,9 @@ module.exports = React.StyleSheet.create({
         marginLeft: 68
     },
     webView:{
-        width: width - 32,
+        width: width,
         height: height,
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center'
     },
     imageGalleryWrapper: {

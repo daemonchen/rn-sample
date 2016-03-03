@@ -101,24 +101,20 @@ module.exports = React.createClass({
         });
     },
     render: function(){
-        console.log('------url', this.state.url);
         return(
-            <View style={{height: this.state.visibleHeight}} >
+            <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
-                <ScrollView style={styles.main}
-                contentContainerStyle={{alignItems: 'center'}}
-                keyboardDismissMode={'interactive'} >
-                    <WebView
-                        automaticallyAdjustContentInsets={false}
-                        style={styles.webView}
-                        source={{uri: this.state.url}}
-                        javaScriptEnabled={true}
-                        domStorageEnabled={true}
-                        startInLoadingState={true}
-                        onBridgeMessage={this.onBridgeMessage}
-                        injectedJavaScript={this.injectedJavaScript()}
-                        scalesPageToFit={this.state.scalesPageToFit} />
-                </ScrollView>
+                <WebView
+                    automaticallyAdjustContentInsets={false}
+                    style={styles.webView}
+                    source={{uri: this.state.url}}
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    startInLoadingState={true}
+                    onBridgeMessage={this.onBridgeMessage}
+                    injectedJavaScript={this.injectedJavaScript()}
+                    scalesPageToFit={this.state.scalesPageToFit} />
+
             </View>
             );
     }
