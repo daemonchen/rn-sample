@@ -57,7 +57,7 @@ module.exports = {
 
     qiniuToken: NZAOM_API_DOMAIN + '/api/accessory/token',
 
-    template: NZAOM_API_DOMAIN + '/api/job_template',
+    template: NZAOM_API_DOMAIN + '/api/template',
 
     comment: NZAOM_API_DOMAIN + '/api/rate',
 

@@ -101,6 +101,7 @@ module.exports = React.createClass({
     },
     onChange: function() {
         var result = templateListStore.getState();
+        console.log('------templatelist', result);
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
             return;

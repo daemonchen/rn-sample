@@ -80,6 +80,7 @@ module.exports = React.createClass({
         });
     },
     onPressDone: function(){
+        console.log('------templateStatus', this.state.templateStatus);
         if (this.state.templateStatus == 1) {//create
             templateAction.create({
                 templateName: this.state.title || '',
@@ -91,7 +92,7 @@ module.exports = React.createClass({
             templateAction.update({
                 templateName: this.state.title || '',
                 description: this.state.description || '',
-                id: this.props.data.orderId
+                id: this.props.data.templateId
             });
         }
     },
