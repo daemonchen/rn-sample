@@ -23,19 +23,6 @@ var styles = require('../../../styles/order/orderDetail');
 var TaskItem = require('./taskItem');
 var Button = require('../../../common/button.js');
 
-/*
-target: 表示从哪里打开任务列表 enum
-{
-
-    1: 'createTask',
-    2: 'taskdetail',从任务详情的前置任务进入
-    3: 'normal'订单详情里展示任务列表
-}
-
-taskStatus: 表示任务列表数据源
- 1: 任务列表
- 2: 前置任务
-*/
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -47,25 +34,26 @@ module.exports = React.createClass({
         }) // assumes immutable objects
             // return {dataSource: ds.cloneWithRows(ArticleStore.all())}
         return {
-            taskStatus: this.props.data.taskStatus || 1,
-            lastIdList: this.props.data.lastIdList || [],
             loaded : false,
-            list: [],
+            list: this.props.data.tasks || [],
             dataSource: ds,
             scrollEnabled: true
         }
     },
     componentDidMount: function(){
-        this.unlisten = taskListStore.listen(this.onChange);
-        this.unlistenTaskChange = taskStore.listen(this.onTaskChange)
-        if (this._timeout) {
-            this.clearTimeout(this._timeout)
-        };
-        this._timeout = this.setTimeout(this.fetchData, 350)
+        // this.unlisten = taskListStore.listen(this.onChange);
+        this.setTaskListState();
     },
     componentWillUnmount: function() {
-        this.unlisten();
-        this.unlistenTaskChange();
+        // this.unlisten();
+    },
+    componentWillReceiveProps: function(nextProps){
+        var list = nextProps.data.tasks || [];
+        this.setState({
+            list: list,
+            dataSource : this.state.dataSource.cloneWithRows(list),
+            loaded     : true,
+        });
     },
     _allowScroll: function(scrollEnabled) {
        this.setState({ scrollEnabled: scrollEnabled })
@@ -73,7 +61,7 @@ module.exports = React.createClass({
     _handleSwipeout: function(rowData, sectionID, rowID){
         var rawData = this.state.list;
         for (var i = 0; i < rawData.length; i++) {
-            if (rowData.jobDO.id != rawData[i].jobDO.id) {
+            if (rowData.taskVO.taskId != rawData[i].taskVO.taskId) {
                 rawData[i].active = false
             }else{
                 rawData[i].active = true
@@ -84,110 +72,15 @@ module.exports = React.createClass({
             dataSource : this.state.dataSource.cloneWithRows(rawData || [])
         });
     },
-    onTaskChange: function(){
-        var result = taskStore.getState();
-        if (result.status != 200 && !!result.message) {
-            // util.alert(result.message);
-            return;
-        }
-        if (result.type == 'create') {
-            this.setTimeout(this.fetchData, 350)
-            // this.fetchData();
-        };
-        if (result.type == 'update') {
-            this.setTimeout(this.fetchData, 350)
-            // this.fetchData();
-        };
-    },
-    handleGet: function(result){
-        if (result.status != 200 && !!result.message) {
-            this.setState({
-                loaded: true,
-                list: []
-            })
-            return;
-        }
-        var list = this.transfromDataList(result.data.jobVOList);
+
+    setTaskListState: function(result){
+        var list = this.state.list;
         this.setState({
             dataSource : this.state.dataSource.cloneWithRows(list),
-            list: list,
             loaded     : true,
-            total: result.total
         });
     },
-    transfromDataList: function(list){
-        if (!list) { return []};
-        var result = [];
-        for (var i = 0; i < list.length; i++) {
-            list[i].isCheck = 0;
-        };
-        for (var i = 0; i < list.length; i++) {
-            for (var j = 0; j < this.state.lastIdList.length; j++) {
-                if(this.state.lastIdList[j] == list[i].jobDO.id){
-                    list[i].isCheck = 1;
-                    result.push(list[i]);
-                    // return;
-                }
-                // list[i].isCheck = false;
-            };
-        };
-        // for (var i = 0; i < this.state.lastIdList.length; i++) {
-        //     for (var j = 0; j < list.length; j++) {
-        //         if(this.state.lastIdList[i] == list[j].jobDO.id){
-        //             list[j].isCheck = true;
-        //             result.push(list[j]);
-        //         }else{
-        //             list[j].isCheck = false;
-        //         }
-        //     };
 
-        // };
-        if (this.props.target == 2) {
-            return result;
-        }else{
-            return list;
-        }
-    },
-    handleDelete: function(result){
-        util.toast(result.message);
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
-        if (this._timeout) {
-            this.clearTimeout(this._timeout)
-        };
-        this.setTimeout(this.fetchData, 350)
-    },
-    handleUpdate: function(result){
-        if (result.status != 200 && !!result.message) {
-            // util.toast(result.message);
-            return;
-        }
-        this.setTimeout(this.fetchData, 350)
-    },
-    onChange: function() {
-        var result = taskListStore.getState();
-        switch(result.type){
-            case 'get':
-                return this.handleGet(result);
-            case 'update':
-                return this.handleUpdate(result);
-            case 'delete':
-                return this.handleDelete(result);
-        }
-    },
-    fetchData: function() {
-        if (this.state.taskStatus == 2) {//获取前置任务列表
-            taskListAction.getDependencesList({
-                orderId: this.props.data.orderId
-            });
-
-        }else{//获取任务列表
-            taskListAction.getList({
-                orderId: this.props.data.orderId
-            });
-        }
-    },
     renderRow: function(rowData, sectionID, rowID) {
         return (
             <View>
@@ -195,7 +88,6 @@ module.exports = React.createClass({
                 rowData={rowData}
                 sectionID={sectionID}
                 rowID={rowID}
-                target={this.props.target}
                 onPressRow={this.props.onPressRow}
                 _allowScroll={this._allowScroll}
                 _handleSwipeout={this._handleSwipeout} />

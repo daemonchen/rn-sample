@@ -53,17 +53,17 @@ class OrderStore {
 
         this.setState(responseData);
     }
-    onGetHeader(data) {
-        orderService.getHeader(data)
+    onGetOrderExtra(data) {
+        orderService.getOrderExtra(data)
         .then((responseData) => {
-            orderAction.getHeaderSuccess(responseData)
+            orderAction.getOrderExtraSuccess(responseData)
         }).done();
 
         this.preventDefault();
     }
-    onGetHeaderSuccess(responseData){
+    onGetOrderExtraSuccess(responseData){
         if (!responseData) {return false};
-        responseData.type = 'getHeader'
+        responseData.type = 'getOrderExtra'
 
         this.setState(responseData);
     }

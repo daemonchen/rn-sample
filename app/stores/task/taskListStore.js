@@ -22,20 +22,6 @@ class TaskListStore {
             }
         }).done();
     }
-    onGetList(data) {
-        taskListService.getList(data)
-        .then((responseData) => {
-            taskListAction.getListSuccess(responseData)
-        }).done();
-
-        this.preventDefault();
-    }
-    onGetListSuccess(responseData){
-        if (!responseData) {return false};
-        responseData.type = 'get'
-        this.doCache(responseData);
-        this.setState(responseData);
-    }
     onGetDependencesList(data) {
         taskListService.getDependencesList(data)
         .then((responseData) => {
@@ -49,19 +35,6 @@ class TaskListStore {
         responseData.type = 'getDependencesList'
         this.doCache(responseData);
         this.setState(responseData);
-    }
-    onLoadMore(data) {
-        taskListService.getList(data)
-        .then((responseData) => {
-            taskListAction.loadMoreSuccess(responseData)
-        }).done();
-
-        this.preventDefault();
-    }
-    onLoadMoreSuccess(responseData){
-        if (!responseData || !responseData.data) {return false};
-        responseData.type = 'get'
-        this.mergeList(responseData)
     }
     mergeList(responseData){
         asyncStorage.getItem('appConstants')

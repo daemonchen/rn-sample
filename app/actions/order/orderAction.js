@@ -6,7 +6,7 @@ module.exports = alt.generateActions(
     'createSuccess',
     'get',
     'getSuccess',
-    'getHeader',
-    'getHeaderSuccess',
+    'getOrderExtra',
+    'getOrderExtraSuccess',
     'update',
     'updateSuccess');

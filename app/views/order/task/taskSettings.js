@@ -54,7 +54,7 @@ module.exports = React.createClass({
         return this.initTaskState(defaultData);
     },
     initTaskState: function(defaultData){
-        console.log('-----tasksettings data', defaultData);
+        // console.log('-----tasksettings data', defaultData);
         if (defaultData.taskStatus == 2) {
             var endTime = defaultData.endTime || new Date().valueOf();
             var lastIds = defaultData.lastIdList || [];

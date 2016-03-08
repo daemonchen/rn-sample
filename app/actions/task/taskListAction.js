@@ -2,12 +2,12 @@
 
 var alt = require('../../common/alt');
 module.exports = alt.generateActions(
-    'getList',
-    'getListSuccess',
+    // 'getList',
+    // 'getListSuccess',
     'getDependencesList',
     'getDependencesListSuccess',
-    'loadMore',
-    'loadMoreSuccess',
+    // 'loadMore',
+    // 'loadMoreSuccess',
     'update',
     'updateSuccess',
     'delete',

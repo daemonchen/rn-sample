@@ -61,10 +61,11 @@ module.exports = React.createClass({
         this.unlisten = taskListStore.listen(this.onTaskListChange);
         this.unlistenOrder = orderStore.listen(this.onOrderChange);
         this.unlistenFollow = followOrderStore.listen(this.onFollowChange);
+        this.unlistenTaskChange = taskStore.listen(this.onTaskChange);
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
-        this._timeout = this.setTimeout(this.fetchHeaderData, 350);
+        this._timeout = this.setTimeout(this.fetchData, 350);
         util.logPage('orderDetail');
         this.getAppConstants();
     },
@@ -72,6 +73,7 @@ module.exports = React.createClass({
         this.unlisten();
         this.unlistenOrder();
         this.unlistenFollow();
+        this.unlistenTaskChange();
         util.endLogPageView('orderDetail');
     },
     getAppConstants: function(){
@@ -88,8 +90,23 @@ module.exports = React.createClass({
             }
         }).done();
     },
-    fetchHeaderData: function(){
-        orderAction.getHeader({
+    onTaskChange: function(){
+        var result = taskStore.getState();
+        if (result.status != 200 && !!result.message) {
+            // util.alert(result.message);
+            return;
+        }
+        if (result.type == 'create') {
+            this.setTimeout(this.fetchData, 350)
+            // this.fetchData();
+        };
+        if (result.type == 'update') {
+            this.setTimeout(this.fetchData, 350)
+            // this.fetchData();
+        };
+    },
+    fetchData: function(){
+        orderAction.getOrderExtra({
             orderId: this.state.orderId
         });
     },
@@ -115,16 +132,16 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            this.setTimeout(this.fetchHeaderData, 350)
+            this.setTimeout(this.fetchData, 350)
         };
         if (result.type == 'update') {
-            this.setTimeout(this.fetchHeaderData, 350)
+            this.setTimeout(this.fetchData, 350)
         };
         if (result.type == 'delete') {//任务增删改之后，重新更新一下订单首页头部信息
             if (this._timeout) {
                 this.clearTimeout(this._timeout)
             };
-            this._timeout = this.setTimeout(this.fetchHeaderData, 350)
+            this._timeout = this.setTimeout(this.fetchData, 350)
 
         };
     },
@@ -134,7 +151,7 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         };
-        if (result.type == 'getHeader') {
+        if (result.type == 'getOrderExtra') {
             this.setState({
                 orderData: Object.assign(orderData,result.data)
             });
@@ -229,8 +246,8 @@ module.exports = React.createClass({
     },
     onPressTaskRow: function(rowData, sectionID){
         Actions.taskDetail({
-            title: rowData.jobDO.jobName,
-            data: rowData.jobDO.id
+            title: rowData.taskVO.taskTitle,
+            data: rowData.taskVO.taskId
         });
     },
     showCameraRoll: function(){
@@ -258,13 +275,13 @@ module.exports = React.createClass({
     },
     renderSummary: function(){
         var time = moment(this.state.orderData.endTime).format('YYYY.MM.DD');
-        var totaleJobNum = this.state.orderData.totaleJobNum;
-        var overNum = this.state.orderData.overNum ;
-        var undoNumber = totaleJobNum - overNum;
+        var totalTaskCount = this.state.orderData.totalTaskCount;
+        var finishedTaskCount = this.state.orderData.finishedTaskCount ;
+        var undoNumber = totalTaskCount - finishedTaskCount;
         return(
             <View style={{flexDirection:'row', height: 68, backgroundColor: '#4285f4'}}>
                 <View style={{flex: 1}}>
-                    <Text style={styles.taskTotalText}>{overNum}</Text>
+                    <Text style={styles.taskTotalText}>{finishedTaskCount}</Text>
                     <Text style={styles.taskTotalText}>已完成</Text>
                 </View>
                 <View style={{flex: 1}}>

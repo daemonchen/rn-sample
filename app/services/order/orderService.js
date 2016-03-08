@@ -13,8 +13,8 @@ module.exports = {
          var urlParams = '/{orderId}'.replace('{orderId}', data.orderId);
          return http.get(NZAOM_INTERFACE.order + urlParams)
     },
-    getHeader: function(data){
-         // var urlParams = '/{orderId}'.replace('{orderId}', data.orderId);
-         return http.get(NZAOM_INTERFACE.orderHeader, data)
+    getOrderExtra: function(data){
+         var urlParams = '/{orderId}'.replace('{orderId}', data.orderId);
+         return http.get(NZAOM_INTERFACE.orderExtra + urlParams)
     }
 }

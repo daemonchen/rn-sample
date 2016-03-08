@@ -43,6 +43,10 @@ module.exports = {
 
     order: NZAOM_API_DOMAIN + '/api/order',
 
+    // orderHeader: NZAOM_API_DOMAIN + '/api/order_index_head',
+
+    orderExtra: NZAOM_API_DOMAIN + '/api/order_extra',
+
     updateTaskStatus: NZAOM_API_DOMAIN + '/api/order_job/over',
 
     task: NZAOM_API_DOMAIN + '/api/order_job',
@@ -77,5 +81,4 @@ module.exports = {
 
     followOrder: NZAOM_API_DOMAIN + '/api/follow',
 
-    orderHeader: NZAOM_API_DOMAIN + '/api/order_index_head'
 }

@@ -179,17 +179,9 @@ module.exports = React.createClass({
         }
     },
     fetchData: function() {
-        console.log('-------this.state.taskStatus', this.state.taskStatus);
-        if (this.state.taskStatus == 2) {//获取前置任务列表
-            taskListAction.getDependencesList({
-                orderId: this.props.data.orderId
-            });
-
-        }else{//获取任务列表
-            taskListAction.getList({
-                orderId: this.props.data.orderId
-            });
-        }
+        taskListAction.getDependencesList({
+            orderId: this.props.data.orderId
+        });
     },
     renderRow: function(rowData, sectionID, rowID) {
         return (
