@@ -113,20 +113,22 @@ module.exports = React.createClass({
     onFollowChange: function(){
         var result = followOrderStore.getState();
         var orderData = this.state.orderData;
+        // console.log('------followchange', result);
         if (result.status != 200 && !!result.message) {
             return;
         };
         if (result.type == 'update') {
-            var status = !this.state.orderData.userFollow ? 1 : 0;
+            var status = !this.state.orderData.follow;
             var toastMessage = !!status ? '关注成功' : '您已取消关注'
             this.setState({
-                orderData: Object.assign(orderData,{userFollow: status})
+                orderData: Object.assign(orderData,{follow: status})
             });
             util.toast(toastMessage);
         };
     },
     onTaskListChange: function(){
         var result = taskListStore.getState();
+        console.log('------onTaskListChange', result);
         if (result.status != 200 && !!result.message) {
             // util.alert(result.message);
             return;
@@ -148,6 +150,7 @@ module.exports = React.createClass({
     onOrderChange: function(){
         var result = orderStore.getState();
         var orderData = this.state.orderData;
+        // console.log('-------getOrderExtra', result);
         if (result.status != 200 && !!result.message) {
             return;
         };
@@ -197,12 +200,17 @@ module.exports = React.createClass({
         }
     },
     _pressFollowButton: function(){
-        var status = !this.state.orderData.userFollow ? 1 : 0;
+        var status = !this.state.orderData.follow;
         util.logEvent('followOrder', {status: status+'', orderId: this.state.orderId});
-        followOrderAction.update({
-            orderId: this.state.orderId,
-            status: status
-        });
+        if (!!status) {
+            followOrderAction.follow({
+                orderId: this.state.orderId
+            });
+        }else{
+            followOrderAction.unFollow({
+                orderId: this.state.orderId
+            });
+        }
     },
     _pressCreateButton: function(){
         var self = this;
@@ -224,7 +232,7 @@ module.exports = React.createClass({
         if ((rights & targetRights) == targetRights){
             return (
                 <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
-                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.orderData.userFollow}/>
+                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.orderData.follow}/>
                     <RightWhiteAddButton onPress={this._pressCreateButton} />
                     <RightWhiteMoreButton onPress={this.showPopover} />
                 </View>
@@ -232,7 +240,7 @@ module.exports = React.createClass({
         }else{
             return(
                 <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
-                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.orderData.userFollow}/>
+                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.orderData.follow}/>
                 </View>
                 )
         }
@@ -279,18 +287,18 @@ module.exports = React.createClass({
         var finishedTaskCount = this.state.orderData.finishedTaskCount ;
         var undoNumber = totalTaskCount - finishedTaskCount;
         return(
-            <View style={{flexDirection:'row', height: 68, backgroundColor: '#4285f4'}}>
+            <View style={{flexDirection:'row', backgroundColor: '#4285f4'}}>
                 <View style={{flex: 1}}>
-                    <Text style={styles.taskTotalText}>{finishedTaskCount}</Text>
-                    <Text style={styles.taskTotalText}>已完成</Text>
+                    <Text style={styles.taskTotalTextTop}>{finishedTaskCount}</Text>
+                    <Text style={styles.taskTotalTextBottom}>已完成</Text>
                 </View>
                 <View style={{flex: 1}}>
-                    <Text style={styles.taskTotalText}>{undoNumber}</Text>
-                    <Text style={styles.taskTotalText}>未完成</Text>
+                    <Text style={styles.taskTotalTextTop}>{undoNumber}</Text>
+                    <Text style={styles.taskTotalTextBottom}>未完成</Text>
                 </View>
                 <View style={{flex: 1}}>
-                    <Text style={styles.taskTotalText}>{time}</Text>
-                    <Text style={styles.taskTotalText}>截止日</Text>
+                    <Text style={styles.taskTotalTextTop}>{time}</Text>
+                    <Text style={styles.taskTotalTextBottom}>截止日</Text>
                 </View>
             </View>
             );
@@ -412,9 +420,10 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     statusBar={{style: 'light-content', hidden: false}}
                     tintColor={'#4285f4'}
-                    title={{ title: '订单详情', tintColor: '#fff' }}
+                    title={{ title: '', tintColor: '#fff' }}
                     leftButton={<WhiteBackButton />}
                     rightButton={this.rightButtonConfig()} />
                 <View style={styles.main}>

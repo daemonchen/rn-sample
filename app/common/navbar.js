@@ -1,12 +1,10 @@
 'use strict';
 
-var React = require('react-native');
-var util = require('./util.js');
-var {
+import React, {
     Navigator,
     StyleSheet
-} = React;
-
+} from 'react-native'
+var util = require('./util.js');
 
 var {
     width, height
@@ -35,7 +33,7 @@ module.exports = React.createClass({
         return (
             <Navigator
                 style={styles.container}
-                tintColor="#fff"
+                tintColor="#000"
                 initialRoute={this.props.initialRoute}
                 renderScene={this.renderScene}
                 configureScene={(route)=>route.sceneConfig} />
@@ -46,7 +44,8 @@ module.exports = React.createClass({
 var styles = StyleSheet.create({
     container: {
         width: width,
-        height: height - 49
+        // height: height - 49
+        height: 49
         // borderBottomWidth:1 / React.PixelRatio.get(),
         // borderBottomColor:'#dfe0df'
     },

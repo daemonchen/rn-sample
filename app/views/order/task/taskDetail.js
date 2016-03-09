@@ -53,7 +53,7 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {
             visibleHeight: Dimensions.get('window').height,
-            jobId: this.props.data || 0,//任务id
+            taskId: this.props.data || 0,//任务id
             taskData: {}
         }
     },
@@ -134,7 +134,7 @@ module.exports = React.createClass({
     },
     fetchData: function(){
         taskAction.get({
-            jobId: this.state.jobId
+            taskId: this.state.taskId
         });
     },
     generatorOwnerDataDebounce: function(){
@@ -178,7 +178,7 @@ module.exports = React.createClass({
             done: data.status,
             endTime: endTime,
             endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
-            userName: data.owner || ''
+            ownerName: data.ownerName || ''
 
         })
     },
@@ -191,6 +191,7 @@ module.exports = React.createClass({
     // },
     _pressSettingButton: function(){
         var data = Object.assign({taskStatus: 2}, this.state.taskData);
+        console.log('-------_pressSettingButton');
         Actions.taskSettings({
             title: '任务设置',
             data: data
@@ -208,13 +209,12 @@ module.exports = React.createClass({
         //     taskData: this.transformatData(this.state.taskData)
         // });
         taskAction.update({
-            id: this.state.taskData.id || 0,
+            taskId: this.state.taskData.taskId || 0,
             ownerId: this.state.taskData.ownerId || 0,
             description: this.state.taskData.description || '',
-            jobName: this.state.taskData.jobName || '',
+            taskTitle: this.state.taskData.taskTitle || '',
             endTime: moment(date).valueOf(),
             lastIds: this.state.taskData.lastIds || [],
-            accessoryIds: this.state.taskData.accessoryIds || [],
             accessoryNum: this.state.taskData.accessoryNum || ''
         });
         // this.setState({
@@ -250,7 +250,7 @@ module.exports = React.createClass({
             return;
         };
         Actions.contactDetail({
-            title: this.ownerData.userName,
+            title: this.ownerData.ownerName,
             data: this.ownerData
         });
     },
@@ -261,8 +261,8 @@ module.exports = React.createClass({
             '您确定要更改任务状态吗',
             [
                 {text: '确定', onPress: () => {
-                    taskListAction.update({
-                        id: this.state.taskData.id,
+                    taskAction.update({
+                        taskId: this.state.taskData.taskId,
                         status: status,
                     });
                 } },
@@ -282,22 +282,22 @@ module.exports = React.createClass({
             )
     },
     renderCommentList: function(){
-        if (!this.state.taskData.id) {
+        if (!this.state.taskData.taskId) {
             return(
                 <View />
                 );
         }
         return(
-            <CommentList data={this.state.taskData.id}/>
+            <CommentList data={this.state.taskData.taskId}/>
             )
     },
     sendComment: function(){
         Actions.createComment({
-            data: this.state.taskData.id
+            data: this.state.taskData.taskId
         });
     },
     renderCommentBar: function(){
-        if (!this.state.taskData.id) {
+        if (!this.state.taskData.taskId) {
             return(
                 <View />
                 );
@@ -323,7 +323,7 @@ module.exports = React.createClass({
         });
     },
     renderDependences: function(){
-        if (!this.state.taskData.lastIdList || this.state.taskData.lastIdList.length == 0) {
+        if (!this.state.taskData.lastIds || this.state.taskData.lastIds.length == 0) {
             return(<View />)
         }else{
             return(
@@ -339,11 +339,11 @@ module.exports = React.createClass({
                         </Text>
                         <Text
                         style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                            {this.state.taskData.lastIdList.length}
+                            {this.state.taskData.lastIds.length}
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}
-                        source={require('../../../images/common/arrow_right.png')} />
+                        source={require('../../../images/common/arrow_right_gray.png')} />
                     </View>
                 </TouchableHighlight>
                 );
@@ -369,7 +369,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                         style={commonStyle.settingArrow}
-                        source={require('../../../images/common/arrow_right.png')} />
+                        source={require('../../../images/common/arrow_right_gray.png')} />
                         </View>
                     </View>
                 </TouchableHighlight>
@@ -378,12 +378,12 @@ module.exports = React.createClass({
         return(<View />);
     },
     renderOverTime: function(){
-        if (!this.state.taskData.overTime) {
+        if (!this.state.taskData.finishedTime) {
             return(
                 <View />
                 );
         };
-        var overTimeFormat = moment(this.state.taskData.overTime).format('YYYY年MM月DD日')
+        var overTimeFormat = moment(this.state.taskData.finishedTime).format('YYYY年MM月DD日')
         return(
             <View
             style={commonStyle.settingItemWrapper} >
@@ -409,12 +409,14 @@ module.exports = React.createClass({
             return(
                 <NavigationBar
                     title={{ title: '任务详情'}}
+                    tintColor="#f9f9f9"
                     leftButton={<BlueBackButton />}
                     rightButton={<RightSettingButton onPress={this._pressSettingButton} />} />
                 );
         }else{
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: '任务详情'}}
                     leftButton={<BlueBackButton />} />
                 );
@@ -426,17 +428,17 @@ module.exports = React.createClass({
         this.unlistenTaskList();
         this.unlistenEmployee();
         Actions.taskDetail({
-            title: rowData.title,
-            data: rowData.id
+            title: rowData.taskTitle,
+            data: rowData.taskId
         });
     },
     renderSubTask: function(){
-        if (!this.state.taskData.subOrderJobs) {
+        if (!this.state.taskData.subTaskList) {
             return(<View />);
         };
         return(
             <SubTaskList
-            data={this.state.taskData.subOrderJobs}
+            data={this.state.taskData.subTaskList}
             onPressRow={this.onPressTaskRow}/>
             );
     },
@@ -455,11 +457,11 @@ module.exports = React.createClass({
                         </Text>
                         <Text
                         style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                            {this.state.taskData.userName}
+                            {this.state.taskData.ownerName}
                         </Text>
                         <Image
                         style={commonStyle.settingArrow}
-                        source={require('../../../images/common/arrow_right.png')} />
+                        source={require('../../../images/common/arrow_right_gray.png')} />
                     </View>
                 </View>
             </TouchableHighlight>
@@ -483,7 +485,7 @@ module.exports = React.createClass({
                         {this.renderCheckIcon()}
                         <Text placeholder='任务名称'
                         style={[styles.taskTitle]}>
-                            {this.state.taskData.jobName}
+                            {this.state.taskData.taskTitle}
                         </Text>
                     </View>
                     <TouchableHighlight
@@ -503,7 +505,7 @@ module.exports = React.createClass({
                                 </Text>
                                 <Image
                                 style={commonStyle.settingArrow}
-                                source={require('../../../images/common/arrow_right.png')} />
+                                source={require('../../../images/common/arrow_right_gray.png')} />
                             </View>
                         </View>
                     </TouchableHighlight>
@@ -524,7 +526,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
+                            source={require('../../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     {this.renderSubTask()}
@@ -548,7 +550,7 @@ module.exports = React.createClass({
                                 </Text>
                                 <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
+                            source={require('../../../images/common/arrow_right_gray.png')} />
                             </View>
                         </View>
                     </TouchableHighlight>

@@ -15,6 +15,7 @@ var {
 
 var Swipeout = require('react-native-swipeout');
 
+var taskAction = require('../../../actions/task/taskAction');
 var taskListAction = require('../../../actions/task/taskListAction');
 var taskListStore = require('../../../stores/task/taskListStore');
 
@@ -33,7 +34,7 @@ target:
 module.exports = React.createClass({
     getInitialState: function(){
         return{
-            done: this.props.rowData.jobDO.status,
+            done: this.props.rowData.taskVO.status,
             isCheck: this.props.rowData.isCheck,
             target: this.props.target || 3
         }
@@ -48,7 +49,7 @@ module.exports = React.createClass({
         if (result.status != 200 && !!result.message) {
             return;
         }
-        if (parseInt(result.data) != this.props.rowData.jobDO.id) {
+        if (parseInt(result.data) != this.props.rowData.taskVO.taskId) {
             return;
         };
         var status = (this.state.done == 1) ? 0 : 1
@@ -69,10 +70,11 @@ module.exports = React.createClass({
     onPressCircle: function(){
         var status = (this.state.done == 1) ? 0 : 1
         var isCheck = (this.state.isCheck == 1) ? 0 : 1;
+        console.log('-------this.props.rowData', this.props.rowData);
         if (this.state.target == 1) {//新建任务的时候，选择任务依赖
             taskListAction.addDependinces({
                 type: 'addDependinces',
-                id: this.props.rowData.jobDO.id,
+                id: this.props.rowData.taskVO.taskId,
                 isCheck: isCheck
             });
             this.setState({
@@ -84,8 +86,8 @@ module.exports = React.createClass({
                 '您确定要更改任务状态吗',
                 [
                     {text: '确定', onPress: () => {
-                        taskListAction.update({
-                            id: this.props.rowData.jobDO.id,
+                        taskAction.update({
+                            taskId: this.props.rowData.taskVO.taskId,
                             status: status,
                         });
                     } },
@@ -105,7 +107,7 @@ module.exports = React.createClass({
     },
     onDelete: function(){
         taskListAction.delete({
-            jobId: this.props.rowData.jobDO.id
+            jobId: this.props.rowData.taskVO.taskId
         });
     },
     renderAvatar: function(user){
@@ -220,11 +222,11 @@ module.exports = React.createClass({
                             <View style={styles.contentTop}>
                                 <Text style={[styles.rowText]}
                                 numberOfLines={1}>
-                                    {this.props.rowData.jobDO.jobName}
+                                    {this.props.rowData.taskVO.taskTitle}
                                 </Text>
                             </View>
                             <View style={styles.contentBottom}>
-                                {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                                {this.renderTimeLabel(this.props.rowData.taskVO.endTime)}
                             </View>
                         </View>
                         {this.renderAvatar(this.props.rowData.userVO)}
@@ -250,11 +252,11 @@ module.exports = React.createClass({
                                 <View style={styles.contentTop}>
                                     <Text style={[styles.rowText]}
                                     numberOfLines={1}>
-                                        {this.props.rowData.jobDO.jobName}
+                                        {this.props.rowData.taskVO.taskTitle}
                                     </Text>
                                 </View>
                                 <View style={styles.contentBottom}>
-                                    {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                                    {this.renderTimeLabel(this.props.rowData.taskVO.endTime)}
                                 </View>
                             </View>
                             {this.renderAvatar(this.props.rowData.userVO)}
@@ -274,11 +276,11 @@ module.exports = React.createClass({
                             <View style={styles.contentTop}>
                                 <Text style={[styles.rowText]}
                                 numberOfLines={1}>
-                                    {this.props.rowData.jobDO.jobName}
+                                    {this.props.rowData.taskVO.taskTitle}
                                 </Text>
                             </View>
                             <View style={styles.contentBottom}>
-                                {this.renderTimeLabel(this.props.rowData.jobDO.endTime)}
+                                {this.renderTimeLabel(this.props.rowData.taskVO.endTime)}
                             </View>
                         </View>
                         {this.renderAvatar(this.props.rowData.userVO)}

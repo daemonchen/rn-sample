@@ -64,15 +64,28 @@ class FollowOrderStore {
             this.doCache(data);
         }).done();
     }
-    onUpdate(data) {
+    onFollow(data) {
         followOrderService.post(data)
         .then((responseData) => {
-            followOrderAction.updateSuccess(responseData)
+            followOrderAction.followSuccess(responseData)
         }).done();
 
         this.preventDefault();
     }
-    onUpdateSuccess(responseData){
+    onFollowSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'update'
+        this.setState(responseData);
+    }
+    onUnFollow(data) {
+        followOrderService.delete(data)
+        .then((responseData) => {
+            followOrderAction.unFollowSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onUnFollowSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'update'
         this.setState(responseData);

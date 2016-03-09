@@ -62,13 +62,13 @@ module.exports = React.createClass({
                 isVisible: false,
                 taskStatus: defaultData.taskStatus,
                 done: defaultData.status,
-                jobName: defaultData.jobName || '',
+                taskTitle: defaultData.taskTitle || '',
                 description: defaultData.description || '',
                 endTime: endTime,
                 endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
-                id: defaultData.id || 0,
+                taskId: defaultData.taskId || 0,
                 ownerId: defaultData.ownerId || 0,
-                userName: defaultData.userName || '',
+                ownerName: defaultData.ownerName || '',
                 lastIds: lastIds,
                 lastIdsNumber: lastIds.length,
                 accessoryNum: defaultData.accessoryNum || '',
@@ -82,9 +82,9 @@ module.exports = React.createClass({
             taskStatus: defaultData.taskStatus || 3,
             orderId: defaultData.orderId || 0,
             ownerId: 0,
-            userName: defaultData.userName || '',
+            ownerName: defaultData.ownerName || '',
             description: '',
-            jobName: '',
+            taskTitle: '',
             endTime: endTime,
             endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
             lastIds: lastIds,
@@ -151,11 +151,12 @@ module.exports = React.createClass({
     },
     onPressDone: function(){
         if (this.state.taskStatus == 2) {//修改任务
+            console.log('---update task', this.state.taskTitle);
             taskAction.update({
-                id: this.state.id || 0,
+                taskId: this.state.taskId || 0,
                 ownerId: this.state.ownerId || 0,
                 description: this.state.description || '',
-                jobName: this.state.jobName || '',
+                title: this.state.taskTitle || '',
                 endTime: this.state.endTime || new Date().valueOf(),
                 lastIds: this.state.lastIds || [],
                 // accessoryIds: this.state.accessoryIds || [],
@@ -167,7 +168,7 @@ module.exports = React.createClass({
                 orderId: this.state.orderId || 0,
                 ownerId: this.state.ownerId || 0,
                 description: this.state.description || '',
-                jobName: this.state.jobName || '',
+                title: this.state.taskTitle || '',
                 endTime: this.state.endTime || new Date().valueOf(),
                 lastIds: this.state.lastIds || [],
                 // accessoryIds: this.state.accessoryIds || [],
@@ -177,7 +178,7 @@ module.exports = React.createClass({
     },
     onChangeNameText: function(text){
         this.setState({
-            jobName: text
+            taskTitle: text
         });
     },
     onChangeDescribeText: function(text){
@@ -189,6 +190,7 @@ module.exports = React.createClass({
         if (this.state.taskStatus == 2) {//修改任务
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title: this.props.title}}
                     leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
@@ -196,6 +198,7 @@ module.exports = React.createClass({
         };
         return(
             <NavigationBar
+                tintColor="#f9f9f9"
                 title={{title: this.props.title}}
                 leftButton={<LeftCloseButton />}
                 rightButton={<RightDoneButton onPress={this.onPressDone} />} />
@@ -263,7 +266,7 @@ module.exports = React.createClass({
     onPressContactRow: function(data){
         this.setState({
             ownerId: data.userId,
-            userName: data.userName
+            ownerName: data.ownerName
         });
     },
     onPressTaskRow: function(rowData){
@@ -355,7 +358,7 @@ module.exports = React.createClass({
                             <TextInput placeholder='任务名称'
                             style={commonStyle.textInput}
                             clearButtonMode={'while-editing'}
-                            value={this.state.jobName}
+                            value={this.state.taskTitle}
                             onChangeText={this.onChangeNameText} />
                         </View>
                         <View style={commonStyle.textAreaWrapper}>
@@ -383,7 +386,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
+                            source={require('../../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -398,11 +401,11 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                                {this.state.userName}
+                                {this.state.ownerName}
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
+                            source={require('../../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -421,7 +424,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
+                            source={require('../../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -440,7 +443,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../../images/common/arrow_right.png')} />
+                            source={require('../../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                 </ScrollView>

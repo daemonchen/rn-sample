@@ -328,9 +328,6 @@ module.exports = React.StyleSheet.create({
     },
     card: {
         marginHorizontal: 16,
-        borderRadius: 6,
-        borderWidth: 1,
-        borderColor: '#eee'
     },
     cardHeader:{
         paddingVertical: 12,
@@ -343,6 +340,13 @@ module.exports = React.StyleSheet.create({
         // flex: 1,
         textAlign: 'center',
         fontSize: 16
+    },
+    cardBlock: {
+        borderBottomLeftRadius: 6,
+        borderBottomRightRadius: 6,
+        borderWidth: 1,
+        borderColor: '#d5d5d5'
+
     },
     cardBody: {
         paddingHorizontal: 16

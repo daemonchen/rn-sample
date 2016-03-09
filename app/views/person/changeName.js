@@ -94,12 +94,14 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title: this.props.title}}
                     leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textInputWrapper}>
                         <TextInput placeholder='姓名'
+                        autoFocus={true}
                         style={commonStyle.textInput}
                         clearButtonMode={'while-editing'}
                         onChangeText={this.onChangeNameText}

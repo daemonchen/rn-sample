@@ -103,6 +103,7 @@ var orderList = React.createClass({
 
     },
     handleGet: function(result){
+        // console.log('------result', result);
         if (result.status != 200 && !!result.message) {
             util.toast(result.message);
             this.setState({
@@ -159,7 +160,7 @@ var orderList = React.createClass({
             pageNum: 1,
             isRefreshing: true
         });
-        if (this.state.status == 2) {
+        if (this.state.status == 2) {//获取关注列表
             followOrderAction.get({
                 pageNum: this.state.pageNum,
                 pageSize: this.state.pageSize

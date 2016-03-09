@@ -10,7 +10,7 @@ module.exports = {
         return http.put(NZAOM_INTERFACE.task, data)
     },
     get: function(data){
-         var urlParams = '/{jobId}'.replace('{jobId}', data.jobId);
+         var urlParams = '/{taskId}'.replace('{taskId}', data.taskId);
          return http.get(NZAOM_INTERFACE.task + urlParams)
     }
 }

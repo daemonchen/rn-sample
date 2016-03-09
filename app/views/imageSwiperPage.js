@@ -60,6 +60,7 @@ module.exports = React.createClass({
         return(
             <View>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: '图片预览'}}
                     leftButton={<BlueBackButton />} />
                 <Swiper style={styles.imageGalleryWrapper}

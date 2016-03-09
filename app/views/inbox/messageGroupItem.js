@@ -122,7 +122,7 @@ module.exports = React.createClass({
                     </Text>
                     <Image
                     style={commonStyle.settingArrow}
-                    source={require('../../images/common/arrow_right.png')} />
+                    source={require('../../images/common/arrow_right_gray.png')} />
                 </View>
             </View>
             );
@@ -147,14 +147,16 @@ module.exports = React.createClass({
                     style={commonStyle.card}>
                         <View>
                             {this.renderCardHeader()}
-                            <View style={commonStyle.cardBody}>
-                                {this.renderImage()}
-                                <Text style={[commonStyle.cardBodyTitle, commonStyle.textDark]}>
-                                    {this.props.rowData.msgContent}
-                                </Text>
-                                {this.renderCardContent()}
+                            <View style={commonStyle.cardBlock}>
+                                <View style={commonStyle.cardBody}>
+                                    {this.renderImage()}
+                                    <Text style={[commonStyle.cardBodyTitle, commonStyle.textDark]}>
+                                        {this.props.rowData.msgContent}
+                                    </Text>
+                                    {this.renderCardContent()}
+                                </View>
+                                {this.renderCardFooter()}
                             </View>
-                            {this.renderCardFooter()}
 
                         </View>
                   </ToolTip>

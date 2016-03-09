@@ -51,6 +51,7 @@ var MyDatePicker =  React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title:'选择日期'}}
                     leftButton={this.leftButtonConfig()}
                     rightButton={this.rightButtonConfig()}/>

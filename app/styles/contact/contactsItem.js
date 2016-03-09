@@ -12,7 +12,7 @@ module.exports = React.StyleSheet.create({
     },
     contactsItem: {
         width: width,
-        padding: 16,
+        padding: 10,
         flexDirection: 'row'
     },
     contactsItemCircle: {

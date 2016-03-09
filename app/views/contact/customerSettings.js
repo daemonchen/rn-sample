@@ -194,6 +194,7 @@ module.exports = React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title: this.props.title}}
                     leftButton={<BlueBackButton />}
                     rightButton={<RightAddButton onPress={this.onPressDone} title="保存" />} />

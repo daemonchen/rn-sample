@@ -169,6 +169,7 @@ var validationCode = React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title:'验证'}}
                     leftButton={<BlueBackButton />} />
                 <View style={[styles.main, {marginTop: 20}]}>

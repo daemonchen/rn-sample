@@ -14,6 +14,7 @@ var {
 } = React
 
 var Swipeout = require('react-native-swipeout');
+var taskAction = require('../../../actions/task/taskAction');
 var taskListAction = require('../../../actions/task/taskListAction');
 var taskListStore = require('../../../stores/task/taskListStore');
 
@@ -57,8 +58,8 @@ module.exports = React.createClass({
             '您确定要更改任务状态吗',
             [
                 {text: '确定', onPress: () => {
-                    taskListAction.update({
-                        id: this.props.rowData.id,
+                    taskAction.update({
+                        taskId: this.props.rowData.taskId,
                         status: status,
                     });
                 } },
@@ -71,7 +72,7 @@ module.exports = React.createClass({
     },
     onDelete: function(){
         taskListAction.delete({
-            jobId: this.props.rowData.id
+            taskId: this.props.rowData.taskId
         });
     },
     renderCheckIcon: function(){
@@ -93,7 +94,7 @@ module.exports = React.createClass({
                     {this.renderCheckIcon()}
                     <View style={styles.contentWrapper}>
                         <View style={styles.contentTop}>
-                            <Text style={styles.rowText}>{this.props.rowData.jobName}</Text>
+                            <Text style={styles.rowText}>{this.props.rowData.taskTitle}</Text>
                         </View>
                         <View style={styles.contentBottom}>
                             <Text style={[styles.rowTextDetail, styles.rowTextDetailLeft, commonStyle.textGray]}

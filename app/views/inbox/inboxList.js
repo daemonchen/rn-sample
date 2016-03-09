@@ -287,6 +287,7 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: '消息' }} />
                 <View style={styles.main}>
                     {this.renderInbox()}

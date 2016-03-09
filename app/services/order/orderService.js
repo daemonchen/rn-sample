@@ -9,9 +9,9 @@ module.exports = {
     update: function(data){
         return http.put(NZAOM_INTERFACE.order, data)
     },
-    get: function(data){
+    get: function(data){//获取订单编辑页的数据
          var urlParams = '/{orderId}'.replace('{orderId}', data.orderId);
-         return http.get(NZAOM_INTERFACE.order + urlParams)
+         return http.get(NZAOM_INTERFACE.orderV2 + urlParams)
     },
     getOrderExtra: function(data){
          var urlParams = '/{orderId}'.replace('{orderId}', data.orderId);

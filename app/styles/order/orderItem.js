@@ -2,7 +2,7 @@ const React = require('react-native');
 
 module.exports = React.StyleSheet.create({
   rowStyle: {
-        padding: 16,
+        padding: 12,
         // borderBottomColor: '#E0E0E0',
         // borderBottomWidth: 1 / React.PixelRatio.get(),
         flex: 1,
@@ -51,7 +51,7 @@ module.exports = React.StyleSheet.create({
         height:50,
         textAlign: 'center',
         position: 'absolute',
-        left: 18,
-        top: 34
+        left: 14,
+        top: 30
     }
 });

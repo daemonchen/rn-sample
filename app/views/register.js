@@ -62,6 +62,7 @@ var register = React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={<NavTitleWithLogo />}
                     leftButton={<LeftCloseButton />} />
                 <View style={[styles.main, {marginTop: 20}]}>

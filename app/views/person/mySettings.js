@@ -82,6 +82,7 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title: '设置'}}
                     leftButton={<BlueBackButton />} />
                 <View style={commonStyle.settingGroups}>

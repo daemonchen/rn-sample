@@ -11,10 +11,16 @@ module.exports = React.StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff'
     },
-    taskTotalText: {
+    taskTotalTextTop: {
         color:'#fff',
         textAlign:'center',
-        paddingVertical: 5
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    taskTotalTextBottom: {
+        color:'#fff',
+        textAlign:'center',
+        paddingBottom: 10
     },
     rowStyle: {
         paddingRight: 16,

@@ -70,6 +70,7 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title:'我的账号'}}
                     leftButton={<BlueBackButton />} />
                 <View style={commonStyle.settingGroups}>
@@ -89,7 +90,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                 </View>

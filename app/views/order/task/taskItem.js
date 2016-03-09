@@ -15,6 +15,7 @@ var {
 
 var Swipeout = require('react-native-swipeout');
 
+var taskAction = require('../../../actions/task/taskAction');
 var taskListAction = require('../../../actions/task/taskListAction');
 var taskListStore = require('../../../stores/task/taskListStore');
 
@@ -55,8 +56,8 @@ module.exports = React.createClass({
             '您确定要更改任务状态吗',
             [
                 {text: '确定', onPress: () => {
-                    taskListAction.update({
-                        id: this.props.rowData.taskVO.taskId,
+                    taskAction.update({
+                        taskId: this.props.rowData.taskVO.taskId,
                         status: status,
                     });
                 } },

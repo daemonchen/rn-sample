@@ -1,15 +1,13 @@
 'use strict';
 
-var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
-var Actions = require('react-native-router-flux').Actions;
-var {
+import React, {
     View,
     Text,
     ActionSheetIOS,
     StyleSheet
-} = React;
-
+} from 'react-native'
+import NavigationBar from '../../common/react-native-navbar/index';
+var Actions = require('react-native-router-flux').Actions;
 
 var commonStyle = require('../../styles/commonStyle');
 var OrderSegmentControl = require('./components/orderSegmentControl');
@@ -81,7 +79,7 @@ var order =  React.createClass({
     actionList: ['新建订单','从模版创建','取消'],
     onPressOrderRow: function(rowData){
         Actions.orderDetail({
-            data: rowData.id
+            data: rowData.orderId
         });
     },
     onSegmentChange: function(event){
@@ -117,12 +115,14 @@ var order =  React.createClass({
         if ((rights & targetRights) == targetRights) {
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: '订单' }}
                     rightButton={<RightAddButton onPress={this.showActionSheet} />} />
                 );
         }else{
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: '订单' }} />
                 );
         }

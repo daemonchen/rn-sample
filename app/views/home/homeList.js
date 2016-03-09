@@ -190,27 +190,27 @@ module.exports = React.createClass({
             };
             this.setTimeout(this.onRefresh, 350)
         };
-        if (result.type == 'update') {
-            if (result.status != 200 && !!result.message) {
-                return;
-            }
-            if (this._timeout) {
-                this.clearTimeout(this._timeout)
-            };
-            this.setTimeout(this.onRefresh, 350)
-        };
+
     },
     onTaskChange: function(){
         var result = taskStore.getState();
+        // console.log('------task change', result);
         if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
+            util.toast(result.message);
             return;
         }
         if (result.type == 'create') {
             this.setTimeout(this.onRefresh, 350)
         };
         if (result.type == 'update') {
-            // this.setTimeout(this.onRefresh, 350)
+            if (result.status != 200 && !!result.message) {
+                return;
+            }
+            util.toast('修改成功');
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this.setTimeout(this.onRefresh, 350)
         };
     },
     handleGet: function(result, isLoadmore){

@@ -98,6 +98,7 @@ module.exports = React.createClass({
     renderNavigationBar: function(){
         return(
             <NavigationBar
+                tintColor="#f9f9f9"
                 title={{ title: this.props.title }}
                 leftButton={<BlueBackButton />} />
             );

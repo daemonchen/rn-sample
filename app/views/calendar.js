@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var CalendarPicker = require('../common/calendarPicker/CalendarPicker');
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from '../common/react-native-navbar/index'
 var Actions = require('react-native-router-flux').Actions;
 var {
     View,
@@ -33,6 +33,7 @@ module.exports =  React.createClass({
         return (
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title:'日历'}}
                     leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />

@@ -149,6 +149,7 @@ module.exports = React.createClass({
         if (this.state.group == 1) {//1: 企业员工
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: '详细资料' }}
                     leftButton={<BlueBackButton />} />
                 );
@@ -156,6 +157,7 @@ module.exports = React.createClass({
         }else{//1: 客户
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: '详细资料' }}
                     leftButton={<BlueBackButton />}
                     rightButton={<RightAddButton onPress={this.goSetting} title="编辑" />} />
@@ -278,7 +280,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -297,7 +299,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                 </View>

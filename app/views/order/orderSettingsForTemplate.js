@@ -216,6 +216,7 @@ module.exports = React.createClass({
     renderNavigationBar: function(){
         return(
             <NavigationBar
+                tintColor="#f9f9f9"
                 title={{title: this.props.title}}
                 leftButton={<BlueBackButton />}
                 rightButton={<RightDoneButton onPress={this.onPressDone} />} />
@@ -274,7 +275,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -293,7 +294,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -312,7 +313,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -331,7 +332,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                 </ScrollView>

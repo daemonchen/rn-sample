@@ -33,6 +33,7 @@ module.exports = React.createClass({
         if (!!this.props.onPressDone) {
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title: this.props.title}}
                     leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
@@ -40,6 +41,7 @@ module.exports = React.createClass({
         }else{
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title: this.props.title}}
                     leftButton={<BlueBackButton />} />
                 );

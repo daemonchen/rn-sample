@@ -60,7 +60,7 @@ module.exports = React.createClass({
             // accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
             creatorId: defaultData.creatorId || 0,
-            creatorName: defaultData.creatorName || '',
+            userName: defaultData.userName || '',
             customerId: defaultData.customerId || '',
             customerName: defaultData.customerName || '',
             description: defaultData.description || '',
@@ -135,7 +135,7 @@ module.exports = React.createClass({
             // accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
             creatorId: defaultData.creatorId || 0,
-            creatorName: defaultData.creatorName || '',
+            userName: defaultData.userName || '',
             customerId: defaultData.customerId || '',
             customerName: defaultData.customerName || '',
             description: defaultData.description || '',
@@ -259,7 +259,7 @@ module.exports = React.createClass({
                 // accessoryIds: this.state.accessoryIds || [],
                 accessoryNum: this.state.accessoryNum || '',
                 creatorId: this.state.creatorId || 0,
-                creatorName: this.state.creatorName || '',
+                userName: this.state.userName || '',
                 customerId: this.state.customerId || '',
                 customerName: this.state.customerName || '',
                 description: this.state.description || '',
@@ -277,7 +277,7 @@ module.exports = React.createClass({
                 // accessoryIds: this.state.accessoryIds || [],
                 accessoryNum: this.state.accessoryNum || '',
                 creatorId: this.state.creatorId || 0,
-                creatorName: this.state.creatorName || '',
+                userName: this.state.userName || '',
                 customerId: this.state.customerId || '',
                 customerName: this.state.customerName || '',
                 description: this.state.description || '',
@@ -305,6 +305,7 @@ module.exports = React.createClass({
         if (this.state.orderStatus == 2) {//修改订单
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title: this.props.title}}
                     leftButton={<BlueBackButton />}
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
@@ -312,6 +313,7 @@ module.exports = React.createClass({
         };
         return(
             <NavigationBar
+                tintColor="#f9f9f9"
                 title={{title: this.props.title}}
                 leftButton={<LeftCloseButton />}
                 rightButton={<RightDoneButton onPress={this.onPressDone} />} />
@@ -344,7 +346,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                            {this.state.creatorName}
+                            {this.state.userName}
                             </Text>
                         </View>
                     </TouchableHighlight>
@@ -363,7 +365,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -397,7 +399,7 @@ module.exports = React.createClass({
                     </Text>
                     <Image
                     style={commonStyle.settingArrow}
-                    source={require('../../images/common/arrow_right.png')} />
+                    source={require('../../images/common/arrow_right_gray.png')} />
                 </View>
             </TouchableHighlight>
             )
@@ -443,7 +445,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -462,7 +464,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -481,7 +483,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight
@@ -500,7 +502,7 @@ module.exports = React.createClass({
                             </Text>
                             <Image
                             style={commonStyle.settingArrow}
-                            source={require('../../images/common/arrow_right.png')} />
+                            source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
                     {this.renderOptionalSettings()}

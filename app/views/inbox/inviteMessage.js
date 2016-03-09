@@ -145,6 +145,7 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: '系统消息' }}
                     leftButton={<BlueBackButton />} />
                 <ScrollView style={commonStyle.container}

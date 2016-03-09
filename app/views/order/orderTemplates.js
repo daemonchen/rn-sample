@@ -32,11 +32,13 @@ module.exports = React.createClass({
         if (this.state.orderStatus == 2) {//从个人中心进入模版列表
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{title: this.props.title}} />
                 );
         };
         return(
             <NavigationBar
+                tintColor="#f9f9f9"
                 title={{title: this.props.title}}
                 leftButton={<BlueBackButton />} />
             );

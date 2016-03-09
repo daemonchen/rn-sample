@@ -125,15 +125,7 @@ module.exports = React.createClass({
             };
             this.setTimeout(this.onRefresh, 350)
         };
-        if (result.type == 'update') {
-            if (result.status != 200 && !!result.message) {
-                return;
-            }
-            if (this._timeout) {
-                this.clearTimeout(this._timeout)
-            };
-            this.setTimeout(this.onRefresh, 350)
-        };
+
     },
     onTaskChange: function(){
         var result = taskStore.getState();
@@ -145,7 +137,14 @@ module.exports = React.createClass({
             this.setTimeout(this.onRefresh, 350)
         };
         if (result.type == 'update') {
-            // this.setTimeout(this.onRefresh, 350)
+            if (result.status != 200 && !!result.message) {
+                return;
+            }
+            util.toast('修改成功');
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this.setTimeout(this.onRefresh, 350)
         };
     },
     handleGet: function(result, isLoadmore){

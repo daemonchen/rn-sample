@@ -74,7 +74,7 @@ module.exports = React.createClass({
     _handleSwipeout: function(rowData, sectionID, rowID){
         var rawData = this.state.list;
         for (var i = 0; i < rawData.length; i++) {
-            if (rowData.jobDO.id != rawData[i].jobDO.id) {
+            if (rowData.taskVO.taskId != rawData[i].taskVO.taskId) {
                 rawData[i].active = false
             }else{
                 rawData[i].active = true
@@ -101,6 +101,7 @@ module.exports = React.createClass({
         };
     },
     handleGet: function(result){
+        console.log('-----getDependencesList', result);
         if (result.status != 200 && !!result.message) {
             this.setState({
                 loaded: true,
@@ -108,7 +109,7 @@ module.exports = React.createClass({
             })
             return;
         }
-        var list = this.transfromDataList(result.data.jobVOList);
+        var list = this.transfromDataList(result.data);
         this.setState({
             dataSource : this.state.dataSource.cloneWithRows(list),
             list: list,
@@ -118,7 +119,7 @@ module.exports = React.createClass({
     },
     withoutCurrentTask: function(list){
         for (var i = 0; i < list.length; i++) {
-            if (list[i].jobDO.id == this.props.data.id) {
+            if (list[i].taskVO.taskId == this.props.data.taskId) {
                 list.splice(i, 1);
             };
         };
@@ -133,7 +134,7 @@ module.exports = React.createClass({
         };
         for (var i = 0; i < list.length; i++) {
             for (var j = 0; j < this.state.lastIdList.length; j++) {
-                if(this.state.lastIdList[j] == list[i].jobDO.id){
+                if(this.state.lastIdList[j] == list[i].taskVO.taskId){
                     list[i].isCheck = 1;
                     result.push(list[i]);
                     // return;
@@ -143,7 +144,7 @@ module.exports = React.createClass({
         };
         // for (var i = 0; i < this.state.lastIdList.length; i++) {
         //     for (var j = 0; j < list.length; j++) {
-        //         if(this.state.lastIdList[i] == list[j].jobDO.id){
+        //         if(this.state.lastIdList[i] == list[j].taskVO.id){
         //             list[j].isCheck = true;
         //             result.push(list[j]);
         //         }else{
@@ -166,9 +167,10 @@ module.exports = React.createClass({
     },
     onChange: function() {
         var result = taskListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
+        // console.log('------tasklist change result', result);
+        // if (result.status != 200 && !!result.message) {
+        //     return;
+        // }
         switch(result.type){
             case 'get':
                 return this.handleGet(result);

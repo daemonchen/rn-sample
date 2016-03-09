@@ -6,5 +6,7 @@ module.exports = alt.generateActions(
     'getSuccess',
     'loadMore',
     'loadMoreSuccess',
-    'update',
-    'updateSuccess');
+    'follow',
+    'followSuccess',
+    'unFollow',
+    'unFollowSuccess');

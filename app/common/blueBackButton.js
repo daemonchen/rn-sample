@@ -23,7 +23,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             <TouchableOpacity onPress={this.onPress}>
-                <Image source={require('../images/common/Arrow_back.png')}
+                <Image source={require('../images/common/arrow_back_blue.png')}
                 style={[{ width: 24, height: 24, marginLeft: 16, marginRight: 16 }, this.props.style]} />
             </TouchableOpacity>
             );

@@ -355,6 +355,7 @@ module.exports = React.createClass({
         if (this.state.target == 3) {
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: this.props.route.title }}
                     rightButton={this.rightButtonConfig()} />
                 );
@@ -362,6 +363,7 @@ module.exports = React.createClass({
         }else{
             return(
                 <NavigationBar
+                    tintColor="#f9f9f9"
                     title={{ title: this.props.route.title }}
                     leftButton={<BlueBackButton />}
                     rightButton={this.rightButtonConfig()} />

@@ -1,15 +1,16 @@
 'use strict';
 
-var React = require('react-native');
-import NavigationBar from 'react-native-navbar';
-var Actions = require('react-native-router-flux').Actions;
-var TimerMixin = require('react-timer-mixin');
-var {
+import React, {
     View,
     Text,
     ActionSheetIOS,
     StyleSheet
-} = React;
+} from 'react-native'
+import NavigationBar from '../../common/react-native-navbar/index';
+
+var Actions = require('react-native-router-flux').Actions;
+var TimerMixin = require('react-timer-mixin');
+
 var HomeSegmentControl = require('./homeSegmentControl');
 var HomeList = require('./homeList');
 var HomeListDone = require('./homeListDone');
@@ -130,6 +131,7 @@ var Home =  React.createClass({
         // }
         return(
             <NavigationBar
+                tintColor="#f9f9f9"
                 title={{ title: '工作台' }} />
             );
     },

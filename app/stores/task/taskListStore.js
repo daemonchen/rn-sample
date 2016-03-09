@@ -48,19 +48,7 @@ class TaskListStore {
             this.doCache(responseData);
         }).done();
     }
-    onUpdate(data){
-        taskListService.updateTaskStatus(data)
-        .then((responseData) => {
-            taskListAction.updateSuccess(responseData)
-        }).done();
 
-        this.preventDefault();
-    }
-    onUpdateSuccess(responseData){
-        if (!responseData) {return false};
-        responseData.type = 'update'
-        this.setState(responseData);
-    }
     onDelete(data){
         taskListService.deleteList(data)
         .then((responseData) => {
