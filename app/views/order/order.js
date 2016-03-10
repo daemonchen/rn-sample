@@ -115,6 +115,7 @@ var order =  React.createClass({
         if ((rights & targetRights) == targetRights) {
             return(
                 <NavigationBar
+                    style={{borderBottomWidth: 0}}
                     tintColor="#f9f9f9"
                     title={{ title: '订单' }}
                     rightButton={<RightAddButton onPress={this.showActionSheet} />} />
@@ -122,6 +123,7 @@ var order =  React.createClass({
         }else{
             return(
                 <NavigationBar
+                    style={{borderBottomWidth: 0}}
                     tintColor="#f9f9f9"
                     title={{ title: '订单' }} />
                 );

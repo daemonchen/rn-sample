@@ -131,6 +131,7 @@ var Home =  React.createClass({
         // }
         return(
             <NavigationBar
+                style={{borderBottomWidth: 0}}
                 tintColor="#f9f9f9"
                 title={{ title: '工作台' }} />
             );

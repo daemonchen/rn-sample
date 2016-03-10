@@ -1,13 +1,14 @@
 'use strict';
 
-var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
-var {
+import React, {
     View,
     Text,
     SegmentedControlIOS,
     StyleSheet
-} = React;
+} from 'react-native'
+
+import NavigationBar from '../../../common/react-native-navbar/index';
+
 var orderSegmentControl =  React.createClass({
     getInitialState: function(){
         return {
@@ -21,7 +22,7 @@ var orderSegmentControl =  React.createClass({
     },
     render:function(){
         return (
-            <View style={{paddingHorizontal:16, paddingVertical: 8}}>
+            <View style={styles.segmentedStyle}>
                 <SegmentedControlIOS values={['未完成', '已完成', '已关注']}
                 tintColor={'#4285f4'}
                 selectedIndex={this.state.selectedIndex}
@@ -30,5 +31,15 @@ var orderSegmentControl =  React.createClass({
         );
     }
 })
+
+var styles = StyleSheet.create({
+    segmentedStyle:{
+        paddingHorizontal:16,
+        paddingVertical: 8,
+        backgroundColor: '#f9f9f9',
+        borderBottomWidth:1 / React.PixelRatio.get(),
+        borderBottomColor:'#d5d5d5'
+    }
+});
 
 module.exports = orderSegmentControl;

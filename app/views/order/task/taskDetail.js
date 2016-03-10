@@ -1,13 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
-var Actions = require('react-native-router-flux').Actions;
-var SearchBar = require('react-native-search-bar');
-var moment = require('moment');
-var underscore = require('underscore');
-var TimerMixin = require('react-timer-mixin');
-var {
+import React, {
     View,
     Text,
     Image,
@@ -21,7 +14,15 @@ var {
     Dimensions,
     AlertIOS,
     StyleSheet
-} = React;
+} from 'react-native'
+import NavigationBar from '../../../common/react-native-navbar/index';
+
+var Actions = require('react-native-router-flux').Actions;
+var SearchBar = require('react-native-search-bar');
+var moment = require('moment');
+var underscore = require('underscore');
+var TimerMixin = require('react-timer-mixin');
+
 
 
 var commonStyle = require('../../../styles/commonStyle');

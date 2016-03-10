@@ -1,22 +1,22 @@
 'use strict';
 
-var React = require('react-native');
+import React, {
+    AppRegistry,
+    StyleSheet,
+    TabBarIOS,
+    Navigator,
+    Image,
+    Text,
+    PushNotificationIOS,
+    NativeAppEventEmitter,
+    Linking,
+    View,
+    Animated
+} from 'react-native'
 // var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
-var {
-  AppRegistry,
-  StyleSheet,
-  TabBarIOS,
-  Navigator,
-  Image,
-  Text,
-  PushNotificationIOS,
-  NativeAppEventEmitter,
-  Linking,
-  View,
-  Animated
-} = React;
+
 
 var AppNavigator = require('../common/navbar');
 var Home = require('../views/home/home');

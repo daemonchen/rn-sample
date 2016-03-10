@@ -420,7 +420,7 @@ module.exports = React.createClass({
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
-                    tintColor="#f9f9f9"
+                    style={{borderBottomWidth: 0}}
                     statusBar={{style: 'light-content', hidden: false}}
                     tintColor={'#4285f4'}
                     title={{ title: '', tintColor: '#fff' }}

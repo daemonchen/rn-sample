@@ -2,16 +2,13 @@ import React, {
     StyleSheet
 } from 'react-native'
 
-const NAV_BAR_HEIGHT = 39;
+const NAV_BAR_HEIGHT = 44;
 const STATUS_BAR_HEIGHT = 20;
 const NAV_HEIGHT = NAV_BAR_HEIGHT + STATUS_BAR_HEIGHT;
 
 module.exports = {
   navBarContainer: {
     backgroundColor: 'white',
-    paddingBottom: 5,
-    borderBottomWidth:1 / React.PixelRatio.get(),
-    borderBottomColor:'#d5d5d5'
   },
   statusBar: {
     height: STATUS_BAR_HEIGHT,
@@ -20,6 +17,9 @@ module.exports = {
     height: NAV_BAR_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    // paddingBottom: 5,
+    borderBottomWidth:1 / React.PixelRatio.get(),
+    borderBottomColor:'#d5d5d5'
   },
   customTitle: {
     position: 'absolute',
