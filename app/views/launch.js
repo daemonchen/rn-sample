@@ -8,12 +8,12 @@ import React, {
     Image,
     Text,
     PushNotificationIOS,
-    NativeAppEventEmitter,
+    // NativeAppEventEmitter,
     Linking,
     View,
     Animated
 } from 'react-native'
-// var NativeAppEventEmitter = require('RCTNativeAppEventEmitter');
+var NativeAppEventEmitter = require('RCTNativeAppEventEmitter');
 // var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
