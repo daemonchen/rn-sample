@@ -123,13 +123,14 @@ var styles = StyleSheet.create({
         flex: 1
     },
     imageGalleryWrapper: {
-        backgroundColor: '#000',
+        backgroundColor: '#fff',
         width: width,
-        height: height - 49
+        flex: 1
     },
     welcomeImage:{
         width: width,
-        height: height - 49
+        // height: height
+        flex: 1
         // width: width
         // marginTop: 100
     },
