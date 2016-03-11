@@ -1,11 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
-var Actions = require('react-native-router-flux').Actions;
-var TimerMixin = require('react-timer-mixin');
-var Swiper = require('react-native-swiper')
-var {
+import React, {
     View,
     Text,
     Image,
@@ -13,15 +8,18 @@ var {
     Dimensions,
     TouchableOpacity,
     StyleSheet
-} = React;
+} from 'react-native'
 
+import NavigationBar from '../common/react-native-navbar/index';
+var Actions = require('react-native-router-flux').Actions;
+var TimerMixin = require('react-timer-mixin');
+var Swiper = require('react-native-swiper')
 
 var commonStyle = require('../styles/commonStyle');
 var styles = require('../styles/order/orderDetail');
 var util = require('../common/util');
 
 var BlueBackButton = require('../common/blueBackButton');
-var Lightbox = require('react-native-lightbox');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],

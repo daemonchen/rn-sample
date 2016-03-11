@@ -41,7 +41,7 @@
     
     // 注册远程通知 -根据远程通知类型
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+//    [[UIApplication sharedApplication] registerForRemoteNotifications];
     //    NSLog(@"----did registerUserNotificationSettings as ios version < 8.0");
   }
 }
