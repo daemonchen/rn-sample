@@ -13,6 +13,7 @@ import React, {
     View,
     Animated
 } from 'react-native'
+// var NativeAppEventEmitter = require('RCTNativeAppEventEmitter');
 // var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
@@ -55,12 +56,8 @@ module.exports = React.createClass({
     componentDidMount: function(){
         this.unlisten = inboxStore.listen(this.onChange);
         this.unlistenScheme = schemeStore.listen(this.onSchemeChange);
-        this.unlistenNotification =  NativeAppEventEmitter.addListener(
-            'nzaomNotify',
-            (notifData) => {
-                this.factoryNotify(notifData);
-            }
-        );
+
+        this.addNativeAppEventListener();//监听推送消息
 
         this.getAppConstants();//初始化消息未读数
 
@@ -69,19 +66,28 @@ module.exports = React.createClass({
         var url = Linking.getInitialURL();
         this.factoryLinkingScheme(url);
 
-        Animated.spring(                          // 可选的基本动画类型: spring, decay, timing
-          this.state.viewBounceValue,                 // 将`circleBounceValue`值动画化
-          {
-            toValue: 1,                         // 将其值以动画的形式改到一个较小值
-            friction: 7,                          // Bouncier spring
-          }
-        ).start();
+        this.doLaunchWithAnimate();//带有动画的打开页面
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenScheme();
-        this.unlistenNotification.remove();
+        this.removeNativeAppEventListener();//移除推送消息的监听
         Linking.removeEventListener('url', this._handleOpenURL);
+    },
+    addNativeAppEventListener: function(){
+        try{
+            this.unlistenNotification =  NativeAppEventEmitter.addListener(
+                'nzaomNotify',
+                (notifData) => {
+                    this.factoryNotify(notifData);
+                }
+            );
+        }catch(e){
+            console.log('[nzaom error:]', e);
+        }
+    },
+    removeNativeAppEventListener: function(){
+        !!this.unlistenNotification && this.unlistenNotification.remove();
     },
     getAppConstants: function(){
         var self = this;
@@ -99,6 +105,15 @@ module.exports = React.createClass({
                 }, 350)
             }
         }).done();
+    },
+    doLaunchWithAnimate: function(){
+        Animated.spring(                          // 可选的基本动画类型: spring, decay, timing
+          this.state.viewBounceValue,                 // 将`circleBounceValue`值动画化
+          {
+            toValue: 1,                         // 将其值以动画的形式改到一个较小值
+            friction: 7,                          // Bouncier spring
+          }
+        ).start();
     },
     onSchemeChange: function(){
         var result = schemeStore.getState();
