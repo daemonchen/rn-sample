@@ -1,8 +1,6 @@
 'use strict';
-var React = require('react-native')
-var TimerMixin = require('react-timer-mixin');
-var Actions = require('react-native-router-flux').Actions;
-var {
+
+import React, {
     Text,
     TextInput,
     View,
@@ -13,7 +11,11 @@ var {
     TouchableOpacity,
     TouchableHighlight,
     StyleSheet
-} = React
+} from 'react-native'
+
+var ParallaxView = require('../../common/react-native-parallax-view/index');
+var TimerMixin = require('react-timer-mixin');
+var Actions = require('react-native-router-flux').Actions;
 
 var util = require('../../common/util.js');
 
@@ -203,18 +205,31 @@ module.exports = React.createClass({
                 )
         }
     },
+    renderParallaxHeader: function(){
+        return(
+            <View style={styles.topInfo}>
+                {this.renderAvatar(this.state.user)}
+                <View style={styles.nameWrapper}>
+                    <Text style={styles.name}>
+                        {this.state.user.userName}
+                    </Text>
+                </View>
+            </View>
+            );
+    },
+    getParallaxBackground: function(){
+        if (!this.state.user || !this.state.user.avatar) {
+            return require('../../images/default.png');
+            // return {uri: 'http://www.nzaom.com/assets/index-assets-new/bg-2.jpg'}
+        };
+        return { uri: this.state.user.avatar }
+    },
     render: function(){
         return(
-            <ScrollView style={commonStyle.container}
-                automaticallyAdjustContentInsets={false} >
-                <View style={styles.topInfo}>
-                    {this.renderAvatar(this.state.user)}
-                    <View style={styles.nameWrapper}>
-                        <Text style={styles.name}>
-                            {this.state.user.userName}
-                        </Text>
-                    </View>
-                </View>
+            <ParallaxView style={commonStyle.container}
+                backgroundSource={this.getParallaxBackground()}
+                header={this.renderParallaxHeader()} >
+
                 <View style={commonStyle.settingGroups}>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
@@ -277,7 +292,7 @@ module.exports = React.createClass({
                         </View>
                     </TouchableHighlight>
                 </View>
-            </ScrollView>
+            </ParallaxView>
             );
     }
 });

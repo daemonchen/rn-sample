@@ -1,0 +1,86 @@
+{
+  "_args": [
+    [
+      "react-native-parallax-view",
+      "/Users/chenguangyuan/Documents/nzaom/nzaom-ios-platform"
+    ]
+  ],
+  "_cnpm_publish_time": 1449786216141,
+  "_from": "react-native-parallax-view@*",
+  "_id": "react-native-parallax-view@2.0.3",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/react-native-parallax-view",
+  "_nodeVersion": "4.1.1",
+  "_npmUser": {
+    "email": "leland.m.richardson@gmail.com",
+    "name": "intelligibabble"
+  },
+  "_npmVersion": "2.14.4",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "react-native-parallax-view",
+    "raw": "react-native-parallax-view",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "*",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/react-native-parallax-view/download/react-native-parallax-view-2.0.3.tgz",
+  "_shasum": "0c15d2f3081b4d66ef314f85362643e8523729ae",
+  "_shrinkwrap": null,
+  "_spec": "react-native-parallax-view",
+  "_where": "/Users/chenguangyuan/Documents/nzaom/nzaom-ios-platform",
+  "author": {
+    "name": "Leland Richardson"
+  },
+  "bugs": {
+    "url": "https://github.com/lelandrichardson/react-native-parallax-view/issues"
+  },
+  "dependencies": {
+    "react-native-scrollable-mixin": "^1.0.1"
+  },
+  "description": "Parallax view for vertical scrollview with a header image and header content",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "noattachment": false,
+    "shasum": "0c15d2f3081b4d66ef314f85362643e8523729ae",
+    "size": 14773,
+    "tarball": "http://registry.npm.taobao.org/react-native-parallax-view/download/react-native-parallax-view-2.0.3.tgz"
+  },
+  "gitHead": "4b8c587c57d74125cf613ba572be5a8526f5050f",
+  "homepage": "https://github.com/lelandrichardson/react-native-parallax-view",
+  "keywords": [
+    "parallax",
+    "react",
+    "react-component",
+    "react-native"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "intelligibabble",
+      "email": "leland@tech.pro"
+    }
+  ],
+  "name": "react-native-parallax-view",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "react-native": ">=0.8.0 || 0.8.0-rc || 0.8.0-rc.2 || 0.8.0-rc.3"
+  },
+  "publish_time": 1449786216141,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lelandrichardson/react-native-parallax-view.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "2.0.3"
+}

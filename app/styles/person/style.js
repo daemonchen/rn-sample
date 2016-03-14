@@ -9,9 +9,9 @@ var {
 module.exports = React.StyleSheet.create({
     topInfo:{
         // height: 174,
-        marginTop: 16,
+        paddingTop: 56,
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         paddingHorizontal: 16
     },
     avatar:{
@@ -22,13 +22,16 @@ module.exports = React.StyleSheet.create({
     },
     nameWrapper: {
         width: width - 32,
-        borderBottomWidth: 1,
+        // borderBottomWidth: 1,
         paddingVertical: 22,
-        borderBottomColor: '#eee'
+        // borderBottomColor: '#eee'
     },
     name: {
         textAlign: 'center',
         fontSize: 24
+    },
+    nameWhite: {
+        color: '#fff',
     },
     avatarWrapper: {
         marginTop: 16,
