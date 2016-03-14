@@ -1,10 +1,5 @@
 'use strict';
-var React = require('react-native')
-import NavigationBar from 'react-native-navbar'
-var Actions = require('react-native-router-flux').Actions;
-var moment = require('moment');
-var TimerMixin = require('react-timer-mixin');
-var {
+import React, {
     Text,
     TextInput,
     View,
@@ -14,7 +9,12 @@ var {
     TouchableOpacity,
     TouchableHighlight,
     StyleSheet
-} = React
+} from 'react-native'
+import NavigationBar from '../../common/react-native-navbar/index';
+var Actions = require('react-native-router-flux').Actions;
+var moment = require('moment');
+var TimerMixin = require('react-timer-mixin');
+
 
 var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/order/orderDetail');

@@ -1,12 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-import NavigationBar from 'react-native-navbar';
-var Actions = require('react-native-router-flux').Actions;
-var SearchBar = require('react-native-search-bar');
-var PhonePicker = require('react-native-phone-picker');
-var TimerMixin = require('react-timer-mixin');
-var {
+import React, {
     View,
     Text,
     Image,
@@ -15,7 +9,12 @@ var {
     TouchableHighlight,
     ActionSheetIOS,
     StyleSheet
-} = React;
+} from 'react-native'
+import NavigationBar from '../../common/react-native-navbar/index';
+var Actions = require('react-native-router-flux').Actions;
+var SearchBar = require('react-native-search-bar');
+var PhonePicker = require('react-native-phone-picker');
+var TimerMixin = require('react-timer-mixin');
 
 var commonStyle = require('../../styles/commonStyle');
 var contactsStyle = require('../../styles/contact/contactsItem');

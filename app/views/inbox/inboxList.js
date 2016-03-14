@@ -1,9 +1,5 @@
 'use strict';
-var React = require('react-native')
-var TimerMixin = require('react-timer-mixin');
-import NavigationBar from 'react-native-navbar'
-var Actions = require('react-native-router-flux').Actions;
-var {
+import React, {
     Text,
     TextInput,
     View,
@@ -14,7 +10,11 @@ var {
     AlertIOS,
     ActivityIndicatorIOS,
     StyleSheet
-} = React
+} from 'react-native'
+var TimerMixin = require('react-timer-mixin');
+import NavigationBar from '../../common/react-native-navbar/index';
+var Actions = require('react-native-router-flux').Actions;
+
 
 /**
   public final static int order_message = 1;
