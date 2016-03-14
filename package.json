@@ -6,6 +6,7 @@
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
+    "@remobile/react-native-toast": "^1.0.4",
     "alt": "^0.18.2",
     "fbjs": "^0.6.0",
     "keymirror": "^0.1.1",
