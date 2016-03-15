@@ -50,6 +50,7 @@ module.exports = React.createClass({
         return {
             orderId: this.props.data || 0,//订单id
             orderData: {},
+            follow: false,
             tabIndex: 0,
             images: [],
             isVisible: false,
@@ -62,10 +63,14 @@ module.exports = React.createClass({
         this.unlistenOrder = orderStore.listen(this.onOrderChange);
         this.unlistenFollow = followOrderStore.listen(this.onFollowChange);
         this.unlistenTaskChange = taskStore.listen(this.onTaskChange);
-        if (this._timeout) {
-            this.clearTimeout(this._timeout)
-        };
-        this._timeout = this.setTimeout(this.fetchData, 350);
+        // if (this._timeout) {
+        //     this.clearTimeout(this._timeout)
+        // };
+        this.setTimeout(this.fetchData, 350);
+        //  if (this._timeout) {
+        //     this.clearTimeout(this._timeout)
+        // };
+        this.setTimeout(this.getFollowStatus, 350);
         util.logPage('orderDetail');
         this.getAppConstants();
     },
@@ -106,7 +111,14 @@ module.exports = React.createClass({
         };
     },
     fetchData: function(){
+        if (!this.state.orderId) {return;};
         orderAction.getOrderExtra({
+            orderId: this.state.orderId
+        });
+    },
+    getFollowStatus: function(){
+        if (!this.state.orderId) {return;};
+        orderAction.get({
             orderId: this.state.orderId
         });
     },
@@ -118,10 +130,10 @@ module.exports = React.createClass({
             return;
         };
         if (result.type == 'update') {
-            var status = !this.state.orderData.follow;
+            var status = !this.state.follow;
             var toastMessage = !!status ? '关注成功' : '您已取消关注'
             this.setState({
-                orderData: Object.assign(orderData,{follow: status})
+                follow: status
             });
             util.toast(toastMessage);
         };
@@ -150,13 +162,18 @@ module.exports = React.createClass({
     onOrderChange: function(){
         var result = orderStore.getState();
         var orderData = this.state.orderData;
-        // console.log('-------getOrderExtra', result);
+        console.log('-------getOrderdata:', result);
         if (result.status != 200 && !!result.message) {
             return;
         };
         if (result.type == 'getOrderExtra') {
             this.setState({
                 orderData: Object.assign(orderData,result.data)
+            });
+        };
+        if (result.type == 'get') {
+            this.setState({
+                follow: result.data.follow
             });
         };
     },
@@ -200,7 +217,7 @@ module.exports = React.createClass({
         }
     },
     _pressFollowButton: function(){
-        var status = !this.state.orderData.follow;
+        var status = !this.state.follow;
         util.logEvent('followOrder', {status: status+'', orderId: this.state.orderId});
         if (!!status) {
             followOrderAction.follow({
@@ -232,7 +249,7 @@ module.exports = React.createClass({
         if ((rights & targetRights) == targetRights){
             return (
                 <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
-                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.orderData.follow}/>
+                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.follow}/>
                     <RightWhiteAddButton onPress={this._pressCreateButton} />
                     <RightWhiteMoreButton onPress={this.showPopover} />
                 </View>
@@ -240,7 +257,7 @@ module.exports = React.createClass({
         }else{
             return(
                 <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
-                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.orderData.follow}/>
+                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.follow}/>
                 </View>
                 )
         }
