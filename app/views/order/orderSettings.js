@@ -99,7 +99,7 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'delete') {
-            Actions.pop();
+            Actions.pop(2);
         };
     },
     onAttachChange: function(){

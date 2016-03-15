@@ -33,22 +33,21 @@ var RightDoneButton = require('../../common/rightDoneButton');
 var orderAction = require('../../actions/order/orderAction');
 var orderStore = require('../../stores/order/orderStore');
 var orderListAction = require('../../actions/order/orderListAction');
-var orderListStore = require('../../stores/order/orderListStore');
+// var orderListStore = require('../../stores/order/orderListStore');
 var attachAction = require('../../actions/attach/attachAction');
 var attachStore = require('../../stores/attach/attachStore');
 
 var util = require('../../common/util');
 
-
+/*--从模版新建订单，设置页面--*/
 module.exports = React.createClass({
     getInitialState: function(){
 
         var defaultData = this.props.data || {};
         var endTime = defaultData.endTime || new Date().valueOf();
-
+        console.log('------template data:', defaultData);
         return {
-            templateId: defaultData.id || null,
-            orderId: defaultData.id || 0,
+            templateId: defaultData.templateId || null,
             accessoryIds: defaultData.accessoryIds || [],
             accessoryNum: defaultData.accessoryNum || '',
             creatorId: defaultData.creatorId || 0,
@@ -63,29 +62,29 @@ module.exports = React.createClass({
             salesManId: defaultData.salesManId || '',
             salesManName: defaultData.salesManName || '',
             startTime: defaultData.startTime || '',
-            title: defaultData.title || ''
+            title: defaultData.templateName || ''
 
         }
     },
     componentDidMount: function(){
         this.unlisten = orderStore.listen(this.onChange);
         this.unlistenAttach = attachStore.listen(this.onAttachChange);
-        this.unlistenOrderList = orderListStore.listen(this.onOrderlistChange);
+        // this.unlistenOrderList = orderListStore.listen(this.onOrderlistChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
         this.unlistenAttach();
-        this.unlistenOrderList();
+        // this.unlistenOrderList();
     },
-    onOrderlistChange: function(){
-        var result = orderListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
-        if (result.type == 'delete') {
-            Actions.pop();
-        };
-    },
+    // onOrderlistChange: function(){
+    //     var result = orderListStore.getState();
+    //     if (result.status != 200 && !!result.message) {
+    //         return;
+    //     }
+    //     if (result.type == 'delete') {
+    //         Actions.pop();
+    //     };
+    // },
     onAttachChange: function(){
         var result = attachStore.getState();
         if (result.status != 200 && !!result.message) {
@@ -114,10 +113,7 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            Actions.orderDetailReplace({
-                data: result.data
-            });
-            // Actions.pop();
+            Actions.pop(2);
         };
         if (result.type == 'update') {
             Actions.pop();
@@ -228,11 +224,7 @@ module.exports = React.createClass({
             data: this.props.data
         });
     },
-    _deleteOrder: function(){
-        orderListAction.delete({
-            orderId: this.state.orderId
-        })
-    },
+
 
     render: function(){
         return(

@@ -25,10 +25,11 @@ var util = require('../../../common/util');
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
+        console.log('------data:', this.props.data);
         return {
             templateStatus: this.props.target,//1新建 2 修改
-            title: this.props.data.orderTitle || this.props.data.templateName,
-            description: this.props.data.description
+            title: this.props.data.title || this.props.data.templateName,
+            description: (this.props.target == 1) ? '' : this.props.data.description
         }
     },
     componentDidMount: function(){
@@ -97,7 +98,6 @@ module.exports = React.createClass({
         }
     },
     render: function(){
-        var description = (this.state.templateStatus == 1) ? '' : this.state.description
         return(
             <View style={commonStyle.container}>
                 <NavigationBar
@@ -121,7 +121,7 @@ module.exports = React.createClass({
                         clearButtonMode={'while-editing'}
                         returnKeyType={'done'}
                         onSubmitEditing={this.onPressDone}
-                        value={description}
+                        value={this.state.description}
                         onChangeText={this.onChangeDescribeText} />
                     </View>
                 </ScrollView>

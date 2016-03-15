@@ -80,15 +80,15 @@ module.exports = React.createClass({
     },
     handleDelete: function(result){
         if (result.status != 200 && !!result.message) {
-            // util.toast(result.message);
+            util.toast(result.message);
             return;
         }
-        // util.toast('删除客户成功');
+        util.toast('删除客户成功');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
         this._timeout = this.setTimeout(()=>{
-            Actions.pop();
+            Actions.pop(2);
         },350);
     },
     onChange: function() {

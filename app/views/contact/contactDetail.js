@@ -63,8 +63,7 @@ module.exports = React.createClass({
         switch(result.type){
             case 'update':
                 return this.handleUpdate(result);
-            case 'delete':
-                return this.handleDelete(result);
+           
         }
     },
     handleUpdate: function(result){
@@ -73,20 +72,6 @@ module.exports = React.createClass({
             return;
         }
         util.toast('修改成功');
-        if (this._timeout) {
-            this.clearTimeout(this._timeout);
-        };
-        this._timeout = this.setTimeout(()=>{
-            Actions.pop();
-        },2000);
-    },
-    handleDelete: function(result){
-        // console.log('------删除客户 result', result);
-        if (result.status != 200 && !!result.message) {
-            util.toast(result.message);
-            return;
-        }
-        util.toast('删除客户成功');
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };

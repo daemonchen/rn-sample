@@ -68,7 +68,7 @@ var orderList = React.createClass({
     _handleSwipeout: function(rowData, sectionID, rowID){
         var rawData = this.state.list;
         for (var i = 0; i < rawData.length; i++) {
-            if (rowData.id != rawData[i].id) {
+            if (rowData.orderId != rawData[i].orderId) {
                 rawData[i].active = false
             }else{
                 rawData[i].active = true
@@ -197,13 +197,14 @@ var orderList = React.createClass({
         return this.state.list.length >= this.state.total||this.state.list.length===0;
     },
     onDelete: function(rowData){
+        console.log('----rowData', rowData);
         AlertIOS.alert(
             '删除订单',
             '删除订单将连同该订单任务一起删除，确定删除吗？',
             [
                 {text: '确定', onPress: () => {
                     orderListAction.delete({
-                        orderId:rowData.id
+                        orderId:rowData.orderId
                     });
                 } },
                 {text: '取消', onPress: () => {return}, style: 'cancel'},
