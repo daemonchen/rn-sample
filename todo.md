@@ -33,8 +33,8 @@ swipeout & rn panresponseder bug: 打开swipeout组件的index.js文件，109行
   }`
 
   - 需要单独引入的组件:
-    - [react-native-circle-progress](https://github.com/guodong000/react-native-circle-progress.git)
-    - [react-native-phone-picker](git@github.com:daemonchen/react-native-phone-picker.git) 由于增加了联系人姓名属性，所以用自己修改过的版本
+    - [react-native-circle-progress](https://github.com/daemonchen/react-native-circle-progress)
+    - [react-native-phone-picker](https://github.com/daemonchen/react-native-phone-picker) 由于增加了联系人姓名属性，所以用自己修改过的版本
 
 - 给fetch函数增加timeout
     // Rough implementation. Untested.
