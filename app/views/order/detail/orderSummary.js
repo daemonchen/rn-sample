@@ -180,7 +180,7 @@ module.exports = React.createClass({
                             <Text
                             numberOfLines={3}
                             style={{flex: 1,fontSize: 18}}>
-                                {this.props.data.orderTitle}
+                                {this.props.data.title}
                             </Text>
                         </View>
                     </View>

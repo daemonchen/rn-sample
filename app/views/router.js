@@ -173,6 +173,7 @@ module.exports = React.createClass({
         if (this._timeout) {
             this.clearTimeout(this._timeout);
         };
+        console.log('-----do getAppState after login or updateToken');
         this._timeout = this.setTimeout(()=>{
             systemAction.init();
         }, 350);
