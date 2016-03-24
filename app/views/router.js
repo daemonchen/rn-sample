@@ -17,6 +17,8 @@ var Register = require('./register');
 var ImageSwiperPage = require('./imageSwiperPage');
 var WebViewWrapper = require('./webViewWrapper');
 
+var MyTask = require('./home/myTask');
+
 var OrderDetail = require('./order/orderDetail');
 var OrderSettings = require('./order/orderSettings');
 var OrderSettingsForTemplate = require('./order/orderSettingsForTemplate');
@@ -231,6 +233,7 @@ module.exports = React.createClass({
                 <Route name="register" component={Register} title="注册" schema="modal"/>
                 <Route name="imageSwiperPage" component={ImageSwiperPage} title="图片详情" schema="withoutAnimation"/>
 
+                <Route name="myTask" component={MyTask} title="我的任务"/>
 
                 <Route name="userAccount" component={UserAccount} title="我的账号"/>
                 <Route name="mySettings" component={MySettings} title="设置"/>

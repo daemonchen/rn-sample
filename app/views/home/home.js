@@ -4,21 +4,21 @@ import React, {
     View,
     Text,
     ActionSheetIOS,
+    ScrollView,
     StyleSheet
 } from 'react-native'
 import NavigationBar from '../../common/react-native-navbar/index';
 
+import { PieChart } from 'react-native-ios-charts';
+
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
-
-var HomeSegmentControl = require('./homeSegmentControl');
-var HomeList = require('./homeList');
-var HomeListDone = require('./homeListDone');
 
 var RightAddButton = require('../../common/rightAddButton');
 
 var appConstants = require('../../constants/appConstants');
 var commonStyle = require('../../styles/commonStyle');
+var styles = require('../../styles/home/style');
 var util = require('../../common/util');
 
 var taskListStore = require('../../stores/task/taskListStore');
@@ -28,29 +28,34 @@ var Home =  React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         return {
-            tabIndex: 0
+            config: {
+                dataSets: [{
+                    values: [0.14, 0.14, 0.34, 0.38],
+                    colors: ['rgb(197, 255, 140)', 'rgb(255, 247, 140)', 'rgb(255, 210, 141)', 'rgb(140, 235, 255)'],
+                    label: 'Quarter Revenues 2014'
+                }],
+                backgroundColor: 'transparent',
+                labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
+                centerText: 'Quartely Revenue',
+                legend: {
+                    position: 'aboveChartRight',
+                    wordWrap: true
+                },
+                valueFormatter: {
+                    type: 'regular',
+                    numberStyle: 'PercentStyle',
+                    maximumDecimalPlaces: 0
+                }
+            }
         }
     },
     componentDidMount: function(){
         this.unlisten = taskListStore.listen(this.onChange);
-        this.unlistenScheme = schemeStore.listen(this.onSchemeChange);
     },
     componentWillUnmount: function() {
         this.unlisten();
-        this.unlistenScheme();
     },
-    onSchemeChange: function(){
-        var result = schemeStore.getState();
-        // console.log('---scheme change', result.scheme);
-        if (!result.scheme) { return; };
-        var params = util.getParams(result.scheme.split('?')[1]);
-        if (/nzaom:\/\/workbench/.test(result.scheme)) {
-            console.log('-----params.status', params.status);
-            this.setState({
-                tabIndex: parseInt(params.status)
-            })
-        };
-    },
+
     handleUpdate: function(result){
         if (result.status != 200 && !!result.message) {
             util.toast(result.message);
@@ -90,34 +95,7 @@ var Home =  React.createClass({
                 return;
         }
     },
-    onPressTaskRow: function(rowData, sectionID){
-        Actions.taskDetail({
-            title: rowData.title,
-            data: rowData.taskId
-        });
-    },
-    onSegmentChange: function(event){
-        this.setState({
-            tabIndex: event.nativeEvent.selectedSegmentIndex
-        })
-    },
-    renderTabContent: function(){
-        switch(this.state.tabIndex){
-            case 0:
-                return(
-                    <HomeList
-                    onPressRow={this.onPressTaskRow}
-                    status={0} />
-                )
-            case 1:
-                console.log('----------homeListDone');
-                return(
-                    <HomeListDone
-                    onPressRow={this.onPressTaskRow}
-                    status={1} />
-                )
-        }
-    },
+
     renderNavigationBar: function(){
         // var rights = appConstants.userRights.rights;
         // var targetRights = 2;
@@ -136,25 +114,44 @@ var Home =  React.createClass({
                 title={{ title: '工作台' }} />
             );
     },
+    renderPie: function(){
+        var config = {
+          dataSets: [{
+            values: [10,2,3],
+            colors: ['#98ebec', '#fec2bf', '#bdd3f7'],
+            sliceSpace: 2,
+            selectionShift: 10.0
+            // label: 'Quarter Revenues 2014'
+          }],
+          backgroundColor: 'transparent',
+          labels: ['已完成', '延期', '进行中'],
+          centerText: '110 \n 本月订单',
+          legend: {
+            position: 'belowChartCenter',
+            wordWrap: true
+          },
+          valueFormatter: {
+            type: 'regular',
+            numberStyle: 'NoStyle',
+            maximumDecimalPlaces: 0
+          },
+          holeRadiusPercent: 0.72,
+          drawSliceTextEnabled: false
+        };
+        return (<PieChart config={config} style={styles.pieContainer}/>);
+    },
     render:function(){
         return (
             <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
                 <View style={styles.main}>
-                    <HomeSegmentControl
-                    selectedIndex={this.state.tabIndex}
-                    onSegmentChange={this.onSegmentChange} />
-                    {this.renderTabContent()}
+                    {this.renderPie()}
+                    <View style={styles.sepLine}/>
                 </View>
             </View>
         );
     }
 })
 
-var styles = StyleSheet.create({
-    main:{
-        flex:1
-    }
-});
 
 module.exports = Home;

@@ -1,0 +1,8 @@
+use_frameworks!
+
+platform :ios, '9.0'
+
+target 'awesomeMobile' do
+  pod 'SwiftyJSON', '~> 2.3'
+  pod 'Charts', '~> 2.2'
+end

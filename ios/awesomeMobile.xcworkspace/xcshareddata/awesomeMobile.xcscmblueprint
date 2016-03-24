@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "08F3308DF0AF36C4329C6344C30A4FA342CA4705",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "29EB10DE8C11B0C59B4B02624253D7F0EBA6F014" : 0,
+    "08F3308DF0AF36C4329C6344C30A4FA342CA4705" : 0,
+    "5D50D175551B43C29EA412138385F5DB41979A49" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "BCE63CC1-253E-48E7-8AB4-A82854BA62EF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "29EB10DE8C11B0C59B4B02624253D7F0EBA6F014" : "nzaom-ios-platform\/ios\/react-native-circle-progress\/",
+    "08F3308DF0AF36C4329C6344C30A4FA342CA4705" : "nzaom-ios-platform\/",
+    "5D50D175551B43C29EA412138385F5DB41979A49" : "nzaom-ios-platform\/ios\/react-native-phone-picker\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "awesomeMobile",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ios\/awesomeMobile.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git.oschina.net:classical1988\/nzaom-ios-platform.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "08F3308DF0AF36C4329C6344C30A4FA342CA4705"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:daemonchen\/react-native-circle-progress.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "29EB10DE8C11B0C59B4B02624253D7F0EBA6F014"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:daemonchen\/react-native-phone-picker.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5D50D175551B43C29EA412138385F5DB41979A49"
+    }
+  ]
+}

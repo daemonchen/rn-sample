@@ -1,0 +1,6 @@
+framework module Pods_awesomeMobile {
+  umbrella header "Pods-awesomeMobile-umbrella.h"
+
+  export *
+  module * { export * }
+}
