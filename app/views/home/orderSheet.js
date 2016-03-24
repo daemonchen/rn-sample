@@ -121,6 +121,14 @@ module.exports =  React.createClass({
                 title={{ title: '工作台' }} />
             );
     },
+    renderPieTitle: function(){
+        return(
+            <View>
+                <Image />
+                <Text>2016年3月</Text>
+            </View>
+            );
+    },
     renderPie: function(){
         var config = {
           dataSets: [{
@@ -131,7 +139,7 @@ module.exports =  React.createClass({
             // label: 'Quarter Revenues 2014'
           }],
           backgroundColor: 'transparent',
-          labels: ['已完成', '延期', '进行中'],
+          // labels: ['已完成', '延期', '进行中'],
           centerText: '110 \n 本月订单',
           legend: {
             position: 'belowChartCenter',
@@ -152,39 +160,11 @@ module.exports =  React.createClass({
             <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
                 <View style={styles.main}>
+                    {this.renderPieTitle()}
                     {this.renderPie()}
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee'
-                        onPress={this.goSheet}>
-                        <View
-                        style={commonStyle.settingItem}>
-                            <Text
-                            style={commonStyle.blue}>
-                                查看更多报表...
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
+
                     <View style={styles.sepLine}/>
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee'
-                        onPress={this.goTask}>
-                        <View
-                        style={commonStyle.settingItem}>
-                            <Image
-                            style={commonStyle.settingIcon}
-                            source={require('../../images/person/account_settings.png')}/>
-                            <Text
-                            style={commonStyle.settingTitle}>
-                                我的任务
-                            </Text>
-                            <Text
-                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                                23
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
+
                 </View>
             </View>
         );

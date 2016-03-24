@@ -16,6 +16,7 @@ var HomeList = require('./homeList');
 var HomeListDone = require('./homeListDone');
 
 var RightAddButton = require('../../common/rightAddButton');
+var BlueBackButton = require('../../common/blueBackButton');
 
 var appConstants = require('../../constants/appConstants');
 var commonStyle = require('../../styles/commonStyle');
@@ -133,7 +134,8 @@ module.exports =  React.createClass({
             <NavigationBar
                 style={{borderBottomWidth: 0}}
                 tintColor="#f9f9f9"
-                title={{ title: '工作台' }} />
+                leftButton={<BlueBackButton />}
+                title={{ title: '我的任务' }} />
             );
     },
     render:function(){

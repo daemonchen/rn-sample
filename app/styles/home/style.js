@@ -57,8 +57,7 @@ module.exports = React.StyleSheet.create({
     },
     sepLine:{
         width: width - 32,
-        // marginHorizontal: 16,
-        margin: 16,
+        marginHorizontal: 16,
         height: 1,
         backgroundColor: '#E0E0E0'
     },
@@ -69,5 +68,10 @@ module.exports = React.StyleSheet.create({
         backgroundColor: 'white',
         marginHorizontal: 16,
         marginTop: 16
+    },
+    pieTitle: {
+        width: width,
+        height: 34,
+        textAlign: 'center'
     }
 });
