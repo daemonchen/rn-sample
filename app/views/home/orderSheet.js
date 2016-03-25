@@ -5,6 +5,7 @@ import React, {
     Text,
     ActionSheetIOS,
     ScrollView,
+    TouchableOpacity,
     TouchableHighlight,
     Image,
     StyleSheet
@@ -17,6 +18,7 @@ var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 
 var RightAddButton = require('../../common/rightAddButton');
+var BlueBackButton = require('../../common/blueBackButton');
 
 var appConstants = require('../../constants/appConstants');
 var commonStyle = require('../../styles/commonStyle');
@@ -30,25 +32,7 @@ module.exports =  React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         return {
-            config: {
-                dataSets: [{
-                    values: [0.14, 0.14, 0.34, 0.38],
-                    colors: ['rgb(197, 255, 140)', 'rgb(255, 247, 140)', 'rgb(255, 210, 141)', 'rgb(140, 235, 255)'],
-                    label: 'Quarter Revenues 2014'
-                }],
-                backgroundColor: 'transparent',
-                labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
-                centerText: 'Quartely Revenue',
-                legend: {
-                    position: 'aboveChartRight',
-                    wordWrap: true
-                },
-                valueFormatter: {
-                    type: 'regular',
-                    numberStyle: 'PercentStyle',
-                    maximumDecimalPlaces: 0
-                }
-            }
+            pieValue: [10,2,3]
         }
     },
     componentDidMount: function(){
@@ -71,38 +55,6 @@ module.exports =  React.createClass({
                 return this.handleUpdate(result);
         }
     },
-    showActionSheet: function(){
-        var self = this;
-        ActionSheetIOS.showActionSheetWithOptions({
-            options: this.actionList,
-            cancelButtonIndex: 1,
-            // destructiveButtonIndex: 1,
-            },
-            (buttonIndex) => {
-              self.onSelectActionSheet(buttonIndex);
-            });
-    },
-    actionList: ['新建订单','取消'],
-    doPushOrderSetting: function(){
-        Actions.orderSettings({
-            title: '新建订单',
-            data: {orderStatus: 1}
-        });
-    },
-    onSelectActionSheet: function(index){
-        switch(index){
-            case 0:
-                return this.doPushOrderSetting();
-            default :
-                return;
-        }
-    },
-    goSheet: function(){
-        console.log('---go sheet');
-    },
-    goTask: function(){
-        Actions.myTask();
-    },
     renderNavigationBar: function(){
         // var rights = appConstants.userRights.rights;
         // var targetRights = 2;
@@ -116,23 +68,42 @@ module.exports =  React.createClass({
         // }
         return(
             <NavigationBar
-                style={{borderBottomWidth: 0}}
                 tintColor="#f9f9f9"
-                title={{ title: '工作台' }} />
+                leftButton={<BlueBackButton />}
+                title={{ title: '报表' }} />
             );
+    },
+    prev: function(){
+        this.setState({
+            pieValue: [Math.random()*20,12,Math.random()*3]
+        });
+    },
+    next: function(){
+        this.setState({
+            pieValue: [Math.random(),12,3]
+        });
     },
     renderPieTitle: function(){
         return(
-            <View>
-                <Image />
-                <Text>2016年3月</Text>
+            <View style={styles.pieTitle}>
+                <TouchableOpacity
+                style={styles.pieTitleBtnPrev}
+                onPress={this.prev}>
+                    <Image source={require('../../images/common/arrow_right_gray.png')}/>
+                </TouchableOpacity>
+                <Text style={styles.pieTitleText}>2016年3月</Text>
+                <TouchableOpacity
+                style={styles.pieTitleBtnNext}
+                onPress={this.next}>
+                    <Image source={require('../../images/common/arrow_right_gray.png')}/>
+                </TouchableOpacity>
             </View>
             );
     },
     renderPie: function(){
         var config = {
           dataSets: [{
-            values: [10,2,3],
+            values: this.state.pieValue,
             colors: ['#98ebec', '#fec2bf', '#bdd3f7'],
             sliceSpace: 2,
             selectionShift: 10.0
@@ -141,6 +112,7 @@ module.exports =  React.createClass({
           backgroundColor: 'transparent',
           // labels: ['已完成', '延期', '进行中'],
           centerText: '110 \n 本月订单',
+          rotationWithTwoFingers: true,
           legend: {
             position: 'belowChartCenter',
             wordWrap: true
@@ -151,21 +123,80 @@ module.exports =  React.createClass({
             maximumDecimalPlaces: 0
           },
           holeRadiusPercent: 0.72,
-          drawSliceTextEnabled: false
+          drawSliceTextEnabled: false,
+          animation: {
+            yAxisDuration: 0.8,
+            easingOption: 'easeInOutQuad'
+          }
         };
         return (<PieChart config={config} style={styles.pieContainer}/>);
+    },
+    renderList: function(){
+        return(
+            <View style={styles.sheetList}>
+                <View
+                style={commonStyle.settingItemWrapper}>
+                    <View
+                    style={commonStyle.settingItem}>
+                        <View
+                        style={[styles.sheetCircle, styles.sheetCirclePurple]}/>
+                        <Text
+                        style={commonStyle.settingTitle}>
+                            进行中订单
+                        </Text>
+                        <Text
+                        style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
+                            23
+                        </Text>
+                    </View>
+                </View>
+                <View
+                style={commonStyle.settingItemWrapper}>
+                    <View
+                    style={commonStyle.settingItem}>
+                        <View
+                        style={[styles.sheetCircle, styles.sheetCirclePink]}/>
+                        <Text
+                        style={commonStyle.settingTitle}>
+                            延期订单
+                        </Text>
+                        <Text
+                        style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
+                            23
+                        </Text>
+                    </View>
+                </View>
+                <View
+                style={commonStyle.settingItemWrapper}>
+                    <View
+                    style={commonStyle.settingItem}>
+                        <View
+                        style={[styles.sheetCircle, styles.sheetCircleBlue]}/>
+                        <Text
+                        style={commonStyle.settingTitle}>
+                            已完成订单
+                        </Text>
+                        <Text
+                        style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
+                            23
+                        </Text>
+                    </View>
+                </View>
+            </View>
+            );
     },
     render:function(){
         return (
             <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
-                <View style={styles.main}>
+                <ScrollView style={styles.main}
+                automaticallyAdjustContentInsets={false}>
                     {this.renderPieTitle()}
                     {this.renderPie()}
 
                     <View style={styles.sepLine}/>
-
-                </View>
+                    {this.renderList()}
+                </ScrollView>
             </View>
         );
     }

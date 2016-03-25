@@ -65,13 +65,47 @@ module.exports = React.StyleSheet.create({
         width: width-32,
         height: width-32,
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#fff',
         marginHorizontal: 16,
         marginTop: 16
     },
     pieTitle: {
         width: width,
         height: 34,
-        textAlign: 'center'
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    pieTitleText: {
+        textAlign: 'center',
+        paddingTop: 5,
+        width: 76
+    },
+    pieTitleBtnPrev: {
+        flex: 1,
+        paddingRight: 16,
+        alignItems: 'flex-end'
+    },
+    pieTitleBtnNext: {
+        flex: 1,
+        paddingLeft: 16,
+        alignItems: 'flex-start'
+    },
+    sheetCircle: {
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        marginRight: 16
+    },
+    sheetCircleBlue: {
+        backgroundColor: '#98ebec'
+    },
+    sheetCirclePurple: {
+        backgroundColor: '#bdd3f7'
+    },
+    sheetCirclePink: {
+        backgroundColor: '#fec2bf'
+    },
+    sheetList: {
+        paddingBottom: 32
     }
 });

@@ -5,6 +5,7 @@ import React, {
     Text,
     ActionSheetIOS,
     ScrollView,
+    TouchableOpacity,
     TouchableHighlight,
     Image,
     StyleSheet
@@ -31,23 +32,7 @@ module.exports =  React.createClass({
     getInitialState: function(){
         return {
             config: {
-                dataSets: [{
-                    values: [0.14, 0.14, 0.34, 0.38],
-                    colors: ['rgb(197, 255, 140)', 'rgb(255, 247, 140)', 'rgb(255, 210, 141)', 'rgb(140, 235, 255)'],
-                    label: 'Quarter Revenues 2014'
-                }],
-                backgroundColor: 'transparent',
-                labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
-                centerText: 'Quartely Revenue',
-                legend: {
-                    position: 'aboveChartRight',
-                    wordWrap: true
-                },
-                valueFormatter: {
-                    type: 'regular',
-                    numberStyle: 'PercentStyle',
-                    maximumDecimalPlaces: 0
-                }
+
             }
         }
     },
@@ -99,6 +84,7 @@ module.exports =  React.createClass({
     },
     goSheet: function(){
         console.log('---go sheet');
+        Actions.orderSheet();
     },
     goTask: function(){
         Actions.myTask();
@@ -116,7 +102,6 @@ module.exports =  React.createClass({
         // }
         return(
             <NavigationBar
-                style={{borderBottomWidth: 0}}
                 tintColor="#f9f9f9"
                 title={{ title: '工作台' }} />
             );
@@ -124,7 +109,7 @@ module.exports =  React.createClass({
     renderPie: function(){
         var config = {
           dataSets: [{
-            values: [10,2,3],
+            values: [16,24,60],
             colors: ['#98ebec', '#fec2bf', '#bdd3f7'],
             sliceSpace: 2,
             selectionShift: 10.0
@@ -133,6 +118,7 @@ module.exports =  React.createClass({
           backgroundColor: 'transparent',
           labels: ['已完成', '延期', '进行中'],
           centerText: '110 \n 本月订单',
+          rotationWithTwoFingers: true,
           legend: {
             position: 'belowChartCenter',
             wordWrap: true
@@ -143,7 +129,11 @@ module.exports =  React.createClass({
             maximumDecimalPlaces: 0
           },
           holeRadiusPercent: 0.72,
-          drawSliceTextEnabled: false
+          drawSliceTextEnabled: false,
+          animation: {
+            yAxisDuration: 0.8,
+            easingOption: 'easeInOutQuad'
+          }
         };
         return (<PieChart config={config} style={styles.pieContainer}/>);
     },
@@ -151,7 +141,8 @@ module.exports =  React.createClass({
         return (
             <View style={commonStyle.container}>
                 {this.renderNavigationBar()}
-                <View style={styles.main}>
+                <ScrollView style={styles.main}
+                automaticallyAdjustContentInsets={false}>
                     {this.renderPie()}
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
@@ -185,7 +176,7 @@ module.exports =  React.createClass({
                             </Text>
                         </View>
                     </TouchableHighlight>
-                </View>
+                </ScrollView>
             </View>
         );
     }

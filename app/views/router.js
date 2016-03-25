@@ -18,6 +18,7 @@ var ImageSwiperPage = require('./imageSwiperPage');
 var WebViewWrapper = require('./webViewWrapper');
 
 var MyTask = require('./home/myTask');
+var OrderSheet = require('./home/orderSheet');
 
 var OrderDetail = require('./order/orderDetail');
 var OrderSettings = require('./order/orderSettings');
@@ -234,6 +235,7 @@ module.exports = React.createClass({
                 <Route name="imageSwiperPage" component={ImageSwiperPage} title="图片详情" schema="withoutAnimation"/>
 
                 <Route name="myTask" component={MyTask} title="我的任务"/>
+                <Route name="orderSheet" component={OrderSheet} title="报表"/>
 
                 <Route name="userAccount" component={UserAccount} title="我的账号"/>
                 <Route name="mySettings" component={MySettings} title="设置"/>
