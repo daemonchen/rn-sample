@@ -1,24 +1,34 @@
 'use strict';
-var React = require('react-native');
-var moment = require('moment');
-var {
+
+import React, {
     Text,
     View,
     ListView,
     Image,
     TouchableOpacity,
+    TouchableWithoutFeedback,
     TouchableHighlight,
     StyleSheet
-} = React
+} from 'react-native'
+
+var moment = require('moment');
+
 
 var Swipeout = require('react-native-swipeout');
 var util = require('../../../common/util');
-var CircleProgressView = require('../../../common/circleProgress')
+// var CircleProgressView = require('../../../common/circleProgress');
+var ProgressBar = require('../../../common/progressBar');
 var styles = require('../../../styles/order/orderItem.js');
 var commonStyle = require('../../../styles/commonStyle');
 var appConstants = require('../../../constants/appConstants');
+
+var {
+    width, height, scale
+} = util.getDimensions();
+
 module.exports = React.createClass({
     getInitialState: function(){
+        console.log('-----orderItem data:', this.props.rowData.overPercent)
         return{
             progress: parseInt(this.props.rowData.overPercent)/100 || 0
         }
@@ -69,10 +79,53 @@ module.exports = React.createClass({
             <Text style={[styles.percent]}>{percentString}%</Text>
             );
     },
+    renderCheckIcon: function(){
+        var circleImage = (this.props.rowData.status == 1) ? require('../../../images/order/task_status_done.png') : require('../../../images/order/task_status_default.png')
+        return(
+            <TouchableWithoutFeedback onPress={this.onPressCircle}>
+                <View style={styles.checkIconWrapper}>
+                    <Image source={circleImage} style={styles.checkIcon}/>
+                </View>
+            </TouchableWithoutFeedback>
+            )
+
+    },
+    onPressCircle: function(){
+        var status = (this.props.rowData.status == 1) ? 0 : 1
+        var isCheck = (this.state.isCheck == 1) ? 0 : 1;
+        AlertIOS.alert(
+            '',
+            '您确定要更改订单状态吗',
+            [
+                {text: '确定', onPress: () => {
+                    console.log('----order status');
+                    // taskAction.update({
+                    //     taskId: this.props.rowData.taskId,
+                    //     status: status,
+                    // });
+                } },
+                {text: '取消', onPress: () => {return}, style: 'cancel'},
+            ]
+        )
+    },
     _handleSwipeout: function(){
         this.props._handleSwipeout(this.props.rowData, this.props.sectionID, this.props.rowID);
     },
+    renderProgressBar: function(){
+        console.log('----this.state.progress', this.state.progress);
+        return(
+            <ProgressBar
+                fillStyle={styles.progressBarFill}
+                containerWidth={{width: width - 84}}
+                style={styles.progressBar}
+                progress={this.state.progress} />
+            );
+    },
     render: function(){
+        var self = this;
+        // setTimeout((function() {
+        //       self.setState({ progress: self.state.progress + parseInt(self.props.rowData.overPercent)/100});
+        //     }), 350);
         var swipeoutBtns = [
           {
             text: '删除',
@@ -152,20 +205,13 @@ module.exports = React.createClass({
                     <TouchableHighlight underlayColor='#eee'
                     onPress={this.onPress}>
                         <View style={styles.rowStyle}>
-                            <CircleProgressView
-                              progress={progress}
-                              lineWidth={2}
-                              lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
-                              circleRadius={26}
-                              circleColor='#34a853'
-                              circleUnderlayColor='#e6e6e6'
-                              style={styles.circle}/>
-                            {this.renderPercent(this.props.rowData.overPercent)}
+                            {this.renderCheckIcon()}
                             <View style={styles.orderContentWrapper}>
                                 <Text style={[styles.orderTitle, commonStyle.textDark]}
                                 numberOfLines={1}>
                                     {this.props.rowData.title}
                                 </Text>
+                                {this.renderProgressBar()}
                                 <View style={styles.orderContent}>
                                     {this.renderTimeLabel(this.props.rowData.endTime)}
                                     {this.renderCustomerLabel()}

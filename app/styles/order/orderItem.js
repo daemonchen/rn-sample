@@ -1,4 +1,9 @@
 const React = require('react-native');
+//获取可视窗口的宽高
+var util = require('../../common/util.js');
+var {
+    width, height, scale
+} = util.getDimensions();
 
 module.exports = React.StyleSheet.create({
   rowStyle: {
@@ -45,6 +50,28 @@ module.exports = React.StyleSheet.create({
 
         width: 50,
         height: 50
+    },
+    checkIconWrapper: {
+        width: 36,
+        height: 36,
+        // marginLeft: 15,
+        marginTop: 10
+        // marginRight: 16
+    },
+    checkIcon: {
+        width: 32,
+        height: 32,
+        marginTop: 2,
+        marginLeft: 2
+    },
+    progressBar: {
+        backgroundColor: '#D5D5D5',
+        borderRadius: 4,
+        height: 8
+    },
+    progressBarFill: {
+        height: 8,
+        backgroundColor: '#4285f4'
     },
     percent: {
         width: 50,

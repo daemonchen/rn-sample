@@ -1,7 +1,6 @@
 'use strict';
-var React = require('react-native')
-var TimerMixin = require('react-timer-mixin');
-var {
+
+import React, {
     Text,
     View,
     Image,
@@ -11,7 +10,9 @@ var {
     ActivityIndicatorIOS,
     AlertIOS,
     StyleSheet
-} = React
+} from 'react-native'
+
+var TimerMixin = require('react-timer-mixin');
 
 var orderListAction = require('../../../actions/order/orderListAction');
 var orderListStore = require('../../../stores/order/orderListStore');
@@ -31,7 +32,7 @@ var orderList = React.createClass({
             rowHasChanged: (r1, r2) => true////为了在swipe的时候刷新列表
         });
         return {
-            status: this.props.status,//-1删除，0正常，1结束
+            status: this.props.status,//0: 进行中 1: 已完成 2: 已关注
             pageNum: 1,
             pageSize: 20,
             loaded : false,

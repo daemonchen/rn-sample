@@ -12,9 +12,7 @@ var Actions = require('react-native-router-flux').Actions;
 var commonStyle = require('../../styles/commonStyle');
 var OrderSegmentControl = require('./components/orderSegmentControl');
 var OrderList = require('./components/orderList');
-var OrderTemplates = require('./orderTemplates');
-var OrderSettings = require('./orderSettings');
-var OrderDetail = require('./orderDetail');
+
 var RightAddButton = require('../../common/rightAddButton');
 
 var util = require('../../common/util');
