@@ -4,6 +4,7 @@ import React, {
     Text,
     View,
     ListView,
+    AlertIOS,
     Image,
     TouchableOpacity,
     TouchableWithoutFeedback,
@@ -112,11 +113,10 @@ module.exports = React.createClass({
         this.props._handleSwipeout(this.props.rowData, this.props.sectionID, this.props.rowID);
     },
     renderProgressBar: function(){
-        console.log('----this.state.progress', this.state.progress);
         return(
             <ProgressBar
                 fillStyle={styles.progressBarFill}
-                containerWidth={{width: width - 84}}
+                containerWidth={{width: width - 80}}
                 style={styles.progressBar}
                 progress={this.state.progress} />
             );
@@ -142,20 +142,13 @@ module.exports = React.createClass({
                 <TouchableHighlight underlayColor='#eee'
                 onPress={this.onPress}>
                     <View style={styles.rowStyle}>
-                        <CircleProgressView
-                          progress={progress}
-                          lineWidth={2}
-                          lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
-                          circleRadius={26}
-                          circleColor='#34a853'
-                          circleUnderlayColor='#e6e6e6'
-                          style={styles.circle}/>
-                        {this.renderPercent(this.props.rowData.overPercent)}
+                        {this.renderCheckIcon()}
                         <View style={styles.orderContentWrapper}>
                             <Text style={[styles.orderTitle, commonStyle.textDark]}
                             numberOfLines={1}>
                                 {this.props.rowData.title}
                             </Text>
+                            {this.renderProgressBar()}
                             <View style={styles.orderContent}>
                                 {this.renderTimeLabel(this.props.rowData.endTime)}
                                 {this.renderCustomerLabel()}
@@ -177,20 +170,13 @@ module.exports = React.createClass({
                         <TouchableHighlight underlayColor='#eee'
                         onPress={this.onPress}>
                             <View style={styles.rowStyle}>
-                                <CircleProgressView
-                                  progress={progress}
-                                  lineWidth={2}
-                                  lineCap={CircleProgressView.LineCapSquare}   // LineCapButt | LineCapRound | LineCapSquare
-                                  circleRadius={26}
-                                  circleColor='#34a853'
-                                  circleUnderlayColor='#e6e6e6'
-                                  style={styles.circle}/>
-                                {this.renderPercent(this.props.rowData.overPercent)}
+                                {this.renderCheckIcon()}
                                 <View style={styles.orderContentWrapper}>
                                     <Text style={[styles.orderTitle, commonStyle.textDark]}
                                     numberOfLines={1}>
                                         {this.props.rowData.title}
                                     </Text>
+                                    {this.renderProgressBar()}
                                     <View style={styles.orderContent}>
                                         {this.renderTimeLabel(this.props.rowData.endTime)}
                                         {this.renderCustomerLabel()}

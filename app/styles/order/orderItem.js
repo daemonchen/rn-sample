@@ -19,7 +19,8 @@ module.exports = React.StyleSheet.create({
     orderContentWrapper: {
         flex: 1,
         paddingLeft: 16,
-        marginTop: 5,
+        paddingRight: 4,
+        // marginTop: 5,
         // backgroundColor: '#000',
         // flexDirection: 'column'
     },
@@ -30,6 +31,7 @@ module.exports = React.StyleSheet.create({
     },
     orderContent: {
         // flex: 1,
+        marginTop: 5,
         flexDirection: 'row'
     },
     orderLabel: {
@@ -62,7 +64,7 @@ module.exports = React.StyleSheet.create({
         width: 32,
         height: 32,
         marginTop: 2,
-        marginLeft: 2
+        marginLeft: 4
     },
     progressBar: {
         backgroundColor: '#D5D5D5',
