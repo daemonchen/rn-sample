@@ -1,11 +1,6 @@
 'use strict';
 
-var React = require('react-native');
-var TimerMixin = require('react-timer-mixin');
-import NavigationBar from 'react-native-navbar'
-var Actions = require('react-native-router-flux').Actions;
-var SearchBar = require('react-native-search-bar');
-var {
+import React, {
     View,
     Text,
     Image,
@@ -16,7 +11,14 @@ var {
     ActivityIndicatorIOS,
     ActionSheetIOS,
     StyleSheet
-} = React;
+} from 'react-native'
+import NavigationBar from 'react-native-navbar'
+import { PieChart } from 'react-native-ios-charts';
+import TimerMixin from 'react-timer-mixin';
+import _ from 'underscore';
+
+var Actions = require('react-native-router-flux').Actions;
+var SearchBar = require('react-native-search-bar');
 
 
 var attachListStore = require('../../../stores/attach/attachListStore');
@@ -24,6 +26,8 @@ var attachListAction = require('../../../actions/attach/attachListAction');
 var attachStore = require('../../../stores/attach/attachStore');
 
 var commonStyle = require('../../../styles/commonStyle');
+var styles = require('../../../styles/order/orderDetail');
+
 var appConstants = require('../../../constants/appConstants');
 
 // var AttachItem = require('./attachItem');
@@ -42,7 +46,7 @@ module.exports = React.createClass({
     componentDidMount: function() {
         this.unlistenAttach = attachStore.listen(this.onAttachChange);
         this.unlisten = attachListStore.listen(this.onChange);
-        this.fetchAttachData();
+        // this.fetchAttachData();
     },
     componentWillUnmount: function(){
         this.unlisten();
@@ -58,9 +62,6 @@ module.exports = React.createClass({
             return;
         }
         if (result.type == 'create') {
-            this.setTimeout(this.fetchAttachData, 350);
-        };
-        if (result.type == 'get') {
             this.setTimeout(this.fetchAttachData, 350);
         };
     },
@@ -116,7 +117,7 @@ module.exports = React.createClass({
     fetchAttachData: function(){
         attachListAction.getList({
             hostId: this.props.data.orderId,
-            hostType: this.props.hostType
+            hostType: 1//订单附件
         });
     },
     onPressAttachRow: function(rowData,sectionID){
@@ -171,16 +172,89 @@ module.exports = React.createClass({
             </TouchableHighlight>
             );
     },
+    renderPie: function(){
+        var config = {
+          dataSets: [{
+            // values: [16,24,60],
+            values: [160, 45],
+            drawValues: false,
+            colors: ['#4285f4', '#d5d5d5'],
+            // sliceSpace: 2,
+            sliceSpace: 0,
+            selectionShift: 10.0
+            // label: 'Quarter Revenues 2014'
+          }],
+          backgroundColor: 'transparent',
+          // labels: ['已完成', '延期', '进行中'],
+          // labels: ['已完成'],
+          centerText: '160/205 \n 生产进度',
+          rotationWithTwoFingers: true,
+          legend: {
+            position: 'belowChartCenter',
+            wordWrap: true
+          },
+          valueFormatter: {
+            type: 'regular',
+            numberStyle: 'NoStyle',
+            maximumDecimalPlaces: 0
+          },
+          holeRadiusPercent: 0.72,
+          drawSliceTextEnabled: false,
+          animation: {
+            yAxisDuration: 0.8,
+            easingOption: 'easeInOutQuad'
+          }
+        };
+        return (<PieChart config={config} style={styles.pieContainer}/>);
+    },
+    renderBarItem: function(item, key, height){
+        if (key == 0) {
+            return(
+                <View style={[styles.barItemWrapper, {marginLeft: 0}]} key={key}>
+                    <Text style={[commonStyle.textDark, {fontSize: 10}]}>周六</Text>
+                    <Text style={[commonStyle.textGray, {fontSize: 10}]}>3/11</Text>
+                    <Text style={{position: 'absolute', bottom: height}}>{item}</Text>
+                    <View style={[styles.barItem,{height: height}]} />
+                </View>
+                );
+        };
+        return(
+            <View style={styles.barItemWrapper} key={key}>
+                <Text style={[commonStyle.textDark, {fontSize: 10}]}>周六</Text>
+                <Text style={[commonStyle.textGray, {fontSize: 10}]}>3/11</Text>
+                <Text style={{position: 'absolute', bottom: height}}>{item}</Text>
+                <View style={[styles.barItem, {height: height}]} />
+            </View>
+            );
+    },
+    renderBarItems: function(){
+        var self = this;
+        var mockData = [34,5,67,8,4,45,12];
+        var maxValue = _.max(mockData);
+        return _.map(mockData, function(item, key){
+            var height = 170 * (item/maxValue);
+            return self.renderBarItem(item, key, height);
+        });
+    },
+    renderBarChart: function(){
+        return(
+            <ScrollView style={styles.barChartContainer}
+            horizontal={true}>
+                {this.renderBarItems()}
+            </ScrollView>);
+    },
     render: function() {
         return(
             <ScrollView>
                 <View style={commonStyle.section}>
+                    {this.renderPie()}
+                    {this.renderBarChart()}
                     <View style={commonStyle.settingItemWrapper}>
                         <View style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
                             <Text
                             numberOfLines={3}
                             style={{flex: 1,fontSize: 18}}>
-                                {this.props.data.title}
+                                进度记录
                             </Text>
                         </View>
                     </View>
@@ -189,13 +263,7 @@ module.exports = React.createClass({
                 {this.renderListView()}
             </ScrollView>
             );
-        // if (!this.state.loaded) {
-        //     return this.renderLoadingView();
-        // }
-        // if(this.state.list.length == 0){
-        //     return this.renderEmptyView();
-        // }
-        // return this.renderListView();
+
     },
     renderEmptyRow: function(){
         return (
@@ -256,15 +324,5 @@ module.exports = React.createClass({
                     size="small" />
             </View>
         );
-    }
-});
-
-var styles = StyleSheet.create({
-    main:{
-        flex:1
-    },
-    empty:{
-        justifyContent: 'center',
-        alignItems: 'center'
     }
 });

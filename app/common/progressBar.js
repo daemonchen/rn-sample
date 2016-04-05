@@ -1,3 +1,7 @@
+/*---
+copyright:
+https://github.com/lwansbrough/react-native-progress-bar
+---*/
 import React, {
     Animated,
     Easing,

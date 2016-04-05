@@ -8,18 +8,24 @@ var {
 
 module.exports = React.StyleSheet.create({
     main: {
-        flex: 1,
-        backgroundColor: '#fff'
+        flex: 1
+    },
+    orderTitle: {
+        paddingVertical: 16,
+        paddingLeft: 16,
+        fontSize: 18
     },
     taskTotalTextTop: {
-        color:'#fff',
         textAlign:'center',
         paddingTop: 10,
         paddingBottom: 10
     },
     taskTotalTextBottom: {
-        color:'#fff',
         textAlign:'center',
+        paddingBottom: 10
+    },
+    taskTotalImageTop: {
+        paddingTop: 10,
         paddingBottom: 10
     },
     rowStyle: {
@@ -233,5 +239,36 @@ module.exports = React.StyleSheet.create({
     imageGallery:{
         width: width,
         height: height - 64
+    },
+    pieContainer: {
+        width: width-32,
+        height: width-32,
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        marginHorizontal: 16,
+        marginTop: 16
+
+    },
+    barChartContainer: {
+        flexDirection: 'row',
+        width: width,
+        height: 280,
+        paddingTop: 16,
+        paddingHorizontal: 16,
+        borderBottomWidth:1 / React.PixelRatio.get(),
+        borderBottomColor:'#d5d5d5',
+        borderTopWidth:1 / React.PixelRatio.get(),
+        borderTopColor:'#d5d5d5'
+    },
+    barItemWrapper: {
+        height: 264,
+        width: 20,
+        marginLeft: 25
+    },
+    barItem: {
+        position: 'absolute',
+        bottom: 0,
+        width: 20,
+        backgroundColor: '#4285f4'
     }
 });

@@ -4,6 +4,7 @@ import React, {
     TextInput,
     View,
     ListView,
+    ScrollView,
     Image,
     ActionSheetIOS,
     TouchableOpacity,
@@ -27,10 +28,10 @@ var MemberList = require('./member/memberList')
 var OrderSummary = require('./detail/orderSummary');
 var OrderDetailSegmentControl = require('./components/orderDetailSegmentControl');
 
-var WhiteBackButton = require('../../common/whiteBackButton');
-var RightWhiteAddButton = require('../../common/rightWhiteAddButton');
-var RightWhiteFollowButton = require('../../common/rightWhiteFollowButton');
-var RightWhiteMoreButton = require('../../common/rightWhiteMoreButton');
+var BlueBackButton = require('../../common/blueBackButton');
+var RightAddButton = require('../../common/rightAddButton');
+var RightFollowButton = require('../../common/rightFollowButton');
+var RightMoreButton = require('../../common/rightMoreButton');
 var Popover = require('../../common/popover');
 
 var util = require('../../common/util');
@@ -140,7 +141,7 @@ module.exports = React.createClass({
     },
     onTaskListChange: function(){
         var result = taskListStore.getState();
-        console.log('------onTaskListChange', result);
+        // console.log('------onTaskListChange', result);
         if (result.status != 200 && !!result.message) {
             // util.alert(result.message);
             return;
@@ -162,7 +163,7 @@ module.exports = React.createClass({
     onOrderChange: function(){
         var result = orderStore.getState();
         var orderData = this.state.orderData;
-        console.log('-------getOrderdata:', result);
+        // console.log('-------getOrderdata:', result);
         if (result.status != 200 && !!result.message) {
             return;
         };
@@ -249,15 +250,15 @@ module.exports = React.createClass({
         if ((rights & targetRights) == targetRights){
             return (
                 <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
-                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.follow}/>
-                    <RightWhiteAddButton onPress={this._pressCreateButton} />
-                    <RightWhiteMoreButton onPress={this.showPopover} />
+                    <RightFollowButton onPress={this._pressFollowButton} status={!!this.state.follow}/>
+                    <RightAddButton onPress={this._pressCreateButton} />
+                    <RightMoreButton onPress={this.showPopover} />
                 </View>
                 );
         }else{
             return(
                 <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
-                    <RightWhiteFollowButton onPress={this._pressFollowButton} status={!!this.state.follow}/>
+                    <RightFollowButton onPress={this._pressFollowButton} status={!!this.state.follow}/>
                 </View>
                 )
         }
@@ -299,23 +300,28 @@ module.exports = React.createClass({
         })
     },
     renderSummary: function(){
+        console.log('-----orderData', this.state.orderData);
         var time = moment(this.state.orderData.endTime).format('YYYY.MM.DD');
-        var totalTaskCount = this.state.orderData.totalTaskCount;
-        var finishedTaskCount = this.state.orderData.finishedTaskCount ;
-        var undoNumber = totalTaskCount - finishedTaskCount;
+
         return(
-            <View style={{flexDirection:'row', backgroundColor: '#4285f4'}}>
-                <View style={{flex: 1}}>
-                    <Text style={styles.taskTotalTextTop}>{finishedTaskCount}</Text>
-                    <Text style={styles.taskTotalTextBottom}>已完成</Text>
+            <View style={{flexDirection:'row', backgroundColor: '#fff'}}>
+                <View style={{flex: 1, alignItems: 'center'}}>
+                    <Image
+                        style={styles.taskTotalImageTop}
+                        source={require('../../images/order/editor_outling_chu.png')}/>
+                    <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{this.state.orderData.totalTaskCount}</Text>
                 </View>
-                <View style={{flex: 1}}>
-                    <Text style={styles.taskTotalTextTop}>{undoNumber}</Text>
-                    <Text style={styles.taskTotalTextBottom}>未完成</Text>
+                <View style={{flex: 1, alignItems: 'center'}}>
+                    <Image
+                        style={styles.taskTotalImageTop}
+                        source={require('../../images/order/editor_outling_chu.png')}/>
+                    <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{this.state.orderData.totalTaskCount}</Text>
                 </View>
-                <View style={{flex: 1}}>
-                    <Text style={styles.taskTotalTextTop}>{time}</Text>
-                    <Text style={styles.taskTotalTextBottom}>截止日</Text>
+                <View style={{flex: 1, alignItems: 'center'}}>
+                    <Image
+                        style={styles.taskTotalImageTop}
+                        source={require('../../images/order/editor_outling_chu.png')}/>
+                    <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{time}</Text>
                 </View>
             </View>
             );
@@ -329,16 +335,15 @@ module.exports = React.createClass({
         switch(this.state.tabIndex){
             case 0:
                 return(
-                    <TaskList
-                    onPressRow={this.onPressTaskRow}
+                    <OrderSummary
+                    onEmptyButtonPress={this.onAttachEmptyButtonPress}
                     data={this.state.orderData} />
                 )
             case 1:
                 return(
-                    <OrderSummary
-                    onEmptyButtonPress={this.onAttachEmptyButtonPress}
-                    data={this.state.orderData}
-                    hostType={1} />
+                    <TaskList
+                    onPressRow={this.onPressTaskRow}
+                    data={this.state.orderData} />
                 )
             case 2:
                 return(
@@ -346,11 +351,11 @@ module.exports = React.createClass({
                     onPressRow={this.onPressMemberRow}
                     data={this.state.orderData} />
                 )
-            case 3:
-                return(
-                    <NewsList
-                    data={this.state.orderData} />
-                )
+            // case 3:
+            //     return(
+            //         <NewsList
+            //         data={this.state.orderData} />
+            //     )
             default:
                 return(
                     <View />
@@ -432,23 +437,37 @@ module.exports = React.createClass({
             </Popover>
             );
     },
+    renderNavigationBar: function(){
+        return(
+            <NavigationBar
+                tintColor={'#f9f9f9'}
+                title={{ title: '' }}
+                leftButton={<BlueBackButton />}
+                rightButton={this.rightButtonConfig()} />
+            );
+        // <NavigationBar
+        //         style={{borderBottomWidth: 0}}
+        //         statusBar={{style: 'light-content', hidden: false}}
+        //         tintColor={'#4285f4'}
+        //         title={{ title: '', tintColor: '#fff' }}
+        //         leftButton={<WhiteBackButton />}
+        //         rightButton={this.rightButtonConfig()} />
+    },
     render: function(){
         var title = this.state.orderData.orderTitle || ''
         return(
             <View style={commonStyle.container}>
-                <NavigationBar
-                    style={{borderBottomWidth: 0}}
-                    statusBar={{style: 'light-content', hidden: false}}
-                    tintColor={'#4285f4'}
-                    title={{ title: '', tintColor: '#fff' }}
-                    leftButton={<WhiteBackButton />}
-                    rightButton={this.rightButtonConfig()} />
-                <View style={styles.main}>
+                {this.renderNavigationBar()}
+                <ScrollView
+                stickyHeaderIndices={[2]}
+                automaticallyAdjustContentInsets={false}
+                style={styles.main}>
+                    <Text style={styles.orderTitle}>{this.state.orderData.title}</Text>
                     {this.renderSummary()}
                     <OrderDetailSegmentControl
                     onSegmentChange={this.onSegmentChange}/>
                     {this.renderTabContent()}
-                </View>
+                </ScrollView>
                 {this.renderPopOver()}
             </View>
             );

@@ -109,15 +109,20 @@ module.exports =  React.createClass({
     renderPie: function(){
         var config = {
           dataSets: [{
-            values: [16,24,60],
-            colors: ['#98ebec', '#fec2bf', '#bdd3f7'],
-            sliceSpace: 2,
+            // values: [16,24,60],
+            values: [60],
+            drawValues: false,
+            // colors: ['#98ebec', '#fec2bf', '#bdd3f7'],
+            colors: ['#98ebec'],
+            // sliceSpace: 2,
+            sliceSpace: 0,
             selectionShift: 10.0
             // label: 'Quarter Revenues 2014'
           }],
           backgroundColor: 'transparent',
-          labels: ['已完成', '延期', '进行中'],
-          centerText: '110 \n 本月订单',
+          // labels: ['已完成', '延期', '进行中'],
+          // labels: ['已完成'],
+          centerText: '0 \n 本月订单',
           rotationWithTwoFingers: true,
           legend: {
             position: 'belowChartCenter',
