@@ -10,6 +10,9 @@ module.exports = React.StyleSheet.create({
     main: {
         flex: 1
     },
+    summaryWrapper: {
+        paddingBottom: 36
+    },
     orderTitle: {
         paddingVertical: 16,
         paddingLeft: 16,
@@ -270,5 +273,45 @@ module.exports = React.StyleSheet.create({
         bottom: 0,
         width: 20,
         backgroundColor: '#4285f4'
+    },
+    addButtonWrapper: {
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        left: width/2 - 28,
+        bottom: 10
+    },
+    addButton: {
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        backgroundColor: '#4285f4',
+        alignItems: 'center',
+        justifyContent: 'center'
+
+    },
+    sepLine: {
+        width: width - 32,
+        marginHorizontal: 16,
+        backgroundColor: '#eee',
+        height: 1
+    },
+    summarySection: {
+        width: width-32,
+        marginHorizontal: 16
+    },
+    recordNum: {
+        height: 44,
+        marginVertical: 20,
+        textAlign: 'center',
+        color: '#4285f4',
+        borderBottomWidth:1 / React.PixelRatio.get(),
+        borderBottomColor:'#d5d5d5'
+    },
+    recordsDesc: {
+        width: width-32,
+        marginHorizontal: 16,
+        height: 64,
+        marginVertical: 20,
+        color: '#212121'
     }
 });

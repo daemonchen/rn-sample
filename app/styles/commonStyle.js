@@ -166,10 +166,11 @@ module.exports = React.StyleSheet.create({
         borderTopWidth: 1 / React.PixelRatio.get(),
         borderTopColor: '#eee'
     },
-    section: {
+    sectionWithBorder: {
         // borderBottomWidth: 1 / React.PixelRatio.get(),
         // borderBottomColor: '#eee'
     },
+    section: {},
     settingGroupsTitle: {
         color: '#727272',
         marginVertical: 10,

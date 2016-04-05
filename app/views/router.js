@@ -20,6 +20,9 @@ var WebViewWrapper = require('./webViewWrapper');
 var MyTask = require('./home/myTask');
 var OrderSheet = require('./home/orderSheet');
 
+var RecordsList = require('./order/records/recordsList');
+var RecordsSetting = require('./order/records/recordsSetting');
+
 var OrderDetail = require('./order/orderDetail');
 var OrderSettings = require('./order/orderSettings');
 var OrderSettingsForTemplate = require('./order/orderSettingsForTemplate');
@@ -245,6 +248,10 @@ module.exports = React.createClass({
                 <Route name="resetPassword" component={ResetPassword} title="重置密码"/>
                 <Route name="setPassword" component={SetPassword} title="设置密码"/>
                 <Route name="validationCode" component={ValidationCode} title="验证码"/>
+
+
+                <Route name="recordsList" component={RecordsList} title="进度记录"/>
+                <Route name="recordsSetting" component={RecordsSetting} title="记录进度"/>
 
                 <Route name="orderDetail" component={OrderDetail} title="订单详情"/>
                 <Route name="orderDetailReplace" component={OrderDetail} title="订单详情" type="replace"/>

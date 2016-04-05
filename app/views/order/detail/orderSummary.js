@@ -34,6 +34,7 @@ var appConstants = require('../../../constants/appConstants');
 var Button = require('../../../common/button.js');
 var util = require('../../../common/util');
 var CollectionView = require('../../../common/collectionView');
+var RecordsList = require('./recordsList');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -243,27 +244,87 @@ module.exports = React.createClass({
                 {this.renderBarItems()}
             </ScrollView>);
     },
+    goRecordsList: function(){
+        Actions.recordsList({
+            data: this.props.data
+        });
+    },
     render: function() {
         return(
-            <ScrollView>
+            <ScrollView style={styles.summaryWrapper}>
                 <View style={commonStyle.section}>
                     {this.renderPie()}
                     {this.renderBarChart()}
                     <View style={commonStyle.settingItemWrapper}>
-                        <View style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                        <View style={[commonStyle.settingItem]}>
                             <Text
                             numberOfLines={3}
-                            style={{flex: 1,fontSize: 18}}>
+                            style={[commonStyle.commonTitle, commonStyle.textGray,{flex: 1}]}>
                                 进度记录
                             </Text>
                         </View>
                     </View>
+                    {this.renderRecordsList()}
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this.goRecordsList}>
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                            <Text
+                            style={[commonStyle.blue, {flex: 1}]}>
+                                查看更多
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this.goTask}>
+                        <View
+                        style={commonStyle.settingItem}>
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../../images/person/account_settings.png')}/>
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                业务员
+                            </Text>
+                            <Text
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
+                                abc
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <View style={commonStyle.settingItemWrapper}>
+                        <View style={[commonStyle.settingItem]}>
+                            <Text
+                            numberOfLines={3}
+                            style={[commonStyle.commonTitle, commonStyle.textGray,{flex: 1}]}>
+                                订单描述
+                            </Text>
+                        </View>
+                    </View>
                     {this.renderDescribeItem()}
+                    <View style={commonStyle.settingItemWrapper}>
+                        <View style={[commonStyle.settingItem]}>
+                            <Text
+                            numberOfLines={3}
+                            style={[commonStyle.commonTitle, commonStyle.textGray,{flex: 1}]}>
+                                附件
+                            </Text>
+                        </View>
+                    </View>
+                    {this.renderListView()}
                 </View>
-                {this.renderListView()}
             </ScrollView>
             );
 
+    },
+    renderRecordsList: function(){
+        return (
+            <RecordsList data={this.state.listData} />
+            );
     },
     renderEmptyRow: function(){
         return (

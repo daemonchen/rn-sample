@@ -453,6 +453,24 @@ module.exports = React.createClass({
         //         leftButton={<WhiteBackButton />}
         //         rightButton={this.rightButtonConfig()} />
     },
+    goRecordsSetting: function(){
+        Actions.recordsSetting({
+            data: this.state.orderData
+        });
+    },
+    renderAddButton: function(){
+        return(
+            <View style={styles.addButtonWrapper}>
+                <TouchableHighlight
+                    underlayColor='#eee'
+                    onPress={this.goRecordsSetting}>
+                    <View style={styles.addButton}>
+                        <Image source={require('../../images/common/add_white.png')}/>
+                    </View>
+                </TouchableHighlight>
+            </View>
+            );
+    },
     render: function(){
         var title = this.state.orderData.orderTitle || ''
         return(
@@ -468,6 +486,7 @@ module.exports = React.createClass({
                     onSegmentChange={this.onSegmentChange}/>
                     {this.renderTabContent()}
                 </ScrollView>
+                {this.renderAddButton()}
                 {this.renderPopOver()}
             </View>
             );
