@@ -66,7 +66,7 @@ module.exports = React.createClass({
         var url = Linking.getInitialURL();
         this.factoryLinkingScheme(url);
 
-        this.doLaunchWithAnimate();//带有动画的打开页面
+        // this.doLaunchWithAnimate();//带有动画的打开页面
     },
     componentWillUnmount: function() {
         this.unlisten();
@@ -226,13 +226,8 @@ module.exports = React.createClass({
     },
     render: function() {
         return (
-            <Animated.View style={{
-                flex: 1,
-                transform: [                        // `transform`是一个有序数组（动画按顺序执行）
-                    {
-                        scale: this.state.viewBounceValue
-                   }
-                  ]
+            <View style={{
+                flex: 1
             }}>
             <TabBarIOS
                 tintColor = "#4285f4"
@@ -279,7 +274,7 @@ module.exports = React.createClass({
                     <AppNavigator initialRoute={{title: 'Person', component:UserIndex, topNavigator: this.props.navigator}} key='Person' />
                 </TabBarIOS.Item>
             </TabBarIOS>
-            </Animated.View>
+            </View>
         );
     }
 });

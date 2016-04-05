@@ -11,7 +11,7 @@ import React, {
     StyleSheet
 } from 'react-native'
 import NavigationBar from '../../common/react-native-navbar/index';
-
+import moment from 'moment'
 import { PieChart } from 'react-native-ios-charts';
 
 var Actions = require('react-native-router-flux').Actions;
@@ -25,63 +25,77 @@ var commonStyle = require('../../styles/commonStyle');
 var styles = require('../../styles/home/style');
 var util = require('../../common/util');
 
-var taskListStore = require('../../stores/task/taskListStore');
-var schemeStore = require('../../stores/scheme/schemeStore');
+var workbenchReportAction = require('../../actions/workbench/workbenchReportAction');
+var workbenchReportStore = require('../../stores/workbench/workbenchReportStore');
 
 module.exports =  React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         return {
-            pieValue: [10,2,3]
+            isLoad: true,
+            delayCount: 0,
+            finishedCount: 0,
+            runningCount: 0,
+            currentTime: moment()
         }
     },
     componentDidMount: function(){
-        this.unlisten = taskListStore.listen(this.onChange);
+        this.unlisten = workbenchReportStore.listen(this.onChange);
+        if (this._timeout) {
+            this.clearTimeout(this._timeout);
+        };
+        this._timeout = this.setTimeout(this.fetchData, 350);
     },
     componentWillUnmount: function() {
         this.unlisten();
     },
-
-    handleUpdate: function(result){
+    fetchData: function(){
+        workbenchReportAction.get({
+            start: this.state.currentTime.startOf('month').valueOf(),
+            end: this.state.currentTime.startOf('month').valueOf()
+        });
+    },
+    handleGet: function(result){
         if (result.status != 200 && !!result.message) {
             util.toast(result.message);
+            this.setState({
+                isLoad: false
+            });
             return;
         }
+        this.setState({
+            isLoad: false,
+            delayCount: result.data.delayCount,
+            finishedCount: result.data.finishedCount,
+            runningCount: result.data.runningCount
+        });
     },
     onChange: function() {
-        var result = taskListStore.getState();
+        var result = workbenchReportStore.getState();
         switch(result.type){
-            case 'update':
-                return this.handleUpdate(result);
+            case 'get':
+                return this.handleGet(result);
         }
     },
     renderNavigationBar: function(){
-        // var rights = appConstants.userRights.rights;
-        // var targetRights = 2;
-        // if ((rights & targetRights) == targetRights) {
-        //     return(
-        //         <NavigationBar
-        //             title={{ title: '工作台' }}
-        //             rightButton={<RightAddButton onPress={this.showActionSheet} />} />
-        //         );
-        // }else{
-        // }
         return(
             <NavigationBar
                 tintColor="#f9f9f9"
                 leftButton={<BlueBackButton />}
-                title={{ title: '报表' }} />
+                title={{ title: this.props.title }} />
             );
     },
     prev: function(){
         this.setState({
-            pieValue: [Math.random()*20,12,Math.random()*3]
+            currentTime: this.state.currentTime.subtract(1, 'M')
         });
+        this.fetchData();
     },
     next: function(){
         this.setState({
-            pieValue: [Math.random(),12,3]
+            currentTime: this.state.currentTime.add(1, 'M')
         });
+        this.fetchData();
     },
     renderPieTitle: function(){
         return(
@@ -91,7 +105,7 @@ module.exports =  React.createClass({
                 onPress={this.prev}>
                     <Image source={require('../../images/common/arrow_right_gray.png')}/>
                 </TouchableOpacity>
-                <Text style={styles.pieTitleText}>2016年3月</Text>
+                <Text style={styles.pieTitleText}>{this.state.currentTime.format('MM/YYYY')}</Text>
                 <TouchableOpacity
                 style={styles.pieTitleBtnNext}
                 onPress={this.next}>
@@ -100,18 +114,85 @@ module.exports =  React.createClass({
             </View>
             );
     },
+    getPieValue: function(){
+        var res = [];
+        if (!!this.state.delayCount) {
+            res.push(this.state.delayCount);
+        };
+        if (!!this.state.finishedCount) {
+            res.push(this.state.finishedCount);
+        };
+        if (!!this.state.runningCount) {
+            res.push(this.state.runningCount);
+        };
+        if (res.length == 0) {//没有数据的情况下
+            res.push(100);
+        };
+        return res;
+
+    },
+    getPieColors: function(){
+        var res = [];
+        if (!!this.state.delayCount) {
+            res.push('#fec2bf');
+        };
+        if (!!this.state.finishedCount) {
+            res.push('#98ebec');
+        };
+        if (!!this.state.runningCount) {
+            res.push('#bdd3f7');
+        };
+        if (res.length == 0) {//没有数据的情况下
+            res.push('#d5d5d5');
+        };
+        return res;
+    },
+    getPieLabels: function(){
+        var res = [];
+        if (!!this.state.delayCount) {
+            res.push('延期');
+        };
+        if (!!this.state.finishedCount) {
+            res.push('已完成');
+        };
+        if (!!this.state.runningCount) {
+            res.push('进行中');
+        };
+        // if (res.length == 0) {//没有数据的情况下
+        //     res.push('#d5d5d5');
+        // };
+        return res;
+    },
+    getSliceSpace: function(){
+        if (this.getPieValue().length > 1) {
+            return 2
+        };
+        return 0;
+    },
+    getPieCenterText: function(){
+        if (this.getPieColors()[0] == '#d5d5d5') {
+            return '本月无数据'
+        };
+        var totalCount = this.state.delayCount + this.state.finishedCount + this.state.runningCount;
+        return totalCount + ' \n 本月订单';
+    },
     renderPie: function(){
+        if (!!this.state.isLoad) {//
+            return(<View style={styles.pieContainer}/>);
+        };
         var config = {
           dataSets: [{
-            values: this.state.pieValue,
-            colors: ['#98ebec', '#fec2bf', '#bdd3f7'],
-            sliceSpace: 2,
+            values: this.getPieValue(),
+            drawValues: !(this.getPieColors()[0] == '#d5d5d5'),
+            colors: this.getPieColors(),
+            // sliceSpace: 2,
+            sliceSpace: this.getSliceSpace(),
             selectionShift: 10.0
             // label: 'Quarter Revenues 2014'
           }],
           backgroundColor: 'transparent',
-          // labels: ['已完成', '延期', '进行中'],
-          centerText: '110 \n 本月订单',
+          // labels: this.getPieLabels(),
+          centerText: this.getPieCenterText(),
           rotationWithTwoFingers: true,
           legend: {
             position: 'belowChartCenter',
@@ -131,57 +212,35 @@ module.exports =  React.createClass({
         };
         return (<PieChart config={config} style={styles.pieContainer}/>);
     },
+    renderSheetFootItem: function(count, color, label){
+        if (!count) {
+            return(<View />);
+        };
+        return(
+            <View
+            style={commonStyle.settingItemWrapper}>
+                <View
+                style={commonStyle.settingItem}>
+                    <View
+                    style={[styles.sheetCircle, {backgroundColor: color}]}/>
+                    <Text
+                    style={commonStyle.settingTitle}>
+                        {label}
+                    </Text>
+                    <Text
+                    style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
+                        {count}
+                    </Text>
+                </View>
+            </View>
+            );
+    },
     renderList: function(){
         return(
             <View style={styles.sheetList}>
-                <View
-                style={commonStyle.settingItemWrapper}>
-                    <View
-                    style={commonStyle.settingItem}>
-                        <View
-                        style={[styles.sheetCircle, styles.sheetCirclePurple]}/>
-                        <Text
-                        style={commonStyle.settingTitle}>
-                            进行中订单
-                        </Text>
-                        <Text
-                        style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                            23
-                        </Text>
-                    </View>
-                </View>
-                <View
-                style={commonStyle.settingItemWrapper}>
-                    <View
-                    style={commonStyle.settingItem}>
-                        <View
-                        style={[styles.sheetCircle, styles.sheetCirclePink]}/>
-                        <Text
-                        style={commonStyle.settingTitle}>
-                            延期订单
-                        </Text>
-                        <Text
-                        style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                            23
-                        </Text>
-                    </View>
-                </View>
-                <View
-                style={commonStyle.settingItemWrapper}>
-                    <View
-                    style={commonStyle.settingItem}>
-                        <View
-                        style={[styles.sheetCircle, styles.sheetCircleBlue]}/>
-                        <Text
-                        style={commonStyle.settingTitle}>
-                            已完成订单
-                        </Text>
-                        <Text
-                        style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                            23
-                        </Text>
-                    </View>
-                </View>
+                {this.renderSheetFootItem(this.state.runningCount, '#bdd3f7', '进行中订单')}
+                {this.renderSheetFootItem(this.state.delayCount, '#fec2bf', '延期订单')}
+                {this.renderSheetFootItem(this.state.finishedCount, '#98ebec', '已完成订单')}
             </View>
             );
     },
@@ -194,7 +253,7 @@ module.exports =  React.createClass({
                     {this.renderPieTitle()}
                     {this.renderPie()}
 
-                    <View style={styles.sepLine}/>
+                    <View style={[styles.sepLine, {marginTop: 16}]}/>
                     {this.renderList()}
                 </ScrollView>
             </View>
