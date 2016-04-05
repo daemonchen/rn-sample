@@ -39,6 +39,22 @@ class OrderStore {
 
         this.setState(responseData);
     }
+
+    onUpdateStatus(data) {
+        orderService.updateStatus(data)
+        .then((responseData) => {
+            orderAction.updateStatusSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onUpdateStatusSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'updateStatus'
+
+        this.setState(responseData);
+    }
+
     onGet(data) {
         orderService.get(data)
         .then((responseData) => {

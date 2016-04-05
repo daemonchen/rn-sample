@@ -23,6 +23,9 @@ var styles = require('../../../styles/order/orderItem.js');
 var commonStyle = require('../../../styles/commonStyle');
 var appConstants = require('../../../constants/appConstants');
 
+var orderStore = require('../../../stores/order/orderStore');
+var orderAction = require('../../../actions/order/orderAction');
+
 var {
     width, height, scale
 } = util.getDimensions();
@@ -93,17 +96,16 @@ module.exports = React.createClass({
     },
     onPressCircle: function(){
         var status = (this.props.rowData.status == 1) ? 0 : 1
-        var isCheck = (this.state.isCheck == 1) ? 0 : 1;
         AlertIOS.alert(
             '',
             '您确定要更改订单状态吗',
             [
                 {text: '确定', onPress: () => {
-                    console.log('----order status');
-                    // taskAction.update({
-                    //     taskId: this.props.rowData.taskId,
-                    //     status: status,
-                    // });
+                    console.log('----order status', this.props.rowData);
+                    orderAction.update({
+                        id: this.props.rowData.orderId,
+                        status: status,
+                    });
                 } },
                 {text: '取消', onPress: () => {return}, style: 'cancel'},
             ]

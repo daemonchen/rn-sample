@@ -50,7 +50,7 @@ module.exports =  React.createClass({
         this.unlisten();
     },
     fetchData: function(){
-        workbenchReportAction.get({
+        workbenchReportAction.getMore({
             start: this.state.currentTime.startOf('month').valueOf(),
             end: this.state.currentTime.startOf('month').valueOf()
         });
@@ -73,7 +73,7 @@ module.exports =  React.createClass({
     onChange: function() {
         var result = workbenchReportStore.getState();
         switch(result.type){
-            case 'get':
+            case 'getMore':
                 return this.handleGet(result);
         }
     },

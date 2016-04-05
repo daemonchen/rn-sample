@@ -15,7 +15,7 @@ class WorkbenchReportStore {
         .then((data)=>{
             if(!!data){
                 appConstants = data;
-                appConstants.workbenchList = responseData.data
+                appConstants.workbenchReport = responseData.data
                 asyncStorage.setItem('appConstants', appConstants);
 
             }
@@ -32,7 +32,21 @@ class WorkbenchReportStore {
     onGetSuccess(responseData){
         if (!responseData) {return false};
         responseData.type = 'get'
-        this.doCache(responseData)
+        // this.doCache(responseData)
+        this.setState(responseData);
+    }
+    onGetMore(data) {
+        workbenchReportService.get(data)
+        .then((responseData) => {
+            workbenchReportAction.getMoreSuccess(responseData)
+        }).done();
+
+        this.preventDefault();
+    }
+    onGetMoreSuccess(responseData){
+        if (!responseData) {return false};
+        responseData.type = 'getMore'
+        // this.doCache(responseData)
         this.setState(responseData);
     }
 

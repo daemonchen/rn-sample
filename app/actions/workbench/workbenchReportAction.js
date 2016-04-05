@@ -2,5 +2,7 @@
 
 var alt = require('../../common/alt');
 module.exports = alt.generateActions(
-    'get',
-    'getSuccess');
+    'get',//首页sheet
+    'getSuccess',
+    'getMore',//查看更多sheet
+    'getMoreSuccess');

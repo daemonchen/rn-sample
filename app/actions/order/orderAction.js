@@ -9,4 +9,6 @@ module.exports = alt.generateActions(
     'getOrderExtra',
     'getOrderExtraSuccess',
     'update',
-    'updateSuccess');
+    'updateSuccess',
+    'updateStatus',
+    'updateStatusSuccess');

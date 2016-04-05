@@ -14,6 +14,8 @@ import React, {
 
 var TimerMixin = require('react-timer-mixin');
 
+var orderStore = require('../../../stores/order/orderStore');
+var orderAction = require('../../../actions/order/orderAction');
 var orderListAction = require('../../../actions/order/orderListAction');
 var orderListStore = require('../../../stores/order/orderListStore');
 var followOrderAction = require('../../../actions/followOrder/followOrderAction');
@@ -104,7 +106,7 @@ var orderList = React.createClass({
 
     },
     handleGet: function(result){
-        // console.log('------result', result);
+        // console.log('------order list result', result);
         if (result.status != 200 && !!result.message) {
             util.toast(result.message);
             this.setState({
