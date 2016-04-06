@@ -110,7 +110,8 @@ module.exports = React.createClass({
         if (this.props.rowData.unreadMsgCount == 0) {
             return(<View />);
         };
-        var labelWidth = parseInt(this.props.rowData.unreadMsgCount/10)* 10 + 20;
+        var labelWidth = parseInt(this.props.rowData.unreadMsgCount.toString().length)* 5 + 20;
+        // console.log('----labelWidth', labelWidth, this.props.rowData.unreadMsgCount.toString().length);
         return(
             <Text style={[styles.redDot, commonStyle.textWhite, {width: labelWidth, height: 20, borderRadius: 10}]}>
                 {this.props.rowData.unreadMsgCount}
