@@ -175,14 +175,12 @@ module.exports = React.createClass({
     },
     getPieValue: function(){
         var res = [];
-        if (!!this.state.delayCount) {
-            res.push(this.state.delayCount);
+        if (!!this.props.data.finishedQuantity) {
+            res.push(this.props.data.finishedQuantity);
         };
-        if (!!this.state.finishedCount) {
-            res.push(this.state.finishedCount);
-        };
-        if (!!this.state.runningCount) {
-            res.push(this.state.runningCount);
+        var runningCount = this.props.data.quantity - this.props.data.finishedQuantity;
+        if (runningCount > 0) {
+            res.push(runningCount);
         };
         if (res.length == 0) {//没有数据的情况下
             res.push(100);
@@ -192,14 +190,12 @@ module.exports = React.createClass({
     },
     getPieColors: function(){
         var res = [];
-        if (!!this.props.quantity) {
-            res.push('#fec2bf');
+        if (!!this.props.data.finishedQuantity) {
+            res.push('#4285f4');
         };
-        if (!!this.props.quantity) {
-            res.push('#98ebec');
-        };
-        if (!!this.state.runningCount) {
-            res.push('#bdd3f7');
+        var runningCount = this.props.data.quantity - this.props.data.finishedQuantity;
+        if (runningCount > 0) {
+            res.push('#d5d5d5');
         };
         if (res.length == 0) {//没有数据的情况下
             res.push('#d5d5d5');
@@ -210,10 +206,10 @@ module.exports = React.createClass({
         if (this.getPieColors()[0] == '#d5d5d5') {
             return '无生产进度'
         };
-        var totalCount = this.state.delayCount + this.state.finishedCount + this.state.runningCount;
-        return totalCount + ' \n 生产进度';
+        return this.props.data.finishedQuantity + '/' + this.props.data.quantity + ' \n 生产进度';
     },
     renderPie: function(){
+        console.log('----pid data:', this.props.data);
         if (!!this.props.isLoad) {//
             return(<View style={styles.pieContainer}/>);
         };
@@ -268,6 +264,7 @@ module.exports = React.createClass({
             );
     },
     renderBarItems: function(){
+        console.log('----schedules', this.props.data.schedules);
         var self = this;
         var mockData = [34,5,67,8,4,45,12];
         var maxValue = _.max(mockData);

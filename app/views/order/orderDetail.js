@@ -302,7 +302,7 @@ module.exports = React.createClass({
         })
     },
     renderSummary: function(){
-        console.log('-----orderData', this.state.orderData);
+        // console.log('-----orderData', this.state.orderData);
         var time = moment(this.state.orderData.endTime).format('YYYY.MM.DD');
 
         return(
