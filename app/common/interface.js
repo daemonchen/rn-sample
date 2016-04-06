@@ -48,6 +48,8 @@ module.exports = {
 
     orderStatus: NZAOM_API_DOMAIN + '/api/order/status',
 
+    orderSchedule: NZAOM_API_DOMAIN + '/api/order/schedule',
+
     orderV2: NZAOM_API_DOMAIN + '/api/v2/order',
 
     orderExtra: NZAOM_API_DOMAIN + '/api/order_extra',

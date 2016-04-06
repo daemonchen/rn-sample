@@ -12,12 +12,13 @@ import React, {
     StyleSheet
 } from 'react-native'
 import NavigationBar from 'react-native-navbar'
+var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 
 var RecordsList = require('../detail/recordsList');
 
-var memberListAction = require('../../../actions/member/memberListAction');
-var memberListStore = require('../../../stores/member/memberListStore');
+var orderScheduleAction = require('../../../actions/order/orderScheduleAction');
+var orderScheduleStore = require('../../../stores/order/orderScheduleStore');
 var util = require('../../../common/util');
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
@@ -30,10 +31,12 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         return {
+            remark: '',
+            scheduleCount: 0
         }
     },
     componentDidMount: function(){
-        this.unlisten = memberListStore.listen(this.onChange);
+        this.unlisten = orderScheduleStore.listen(this.onChange);
         if (this._timeout) {
             this.clearTimeout(this._timeout)
         };
@@ -42,38 +45,30 @@ module.exports = React.createClass({
     componentWillUnmount: function() {
         this.unlisten();
     },
-    handleGet: function(result){
+    handleCreate: function(result){
         if (result.status != 200 && !!result.message) {
-            this.setState({
-                loaded: true,
-                list: []
-            })
+            util.toast(result.message);
             return;
         }
-        this.setState({
-            listData: result.data,
-            loaded: true
-        });
+        Actions.pop();
     },
     onChange: function() {
-        var result = memberListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
+        var result = orderScheduleStore.getState();
+        console.log('-------create report:', result);
         switch(result.type){
-            case 'get':
-                return this.handleGet(result);
+            case 'create':
+                return this.handleCreate(result);
         }
     },
-    fetchData: function() {
-        memberListAction.getList({
+    doCreate: function() {
+        orderScheduleAction.create({
             orderId: this.props.data.orderId,
-            pageNum: this.pageNum,
-            pageSize: this.state.pageSize
+            remark: this.state.remark,
+            scheduleCount: this.state.scheduleCount
         });
     },
     onPressDone: function(){
-        console.log('---Todo');
+        this.doCreate();
     },
     renderNavigationBar: function(){
         return(
@@ -84,17 +79,18 @@ module.exports = React.createClass({
                 rightButton={<RightDoneButton onPress={this.onPressDone} />} />
             );
     },
-    onChangeText: function(){
-        console.log('---todo');
+    onChangeText: function(text){
+        this.setState({
+            scheduleCount: text
+        });
     },
-    onSubmitEditing: function(){
-        console.log('---todo');
-    },
-    onChangeDesText: function(){
-        console.log('---todo');
+    onChangeDesText: function(text){
+        this.setState({
+            remark: text
+        });
     },
     onSubmitDesEditing: function(){
-        console.log('---todo');
+        this.doCreate();
     },
     render: function() {
         return(
@@ -103,18 +99,17 @@ module.exports = React.createClass({
                 <ScrollView
                 automaticallyAdjustContentInsets={false}
                 style={styles.main}>
-                    <TextInput value={'123'}
-                    placeholder={'124'} style={styles.recordNum}
+                    <TextInput
+                    placeholder={'请输入进度'} style={styles.recordNum}
                     placeholderTextColor={'#4285f4'}
                     onChangeText={this.onChangeText}
                     keyboardType={'number-pad'}
                     returnKeyType={'next'}
-                    onSubmitEditing={this.onSubmitEditing}
                     autoFocus={true} />
                     <View style={styles.sepLine}/>
                     <View style={styles.summarySection}>
-                        <Text style={[commonStyle.textDark, {paddingVertical: 10}]}>阿斯顿发发</Text>
-                        <Text style={[commonStyle.textGray, {paddingBottom: 10}]}>当前进度: 2/10</Text>
+                        <Text style={[commonStyle.textDark, {paddingVertical: 10}]}>{this.props.data.title}</Text>
+                        <Text style={[commonStyle.textGray, {paddingBottom: 10}]}>当前进度: {this.props.data.finishedQuantity}/{this.props.data.quantity}</Text>
                     </View>
                     <View style={styles.sepLine}/>
                     <TextInput
