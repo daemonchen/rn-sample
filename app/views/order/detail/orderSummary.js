@@ -331,6 +331,9 @@ module.exports = React.createClass({
         var maxValue = _.max(barDataArray, function(item){ return item.count}).count;
         return _.map(barDataArray, function(item, key){
             var height = parseInt(200 * (item.count/maxValue));
+            if (!height) {
+                height = 0;
+            };
             // console.log('---height', height, maxValue);
             return self.renderBarItem(item, key, height);
         });
