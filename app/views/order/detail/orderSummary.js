@@ -149,7 +149,7 @@ module.exports = React.createClass({
             );
     },
     renderDescribeItem: function(){
-        console.log('------this.props.data', this.props.data);
+        // console.log('------this.props.data', this.props.data);
         if (!this.props.data.hadDes) {
             return(
                 <View />);
@@ -173,22 +173,61 @@ module.exports = React.createClass({
             </TouchableHighlight>
             );
     },
+    getPieValue: function(){
+        var res = [];
+        if (!!this.state.delayCount) {
+            res.push(this.state.delayCount);
+        };
+        if (!!this.state.finishedCount) {
+            res.push(this.state.finishedCount);
+        };
+        if (!!this.state.runningCount) {
+            res.push(this.state.runningCount);
+        };
+        if (res.length == 0) {//没有数据的情况下
+            res.push(100);
+        };
+        return res;
+
+    },
+    getPieColors: function(){
+        var res = [];
+        if (!!this.props.quantity) {
+            res.push('#fec2bf');
+        };
+        if (!!this.props.quantity) {
+            res.push('#98ebec');
+        };
+        if (!!this.state.runningCount) {
+            res.push('#bdd3f7');
+        };
+        if (res.length == 0) {//没有数据的情况下
+            res.push('#d5d5d5');
+        };
+        return res;
+    },
+    getPieCenterText: function(){
+        if (this.getPieColors()[0] == '#d5d5d5') {
+            return '无生产进度'
+        };
+        var totalCount = this.state.delayCount + this.state.finishedCount + this.state.runningCount;
+        return totalCount + ' \n 生产进度';
+    },
     renderPie: function(){
+        if (!!this.props.isLoad) {//
+            return(<View style={styles.pieContainer}/>);
+        };
         var config = {
           dataSets: [{
-            // values: [16,24,60],
-            values: [160, 45],
-            drawValues: false,
-            colors: ['#4285f4', '#d5d5d5'],
-            // sliceSpace: 2,
+            values: this.getPieValue(),
+            drawValues: !(this.getPieColors()[0] == '#d5d5d5'),
+            colors: this.getPieColors(),
             sliceSpace: 0,
             selectionShift: 10.0
             // label: 'Quarter Revenues 2014'
           }],
           backgroundColor: 'transparent',
-          // labels: ['已完成', '延期', '进行中'],
-          // labels: ['已完成'],
-          centerText: '160/205 \n 生产进度',
+          centerText: this.getPieCenterText(),
           rotationWithTwoFingers: true,
           legend: {
             position: 'belowChartCenter',

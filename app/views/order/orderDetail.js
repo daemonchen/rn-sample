@@ -49,6 +49,7 @@ module.exports = React.createClass({
     displayName: 'orderDetail',
     getInitialState: function(){
         return {
+            isLoad: true,
             orderId: this.props.data || 0,//订单id
             orderData: {},
             follow: false,
@@ -169,6 +170,7 @@ module.exports = React.createClass({
         };
         if (result.type == 'getOrderExtra') {
             this.setState({
+                isLoad: false,
                 orderData: Object.assign(orderData,result.data)
             });
         };
@@ -309,13 +311,13 @@ module.exports = React.createClass({
                     <Image
                         style={styles.taskTotalImageTop}
                         source={require('../../images/order/editor_outling_chu.png')}/>
-                    <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{this.state.orderData.totalTaskCount}</Text>
+                    <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{this.state.orderData.overPercent}%</Text>
                 </View>
                 <View style={{flex: 1, alignItems: 'center'}}>
                     <Image
                         style={styles.taskTotalImageTop}
                         source={require('../../images/order/editor_outling_chu.png')}/>
-                    <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{this.state.orderData.totalTaskCount}</Text>
+                    <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{this.state.orderData.userName}</Text>
                 </View>
                 <View style={{flex: 1, alignItems: 'center'}}>
                     <Image
@@ -337,6 +339,7 @@ module.exports = React.createClass({
                 return(
                     <OrderSummary
                     onEmptyButtonPress={this.onAttachEmptyButtonPress}
+                    isLoad={this.state.isLoad}
                     data={this.state.orderData} />
                 )
             case 1:

@@ -9,7 +9,7 @@ module.exports = {
     update: function(data){
         return http.put(NZAOM_INTERFACE.order, data)
     },
-    updateStatus: function(){
+    updateStatus: function(data){
         return http.put(NZAOM_INTERFACE.orderStatus, data)
     },
     get: function(data){//获取订单编辑页的数据

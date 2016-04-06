@@ -14,13 +14,12 @@ import React, {
 
 var TimerMixin = require('react-timer-mixin');
 
-var orderStore = require('../../../stores/order/orderStore');
-var orderAction = require('../../../actions/order/orderAction');
 var orderListAction = require('../../../actions/order/orderListAction');
 var orderListStore = require('../../../stores/order/orderListStore');
 var followOrderAction = require('../../../actions/followOrder/followOrderAction');
 var followOrderStore = require('../../../stores/followOrder/followOrderStore');
 var orderStore = require('../../../stores/order/orderStore');
+// var orderAction = require('../../../actions/order/orderAction');
 var util = require('../../../common/util');
 
 var commonStyle = require('../../../styles/commonStyle');
@@ -96,6 +95,12 @@ var orderList = React.createClass({
 
         };
         if (result.type == 'update') {
+            if (this._timeout) {
+                this.clearTimeout(this._timeout)
+            };
+            this._timeout = this.setTimeout(this.onRefresh, 350)
+        };
+        if (result.type == 'updateStatus') {
             if (this._timeout) {
                 this.clearTimeout(this._timeout)
             };

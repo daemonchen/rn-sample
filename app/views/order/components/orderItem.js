@@ -102,7 +102,7 @@ module.exports = React.createClass({
             [
                 {text: '确定', onPress: () => {
                     console.log('----order status', this.props.rowData);
-                    orderAction.update({
+                    orderAction.updateStatus({
                         id: this.props.rowData.orderId,
                         status: status,
                     });
