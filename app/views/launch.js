@@ -15,6 +15,7 @@ import React, {
 } from 'react-native'
 var NativeAppEventEmitter = require('RCTNativeAppEventEmitter');
 // var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+var DeviceInfo = require('react-native-device-info');
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 
@@ -170,7 +171,10 @@ module.exports = React.createClass({
             authTokenAction.updateToken()
         };
         if (jsonData.type == 3) {
-            this.doLogout()
+            //TODO: devicetoken DeviceInfo.getUniqueID()
+            if (DeviceInfo.getUniqueID() == jsonData.imei) {
+                this.doLogout()
+            };
         };
     },
     doLogout: function(){

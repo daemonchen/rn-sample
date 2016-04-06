@@ -58,7 +58,7 @@ module.exports = React.createClass({
 
 
     renderTimeLabel: function(timestamp){
-        var time = moment(timestamp).calendar();
+        var time = moment(timestamp).calendar();//考虑改成from()？
         return(
             <Text style={[commonStyle.cardOuterTitle, commonStyle.textGray]}>
                 {time}

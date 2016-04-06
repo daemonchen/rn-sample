@@ -265,14 +265,22 @@ module.exports = React.StyleSheet.create({
     },
     barItemWrapper: {
         height: 264,
-        width: 20,
-        marginLeft: 25
+        width: (width-32)/7
+        // marginLeft: 25
     },
     barItem: {
         position: 'absolute',
         bottom: 0,
+        left: ((width-32)/7 - 20)/2,
         width: 20,
         backgroundColor: '#4285f4'
+    },
+    barItemText: {
+        // flex: 1,
+        width: (width-32)/7,
+        // backgroundColor: '#000',
+        paddingBottom: 5,
+        textAlign: 'center'
     },
     addButtonWrapper: {
         backgroundColor: 'transparent',

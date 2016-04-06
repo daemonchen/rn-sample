@@ -32,9 +32,9 @@ var {
 
 module.exports = React.createClass({
     getInitialState: function(){
-        console.log('-----orderItem data:', this.props.rowData.overPercent)
+        // console.log('-----orderItem data:', this.props.rowData.overPercent)
         return{
-            progress: parseInt(this.props.rowData.overPercent)/100 || 0
+            // progress: parseInt(this.props.rowData.overPercent)/100 || 0
         }
     },
     onPress: function(){
@@ -115,19 +115,17 @@ module.exports = React.createClass({
         this.props._handleSwipeout(this.props.rowData, this.props.sectionID, this.props.rowID);
     },
     renderProgressBar: function(){
+        var progress = parseInt(this.props.rowData.overPercent)/100 || 0;
         return(
             <ProgressBar
                 fillStyle={styles.progressBarFill}
                 containerWidth={{width: width - 80}}
                 style={styles.progressBar}
-                progress={this.state.progress} />
+                progress={progress} />
             );
     },
     render: function(){
         var self = this;
-        // setTimeout((function() {
-        //       self.setState({ progress: self.state.progress + parseInt(self.props.rowData.overPercent)/100});
-        //     }), 350);
         var swipeoutBtns = [
           {
             text: '删除',
@@ -138,7 +136,6 @@ module.exports = React.createClass({
         ]
         var rights = appConstants.userRights.rights;
         var targetRights = 4;
-        var progress = parseInt(this.props.rowData.overPercent)/100 || 0;
         if (this.props.status == 2) {//关注列表
             return(
                 <TouchableHighlight underlayColor='#eee'

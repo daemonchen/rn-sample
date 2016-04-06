@@ -16,6 +16,7 @@ import NavigationBar from 'react-native-navbar'
 import { PieChart } from 'react-native-ios-charts';
 import TimerMixin from 'react-timer-mixin';
 import _ from 'underscore';
+import moment from 'moment'
 
 var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
@@ -38,6 +39,7 @@ var RecordsList = require('./recordsList');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
+    dayOfWeek: ['周日','周一','周二','周三','周四','周五','周六'],
     getInitialState: function(){
         return {
             loaded : false,
@@ -209,7 +211,7 @@ module.exports = React.createClass({
         return this.props.data.finishedQuantity + '/' + this.props.data.quantity + ' \n 生产进度';
     },
     renderPie: function(){
-        console.log('----pid data:', this.props.data);
+        // console.log('----pie data:', this.props.data);
         if (!!this.props.isLoad) {//
             return(<View style={styles.pieContainer}/>);
         };
@@ -244,41 +246,73 @@ module.exports = React.createClass({
         return (<PieChart config={config} style={styles.pieContainer}/>);
     },
     renderBarItem: function(item, key, height){
+        console.log('----bar item', item);
         if (key == 0) {
             return(
                 <View style={[styles.barItemWrapper, {marginLeft: 0}]} key={key}>
-                    <Text style={[commonStyle.textDark, {fontSize: 10}]}>周六</Text>
-                    <Text style={[commonStyle.textGray, {fontSize: 10}]}>3/11</Text>
-                    <Text style={{position: 'absolute', bottom: height}}>{item}</Text>
+                    <Text style={[commonStyle.textDark, styles.barItemText]}>{item.dayOfWeek}</Text>
+                    <Text style={[commonStyle.textGray, styles.barItemText]}>{item.formatDay}</Text>
+                    <Text style={[{position: 'absolute', bottom: height}, styles.barItemText]}>{item.count}</Text>
                     <View style={[styles.barItem,{height: height}]} />
                 </View>
                 );
         };
         return(
             <View style={styles.barItemWrapper} key={key}>
-                <Text style={[commonStyle.textDark, {fontSize: 10}]}>周六</Text>
-                <Text style={[commonStyle.textGray, {fontSize: 10}]}>3/11</Text>
-                <Text style={{position: 'absolute', bottom: height}}>{item}</Text>
+                <Text style={[commonStyle.textDark, styles.barItemText]}>{item.dayOfWeek}</Text>
+                <Text style={[commonStyle.textGray, styles.barItemText]}>{item.formatDay}</Text>
+                <Text style={[{position: 'absolute', bottom: height}, styles.barItemText]}>{item.count}</Text>
                 <View style={[styles.barItem, {height: height}]} />
             </View>
             );
     },
     renderBarItems: function(){
-        console.log('----schedules', this.props.data.schedules);
+        // console.log('----schedules', this.props.data.schedules);
         var self = this;
-        var mockData = [34,5,67,8,4,45,12];
-        var maxValue = _.max(mockData);
-        return _.map(mockData, function(item, key){
-            var height = 170 * (item/maxValue);
+        var barDataArray = this.getBarData();
+        // console.log('----barDataArray', barDataArray);
+        var maxValue = _.max(barDataArray, function(item){ return item.count}).count;
+        return _.map(barDataArray, function(item, key){
+            var height = parseInt(200 * (item.count/maxValue));
+            console.log('---height', height, maxValue);
             return self.renderBarItem(item, key, height);
         });
     },
     renderBarChart: function(){
         return(
-            <ScrollView style={styles.barChartContainer}
-            horizontal={true}>
+            <View style={styles.barChartContainer}>
                 {this.renderBarItems()}
-            </ScrollView>);
+            </View>);
+    },
+    getDay: function(date){
+        if (moment().format('YYYY/MM/DD') == moment(date, 'MM/DD').format('YYYY/MM/DD')) {
+            return '今天';
+        };
+        return this.dayOfWeek[moment(date, 'MM/DD').day()];
+    },
+    getBarData: function(){
+        var  res = [];
+        var _data = this.props.data.schedules;
+        _.map(_data, function(item, key){//format all date as month/day
+            item.formatDay = moment(item.date).format('MM/DD');
+            return item;
+        });
+        var daysArray = _.uniq(_.pluck(_data, 'formatDay'));
+        var sliceArray = daysArray.slice(0,7);//get the latest seven days
+        for (var i = 0; i < sliceArray.length; i++) {
+            var item = {
+                formatDay: sliceArray[i],
+                dayOfWeek: this.getDay(sliceArray[i]),
+                count: 0
+            }
+            for (var j = 0; j < _data.length; j++) {
+                if (_data[j].formatDay == sliceArray[i]) {
+                    item.count += _data[j].count;
+                };
+            };
+            res.unshift(item);
+        };
+        return res;
     },
     goRecordsList: function(){
         Actions.recordsList({
