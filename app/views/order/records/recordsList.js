@@ -7,13 +7,15 @@ import React, {
     Image,
     Navigator,
     TouchableOpacity,
+    TouchableHighlight,
     ActivityIndicatorIOS,
     StyleSheet
 } from 'react-native'
 import NavigationBar from 'react-native-navbar'
+import moment from 'moment'
 var TimerMixin = require('react-timer-mixin');
 
-var RecordsList = require('../detail/recordsList');
+// var RecordsList = require('../detail/recordsList');
 
 var memberListAction = require('../../../actions/member/memberListAction');
 var memberListStore = require('../../../stores/member/memberListStore');
@@ -22,25 +24,26 @@ var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
 var contactsStyle = require('../../../styles/contact/contactsItem');
 
+var BlueBackButton = require('../../../common/blueBackButton');
+
 module.exports = React.createClass({
     mixins: [TimerMixin],
-    pageNum: 1,
     getInitialState: function(){
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
+        var data = (!!this.props.data && this.props.data.length > 0) ? this.props.data : [];
         return {
-            pageSize: 20,
-            loaded : false,
-            listData: []
+            dataSource: ds.cloneWithRows(data)
         }
     },
     componentDidMount: function(){
-        this.unlisten = memberListStore.listen(this.onChange);
-        if (this._timeout) {
-            this.clearTimeout(this._timeout)
-        };
-        this._timeout = this.setTimeout(this.fetchData, 350)
+        // this.unlisten = memberListStore.listen(this.onChange);
+        // if (this._timeout) {
+        //     this.clearTimeout(this._timeout)
+        // };
+        // this._timeout = this.setTimeout(this.fetchData, 350)
     },
     componentWillUnmount: function() {
-        this.unlisten();
+        // this.unlisten();
     },
     handleGet: function(result){
         if (result.status != 200 && !!result.message) {
@@ -65,29 +68,69 @@ module.exports = React.createClass({
                 return this.handleGet(result);
         }
     },
-    fetchData: function() {
-        this.pageNum = 1;
-        memberListAction.getList({
-            orderId: this.props.data.orderId,
-            pageNum: this.pageNum,
-            pageSize: this.state.pageSize
-        });
-    },
-    render: function() {
-        if (!this.state.loaded) {
-            return this.renderLoadingView();
+
+    renderAvatar: function(data){
+        if (!data) {
+            return(<View style={contactsStyle.contactsItemCircle}/>);
+        };
+        if (data.avatar) {
+            return(
+                <Image
+                  style={contactsStyle.contactsItemCircle}
+                  source={{uri: data.avatar}} />
+                );
+        }else{
+            var circleBackground = {
+                backgroundColor: data.bgColor
+            }
+            return(
+                <View style={[contactsStyle.contactsItemCircle, circleBackground]}>
+                    <Text style={contactsStyle.contactsItemTitle}>{data.simpleUserName}</Text>
+                </View>
+                )
         }
-        return this.renderListView();
     },
-    onPressRow: function(data){
-        this.props.onPressRow(data);
+    renderRow: function(data){
+        return(
+            <TouchableHighlight
+                underlayColor='#eee'>
+                <View style={contactsStyle.contactsItem}>
+                    {this.renderAvatar(data.userVO)}
+                    <View style={contactsStyle.contactsItemFlexWrapper}>
+                        <Text style={[contactsStyle.contactsItemDetail, {paddingTop: 0}]}
+                        numberOfLines={1}>
+                            {data.userVO.userName}
+                        </Text>
+                        <Text style={[contactsStyle.contactsItemDetail, commonStyle.textGray]}
+                        numberOfLines={1}>
+                            {moment(data.date).format('YYYY-MM-DD hh:mm')}
+                        </Text>
+                    </View>
+                    <Text style={[contactsStyle.contactRightText, contactsStyle.recordText]}
+                    numberOfLines={1}>
+                        +{data.count}
+                    </Text>
+                </View>
+            </TouchableHighlight>
+            );
     },
-    renderListView: function(){
+    renderNavigationBar: function(){
+        return(
+            <NavigationBar
+                tintColor={'#f9f9f9'}
+                title={{title: this.props.title}}
+                leftButton={<BlueBackButton />} />
+            );
+    },
+    render: function(){
         return (
-            <RecordsList
-                style={contactsStyle.scrollView}
-                data={this.state.listData}
-                onPressRow={this.onPressRow} />
+            <View style={commonStyle.container}>
+                {this.renderNavigationBar()}
+                <ListView
+                  style={contactsStyle.scrollView}
+                  dataSource={this.state.dataSource}
+                  renderRow={this.renderRow} />
+            </View>
             )
     },
     renderLoadingView: function(){

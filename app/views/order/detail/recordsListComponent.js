@@ -13,6 +13,7 @@ import React, {
 } from 'react-native'
 
 import NavigationBar from 'react-native-navbar'
+import moment from 'moment'
 var SearchBar = require('react-native-search-bar');
 
 
@@ -23,14 +24,15 @@ var styles = require('../../../styles/order/orderDetail');
 module.exports = React.createClass({
     getInitialState: function(){
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
+        var data = (!!this.props.data && this.props.data.length > 0) ? this.props.data.slice(0,2) : [];
         return {
-            dataSource: ds.cloneWithRows(this.props.data || [])
+            dataSource: ds.cloneWithRows(data)
         }
     },
     componentWillReceiveProps: function(nextProps){
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(nextProps.data || [])
-        });
+        // this.setState({
+        //     dataSource: this.state.dataSource.cloneWithRows(nextProps.data || [])
+        // });
     },
     renderAvatar: function(data){
         if (!data) {
@@ -56,17 +58,22 @@ module.exports = React.createClass({
     renderRow: function(data){
         return(
             <TouchableHighlight
-                onPress={()=>{this.props.onPressRow(data)}}
                 underlayColor='#eee'>
                 <View style={contactsStyle.contactsItem}>
-                    {this.renderAvatar(data)}
-                    <Text style={contactsStyle.contactsItemDetail}
+                    {this.renderAvatar(data.userVO)}
+                    <View style={contactsStyle.contactsItemFlexWrapper}>
+                        <Text style={[contactsStyle.contactsItemDetail, {paddingTop: 0}]}
+                        numberOfLines={1}>
+                            {data.userVO.userName}
+                        </Text>
+                        <Text style={[contactsStyle.contactsItemDetail, commonStyle.textGray]}
+                        numberOfLines={1}>
+                            {moment(data.date).format('YYYY-MM-DD hh:mm')}
+                        </Text>
+                    </View>
+                    <Text style={[contactsStyle.contactRightText, contactsStyle.recordText]}
                     numberOfLines={1}>
-                        {data.userName}
-                    </Text>
-                    <Text style={[contactsStyle.contactRightText, commonStyle.textGray]}
-                    numberOfLines={1}>
-                        {data.position}
+                        +{data.count}
                     </Text>
                 </View>
             </TouchableHighlight>
@@ -90,8 +97,7 @@ module.exports = React.createClass({
             <ListView
               style={contactsStyle.scrollView}
               dataSource={this.state.dataSource}
-              renderRow={this.renderRow}
-              contentContainerStyle={{paddingBottom: 40}} />
+              renderRow={this.renderRow} />
             );
     }
 });

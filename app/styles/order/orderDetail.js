@@ -252,6 +252,13 @@ module.exports = React.StyleSheet.create({
         marginTop: 16
 
     },
+    descWrapper: {
+        width: width-32,
+        marginHorizontal: 16,
+        // height: 48,
+        backgroundColor: '#000',
+        alignItems: 'center'
+    },
     barChartContainer: {
         flexDirection: 'row',
         width: width,
@@ -277,6 +284,7 @@ module.exports = React.StyleSheet.create({
     },
     barItemText: {
         // flex: 1,
+        fontSize: 12,
         width: (width-32)/7,
         // backgroundColor: '#000',
         paddingBottom: 5,

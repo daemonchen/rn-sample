@@ -109,7 +109,7 @@ module.exports = React.createClass({
                 contentContainerStyle={{alignItems: 'center'}}
                 keyboardDismissMode={'interactive'} >
                     <WebViewBridge
-                        url={this.state.url}
+                        source={{uri: this.state.url}}
                         automaticallyAdjustContentInsets={false}
                         style={styles.webView}
                         javaScriptEnabled={true}

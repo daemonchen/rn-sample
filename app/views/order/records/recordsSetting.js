@@ -15,8 +15,6 @@ import NavigationBar from 'react-native-navbar'
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 
-var RecordsList = require('../detail/recordsList');
-
 var orderScheduleAction = require('../../../actions/order/orderScheduleAction');
 var orderScheduleStore = require('../../../stores/order/orderScheduleStore');
 var util = require('../../../common/util');
@@ -121,29 +119,5 @@ module.exports = React.createClass({
                 </ScrollView>
             </View>
             );
-    },
-    onPressRow: function(data){
-        this.props.onPressRow(data);
-    },
-    renderListView: function(){
-        return (
-            <RecordsList
-                style={contactsStyle.scrollView}
-                data={this.state.listData}
-                onPressRow={this.onPressRow} />
-            )
-    },
-    renderLoadingView: function(){
-        return (
-            <View style={commonStyle.header}>
-                <Text style={commonStyle.headerText}>User List</Text>
-                <View style={commonStyle.container}>
-                    <ActivityIndicatorIOS
-                        animating={!this.state.loaded}
-                        style={[commonStyle.activityIndicator]}
-                        size="small" />
-                </View>
-            </View>
-        );
     }
 });

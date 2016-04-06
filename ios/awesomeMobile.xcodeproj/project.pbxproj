@@ -61,6 +61,7 @@
 		D118809B1CA400D60041CD21 /* RNScatterChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D118807B1CA400D60041CD21 /* RNScatterChartManager.swift */; };
 		D11E67161C5909B5003E9E1B /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D11E67151C5909A7003E9E1B /* libRNSearchBar.a */; };
 		D121E5261C7800810034509B /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D121E50F1C7800670034509B /* libCodePush.a */; };
+		D134ECFD1CB52DAD009AF247 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D134ECFC1CB52DA3009AF247 /* libReact-Native-Webview-Bridge.a */; };
 		D189FD9E1C57983800784BB3 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D189FD841C57983800784BB3 /* UMSocialLocalizable.strings */; };
 		D189FD9F1C57983800784BB3 /* libUMSocial_Sdk_4.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D189FD921C57983800784BB3 /* libUMSocial_Sdk_4.4.a */; };
 		D189FDA01C57983800784BB3 /* UMSCommentDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D189FD941C57983800784BB3 /* UMSCommentDetailController.xib */; };
@@ -90,7 +91,6 @@
 		D22832EB1C0F3AB100027EA3 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D22832EA1C0F3A3B00027EA3 /* libRCTCameraRoll.a */; };
 		D22832FF1C0FCAFA00027EA3 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */; };
 		D2A90CEC1C34F19B000464CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ADA4801C313A1A0078F08F /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		D2A95C621C3E661D0065EDE0 /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A95C611C3E660E0065EDE0 /* libReact-Native-Webview-Bridge.a */; };
 		D2BF469E1C1FFD00002C7185 /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF469D1C1FFD00002C7185 /* Orientation.m */; };
 		D2BF47231C21476C002C7185 /* libGeTuiSdk-1.3.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47221C21476C002C7185 /* libGeTuiSdk-1.3.1.a */; };
 		D2BF47261C214901002C7185 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D2BF47251C214901002C7185 /* libz.tbd */; };
@@ -292,6 +292,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = CodePush;
 		};
+		D134ECFB1CB52DA3009AF247 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D134ECF71CB52DA3009AF247 /* React-Native-Webview-Bridge.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4114DC4C1C187C3A003CD988;
+			remoteInfo = "React-Native-Webview-Bridge";
+		};
 		D1C80AA71C7D7C6E0014E596 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D1C80A8B1C7D7C6D0014E596 /* ToolTipMenu.xcodeproj */;
@@ -319,13 +326,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
 			remoteInfo = RCTCameraRoll;
-		};
-		D2A95C601C3E660E0065EDE0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4114DC4C1C187C3A003CD988;
-			remoteInfo = "React-Native-Webview-Bridge";
 		};
 		D2BF46F91C2134CE002C7185 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -422,6 +422,7 @@
 		D118807B1CA400D60041CD21 /* RNScatterChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNScatterChartManager.swift; path = "../node_modules/react-native-ios-charts/RNiOSCharts/RNScatterChartManager.swift"; sourceTree = "<group>"; };
 		D11E67101C5909A7003E9E1B /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		D121E50A1C7800670034509B /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/CodePush.xcodeproj"; sourceTree = "<group>"; };
+		D134ECF71CB52DA3009AF247 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		D189FD851C57983800784BB3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		D189FD871C57983800784BB3 /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
 		D189FD881C57983800784BB3 /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
@@ -474,7 +475,6 @@
 		D22832FE1C0FCAFA00027EA3 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerManager.m; sourceTree = "<group>"; };
 		D26F5C9A1C23A8E4006D4BE7 /* awesomeMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = awesomeMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D26F5C9B1C23A8E4006D4BE7 /* awesomeMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = awesomeMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		D2ADA47E1C31394C0078F08F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2ADA4801C313A1A0078F08F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D2BF469C1C1FFD00002C7185 /* Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orientation.h; sourceTree = "<group>"; };
@@ -628,6 +628,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D134ECFD1CB52DAD009AF247 /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				1A33F0471C96AA44004206C3 /* libRNPhonePicker.a in Frameworks */,
 				1A33F0401C96A912004206C3 /* libRCTCircleProgress.a in Frameworks */,
 				1A33F0361C96A2B3004206C3 /* libRCTToast.a in Frameworks */,
@@ -648,7 +649,6 @@
 				D1FD91EE1C5762900067EC7E /* Security.framework in Frameworks */,
 				D1C84B961C4F8D020050EFEE /* libRCTPushNotification.a in Frameworks */,
 				D189FD9F1C57983800784BB3 /* libUMSocial_Sdk_4.4.a in Frameworks */,
-				D2A95C621C3E661D0065EDE0 /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				D2A90CEC1C34F19B000464CD /* UIKit.framework in Frameworks */,
 				D2D974CA1C2D28EB00A22F98 /* libRNBlur.a in Frameworks */,
 				D2F074121C23057D00A3BABE /* libresolv.9.tbd in Frameworks */,
@@ -857,6 +857,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D134ECF71CB52DA3009AF247 /* React-Native-Webview-Bridge.xcodeproj */,
 				1A33F0411C96AA29004206C3 /* RNPhonePicker.xcodeproj */,
 				1A33F0371C96A904004206C3 /* RCTCircleProgress.xcodeproj */,
 				1A33F0301C96A284004206C3 /* RCTToast.xcodeproj */,
@@ -869,7 +870,6 @@
 				D189FD831C57983800784BB3 /* UMSocial_Sdk_4.4 */,
 				D1FD91681C573F220067EC7E /* UMeng */,
 				D1C84B901C4F8CF50050EFEE /* RCTPushNotification.xcodeproj */,
-				D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */,
 				D2D974C41C2D28DC00A22F98 /* RNBlur.xcodeproj */,
 				D2F073A61C2304B800A3BABE /* AFNetworking */,
 				D2F073551C23049F00A3BABE /* QiniuSDK */,
@@ -938,6 +938,14 @@
 			isa = PBXGroup;
 			children = (
 				D121E50F1C7800670034509B /* libCodePush.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D134ECF81CB52DA3009AF247 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D134ECFC1CB52DA3009AF247 /* libReact-Native-Webview-Bridge.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1071,14 +1079,6 @@
 			);
 			name = UIImagePickerManager;
 			path = "../node_modules/react-native-image-picker/UIImagePickerManager";
-			sourceTree = "<group>";
-		};
-		D2A95C5D1C3E660E0065EDE0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D2A95C611C3E660E0065EDE0 /* libReact-Native-Webview-Bridge.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		D2BF469B1C1FFD00002C7185 /* RCTOrientation */ = {
@@ -1545,8 +1545,8 @@
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
 				},
 				{
-					ProductGroup = D2A95C5D1C3E660E0065EDE0 /* Products */;
-					ProjectRef = D2A95C5C1C3E660E0065EDE0 /* React-Native-Webview-Bridge.xcodeproj */;
+					ProductGroup = D134ECF81CB52DA3009AF247 /* Products */;
+					ProjectRef = D134ECF71CB52DA3009AF247 /* React-Native-Webview-Bridge.xcodeproj */;
 				},
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
@@ -1709,6 +1709,13 @@
 			remoteRef = D121E50E1C7800670034509B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D134ECFC1CB52DA3009AF247 /* libReact-Native-Webview-Bridge.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libReact-Native-Webview-Bridge.a";
+			remoteRef = D134ECFB1CB52DA3009AF247 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D1C80AA81C7D7C6E0014E596 /* libToolTipMenu.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1735,13 +1742,6 @@
 			fileType = archive.ar;
 			path = libRCTCameraRoll.a;
 			remoteRef = D22832E91C0F3A3B00027EA3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D2A95C611C3E660E0065EDE0 /* libReact-Native-Webview-Bridge.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libReact-Native-Webview-Bridge.a";
-			remoteRef = D2A95C601C3E660E0065EDE0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D2BF46FA1C2134CE002C7185 /* libRNVectorIcons.a */ = {

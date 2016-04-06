@@ -36,10 +36,18 @@ module.exports = React.StyleSheet.create({
         paddingLeft: 10,
         paddingTop: 8
     },
+    contactsItemFlexWrapper:{
+        flex: 1,
+        flexDirection:'column'
+    },
     contactRightText: {
         width: 124,
         paddingTop: 10,
         fontSize: 14,
         textAlign: 'right'
+    },
+    recordText: {
+        fontSize: 24,
+        color: '#4285f4'
     }
 });

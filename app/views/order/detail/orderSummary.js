@@ -10,13 +10,15 @@ import React, {
     TouchableHighlight,
     ActivityIndicatorIOS,
     ActionSheetIOS,
+    WebView,
     StyleSheet
 } from 'react-native'
 import NavigationBar from 'react-native-navbar'
 import { PieChart } from 'react-native-ios-charts';
 import TimerMixin from 'react-timer-mixin';
 import _ from 'underscore';
-import moment from 'moment'
+import moment from 'moment';
+import WebViewBridge from 'react-native-webview-bridge';
 
 var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
@@ -32,10 +34,11 @@ var styles = require('../../../styles/order/orderDetail');
 var appConstants = require('../../../constants/appConstants');
 
 // var AttachItem = require('./attachItem');
+var http = require('../../../common/http');
 var Button = require('../../../common/button.js');
 var util = require('../../../common/util');
 var CollectionView = require('../../../common/collectionView');
-var RecordsList = require('./recordsList');
+var RecordsListComponent = require('./recordsListComponent');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
@@ -43,7 +46,7 @@ module.exports = React.createClass({
     getInitialState: function(){
         return {
             loaded : false,
-            list: []
+            webViewHeight: 100
         }
     },
     componentDidMount: function() {
@@ -150,29 +153,83 @@ module.exports = React.createClass({
             </TouchableOpacity>
             );
     },
+    injectedJavaScript: function(){
+        return `
+        var NzmJavascriptHandler = {
+            imageZoom: function(imageSrc, imageSrcList){
+                var obj = {
+                    imageSrc: imageSrc,
+                    imageSrcList: imageSrcList
+                }
+                WebViewBridge.send(JSON.stringify(obj));
+            }
+        };
+        function webViewBridgeReady(cb) {
+            //checks whether WebViewBirdge exists in global scope.
+            if (window.WebViewBridge) {
+                cb(window.WebViewBridge);
+                return;
+            }
+
+            function handler() {
+                //remove the handler from listener since we don't need it anymore
+                document.removeEventListener('WebViewBridge', handler, false);
+                //pass the WebViewBridge object to the callback
+                cb(window.WebViewBridge);
+            }
+
+            //if WebViewBridge doesn't exist in global scope attach itself to document
+            //event system. Once the code is being injected by extension, the handler will
+            //be called.
+            document.addEventListener('WebViewBridge', handler, false);
+        }
+
+        webViewBridgeReady(function (webViewBridge) {
+            WebViewBridge.send(JSON.stringify({"webViewHeight": document.body.scrollHeight}));
+            WebViewBridge.onMessage = function (message) {
+              alert('got a message from Native: ' + message);
+            };
+        });
+        `;
+    },
+    onBridgeMessage: function (obj) {
+        // if (res) {};
+        // console.log('-----webViewHeight', obj);
+        var result = JSON.parse(obj);
+        if (!!result.webViewHeight) {
+            this.setState({webViewHeight: parseInt(result.webViewHeight)});
+            return;
+        };
+        result.imageSrcList = util.parseStringToJson(result.imageSrcList);
+        var index = 0;
+        for (var i = 0; i < result.imageSrcList.length; i++) {
+            (result.imageSrc == result.imageSrcList[i]) && (index = i);
+        };
+        Actions.imageSwiperPage({
+            index: index,
+            slides: result.imageSrcList || []
+        });
+    },
     renderDescribeItem: function(){
         // console.log('------this.props.data', this.props.data);
-        if (!this.props.data.hadDes) {
-            return(
-                <View />);
-        };
+        var url = this.props.data.descriptionUrl + '?' + http.getWebViewUrlParams();
+        // if (!this.props.data.hadDes) {
+        //     return(
+        //         <View />);
+        // };
         return(
-            <TouchableHighlight
-            style={commonStyle.settingItemWrapper}
-            underlayColor='#eee'
-            onPress={this._goOrderDescribe} >
-                <View
-                style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
-                    <Text
-                    numberOfLines={3}
-                    style={commonStyle.settingDetail}>
-                        {this.props.data.description}
-                    </Text>
-                    <Image
-                    style={commonStyle.settingArrow}
-                    source={require('../../../images/common/arrow_right_gray.png')} />
-                </View>
-            </TouchableHighlight>
+            <WebViewBridge
+                source={{uri: url}}
+                automaticallyAdjustContentInsets={true}
+                style={[styles.descWrapper, {height: this.state.webViewHeight}]}
+                scrollEnabled={false}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                startInLoadingState={true}
+                onBridgeMessage={this.onBridgeMessage}
+                injectedJavaScript={this.injectedJavaScript()}
+                scalesPageToFit={false} />
+
             );
     },
     getPieValue: function(){
@@ -246,7 +303,7 @@ module.exports = React.createClass({
         return (<PieChart config={config} style={styles.pieContainer}/>);
     },
     renderBarItem: function(item, key, height){
-        console.log('----bar item', item);
+        // console.log('----bar item', item);
         if (key == 0) {
             return(
                 <View style={[styles.barItemWrapper, {marginLeft: 0}]} key={key}>
@@ -274,7 +331,7 @@ module.exports = React.createClass({
         var maxValue = _.max(barDataArray, function(item){ return item.count}).count;
         return _.map(barDataArray, function(item, key){
             var height = parseInt(200 * (item.count/maxValue));
-            console.log('---height', height, maxValue);
+            // console.log('---height', height, maxValue);
             return self.renderBarItem(item, key, height);
         });
     },
@@ -312,11 +369,35 @@ module.exports = React.createClass({
             };
             res.unshift(item);
         };
+        res = this.addMockData(res);
         return res;
+    },
+    addMockData: function(data){
+        if (data.length == 0) {
+            data[0] = {
+                formatDay: moment().format('MM/DD'),
+                dayOfWeek: this.getDay(moment()),
+                count: 0
+            }
+        };
+        if (data.length < 7) {
+            var mockLength = 7 - data.length;
+            var start = moment(data[0].formatDay, 'MM/DD');
+            for (var i = 1; i <=mockLength; i++) {
+                var currentDay = start.subtract(1, 'd');
+                var item = {
+                    formatDay: currentDay.format('MM/DD'),
+                    dayOfWeek: this.getDay(currentDay),
+                    count: 0
+                }
+                data.unshift(item);
+            };
+        };
+        return data;
     },
     goRecordsList: function(){
         Actions.recordsList({
-            data: this.props.data
+            data: this.props.data.schedules
         });
     },
     render: function() {
@@ -393,7 +474,7 @@ module.exports = React.createClass({
     },
     renderRecordsList: function(){
         return (
-            <RecordsList data={this.state.listData} />
+            <RecordsListComponent data={this.props.data.schedules}/>
             );
     },
     renderEmptyRow: function(){

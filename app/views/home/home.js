@@ -55,7 +55,7 @@ module.exports =  React.createClass({
         });
     },
     handleGet: function(result){
-        console.log('-------home sheet data:', result.data);
+        // console.log('-------home sheet data:', result.data);
         if (result.status != 200 && !!result.message) {
             util.toast(result.message);
             this.setState({
