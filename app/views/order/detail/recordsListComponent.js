@@ -30,9 +30,11 @@ module.exports = React.createClass({
         }
     },
     componentWillReceiveProps: function(nextProps){
-        // this.setState({
-        //     dataSource: this.state.dataSource.cloneWithRows(nextProps.data || [])
-        // });
+        var data = (!!nextProps.data && nextProps.data.length > 0) ? nextProps.data.slice(0,2) : [];
+
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(data)
+        });
     },
     renderAvatar: function(data){
         if (!data) {

@@ -43,6 +43,7 @@ var taskListStore = require('../../stores/task/taskListStore');
 var taskStore = require('../../stores/task/taskStore');
 var followOrderAction = require('../../actions/followOrder/followOrderAction');
 var followOrderStore = require('../../stores/followOrder/followOrderStore');
+var orderScheduleStore = require('../../stores/order/orderScheduleStore');
 
 
 module.exports = React.createClass({
@@ -66,6 +67,8 @@ module.exports = React.createClass({
         this.unlistenOrder = orderStore.listen(this.onOrderChange);
         this.unlistenFollow = followOrderStore.listen(this.onFollowChange);
         this.unlistenTaskChange = taskStore.listen(this.onTaskChange);
+        this.unlistenOrderScheduleChange = orderScheduleStore.listen(this.onOrderScheduleChange);
+
         // if (this._timeout) {
         //     this.clearTimeout(this._timeout)
         // };
@@ -82,6 +85,7 @@ module.exports = React.createClass({
         this.unlistenOrder();
         this.unlistenFollow();
         this.unlistenTaskChange();
+        this.unlistenOrderScheduleChange();
         util.endLogPageView('orderDetail');
     },
     getAppConstants: function(){
@@ -97,6 +101,21 @@ module.exports = React.createClass({
                 }, 350)
             }
         }).done();
+    },
+    handleScheduleCreate: function(){
+        this.setTimeout(this.fetchData, 350);
+        // this.setTimeout(this.getFollowStatus, 350);
+    },
+    onOrderScheduleChange: function(){
+        var result = orderScheduleStore.getState();
+        console.log('-------create report:', result);
+        if (result.status != 200 && !!result.message) {
+            return;
+        }
+        switch(result.type){
+            case 'create':
+                return this.handleScheduleCreate(result);
+        }
     },
     onTaskChange: function(){
         var result = taskStore.getState();
@@ -345,6 +364,8 @@ module.exports = React.createClass({
                 <View />
                 );
         };
+        // console.log('-----schedules in orderdetail:', this.state.orderData.schedules);
+
         switch(this.state.tabIndex){
             case 0:
                 return(

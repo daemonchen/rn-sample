@@ -52,7 +52,7 @@ module.exports = React.createClass({
     },
     onChange: function() {
         var result = orderScheduleStore.getState();
-        console.log('-------create report:', result);
+        // console.log('-------create report:', result);
         switch(result.type){
             case 'create':
                 return this.handleCreate(result);

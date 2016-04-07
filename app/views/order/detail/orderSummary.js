@@ -197,6 +197,7 @@ module.exports = React.createClass({
         // console.log('-----webViewHeight', obj);
         var result = JSON.parse(obj);
         if (!!result.webViewHeight) {
+            if (result.webViewHeight == this.state.webViewHeight) { return;};
             this.setState({webViewHeight: parseInt(result.webViewHeight)});
             return;
         };
@@ -477,6 +478,7 @@ module.exports = React.createClass({
 
     },
     renderRecordsList: function(){
+        // console.log('-----schedules in ordersummary:', this.props.data.schedules);
         return (
             <RecordsListComponent data={this.props.data.schedules}/>
             );
