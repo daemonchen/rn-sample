@@ -13,7 +13,7 @@ import React, {
     WebView,
     StyleSheet
 } from 'react-native'
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from '../../../common/react-native-navbar/index';
 import { PieChart } from 'react-native-ios-charts';
 import TimerMixin from 'react-timer-mixin';
 import _ from 'underscore';

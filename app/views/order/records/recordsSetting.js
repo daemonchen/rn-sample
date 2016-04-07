@@ -11,7 +11,7 @@ import React, {
     ActivityIndicatorIOS,
     StyleSheet
 } from 'react-native'
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from '../../../common/react-native-navbar/index';
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 

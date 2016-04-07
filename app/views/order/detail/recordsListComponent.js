@@ -12,7 +12,7 @@ import React, {
     StyleSheet
 } from 'react-native'
 
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from '../../../common/react-native-navbar/index';
 import moment from 'moment'
 var SearchBar = require('react-native-search-bar');
 

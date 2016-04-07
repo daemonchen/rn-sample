@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from '../common/react-native-navbar/index';
 var Actions = require('react-native-router-flux').Actions;
 var TimerMixin = require('react-timer-mixin');
 var WebViewBridge = require('react-native-webview-bridge');

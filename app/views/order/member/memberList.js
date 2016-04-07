@@ -1,6 +1,6 @@
 'use strict';
 var React = require('react-native')
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from '../../../common/react-native-navbar/index';
 var TimerMixin = require('react-timer-mixin');
 var {
     Text,

@@ -3,7 +3,7 @@
     add attach from task settings
 */
 var React = require('react-native');
-import NavigationBar from 'react-native-navbar'
+import NavigationBar from '../../../common/react-native-navbar/index';
 var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 var {

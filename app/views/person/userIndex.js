@@ -13,7 +13,7 @@ import React, {
     StyleSheet
 } from 'react-native'
 
-var ParallaxView = require('../../common/react-native-parallax-view/index');
+// var ParallaxView = require('../../common/react-native-parallax-view/index');
 var TimerMixin = require('react-timer-mixin');
 var Actions = require('react-native-router-flux').Actions;
 
@@ -226,10 +226,8 @@ module.exports = React.createClass({
     },
     render: function(){
         return(
-            <ParallaxView style={commonStyle.container}
-                backgroundSource={this.getParallaxBackground()}
-                header={this.renderParallaxHeader()} >
-
+            <ScrollView style={commonStyle.container}>
+                {this.renderParallaxHeader()}
                 <View style={commonStyle.settingGroups}>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
@@ -292,7 +290,7 @@ module.exports = React.createClass({
                         </View>
                     </TouchableHighlight>
                 </View>
-            </ParallaxView>
+            </ScrollView>
             );
     }
 });
