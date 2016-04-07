@@ -20,7 +20,7 @@ module.exports = React.createClass({
         this.props.onPress()
     },
     render: function(){
-        var uri = this.props.status ? require('../images/follow/follow_fill_white.png') : require('../images/follow/follow_outling_white.png');
+        var uri = this.props.status ? require('../images/follow/follow_fill.png') : require('../images/follow/follow_outling.png');
         return(
             <TouchableOpacity onPress={this.onPress}>
                 <Image source={uri}

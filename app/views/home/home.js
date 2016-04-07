@@ -242,7 +242,7 @@ module.exports =  React.createClass({
                         style={commonStyle.settingItem}>
                             <Image
                             style={commonStyle.settingIcon}
-                            source={require('../../images/person/account_settings.png')}/>
+                            source={require('../../images/task/subtasks_gray.png')}/>
                             <Text
                             style={commonStyle.settingTitle}>
                                 我的任务

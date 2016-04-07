@@ -30,6 +30,7 @@ var OrderDetailSegmentControl = require('./components/orderDetailSegmentControl'
 
 var BlueBackButton = require('../../common/blueBackButton');
 var RightAddButton = require('../../common/rightAddButton');
+var RightEditButton = require('../../common/rightEditButton');
 var RightFollowButton = require('../../common/rightFollowButton');
 var RightMoreButton = require('../../common/rightMoreButton');
 var Popover = require('../../common/popover');
@@ -179,6 +180,15 @@ module.exports = React.createClass({
                 follow: result.data.follow
             });
         };
+        if (result.type == 'updateStatus') {
+            util.toast('订单已完成');
+        };
+    },
+    _finishOrder: function(){
+        orderAction.updateStatus({
+            id: this.state.orderData.orderId,
+            status: 1,
+        });
     },
     _goShareSetting: function(){
         // orderShareSetting
@@ -254,6 +264,7 @@ module.exports = React.createClass({
                 <View style={{flexDirection:'row'}} ref={(ref)=>{this.btn = ref;}}>
                     <RightFollowButton onPress={this._pressFollowButton} status={!!this.state.follow}/>
                     <RightAddButton onPress={this._pressCreateButton} />
+                    <RightEditButton onPress={this._pressSettingButton} />
                     <RightMoreButton onPress={this.showPopover} />
                 </View>
                 );
@@ -310,19 +321,19 @@ module.exports = React.createClass({
                 <View style={{flex: 1, alignItems: 'center'}}>
                     <Image
                         style={styles.taskTotalImageTop}
-                        source={require('../../images/order/editor_outling_chu.png')}/>
+                        source={require('../../images/order/schedule_gray.png')}/>
                     <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{this.state.orderData.overPercent}%</Text>
                 </View>
                 <View style={{flex: 1, alignItems: 'center'}}>
                     <Image
                         style={styles.taskTotalImageTop}
-                        source={require('../../images/order/editor_outling_chu.png')}/>
+                        source={require('../../images/order/client_gray.png')}/>
                     <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{this.state.orderData.userName}</Text>
                 </View>
                 <View style={{flex: 1, alignItems: 'center'}}>
                     <Image
                         style={styles.taskTotalImageTop}
-                        source={require('../../images/order/editor_outling_chu.png')}/>
+                        source={require('../../images/order/date_gray.png')}/>
                     <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{time}</Text>
                 </View>
             </View>
@@ -385,6 +396,21 @@ module.exports = React.createClass({
         // <Image
         // style={commonStyle.settingIcon}
         // source={require('../../images/order/editor_outling.png')}/>
+                    // <TouchableHighlight
+                    //     style={commonStyle.popoverWrapper}
+                    //     underlayColor='#eee'
+                    //     onPress={this._pressSettingButton}>
+                    //     <View
+                    //     style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
+                    //         <Image
+                    //         style={commonStyle.settingIcon}
+                    //         source={require('../../images/order/editor_outling_chu.png')}/>
+                    //         <Text
+                    //         style={[commonStyle.settingDetail]}>
+                    //         编辑
+                    //         </Text>
+                    //     </View>
+                    // </TouchableHighlight>
         return(
             <Popover
                 isVisible={this.state.isVisible}
@@ -392,21 +418,6 @@ module.exports = React.createClass({
                 displayArea={displayArea}
                 placement={'bottom'}
                 onClose={this.closePopover}>
-                    <TouchableHighlight
-                        style={commonStyle.popoverWrapper}
-                        underlayColor='#eee'
-                        onPress={this._pressSettingButton}>
-                        <View
-                        style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
-                            <Image
-                            style={commonStyle.settingIcon}
-                            source={require('../../images/order/editor_outling_chu.png')}/>
-                            <Text
-                            style={[commonStyle.settingDetail]}>
-                            编辑
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
                     <TouchableHighlight
                         style={commonStyle.popoverWrapper}
                         underlayColor='#eee'
@@ -419,6 +430,21 @@ module.exports = React.createClass({
                             <Text
                             style={[commonStyle.settingDetail]}>
                             分享
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.popoverWrapper}
+                        underlayColor='#eee'
+                        onPress={ this._finishOrder}>
+                        <View
+                        style={[commonStyle.popoverItem, commonStyle.bottomBorder]} >
+                            <Image
+                            style={commonStyle.settingIcon}
+                            source={require('../../images/order/order_finish_outline.png')}/>
+                            <Text
+                            style={[commonStyle.settingDetail]}>
+                            完成订单
                             </Text>
                         </View>
                     </TouchableHighlight>

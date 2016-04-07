@@ -25,7 +25,7 @@ module.exports = React.StyleSheet.create({
     },
     taskTotalTextBottom: {
         textAlign:'center',
-        paddingBottom: 10
+        paddingTop: 5
     },
     taskTotalImageTop: {
         paddingTop: 10,

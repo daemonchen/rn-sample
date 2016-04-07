@@ -103,7 +103,7 @@ module.exports =  React.createClass({
                 <TouchableOpacity
                 style={styles.pieTitleBtnPrev}
                 onPress={this.prev}>
-                    <Image source={require('../../images/common/arrow_right_gray.png')}/>
+                    <Image source={require('../../images/common/arrow_left_gray.png')}/>
                 </TouchableOpacity>
                 <Text style={styles.pieTitleText}>{this.state.currentTime.format('MM/YYYY')}</Text>
                 <TouchableOpacity

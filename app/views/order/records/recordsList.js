@@ -30,12 +30,17 @@ module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
-        var data = (!!this.props.data && this.props.data.length > 0) ? this.props.data : [];
         return {
-            dataSource: ds.cloneWithRows(data)
+            dataSource: ds
         }
     },
     componentDidMount: function(){
+        // var schedules = this.props.data.schedules;
+        var data = (!!this.props.data.schedules && this.props.data.schedules.length > 0) ? this.props.data.schedules : [];
+        console.log('------recordsList data:', data);
+        this.setState({
+            dataSource : this.state.dataSource.cloneWithRows(data)
+        });
         // this.unlisten = memberListStore.listen(this.onChange);
         // if (this._timeout) {
         //     this.clearTimeout(this._timeout)
@@ -44,29 +49,6 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
         // this.unlisten();
-    },
-    handleGet: function(result){
-        if (result.status != 200 && !!result.message) {
-            this.setState({
-                loaded: true,
-                list: []
-            })
-            return;
-        }
-        this.setState({
-            listData: result.data,
-            loaded: true
-        });
-    },
-    onChange: function() {
-        var result = memberListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
-        switch(result.type){
-            case 'get':
-                return this.handleGet(result);
-        }
     },
 
     renderAvatar: function(data){

@@ -399,8 +399,9 @@ module.exports = React.createClass({
         return data;
     },
     goRecordsList: function(){
+        // console.log('-----order data:', this.props.data.schedules);
         Actions.recordsList({
-            data: this.props.data.schedules
+            data: this.props.data
         });
     },
     render: function() {
