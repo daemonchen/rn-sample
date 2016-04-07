@@ -91,8 +91,7 @@ module.exports = React.createClass({
                     rightButton={<RightDoneButton onPress={this.onPressDone} />} />
                 <View style={styles.main}>
                     <View style={commonStyle.textAreaWrapper}>
-                        <TextInput placeholder='请输入您的产品意见，我们将不断优化产品体验'
-                        secureTextEntry={true}
+                        <TextInput placeholder={'请输入您的产品意见，我们将不断优化产品体验'}
                         multiline={true}
                         style={commonStyle.textArea}
                         clearButtonMode={'while-editing'}

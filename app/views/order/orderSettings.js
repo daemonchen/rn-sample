@@ -56,23 +56,7 @@ module.exports = React.createClass({
         return {
             isVisible: false,
             orderId: defaultData.orderId || 0,
-            orderStatus: defaultData.orderStatus || 1,
-            // // accessoryIds: defaultData.accessoryIds || [],
-            // accessoryNum: defaultData.accessoryNum || '',
-            // creatorId: defaultData.creatorId || 0,
-            // userName: defaultData.userName || '',
-            // customerId: defaultData.customerId || '',
-            // customerName: defaultData.customerName || '',
-            // description: defaultData.description || '',
-            // endTime: endTime,
-            // endTimeFormat: moment(endTime).format('YYYY年MM月DD日'),
-            // factoryId: defaultData.factoryId || 0,
-            // lable: defaultData.lable || '',
-            // salesManId: defaultData.salesManId || '',
-            // salesManName: defaultData.salesManName || '',
-            // startTime: defaultData.startTime || '',
-            // title: defaultData.title || ''
-
+            orderStatus: defaultData.orderStatus || 1
         }
     },
     componentDidMount: function(){
@@ -179,6 +163,19 @@ module.exports = React.createClass({
             onCalendarPressDone: this.onCalendarPressDone
         });
     },
+    onQuantityPressDone: function(num){
+        this.setState({
+            quantity: num
+        });
+    },
+    _setQuantity: function(){
+        console.log('-----order data:', this.props.data);
+        Actions.orderQuantitySetting({
+            data: this.props.data,
+            onQuantityPressDone: this.onQuantityPressDone
+        });
+
+    },
     onGetCustomer: function(data){
         // customerId
         this.setState({
@@ -269,7 +266,8 @@ module.exports = React.createClass({
                 salesManId: this.state.salesManId || '',
                 salesManName: this.state.salesManName || '',
                 startTime: this.state.startTime || '',
-                title: this.state.title || ''
+                title: this.state.title || '',
+                quantity: this.state.quantity || ''
             });
         }
         if (this.state.orderStatus == 1) {//新增订单
@@ -287,7 +285,8 @@ module.exports = React.createClass({
                 salesManId: this.state.salesManId || '',
                 salesManName: this.state.salesManName || '',
                 startTime: this.state.startTime || '',
-                title: this.state.title || ''
+                title: this.state.title || '',
+                quantity: this.state.quantity || ''
             });
         };
     },
@@ -414,20 +413,13 @@ module.exports = React.createClass({
                 keyboardDismissMode={'interactive'}>
                     <View style={commonStyle.centerWrapper}>
                         <View style={commonStyle.textInputWrapper}>
-                            <TextInput placeholder='订单名称'
+                            <TextInput placeholder={'订单名称'}
                             style={commonStyle.textInput}
                             clearButtonMode={'while-editing'}
                             value={this.state.title}
                             onChangeText={this.onChangeNameText}/>
                         </View>
-                        <View style={commonStyle.textAreaWrapper}>
-                            <TextInput placeholder='订单描述'
-                            style={commonStyle.textArea}
-                            clearButtonMode={'while-editing'}
-                            multiline={true}
-                            value={this.state.description}
-                            onChangeText={this.onChangeDescribeText} />
-                        </View>
+
                     </View>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
@@ -467,6 +459,46 @@ module.exports = React.createClass({
                             source={require('../../images/common/arrow_right_gray.png')} />
                         </View>
                     </TouchableHighlight>
+                    <TouchableHighlight
+                        style={commonStyle.settingItemWrapper}
+                        underlayColor='#eee'
+                        onPress={this._setQuantity} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={commonStyle.settingTitle}>
+                                订单数量
+                            </Text>
+                            <Text
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
+                                {this.state.quantity}
+                            </Text>
+                            <Image
+                            style={commonStyle.settingArrow}
+                            source={require('../../images/common/arrow_right_gray.png')} />
+                        </View>
+                    </TouchableHighlight>
+                    <View style={[commonStyle.textAreaWrapper, {marginTop: 32, borderBottomWidth: 0}]}>
+                        <TextInput placeholder={'请输入订单描述，可不填'}
+                        style={commonStyle.textArea}
+                        clearButtonMode={'while-editing'}
+                        returnKeyType={'done'}
+                        multiline={true}
+                        value={this.state.description}
+                        onChangeText={this.onChangeDescribeText} />
+                    </View>
+                    <View style={commonStyle.settingItemWrapper} >
+                        <View
+                        style={[commonStyle.settingItem, commonStyle.bottomBorder]} >
+                            <Text
+                            style={[commonStyle.settingTitle, commonStyle.textGray]}>
+                                更多内容
+                            </Text>
+                            <Text
+                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
+                            </Text>
+                        </View>
+                    </View>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}
                         underlayColor='#eee'
