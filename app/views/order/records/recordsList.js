@@ -96,20 +96,25 @@ module.exports = React.createClass({
                 underlayColor='#eee'>
                 <View style={contactsStyle.contactsItem}>
                     {this.renderAvatar(data.userVO)}
-                    <View style={contactsStyle.contactsItemFlexWrapper}>
-                        <Text style={[contactsStyle.contactsItemDetail, {paddingTop: 0}]}
-                        numberOfLines={1}>
-                            {data.userVO.userName}
-                        </Text>
-                        <Text style={[contactsStyle.contactsItemDetail, commonStyle.textGray]}
-                        numberOfLines={1}>
-                            {moment(data.date).format('YYYY-MM-DD hh:mm')}
-                        </Text>
+                    <View style={{flex: 1}}>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={contactsStyle.contactsItemFlexWrapper}>
+                                <Text style={[contactsStyle.contactsItemDetail, {paddingTop: 0}]}
+                                numberOfLines={1}>
+                                    {data.userVO.userName}
+                                </Text>
+                                <Text style={[contactsStyle.contactsItemDetail, commonStyle.textGray]}
+                                numberOfLines={1}>
+                                    {moment(data.date).format('YYYY-MM-DD hh:mm')}
+                                </Text>
+                            </View>
+                            <Text style={[contactsStyle.contactRightText, contactsStyle.recordText]}
+                            numberOfLines={1}>
+                                +{data.count}
+                            </Text>
+                        </View>
+                        <Text style={[{flex: 1, paddingLeft: 12, paddingTop: 5}, commonStyle.textGray]}>{data.remark}</Text>
                     </View>
-                    <Text style={[contactsStyle.contactRightText, contactsStyle.recordText]}
-                    numberOfLines={1}>
-                        +{data.count}
-                    </Text>
                 </View>
             </TouchableHighlight>
             );
