@@ -177,6 +177,7 @@ module.exports = React.createClass({
     actionList: ['拍照', '选择图片', '删除头像', '取消'],
     actionListWithoutDeleteButton: ['拍照', '选择图片', '取消'],
     renderAvatar: function(data){
+        // console.log('-----avatar data', data);
         if (!data) {
             return(<View style={styles.avatarWrapper}/>);
         };
@@ -205,7 +206,7 @@ module.exports = React.createClass({
                 )
         }
     },
-    renderParallaxHeader: function(){
+    renderTop: function(){
         return(
             <View style={styles.topInfo}>
                 {this.renderAvatar(this.state.user)}
@@ -227,7 +228,7 @@ module.exports = React.createClass({
     render: function(){
         return(
             <ScrollView style={commonStyle.container}>
-                {this.renderParallaxHeader()}
+                {this.renderTop()}
                 <View style={commonStyle.settingGroups}>
                     <TouchableHighlight
                         style={commonStyle.settingItemWrapper}

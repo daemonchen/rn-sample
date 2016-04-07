@@ -188,6 +188,8 @@ module.exports = React.createClass({
     },
     onChange: function(){
         var result = systemStore.getState();
+        console.log('----before systemStore change', result);
+
         if (result.type != 'init') { return; };
         if (result.status != 200 && !!result.message) {
             util.alert(result.message);
@@ -201,7 +203,7 @@ module.exports = React.createClass({
             */
             appAction.init(appConstants);
         }, 350);
-        console.log('----on systemStore change');
+        console.log('----after systemStore change');
         asyncStorage.setItem('appConstants', appConstants)
         .then(()=>{
             this.doLaunch();

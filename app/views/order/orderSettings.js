@@ -130,7 +130,8 @@ module.exports = React.createClass({
             salesManId: defaultData.salesManId || '',
             salesManName: defaultData.salesManName || '',
             startTime: defaultData.startTime || '',
-            title: defaultData.title || ''
+            title: defaultData.title || '',
+            quantity: defaultData.quantity || ''
         });
     },
     onChange: function(){
