@@ -32,11 +32,12 @@ var attachStore = require('../../../stores/attach/attachStore');
 module.exports = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function(){
+        console.log('-------propsdata', this.props.data);
         return {
             gmtCreate: this.props.data.gmtCreate,
-            fileAddress: this.props.data.fileAddress,
+            absoluteUrl: this.props.data.absoluteUrl,
             fileName: this.props.data.fileName,
-            operatorName: this.props.data.operatorName,
+            userName: this.props.data.userName || '',
             accessoryId: this.props.data.id
         }
     },
@@ -62,9 +63,9 @@ module.exports = React.createClass({
     doGet: function(result){
         this.setState({
             gmtCreate: result.data.gmtCreate,
-            fileAddress: result.data.absoluteUrl,
+            absoluteUrl: result.data.absoluteUrl,
             fileName: result.data.fileName,
-            operatorName: result.data.userName,
+            userName: result.data.userName,
             accessoryId: result.data.id
         });
     },
@@ -107,7 +108,7 @@ module.exports = React.createClass({
                 <ScrollView style={styles.main}>
                     <View style={styles.attachImageWrapper}>
                         <Image
-                          source={{uri: this.state.fileAddress}}
+                          source={{uri: this.state.absoluteUrl}}
                           style={styles.attachImageMiddle} />
                     </View>
                     <Text style={styles.attachTitle}>
@@ -125,7 +126,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={commonStyle.settingDetail}>
-                                {this.state.operatorName}
+                                {this.state.userName}
                             </Text>
                         </View>
                     </TouchableHighlight>

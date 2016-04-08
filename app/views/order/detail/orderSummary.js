@@ -24,9 +24,9 @@ var Actions = require('react-native-router-flux').Actions;
 var SearchBar = require('react-native-search-bar');
 
 
-var attachListStore = require('../../../stores/attach/attachListStore');
-var attachListAction = require('../../../actions/attach/attachListAction');
-var attachStore = require('../../../stores/attach/attachStore');
+// var attachListStore = require('../../../stores/attach/attachListStore');
+// var attachListAction = require('../../../actions/attach/attachListAction');
+// var attachStore = require('../../../stores/attach/attachStore');
 
 var commonStyle = require('../../../styles/commonStyle');
 var styles = require('../../../styles/order/orderDetail');
@@ -58,8 +58,8 @@ module.exports = React.createClass({
         // this.fetchAttachData();
     },
     componentWillUnmount: function(){
-        // this.unlisten();
-        // this.unlistenAttach()
+    // this.unlisten();
+    // this.unlistenAttach()
     },
     componentWillReceiveProps: function(nextProps){
         var accessoryData = this.props.data.accessories || [];
@@ -67,58 +67,6 @@ module.exports = React.createClass({
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(accessoryData)
         });
-    },
-    onAttachChange: function(){
-        var result = attachStore.getState();
-        if (result.status != 200 && !!result.message) {
-            this.setState({
-                loaded: true,
-                list: []
-            })
-            return;
-        }
-        if (result.type == 'create') {
-            this.setTimeout(this.fetchAttachData, 350);
-        };
-    },
-    handleGet: function(result){
-        if (result.status != 200 && !!result.message) {
-            this.setState({
-                loaded: true,
-                list: []
-            })
-            return;
-        }
-        this.setState({
-            list: result.data || [],
-            loaded     : true,
-        });
-    },
-    handleDelete: function(result){
-        if (result.status != 200 && !!result.message) {
-            this.setState({
-                loaded: true,
-                list: []
-            })
-            return;
-        }
-        this.setState({
-            list: result.data || [],
-            loaded: true
-        });
-        return;
-    },
-    onChange: function(){
-        var result = attachListStore.getState();
-        if (result.status != 200 && !!result.message) {
-            return;
-        }
-        switch(result.type){
-            case 'get':
-                return this.handleGet(result);
-            case 'delete':
-                return this.handleDelete(result)
-        }
     },
     _goOrderDescribe: function(){
         if (!this.props.data.descriptionUrl || (this.props.data.descriptionUrl.length == 0)) {
@@ -130,12 +78,12 @@ module.exports = React.createClass({
             descriptionUrl: this.props.data.descriptionUrl
         });
     },
-    fetchAttachData: function(){
-        attachListAction.getList({
-            hostId: this.props.data.orderId,
-            hostType: 1//订单附件
-        });
-    },
+    // fetchAttachData: function(){
+    //     attachListAction.getList({
+    //         hostId: this.props.data.orderId,
+    //         hostType: 1//订单附件
+    //     });
+    // },
     onPressAttachRow: function(rowData,sectionID){
         Actions.attachDetail({
             title: '附件详情',

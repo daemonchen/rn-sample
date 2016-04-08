@@ -36,6 +36,7 @@ var RightMoreButton = require('../../common/rightMoreButton');
 var Popover = require('../../common/popover');
 
 var util = require('../../common/util');
+var attachStore = require('../../stores/attach/attachStore');
 var attachAction = require('../../actions/attach/attachAction');
 var orderStore = require('../../stores/order/orderStore');
 var orderAction = require('../../actions/order/orderAction');
@@ -68,6 +69,7 @@ module.exports = React.createClass({
         this.unlistenFollow = followOrderStore.listen(this.onFollowChange);
         this.unlistenTaskChange = taskStore.listen(this.onTaskChange);
         this.unlistenOrderScheduleChange = orderScheduleStore.listen(this.onOrderScheduleChange);
+        this.unlistenAttach = attachStore.listen(this.onAttachChange);
 
         // if (this._timeout) {
         //     this.clearTimeout(this._timeout)
@@ -86,8 +88,24 @@ module.exports = React.createClass({
         this.unlistenFollow();
         this.unlistenTaskChange();
         this.unlistenOrderScheduleChange();
+        this.unlistenAttach()
         util.endLogPageView('orderDetail');
     },
+    onAttachChange: function(){
+        var result = attachStore.getState();
+        if (result.status != 200 && !!result.message) {
+            this.setState({
+                loaded: true,
+                list: []
+            })
+            return;
+        }
+        if (result.type == 'create') {
+            this.setTimeout(this.fetchData, 350);
+        };
+    },
+
+
     getAppConstants: function(){
         var self = this;
         asyncStorage.getItem('appConstants')
