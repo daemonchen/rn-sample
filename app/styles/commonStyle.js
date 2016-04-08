@@ -309,14 +309,23 @@ module.exports = React.StyleSheet.create({
     },
     collectionImage: {
         flex: 1,
+        width: width - 32,
+        height: width - 32,
+        marginHorizontal: 16,
+        resizeMode: 'cover'
+    },
+    collectionImage2: {
+        flex: 1,
         height: width/2,
         resizeMode: 'cover'
     },
     collectionTitle: {
+        position: 'absolute',
+        width: width - 32,
+        bottom: 0,
         backgroundColor: 'rgba(0,0,0,0.3)',
         padding: 5,
-        marginTop: width/2 - 24,
-        width: width/2,
+        // marginHorizontal: 16,
         color: '#fff'
     },
     cardWraper: {

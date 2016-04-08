@@ -37,26 +37,36 @@ var appConstants = require('../../../constants/appConstants');
 var http = require('../../../common/http');
 var Button = require('../../../common/button.js');
 var util = require('../../../common/util');
-var CollectionView = require('../../../common/collectionView');
+// var CollectionView = require('../../../common/collectionView');
 var RecordsListComponent = require('./recordsListComponent');
 
 module.exports = React.createClass({
     mixins: [TimerMixin],
     dayOfWeek: ['周日','周一','周二','周三','周四','周五','周六'],
     getInitialState: function(){
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => true});
+        var accessoryData = this.props.data.accessories || [];
         return {
             loaded : false,
-            webViewHeight: 100
+            webViewHeight: 100,
+            dataSource: ds.cloneWithRows(accessoryData)//附件数据源
         }
     },
     componentDidMount: function() {
-        this.unlistenAttach = attachStore.listen(this.onAttachChange);
-        this.unlisten = attachListStore.listen(this.onChange);
+        // this.unlistenAttach = attachStore.listen(this.onAttachChange);
+        // this.unlisten = attachListStore.listen(this.onChange);
         // this.fetchAttachData();
     },
     componentWillUnmount: function(){
-        this.unlisten();
-        this.unlistenAttach()
+        // this.unlisten();
+        // this.unlistenAttach()
+    },
+    componentWillReceiveProps: function(nextProps){
+        var accessoryData = this.props.data.accessories || [];
+
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(accessoryData)
+        });
     },
     onAttachChange: function(){
         var result = attachStore.getState();
@@ -139,10 +149,11 @@ module.exports = React.createClass({
                 </View>
                 );
         };
+        // console.log('---------rowData', rowData);
         return(
             <TouchableOpacity onPress={()=>{this.onPressAttachRow(rowData)}} key={index}>
-                <View style={[commonStyle.collectionItem, index%2==0 ? commonStyle.collectionItemPaddingRight : commonStyle.collectionItemPaddingLeft]}>
-                    <Image source={{uri: rowData.fileAddress}}
+                <View style={commonStyle.collectionItem}>
+                    <Image source={{uri: rowData.absoluteUrl}}
                     style={commonStyle.collectionImage}>
                         <Text style={commonStyle.collectionTitle}
                         numberOfLines={1}>
@@ -331,7 +342,7 @@ module.exports = React.createClass({
         // console.log('----barDataArray', barDataArray);
         var maxValue = _.max(barDataArray, function(item){ return item.count}).count;
         return _.map(barDataArray, function(item, key){
-            var height = parseInt(200 * (item.count/maxValue));
+            var height = parseInt(85 * (item.count/maxValue));
             if (!height) {
                 height = 0;
             };
@@ -483,30 +494,25 @@ module.exports = React.createClass({
             <RecordsListComponent data={this.props.data.schedules}/>
             );
     },
-    renderEmptyRow: function(){
-        return (
-            <View style={commonStyle.emptyView}>
-                <Image source={require('../../../images/empty/no_file_gray.png')} />
-                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
-                        您还没有附件
-                </Text>
-            </View>
-        )
-    },
+
     renderListView: function(){
-        if (!this.state.list || this.state.list.length == 0) {
-            // return this.renderEmptyRow();
+        // console.log('---------order data:', this.props.data.accessories);
+        if (!this.state.dataSource || this.state.dataSource.length == 0) {
+            return this.renderEmptyView();
             return false;
         };
         return (
-            <View style={commonStyle.section}>
-                <Text style={commonStyle.settingGroupsTitle}>附件</Text>
-                <CollectionView
-                    items={this.state.list}
-                    itemsPerRow={2}
-                    renderItem={this.renderRow} />
-            </View>
+            <ListView
+              style={commonStyle.section}
+              dataSource={this.state.dataSource}
+              renderRow={this.renderRow} />
             )
+            // <View style={commonStyle.section}>
+            //     <CollectionView
+            //         items={this.props.data.accessories}
+            //         itemsPerRow={1}
+            //         renderItem={this.renderRow} />
+            // </View>
     },
     renderEmptyView: function(){
         var self = this;
@@ -532,15 +538,5 @@ module.exports = React.createClass({
                 </View>
                 )
         }
-    },
-    renderLoadingView: function(){
-        return (
-            <View style={commonStyle.container}>
-                <ActivityIndicatorIOS
-                    animating={!this.state.loaded}
-                    style={[styles.activityIndicator]}
-                    size="small" />
-            </View>
-        );
     }
 });

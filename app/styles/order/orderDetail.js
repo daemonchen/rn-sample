@@ -262,7 +262,7 @@ module.exports = React.StyleSheet.create({
     barChartContainer: {
         flexDirection: 'row',
         width: width,
-        height: 280,
+        height: 165,
         paddingTop: 16,
         paddingHorizontal: 16,
         borderBottomWidth:1 / React.PixelRatio.get(),
@@ -271,7 +271,7 @@ module.exports = React.StyleSheet.create({
         borderTopColor:'#d5d5d5'
     },
     barItemWrapper: {
-        height: 264,
+        height: 150,
         width: (width-32)/7
         // marginLeft: 25
     },

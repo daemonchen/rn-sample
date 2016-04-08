@@ -55,6 +55,11 @@ class AttachStore {
     onCreate(data) {
         attachService.qiniuToken(data)
         .then((responseData) => {
+            if (!responseData) {
+                attachAction.createSuccess({});//如果上传失败，也要通知view去掉lodadingOverlay
+                util.toast("上传失败:", responseData);
+                return;
+            };
             if (responseData.status != 200) {
                 attachAction.createSuccess({});//如果上传失败，也要通知view去掉lodadingOverlay
                 util.toast(responseData.message);
