@@ -21,6 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+ios/awesomeMobile.xcodeproj/project.pbxproj
 
 # Android/IJ
 #
@@ -35,3 +36,4 @@ npm-debug.log
 
 # release assets-desc
 release/
+
