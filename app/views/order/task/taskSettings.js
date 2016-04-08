@@ -264,9 +264,10 @@ module.exports = React.createClass({
         });
     },
     onPressContactRow: function(data){
+        // console.log('-------ownerName:', data);
         this.setState({
             ownerId: data.userId,
-            ownerName: data.ownerName
+            ownerName: data.userName
         });
     },
     onPressTaskRow: function(rowData){

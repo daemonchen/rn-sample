@@ -359,12 +359,12 @@ module.exports = React.createClass({
         return data;
     },
     goRecordsList: function(){
-        // console.log('-----order data:', this.props.data.schedules);
         Actions.recordsList({
             data: this.props.data
         });
     },
     render: function() {
+        console.log('-----order data:', this.props.data);
         return(
             <ScrollView style={styles.summaryWrapper}>
                 <View style={commonStyle.section}>
@@ -407,7 +407,7 @@ module.exports = React.createClass({
                             </Text>
                             <Text
                             style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                                abc
+                                {this.props.data.salesManName}
                             </Text>
                         </View>
                     </TouchableHighlight>

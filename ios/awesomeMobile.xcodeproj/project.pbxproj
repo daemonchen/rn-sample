@@ -2049,8 +2049,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hehuyou Information & Technology Co., LTD (U58JZD8Y2V)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hehuyou Information & Technology Co., LTD (U58JZD8Y2V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: daemon chen (H8J79K9MUM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: daemon chen (H8J79K9MUM)";
 				DEAD_CODE_STRIPPING = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -2096,7 +2096,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "b9386d01-7daa-41db-aaa5-b721b9897cde";
+				PROVISIONING_PROFILE = "cd115c4b-79a7-4a94-ad09-e8f315fd0e3e";
 				SWIFT_OBJC_BRIDGING_HEADER = "awesomeMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2109,8 +2109,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hehuyou Information & Technology Co., LTD (U58JZD8Y2V)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hehuyou Information & Technology Co., LTD (U58JZD8Y2V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: daemon chen (H8J79K9MUM)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: daemon chen (H8J79K9MUM)";
 				DEAD_CODE_STRIPPING = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
@@ -2156,7 +2156,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nzaom.mobile;
 				PRODUCT_NAME = awesomeMobile;
-				PROVISIONING_PROFILE = "b9386d01-7daa-41db-aaa5-b721b9897cde";
+				PROVISIONING_PROFILE = "cd115c4b-79a7-4a94-ad09-e8f315fd0e3e";
 				SWIFT_OBJC_BRIDGING_HEADER = "awesomeMobile-Bridging-Header.h";
 			};
 			name = Release;
