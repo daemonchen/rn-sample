@@ -22,9 +22,9 @@ module.exports = React.StyleSheet.create({
     },
     nameWrapper: {
         width: width - 32,
-        // borderBottomWidth: 1,
         paddingVertical: 22,
-        // borderBottomColor: '#eee'
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee'
     },
     name: {
         textAlign: 'center',
