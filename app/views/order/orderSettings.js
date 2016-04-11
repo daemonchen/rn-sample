@@ -170,7 +170,7 @@ module.exports = React.createClass({
         });
     },
     _setQuantity: function(){
-        console.log('-----order data:', this.props.data);
+        // console.log('-----order data:', this.props.data);
         Actions.orderQuantitySetting({
             data: this.props.data,
             onQuantityPressDone: this.onQuantityPressDone

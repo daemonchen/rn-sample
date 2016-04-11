@@ -83,12 +83,7 @@ module.exports = React.createClass({
     },
     renderEmptyRow: function(){
         return (
-            <View style={commonStyle.emptyView}>
-                <Image source={require('../../../images/empty/no_client_gray.png')} />
-                <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
-                        暂无记录
-                </Text>
-            </View>
+            <View />
         )
     },
     render: function(){
@@ -96,10 +91,21 @@ module.exports = React.createClass({
             return this.renderEmptyRow();
         };
         return(
-            <ListView
-              style={contactsStyle.scrollView}
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow} />
+            <View>
+                <View style={commonStyle.settingItemWrapper}>
+                    <View style={[commonStyle.settingItem]}>
+                        <Text
+                        numberOfLines={3}
+                        style={[commonStyle.commonTitle, commonStyle.textGray,{flex: 1}]}>
+                            进度记录
+                        </Text>
+                    </View>
+                </View>
+                <ListView
+                  style={contactsStyle.scrollView}
+                  dataSource={this.state.dataSource}
+                  renderRow={this.renderRow} />
+            </View>
             );
     }
 });

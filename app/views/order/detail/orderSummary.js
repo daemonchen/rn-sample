@@ -177,20 +177,34 @@ module.exports = React.createClass({
         //     return(
         //         <View />);
         // };
-        return(
-            <WebViewBridge
-                source={{uri: url}}
-                automaticallyAdjustContentInsets={true}
-                style={[styles.descWrapper, {height: this.state.webViewHeight}]}
-                scrollEnabled={false}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                startInLoadingState={true}
-                onBridgeMessage={this.onBridgeMessage}
-                injectedJavaScript={this.injectedJavaScript()}
-                scalesPageToFit={false} />
+        if (!!this.props.data.descriptionUrl) {
+            return(
+                <View>
+                    <View style={commonStyle.settingItemWrapper}>
+                        <View style={[commonStyle.settingItem]}>
+                            <Text
+                            numberOfLines={3}
+                            style={[commonStyle.commonTitle, commonStyle.textGray,{flex: 1}]}>
+                                订单描述
+                            </Text>
+                        </View>
+                    </View>
+                    <WebViewBridge
+                        source={{uri: url}}
+                        automaticallyAdjustContentInsets={true}
+                        style={[styles.descWrapper, {height: this.state.webViewHeight}]}
+                        scrollEnabled={false}
+                        javaScriptEnabled={true}
+                        domStorageEnabled={true}
+                        startInLoadingState={true}
+                        onBridgeMessage={this.onBridgeMessage}
+                        injectedJavaScript={this.injectedJavaScript()}
+                        scalesPageToFit={false} />
+                </View>
 
-            );
+                );
+        };
+        return(<View />);
     },
     getPieValue: function(){
         var res = [];
@@ -228,6 +242,9 @@ module.exports = React.createClass({
         return this.props.data.finishedQuantity + '/' + this.props.data.quantity + ' \n 生产进度';
     },
     renderPie: function(){
+        if (this.props.data.quantity == 0) {
+            return(<View />);
+        };
         // console.log('----pie data:', this.props.data);
         if (!!this.props.isLoad) {//
             return(<View style={styles.pieContainer}/>);
@@ -299,6 +316,9 @@ module.exports = React.createClass({
         });
     },
     renderBarChart: function(){
+        if (this.props.data.quantity == 0) {
+            return(<View />);
+        };
         return(
             <View style={styles.barChartContainer}>
                 {this.renderBarItems()}
@@ -363,6 +383,51 @@ module.exports = React.createClass({
             data: this.props.data
         });
     },
+    renderMoreButton: function(){
+        if (!this.props.data.schedules || this.props.data.schedules.length == 0) {
+            return(<View />);
+        };
+        return(
+            <TouchableHighlight
+                style={commonStyle.settingItemWrapper}
+                underlayColor='#eee'
+                onPress={this.goRecordsList}>
+                <View
+                style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
+                    <Text
+                    style={[commonStyle.blue, {flex: 1}]}>
+                        查看更多
+                    </Text>
+                </View>
+            </TouchableHighlight>
+            );
+    },
+    renderSaleManInfo: function(){
+        if(!this.props.data.salesManName){
+            return(<View />);
+        }
+        return(
+            <TouchableHighlight
+                style={commonStyle.settingItemWrapper}
+                underlayColor='#eee'
+                onPress={this.goTask}>
+                <View
+                style={commonStyle.settingItem}>
+                    <Image
+                    style={commonStyle.settingIcon}
+                    source={require('../../../images/person/account_settings.png')}/>
+                    <Text
+                    style={commonStyle.settingTitle}>
+                        业务员
+                    </Text>
+                    <Text
+                    style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
+                        {this.props.data.salesManName}
+                    </Text>
+                </View>
+            </TouchableHighlight>
+            );
+    },
     render: function() {
         console.log('-----order data:', this.props.data);
         return(
@@ -370,66 +435,14 @@ module.exports = React.createClass({
                 <View style={commonStyle.section}>
                     {this.renderPie()}
                     {this.renderBarChart()}
-                    <View style={commonStyle.settingItemWrapper}>
-                        <View style={[commonStyle.settingItem]}>
-                            <Text
-                            numberOfLines={3}
-                            style={[commonStyle.commonTitle, commonStyle.textGray,{flex: 1}]}>
-                                进度记录
-                            </Text>
-                        </View>
-                    </View>
+
                     {this.renderRecordsList()}
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee'
-                        onPress={this.goRecordsList}>
-                        <View
-                        style={[commonStyle.settingItem, commonStyle.bottomBorder]}>
-                            <Text
-                            style={[commonStyle.blue, {flex: 1}]}>
-                                查看更多
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight
-                        style={commonStyle.settingItemWrapper}
-                        underlayColor='#eee'
-                        onPress={this.goTask}>
-                        <View
-                        style={commonStyle.settingItem}>
-                            <Image
-                            style={commonStyle.settingIcon}
-                            source={require('../../../images/person/account_settings.png')}/>
-                            <Text
-                            style={commonStyle.settingTitle}>
-                                业务员
-                            </Text>
-                            <Text
-                            style={[commonStyle.settingDetail, commonStyle.settingDetailTextRight]}>
-                                {this.props.data.salesManName}
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                    <View style={commonStyle.settingItemWrapper}>
-                        <View style={[commonStyle.settingItem]}>
-                            <Text
-                            numberOfLines={3}
-                            style={[commonStyle.commonTitle, commonStyle.textGray,{flex: 1}]}>
-                                订单描述
-                            </Text>
-                        </View>
-                    </View>
+                    {this.renderMoreButton()}
+                    {this.renderSaleManInfo()}
+
+
                     {this.renderDescribeItem()}
-                    <View style={commonStyle.settingItemWrapper}>
-                        <View style={[commonStyle.settingItem]}>
-                            <Text
-                            numberOfLines={3}
-                            style={[commonStyle.commonTitle, commonStyle.textGray,{flex: 1}]}>
-                                附件
-                            </Text>
-                        </View>
-                    </View>
+
                     {this.renderListView()}
                 </View>
             </ScrollView>
@@ -445,16 +458,26 @@ module.exports = React.createClass({
 
     renderListView: function(){
         // console.log('---------order data:', this.props.data.accessories);
-        if (!this.state.dataSource || this.state.dataSource.length == 0) {
-            return this.renderEmptyView();
-            return false;
+        if (!!this.state.dataSource && this.state.dataSource.length > 0) {
+            return (
+                <View>
+                    <View style={commonStyle.settingItemWrapper}>
+                        <View style={[commonStyle.settingItem]}>
+                            <Text
+                            numberOfLines={3}
+                            style={[commonStyle.commonTitle, commonStyle.textGray,{flex: 1}]}>
+                                附件
+                            </Text>
+                        </View>
+                    </View>
+                    <ListView
+                      style={commonStyle.section}
+                      dataSource={this.state.dataSource}
+                      renderRow={this.renderRow} />
+                </View>
+                )
         };
-        return (
-            <ListView
-              style={commonStyle.section}
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow} />
-            )
+        return this.renderEmptyView();
             // <View style={commonStyle.section}>
             //     <CollectionView
             //         items={this.props.data.accessories}
@@ -463,28 +486,9 @@ module.exports = React.createClass({
             // </View>
     },
     renderEmptyView: function(){
-        var self = this;
-        var rights = appConstants.userRights.rights;
-        var targetRights = 8;
-        if ((rights & targetRights) == targetRights){
-            return (
-                <View style={commonStyle.emptyView}>
-                    <Image source={require('../../../images/empty/no_file_gray.png')} />
-                    <Text style={{fontSize:20, fontWeight:'800', paddingTop: 16, color:'#727272'}}>
-                            您还没有附件
-                    </Text>
-                    <Button
-                    style={commonStyle.blueButton}
-                    onPress={this.props.onEmptyButtonPress} >
-                        添加附件
-                    </Button>
-                </View>
-                );
-        }else{
-            return(
-                <View style={styles.empty}>
-                </View>
-                )
-        }
+        return(
+            <View style={styles.empty}>
+            </View>
+        )
     }
 });

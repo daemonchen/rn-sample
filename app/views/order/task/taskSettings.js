@@ -131,6 +131,7 @@ module.exports = React.createClass({
     onChange: function(){
         var result = taskStore.getState();
         if (result.status != 200 && !!result.message) {
+            util.toast(result.message);
             return;
         }
         if (result.type == 'create') {

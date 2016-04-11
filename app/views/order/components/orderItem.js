@@ -116,13 +116,15 @@ module.exports = React.createClass({
     },
     renderProgressBar: function(){
         var progress = parseInt(this.props.rowData.overPercent)/100 || 0;
-        return(
-            <ProgressBar
-                fillStyle={styles.progressBarFill}
-                containerWidth={{width: width - 80}}
-                style={styles.progressBar}
-                progress={progress} />
-            );
+        if (this.props.rowData.overPercent > 0) {
+            return(
+                <ProgressBar
+                    fillStyle={styles.progressBarFill}
+                    containerWidth={{width: width - 80}}
+                    style={styles.progressBar}
+                    progress={progress} />
+                );
+        };
     },
     render: function(){
         var self = this;

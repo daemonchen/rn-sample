@@ -214,7 +214,8 @@ module.exports = React.createClass({
         };
         if (result.type == 'get') {
             this.setState({
-                follow: result.data.follow
+                follow: result.data.follow,
+                customerName: result.data.customerName
             });
         };
         if (result.type == 'updateStatus') {
@@ -352,7 +353,7 @@ module.exports = React.createClass({
     renderSummary: function(){
         // console.log('-----orderData', this.state.orderData);
         var time = moment(this.state.orderData.endTime).format('YYYY.MM.DD');
-
+        var username = !!this.state.customerName ? this.state.customerName : '无客户';
         return(
             <View style={{flexDirection:'row', backgroundColor: '#fff'}}>
                 <View style={{flex: 1, alignItems: 'center'}}>
@@ -365,7 +366,9 @@ module.exports = React.createClass({
                     <Image
                         style={styles.taskTotalImageTop}
                         source={require('../../images/order/client_gray.png')}/>
-                    <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>{this.state.orderData.userName}</Text>
+                    <Text style={[styles.taskTotalTextBottom, commonStyle.textDark]}>
+                        {username}
+                    </Text>
                 </View>
                 <View style={{flex: 1, alignItems: 'center'}}>
                     <Image
@@ -527,6 +530,9 @@ module.exports = React.createClass({
         });
     },
     renderAddButton: function(){
+        if (this.state.orderData.quantity == 0) {
+            return(<View />);
+        };
         return(
             <View style={styles.addButtonWrapper}>
                 <TouchableHighlight
