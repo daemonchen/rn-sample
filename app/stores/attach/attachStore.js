@@ -80,13 +80,17 @@ class AttachStore {
         this.preventDefault();
     }
     onCreateSuccess(responseData){
-        if (!responseData) {return false};
-        console.log('------create success', responseData, !responseData);
+        console.log('------create attach result', responseData, !responseData);
 
         responseData.type = 'create'
 
         this.setState(responseData);
-        util.toast('上传成功');
+        if (!responseData) {
+            util.toast('上传失败')
+        }else{
+            util.toast('上传成功')
+        };
+        // util.toast('上传成功');
     }
     onUpdate(data) {
         attachService.update(data)

@@ -105,9 +105,13 @@ module.exports = React.createClass({
     },
     onAttachChange: function(){
         var result = attachStore.getState();
-        // console.log('-----attachStore result:', result);
-        if (result.status != 200 && !!result.message) {
-            util.alert(result.message);
+        console.log('-----attachStore result:', result);
+        if (result.status != 200) {
+            this.setState({
+
+                isVisible: false
+            });
+            util.alert(result.message || '出错了');
             return;
         }
         if (result.type == 'create') {
@@ -220,13 +224,14 @@ module.exports = React.createClass({
     },
     _addAttachs: function(){
         var params = {};
+        console.log('-------taskId', this.state.taskId);
         if (this.state.taskStatus == 1) {//如果是创建任务，则没有订任务字段
             params = {
                 hostType: '2'
             }
         }else{
             params = {
-                hostId: this.state.id + '',
+                hostId: this.state.taskId + '',
                 hostType: '2'
             }
         }

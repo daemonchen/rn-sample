@@ -49,7 +49,8 @@ module.exports = React.createClass({
         return {
             loaded : false,
             webViewHeight: 100,
-            dataSource: ds.cloneWithRows(accessoryData)//附件数据源
+            list: accessoryData,
+            dataSource: ds//附件数据源
         }
     },
     componentDidMount: function() {
@@ -63,8 +64,10 @@ module.exports = React.createClass({
     },
     componentWillReceiveProps: function(nextProps){
         var accessoryData = this.props.data.accessories || [];
+        // console.log('--------init dataSource:', accessoryData);
 
         this.setState({
+            list: accessoryData,
             dataSource: this.state.dataSource.cloneWithRows(accessoryData)
         });
     },
@@ -429,7 +432,7 @@ module.exports = React.createClass({
             );
     },
     render: function() {
-        console.log('-----order data:', this.props.data);
+        // console.log('-----order data:', this.props.data);
         return(
             <ScrollView style={styles.summaryWrapper}>
                 <View style={commonStyle.section}>
@@ -458,7 +461,9 @@ module.exports = React.createClass({
 
     renderListView: function(){
         // console.log('---------order data:', this.props.data.accessories);
-        if (!!this.state.dataSource && this.state.dataSource.length > 0) {
+        console.log('-------list',this.state.list);
+        if (!!this.state.list && this.state.list.length > 0) {
+            var dataArray = this.state.dataSource.cloneWithRows(this.state.list);
             return (
                 <View>
                     <View style={commonStyle.settingItemWrapper}>
@@ -472,7 +477,7 @@ module.exports = React.createClass({
                     </View>
                     <ListView
                       style={commonStyle.section}
-                      dataSource={this.state.dataSource}
+                      dataSource={dataArray}
                       renderRow={this.renderRow} />
                 </View>
                 )
